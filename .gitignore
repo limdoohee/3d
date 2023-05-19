@@ -6,9 +6,12 @@
 # Node artifact files
 node_modules/
 dist/
+out/
+.next/
 
 # Compiled Java class files
 *.class
+*.pem
 
 # Compiled Python bytecode
 *.py[cod]
@@ -41,7 +44,7 @@ Thumbs.db
 *.war
 
 # Large media files
-*.mp4
+# *.mp4
 *.tiff
 *.avi
 *.flv
