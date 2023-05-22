@@ -8,6 +8,8 @@ node_modules/
 dist/
 out/
 .next/
+pages/test
+_view/test
 
 # Compiled Java class files
 *.class

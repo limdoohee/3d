@@ -2,6 +2,7 @@
 import { makeAutoObservable, toJS, configure } from "mobx";
 //------------------------------------------------------------------------------- Module
 import CommonStore from "./common";
+import ChatStore from "./chat";
 
 configure({
     enforceActions: "never",
@@ -11,6 +12,7 @@ configure({
 class Store {
     //////////////////////////////// Store Call
     common = new CommonStore(this);
+    chat = new ChatStore(this);
     //////////////////////////////// Store Call
 
     constructor() {

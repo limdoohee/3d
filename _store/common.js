@@ -14,6 +14,11 @@ class Store {
         this.store = store;
         makeAutoObservable(this);
     }
+    debug(data) {
+        if (process.env.STAGE == "LOCAL" || process.env.STAGE == "DEVELOPMENT" || process.env.STAGE == "STAGING" || process.env.STAGE == "prodtest") {
+            console.log(`[Debug:${process.env.STAGE}]`, toJS(data));
+        }
+    }
 }
 //////////////////////////// makeAutoObservable
 
