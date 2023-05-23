@@ -3,7 +3,7 @@
         "browser": true,
         "es2021": true
     },
-    "extends": ["next/core-web-vitals", "eslint:recommended", "plugin:react/recommended"],
+    "extends": ["next/core-web-vitals", "eslint:recommended", "plugin:react/recommended", "next"],
     "overrides": [],
     "parserOptions": {
         "ecmaVersion": "latest",
@@ -12,6 +12,8 @@
     "plugins": ["react"],
     "rules": {
         "no-unused-vars": "warn",
-        "@next/next/no-img-element": "off"
+        "@next/next/no-img-element": "off",
+        "react/no-unescaped-entities": "off",
+        "@next/next/no-page-custom-font": "off"
     }
 }
