@@ -7,6 +7,7 @@ import Store from "../../_store/store";
 const store = new Store();
 //------------------------------------------------------------------------------- Store
 //------------------------------------------------------------------------------- Component
+import ChatComponent from "../../_lib/component/chat";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
@@ -20,7 +21,9 @@ const Home = observer((props) => {
                 // channelType: "openChannel",
                 callback: () => {
                     common.debug(chat.sb);
-                    chat.loadChannels("openChannel");
+                    chat.loadChannels("openChannel", () => {
+                        joinChat("sendbird_open_channel_10510_f7b58093d862c9af9af0f9499049cfd7e1469d5e");
+                    });
                 },
             });
         }
@@ -39,7 +42,7 @@ const Home = observer((props) => {
             </Head>
             <div>{chat.sb ? "Sendbird Connect" : "Sendbird Disconnect"}</div>
             <div>{chat.state.loading ? "Loading...." : ""}</div>
-            <ul>
+            {/* <ul>
                 {chat.state.channels.map((item, key) => {
                     return (
                         <li key={key}>
@@ -48,12 +51,12 @@ const Home = observer((props) => {
                                     joinChat(item.url);
                                 }}
                             >
-                                {item.name}
+                                {item.name} : {item.url}
                             </div>
                         </li>
                     );
                 })}
-            </ul>
+            </ul> */}
             {chat.state.currentlyJoinedChannel && (
                 <>
                     <h1>{chat.state.currentlyJoinedChannel.name}</h1>
@@ -73,6 +76,7 @@ const Home = observer((props) => {
                             );
                         }
                     })}
+                    <ChatComponent.MessageInput chat={chat} value={chat.state.messageInputValue} sendMessage={chat.sendMessage.open} fileSelected={chat.state.file} />
                 </>
             )}
         </>

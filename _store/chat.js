@@ -78,7 +78,7 @@ class Store {
     }
 
     // Sendbird 채널 가져오기
-    async loadChannels(channelType) {
+    async loadChannels(channelType, callback) {
         this.state.loading = true;
         try {
             let channelQuery;
@@ -106,6 +106,7 @@ class Store {
         } catch (error) {
             return this.onError(error);
         }
+        callback && callback();
     }
 
     // Sendbird 채널 들어가기
@@ -254,29 +255,76 @@ class Store {
         },
     };
 
-    // Sendbird onMessageInputChange
-    onMessageInputChange(e) {
-        const messageInputValue = e.currentTarget.value;
-        this.state = { ...this.state, messageInputValue };
-    }
+    // Sendbird 메세지 핸들러
+    messageHandlers = {
+        group: {
+            onMessagesAdded: (context, channel, messages) => {
+                const updatedMessages = [...this.state.messages, ...messages];
+                this.state = { ...this.state, messages: updatedMessages };
+            },
+            onMessagesUpdated: (context, channel, messages) => {
+                const updatedMessages = [...this.state.messages.messages];
+                for (let i in messages) {
+                    const incomingMessage = messages[i];
+                    const indexOfExisting = this.state.messages.messages.findIndex((message) => {
+                        return incomingMessage.reqId === message.reqId;
+                    });
 
-    // Sendbird onFileInputChange
-    async onFileInputChange(e) {
-        if (e.currentTarget.files && e.currentTarget.files.length > 0) {
-            const fileMessageParams = {};
-            fileMessageParams.file = e.currentTarget.files[0];
-            this.state.currentlyJoinedChannel
-                .sendFileMessage(fileMessageParams)
-                .onSucceeded((message) => {
-                    const updatedMessages = [...this.state.messages, message];
-                    this.state = { ...this.state, messages: updatedMessages, messageInputValue: "", file: null };
-                })
-                .onFailed((error) => {
-                    console.log(error);
-                    console.log("failed");
+                    if (indexOfExisting !== -1) {
+                        updatedMessages[indexOfExisting] = incomingMessage;
+                    }
+                    if (!incomingMessage.reqId) {
+                        updatedMessages.push(incomingMessage);
+                    }
+                }
+
+                this.state = { ...this.state, messages: updatedMessages };
+            },
+            onMessagesDeleted: (context, channel, messageIds) => {
+                const updateMessages = this.state.messages.messages.filter((message) => {
+                    return !messageIds.includes(message.messageId);
                 });
-        }
-    }
+                this.state = { ...this.state, messages: updatedMessages };
+            },
+            onChannelUpdated: (context, channel) => {},
+            onChannelDeleted: (context, channelUrl) => {},
+            onHugeGapDetected: () => {},
+        },
+    };
+
+    // Sendbird 메세지 보내기
+    sendMessage = {
+        open: async () => {
+            const { messageToUpdate, currentlyJoinedChannel, messages } = this.state;
+            if (messageToUpdate) {
+                const userMessageUpdateParams = {};
+                userMessageUpdateParams.message = state.messageInputValue;
+                const updatedMessage = await currentlyJoinedChannel.updateUserMessage(messageToUpdate.messageId, userMessageUpdateParams);
+                const messageIndex = messages.findIndex((item) => item.messageId == messageToUpdate.messageId);
+                messages[messageIndex] = updatedMessage;
+                this.state = { ...this.state, messages: messages, messageInputValue: "", messageToUpdate: null };
+            } else {
+                const userMessageParams = {};
+                userMessageParams.message = this.state.messageInputValue;
+                currentlyJoinedChannel
+                    .sendUserMessage(userMessageParams)
+                    .onSucceeded(async (message) => {
+                        console.log("onSucceeded");
+                        const updatedMessages = [...messages, message];
+                        this.state = { ...this.state, messages: updatedMessages, messageInputValue: "" };
+
+                        var params = { prompt: message.message, channelType: "open_channels", channelUrl: "sendbird_open_channel_10510_15a620bd611c5fdb2c80024d330bdb3ff0cc9c41" };
+                        await Api.restPost(`https://86a3-175-209-16-141.ngrok-free.app/dks-api/v2/chatgpt/ask`, params)
+                            .then((response) => response.json())
+                            .then((data) => {});
+                    })
+                    .onFailed((error) => {
+                        console.log(error);
+                        console.log("failed");
+                    });
+            }
+        },
+    };
 }
 //////////////////////////// makeAutoObservable
 
