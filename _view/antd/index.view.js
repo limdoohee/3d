@@ -9,7 +9,7 @@ const Home = observer((props) => {
     const {} = props;
     const router = useRouter();
 
-    return <>INDEX</>;
+    return <>ANTD</>;
 });
 
 export default Home;
