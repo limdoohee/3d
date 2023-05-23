@@ -7,7 +7,7 @@ import Store from "../_store/store";
 const store = new Store();
 //------------------------------------------------------------------------------- Store
 //------------------------------------------------------------------------------- View
-import View from "../_view/index_view";
+import View from "../_view/index.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {
