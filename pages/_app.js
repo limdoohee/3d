@@ -4,6 +4,7 @@ import Head from "next/head";
 import Script from "next/script";
 import PropTypes from "prop-types";
 import "@babel/polyfill";
+import { appWithTranslation } from "next-i18next";
 //------------------------------------------------------------------------------- Module
 import "../public/static/style/global.css";
 
@@ -32,7 +33,7 @@ const MyApp = (props) => {
     );
 };
 
-export default MyApp;
+export default appWithTranslation(MyApp);
 
 MyApp.propTypes = {
     Component: PropTypes.elementType.isRequired,
