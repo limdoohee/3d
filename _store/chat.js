@@ -20,6 +20,7 @@ class Store {
     state = {
         currentlyJoinedChannel: null,
         currentlyUpdatingChannel: null,
+        currentlyJoinedChannelOperators: [],
         messages: [],
         channels: [],
         showChannelCreate: false,
@@ -33,6 +34,8 @@ class Store {
         loading: false,
         error: false,
     };
+
+    members = null;
 
     constructor(store) {
         this.store = store;
@@ -121,6 +124,7 @@ class Store {
             const channelToJoin = this.state.channels.find((channel) => channel.url === channelUrl);
             await channelToJoin.enter();
             const [messages, error] = await this.loadMessages.open(channelToJoin);
+            const [operators, operatorsError] = await this.getChannelOperators(channelToJoin);
             if (error) {
                 return this.onError(error);
             }
@@ -157,7 +161,9 @@ class Store {
                 this.state = { ...this.state, messages: updatedMessages };
             };
             this.sb.openChannel.addOpenChannelHandler(uuid(), channelHandler);
-            this.state = { ...this.state, currentlyJoinedChannel: channelToJoin, messages: messages, loading: false };
+            this.state = { ...this.state, currentlyJoinedChannel: channelToJoin, messages: messages, loading: false, currentlyJoinedChannelOperators: operators };
+
+            console.log({ ...this.state, currentlyJoinedChannel: channelToJoin, messages: messages, loading: false, currentlyJoinedChannelOperators: operators });
         }
         //////////////////////////////////////////////////////////////////// openChannel
 
@@ -325,6 +331,16 @@ class Store {
             }
         },
     };
+
+    async getChannelOperators(channel) {
+        try {
+            const query = channel.createOperatorListQuery();
+            const operators = await query.next();
+            return [operators, null];
+        } catch (error) {
+            return [null, error];
+        }
+    }
 }
 //////////////////////////// makeAutoObservable
 
