@@ -1,0 +1,21 @@
+.dds.input {
+    height: 38px;
+    padding: 0 12px;
+    border-radius: 8px;
+    border: 0;
+    font-size: 16px;
+    width: auto;
+}
+.dds.input.primary {
+    border: 1px solid #dadada;
+}
+.dds.input.secondary {
+    background: #ededed;
+}
+.dds.input.large {
+    height: 48px;
+}
+.dds.input.small {
+    height: 30px;
+    font-size: 14px;
+}

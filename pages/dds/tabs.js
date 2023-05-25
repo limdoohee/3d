@@ -6,15 +6,17 @@ import "../_lib/module/i18n";
 
 import { useTranslation } from "react-i18next";
 //------------------------------------------------------------------------------- Store
-import Store from "../_store/store";
+import Store from "../../_store/store";
 const store = new Store();
 //------------------------------------------------------------------------------- Store
-//------------------------------------------------------------------------------- Component
-//------------------------------------------------------------------------------- Component
+//------------------------------------------------------------------------------- View
+import View from "../../_view/dds/tabs.view";
+//------------------------------------------------------------------------------- View
 
 let langSelect = "en";
 
 const Home = observer((props) => {
+<<<<<<< HEAD:_view/index_view.js
     const {} = props;
     const router = useRouter();
 
@@ -28,6 +30,11 @@ const Home = observer((props) => {
         <>
             INDEX
             {/* <div>{t(`description.part1`)}</div> */}
+=======
+    return (
+        <>
+            <View props={props} />
+>>>>>>> feature/antd:pages/dds/tabs.js
         </>
     );
 });
