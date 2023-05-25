@@ -1,11 +1,12 @@
 import Head from "next/head";
+import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Component
 import { SearchOutlined, PoweroffOutlined } from "@ant-design/icons";
 
-import D_Button from "../../_lib/component/button";
+import DDS_Button from "../../_lib/component/button";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
@@ -14,9 +15,29 @@ const Home = observer((props) => {
 
     return (
         <>
-            <h1>ANTD</h1>
+            <div className="dds container">
+                <div className="dds style-guide">
+                    <h1>DDS Style Guide</h1>
+                    <ul>
+                        <li>
+                            <Link href="/dds/icons">icons</Link>
+                        </li>
+                        <li>
+                            <Link href="/dds/button">Button</Link>
+                        </li>
+                        <li>
+                            <Link href="/dds/input">Input</Link>
+                        </li>
+                        <li>
+                            <Link href="/dds/tabs">Tabs</Link>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div className="dds container"></div>
+
             {/* //////////////////////////////////////////////////////////////////////////// Button */}
-            <h3>Button</h3>
+            {/* <h3>Button</h3>
             <h5>.default</h5>
             <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
                 <D_Button.default>Default Button</D_Button.default>
@@ -87,7 +108,7 @@ const Home = observer((props) => {
                 >
                     Loading Button
                 </D_Button.dropdown>
-            </div>
+            </div> */}
             {/* //////////////////////////////////////////////////////////////////////////// Button */}
             {/* //////////////////////////////////////////////////////////////////////////// Typography */}
             {/* //////////////////////////////////////////////////////////////////////////// Typography */}
