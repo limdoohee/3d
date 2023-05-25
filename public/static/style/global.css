@@ -1,10 +1,1 @@
-.test {
-    padding: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: aqua;
-    position: relative;
-    height: 300px;
-    flex-direction: column;
-}
+@import url("./3d.css");
