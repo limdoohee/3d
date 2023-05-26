@@ -9,7 +9,7 @@
 #box {
     border: 1px solid blue;
     position: absolute;
-    top: 0;
+    top: -200px;
     left: 0;
 }
 

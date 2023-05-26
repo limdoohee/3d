@@ -18,7 +18,6 @@ const Ai = ({ dropStatus }) => {
         function init() {
             const canvas = document.getElementById("ai");
             renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-
             renderer.shadowMap.enabled = true;
 
             camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.01, 10000);
@@ -28,8 +27,6 @@ const Ai = ({ dropStatus }) => {
 
             loader.load("../../static/3d/StandingGreeting.fbx", (object) => {
                 object.scale.multiplyScalar(0.07);
-                // object.position.set(0, -15, -10);
-
                 mixer = new THREE.AnimationMixer(object);
                 const action = mixer.clipAction(object.animations[0]);
                 action.play();
@@ -47,6 +44,8 @@ const Ai = ({ dropStatus }) => {
 
             if (dropStatus === "ing") {
                 renderer.setSize(100, 100);
+                canvas.style.bottom = "";
+                canvas.style.left = "";
             }
 
             // event
