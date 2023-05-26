@@ -4,11 +4,10 @@ html {
     margin: 0;
     padding: 0;
     font-feature-settings: "pnum" on, "lnum" on;
-    /* cursor: url(/src/img/cursor_01.png) 6 6, auto; */
     font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
         sans-serif;
     font-size: 16px;
-    color: #404040;
+    color: #1f1f1f;
 }
 *,
 *::placeholder {
@@ -24,6 +23,7 @@ h4,
 h5,
 h6 {
     margin: 0;
+    padding: 0;
     font-weight: 700;
 }
 strong {
@@ -31,71 +31,51 @@ strong {
 }
 ul,
 ol,
-li,
-td,
-tr {
+li {
     margin: 0;
     padding: 0;
     font-weight: 400;
     list-style-type: none;
 }
-
-img {
-    max-width: 100%;
-}
-
-a {
-    text-decoration: none;
-    cursor: pointer;
+td,
+tr,
+p,
+span,
+input,
+label,
+div {
+    margin: 0;
+    padding: 0;
     font-weight: 400;
 }
-a:active {
+img,
+figure {
+    margin: 0;
+    padding: 0;
 }
 
+a,
 button {
     text-decoration: none;
     cursor: pointer;
     font-weight: 400;
 }
-button:active {
+a:active,
+a:hover {
+    outline: none;
 }
-input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
+input {
+    border: 1px solid #dadada;
+    color: #404040;
 }
-
 input:focus {
     outline: none;
+    border: 1px solid #404040;
 }
 input::placeholder {
     color: #bdbdbd;
 }
-
-textarea:focus {
-    outline: none;
-}
-p {
-    margin: 0;
-    font-weight: 400;
-}
-span {
-    font-weight: 400;
-}
-input,
-label {
-    font-weight: 400;
-    margin: 0;
-}
-ol,
-ul {
-    margin: 0;
-    padding: 0;
-}
-div {
-    font-weight: 400;
-}
-
-figure {
-    margin: 0;
+input:disabled {
+    background-color: #f5f5f5;
+    border: 1px solid #dadada;
 }
