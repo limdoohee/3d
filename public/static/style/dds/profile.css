@@ -1,0 +1,23 @@
+.dds.profile {
+    line-height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    width: 52px;
+    height: 52px;
+}
+.dds.profile .dds.icons svg path {
+    fill: #fff;
+}
+.dds.profile + .cert {
+    top: auto;
+    bottom: 0;
+    right: 0;
+    transform: translateX(25%);
+    transform-origin: none;
+}
+.dds.profile + .dds.icons svg {
+    width: 18px;
+    height: 18px;
+}

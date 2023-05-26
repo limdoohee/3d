@@ -6,6 +6,7 @@ import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Component
 import DDS_Layout from "../../_lib/component/layout";
 import DDS_Button from "../../_lib/component/button";
+import DDS_Profile from "../../_lib/component/profile";
 import DDS_Icons from "../../_lib/component/icons";
 //------------------------------------------------------------------------------- Component
 
@@ -26,10 +27,15 @@ const Home = observer((props) => {
                             Back
                         </DDS_Button.default>
                     </p>
-                    <h1>Icons</h1>
-                    <p>모바일에서 아이콘을 단독으로 사용할 경우, 터치를 위한 아이콘 최소 사이즈를 만족시키기 위해 패딩 영역이 필요한데, 패딩 영역을 포함한 아이콘의 최소 사이즈는 48px을 사용. 데스크탑에서는 40px을 사용.</p>
+                    <h1>Profile</h1>
+                    <h4>유형</h4>
+                    <p>Profile은 화면상에서 사용자를 의미하는 원형의 컴포넌트를 의미합니다. 사용자가 설정한 사진이나 그래픽 등이 원형태로 적용되어 dropkitchen앱 내 필요한 영역에 노출됩니다.</p>
                     <div className="dds style-guide-inner">
-                        <IconsComponent />
+                        <DDS_Profile.default>
+                            <DDS_Icons.user />
+                        </DDS_Profile.default>
+                        <DDS_Profile.default badge={<DDS_Icons.badgeCrown className="cert" />}>U</DDS_Profile.default>
+                        <DDS_Profile.default badge={<DDS_Icons.badgeCrown className="cert" />} src="https://picsum.photos/id/237/200/300" />
                     </div>
                 </div>
             </DDS_Layout.container>
@@ -38,17 +44,3 @@ const Home = observer((props) => {
 });
 
 export default Home;
-
-var IconsComponent = () => {
-    let Print = [];
-    for (const key in DDS_Icons) {
-        Print.push(DDS_Icons[key]);
-    }
-    return (
-        <>
-            {Print.map((Item, key) => {
-                return <Item className="dds icons" key={key} />;
-            })}
-        </>
-    );
-};

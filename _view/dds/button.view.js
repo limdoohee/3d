@@ -4,6 +4,7 @@ import Router, { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Component
+import DDS_Layout from "../../_lib/component/layout";
 import DDS_Button from "../../_lib/component/button";
 //------------------------------------------------------------------------------- Component
 
@@ -13,7 +14,7 @@ const Home = observer((props) => {
 
     return (
         <>
-            <div className="dds container">
+            <DDS_Layout.container>
                 <div className="dds style-guide">
                     <p>
                         <DDS_Button.default
@@ -44,7 +45,7 @@ const Home = observer((props) => {
                         <DDS_Button.default className="dds button primary block">Button block</DDS_Button.default>
                     </div>
                 </div>
-            </div>
+            </DDS_Layout.container>
 
             {/* //////////////////////////////////////////////////////////////////////////// Button */}
             {/* <h3>Button</h3>
