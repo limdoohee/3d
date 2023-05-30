@@ -21,13 +21,7 @@
         "antd": "^5.5.1",
         "dotenv": "^16.0.1",
         "env-cmd": "^10.1.0",
-<<<<<<< HEAD
-        "i18next": "^22.5.0",
-        "i18next-browser-languagedetector": "^7.0.1",
-        "i18next-http-backend": "^2.2.1",
-=======
         "framer-motion": "^10.12.16",
->>>>>>> feature/antd
         "mobx": "^6.6.1",
         "mobx-react-lite": "^3.4.0",
         "moment": "^2.29.4",
