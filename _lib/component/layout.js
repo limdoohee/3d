@@ -8,9 +8,9 @@ const Component = {
     container: (props) => {
         return (
             <motion.div
-                initial={{ x: 100, opacity: 0, duration: 300 }}
+                initial={{ x: 50, opacity: 0, duration: 300 }}
                 animate={{ x: 0, opacity: 1, duration: 300 }}
-                exit={{ x: 100, opacity: 0, duration: 300 }}
+                exit={{ x: 50, opacity: 0, duration: 300 }}
                 transition={{
                     type: "spring",
                     stiffness: 260,

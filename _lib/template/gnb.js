@@ -7,6 +7,7 @@ import { observer } from "mobx-react-lite";
 import DDS_Button from "../component/button";
 import DDS_Icons from "../component/icons";
 import DDS_Profile from "../component/profile";
+import menuData from "../menu";
 
 const Component = {
     default: observer((props) => {
@@ -53,36 +54,14 @@ const Component = {
                     </div>
                     <nav>
                         <ul>
-                            <li>
-                                <Link href="">
-                                    <DDS_Icons.crown />
-                                    <span>Rank</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="">
-                                    <DDS_Icons.storeFilled />
-                                    <span>Drop list</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="">
-                                    <DDS_Icons.bookFilled />
-                                    <span>Magazine</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="">
-                                    <DDS_Icons.circleQuestion />
-                                    <span>FAQ</span>
-                                </Link>
-                            </li>
-                            <li>
-                                <Link href="">
-                                    <DDS_Icons.envelopeOpenTest />
-                                    <span>Feedback</span>
-                                </Link>
-                            </li>
+                            {menuData.gnb.map((Item, key) => (
+                                <li key={key}>
+                                    <Link href={Item.link}>
+                                        <Item.icon />
+                                        <span>{Item.name}</span>
+                                    </Link>
+                                </li>
+                            ))}
                         </ul>
                     </nav>
                 </Drawer>
