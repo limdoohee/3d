@@ -13,7 +13,10 @@ const Component = {
         return (
             <>
                 <Tooltip title={props.title}>
-                    <Button {...props}>{props.children}</Button>
+                    <Button {...props}>{props.children}</Button>shouldComponentUpdate(nextProps, nextState) {
+                        
+                    }
+                    
                 </Tooltip>
             </>
         );

@@ -4,6 +4,7 @@ import Head from "next/head";
 import Script from "next/script";
 import PropTypes from "prop-types";
 import "@babel/polyfill";
+import { AnimatePresence } from "framer-motion";
 //------------------------------------------------------------------------------- Module
 import "../public/static/style/global.css";
 import { ConfigProvider } from "antd";
@@ -30,7 +31,9 @@ const MyApp = (props) => {
                 <meta name="description" content="아트 드롭 컬쳐 미디어 & 스토어. 아티스트, 큐레이터, 컬렉터들의 이야기와 아트에 대한 다양한 콘텐츠를 제공합니다. 아티스트 및 브랜드와 협업한 기발한 작품도 만나 보세요." />
             </Head>
             <ConfigProvider theme={theme}>
-                <Component {...pageProps} />
+                <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
+                    <Component {...pageProps} key={router.asPath} />
+                </AnimatePresence>
             </ConfigProvider>
         </>
     );

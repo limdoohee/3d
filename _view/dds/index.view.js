@@ -19,6 +19,9 @@ const Home = observer((props) => {
                     <h1>DDS Style Guide</h1>
                     <ul>
                         <li>
+                            <Link href="/dds/gnb">gnb</Link>
+                        </li>
+                        <li>
                             <Link href="/dds/icons">icons</Link>
                         </li>
                         <li>
