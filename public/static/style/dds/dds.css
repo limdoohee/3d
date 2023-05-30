@@ -25,6 +25,8 @@
     padding: 30px 0;
     display: flex;
     flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
     gap: 10px;
 }
 
@@ -48,6 +50,7 @@
     height: 24px;
 }
 
+@import url("./gnb.css");
 @import url("./button.css");
 @import url("./input.css");
 @import url("./tabs.css");

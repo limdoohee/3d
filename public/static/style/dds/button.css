@@ -4,6 +4,8 @@
     border-radius: 8px;
     border: 0;
     font-size: 16px;
+    display: flex;
+    align-items: center;
 }
 .dds.button.primary {
     background-color: #000;
