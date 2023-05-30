@@ -4,11 +4,8 @@ import Head from "next/head";
 import Script from "next/script";
 import PropTypes from "prop-types";
 import "@babel/polyfill";
-<<<<<<< HEAD
 import { appWithTranslation } from "next-i18next";
-=======
 import { AnimatePresence } from "framer-motion";
->>>>>>> feature/antd
 //------------------------------------------------------------------------------- Module
 import "../public/static/style/global.css";
 import { ConfigProvider } from "antd";
