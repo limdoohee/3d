@@ -16,25 +16,9 @@ import View from "../../_view/dds/tabs.view";
 let langSelect = "en";
 
 const Home = observer((props) => {
-<<<<<<< HEAD:_view/index_view.js
-    const {} = props;
-    const router = useRouter();
-
-    const { t, i18n } = useTranslation();
-
-    // const changeLanguage = (lng) => {
-    //     i18n.changeLanguage(lng);
-    // };
-
-    return (
-        <>
-            INDEX
-            {/* <div>{t(`description.part1`)}</div> */}
-=======
     return (
         <>
             <View props={props} />
->>>>>>> feature/antd:pages/dds/tabs.js
         </>
     );
 });

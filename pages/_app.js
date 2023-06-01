@@ -6,7 +6,6 @@ import PropTypes from "prop-types";
 import "@babel/polyfill";
 import { appWithTranslation } from "next-i18next";
 import { AnimatePresence } from "framer-motion";
-
 //------------------------------------------------------------------------------- Module
 import "../public/static/style/global.css";
 import { ConfigProvider } from "antd";
