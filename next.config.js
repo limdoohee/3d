@@ -3,6 +3,11 @@
  */
 const path = require("path");
 
+//next.config.js
+const withImages = require("next-images");
+
+const withTM = require("next-transpile-modules")(["antd-mobile"]);
+
 const nextConfig = {
     reactStrictMode: false,
     assetPrefix: "",
@@ -20,4 +25,4 @@ const nextConfig = {
     },
 };
 
-module.exports = nextConfig;
+module.exports = withTM(withImages(nextConfig));

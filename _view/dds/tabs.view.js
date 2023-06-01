@@ -67,7 +67,7 @@ const Home = observer((props) => {
                     <p>Tabs는 페이지 내 유사한 정보를 그룹핑하여 콘텐츠를 정리할 때 사용합니다.</p>
                     <p>Tabs 와 Tabs group 2가지로 분류, Tabs 섹션이 2~4가지는 가장 기본적인 Tabs를 사용하며 섹션이 5가지 이상, 즉 다수일 경우 Tabs Group을 사용하며 길어질 경우 스크롤이 가능합니다.</p>
                     <div className="dds style-guide-inner">
-                        <DDS_Tabs.default className="dds tabs" defaultActiveKey="1" items={items} onChange={onChange} />
+                        <DDS_Tabs.default defaultActiveKey="1" items={items} onChange={onChange} />
                     </div>
                 </div>
             </DDS_Layout.container>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
-import { Button, Tooltip, Space, Dropdown } from "antd";
+import { Button, Tooltip, Space, Dropdown } from "antd-mobile";
 
 const Component = {
     default: (props) => {
@@ -13,10 +13,7 @@ const Component = {
         return (
             <>
                 <Tooltip title={props.title}>
-                    <Button {...props}>{props.children}</Button>shouldComponentUpdate(nextProps, nextState) {
-                        
-                    }
-                    
+                    <Button {...props}>{props.children}</Button>shouldComponentUpdate(nextProps, nextState) {}
                 </Tooltip>
             </>
         );
