@@ -25,8 +25,8 @@ class Store {
         channels: [],
         showChannelCreate: false,
         messageInputValue: "",
-        userNameInputValue: "JISUN",
-        userIdInputValue: "JISUN",
+        userNameInputValue: "",
+        userIdInputValue: "",
         channelNameInputValue: "",
         settingUpUser: true,
         file: null,
@@ -47,7 +47,7 @@ class Store {
     }
     // Sendbird 에러 출력
     onError(error) {
-        this.state = { ...chat.state, error: error.message };
+        this.state = { ...this.state, error: error.message };
     }
 
     // Sendbird 접속
@@ -116,12 +116,15 @@ class Store {
     async handleJoinChannel({ channelType, channelUrl }) {
         //////////////////////////////////////////////////////////////////// openChannel
         if (channelType == "openChannel") {
-            if (this.state.currentlyJoinedChannel?.url === channelUrl) {
-                return null;
-            }
+            // if (this.state.currentlyJoinedChannel?.url === channelUrl) {
+            //     return null;
+            // }
 
             this.state.loading = true;
-            const channelToJoin = this.state.channels.find((channel) => channel.url === channelUrl);
+
+            const channelToJoin = await this.sb.openChannel.getChannel(channelUrl);
+
+            // const channelToJoin = this.state.channels.find((channel) => channel.url === channelUrl);
             await channelToJoin.enter();
             const [messages, error] = await this.loadMessages.open(channelToJoin);
             const [operators, operatorsError] = await this.getChannelOperators(channelToJoin);
@@ -319,10 +322,10 @@ class Store {
                         const updatedMessages = [...messages, message];
                         this.state = { ...this.state, messages: updatedMessages, messageInputValue: "" };
 
-                        var params = { prompt: message.message, channelType: "open_channels", channelUrl: "sendbird_open_channel_10510_15a620bd611c5fdb2c80024d330bdb3ff0cc9c41" };
-                        await Api.restPost(`https://86a3-175-209-16-141.ngrok-free.app/dks-api/v2/chatgpt/ask`, params)
-                            .then((response) => response.json())
-                            .then((data) => {});
+                        // var params = { prompt: message.message, channelType: "open_channels", channelUrl: "sendbird_open_channel_10510_15a620bd611c5fdb2c80024d330bdb3ff0cc9c41" };
+                        // await Api.restPost(`https://86a3-175-209-16-141.ngrok-free.app/dks-api/v2/chatgpt/ask`, params)
+                        //     .then((response) => response.json())
+                        //     .then((data) => {});
                     })
                     .onFailed((error) => {
                         console.log(error);
