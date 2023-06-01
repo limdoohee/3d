@@ -4,8 +4,12 @@ import Head from "next/head";
 import Script from "next/script";
 import PropTypes from "prop-types";
 import "@babel/polyfill";
+import { appWithTranslation } from "next-i18next";
+import { AnimatePresence } from "framer-motion";
 //------------------------------------------------------------------------------- Module
 import "../public/static/style/global.css";
+import { ConfigProvider } from "antd";
+import theme from "../_lib/theme";
 
 const MyApp = (props) => {
     const { Component, pageProps, router } = props;
@@ -27,12 +31,16 @@ const MyApp = (props) => {
                 <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
                 <meta name="description" content="아트 드롭 컬쳐 미디어 & 스토어. 아티스트, 큐레이터, 컬렉터들의 이야기와 아트에 대한 다양한 콘텐츠를 제공합니다. 아티스트 및 브랜드와 협업한 기발한 작품도 만나 보세요." />
             </Head>
-            <Component {...pageProps} />
+            <ConfigProvider theme={theme}>
+                <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
+                    <Component {...pageProps} key={router.asPath} />
+                </AnimatePresence>
+            </ConfigProvider>
         </>
     );
 };
 
-export default MyApp;
+export default appWithTranslation(MyApp);
 
 MyApp.propTypes = {
     Component: PropTypes.elementType.isRequired,

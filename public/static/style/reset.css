@@ -1,0 +1,81 @@
+body,
+html {
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    font-feature-settings: "pnum" on, "lnum" on;
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        sans-serif;
+    font-size: 16px;
+    color: #1f1f1f;
+}
+*,
+*::placeholder {
+    font-family: "Pretendard Variable", Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, "Helvetica Neue", "Segoe UI", "Apple SD Gothic Neo", "Noto Sans KR", "Malgun Gothic", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+        sans-serif;
+    box-sizing: border-box;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+    font-weight: 700;
+}
+strong {
+    font-weight: 700;
+}
+ul,
+ol,
+li {
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+    list-style-type: none;
+}
+td,
+tr,
+p,
+span,
+input,
+label,
+div {
+    margin: 0;
+    padding: 0;
+    font-weight: 400;
+}
+img,
+figure {
+    margin: 0;
+    padding: 0;
+}
+
+a,
+button {
+    text-decoration: none;
+    cursor: pointer;
+    font-weight: 400;
+}
+a:active,
+a:hover {
+    outline: none;
+}
+input {
+    border: 1px solid #dadada;
+    color: #404040;
+}
+input:focus {
+    outline: none;
+    border: 1px solid #404040;
+}
+input::placeholder {
+    color: #bdbdbd;
+}
+input:disabled {
+    background-color: #f5f5f5;
+    border: 1px solid #dadada;
+}

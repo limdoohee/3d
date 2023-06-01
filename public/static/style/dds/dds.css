@@ -1,0 +1,57 @@
+/* Dropkitchen design style  */
+:root {
+    --viewHeight: 100vh;
+}
+@supports (-webkit-touch-callout: none) {
+    :root {
+        --viewHeight: -webkit-fill-available;
+    }
+}
+
+/* =========================== container */
+.dds.container {
+    padding: 0 20px;
+}
+
+@media (min-width: 640px) {
+    .dds.container {
+        padding: 0 24px;
+    }
+}
+/* =========================== container */
+
+/* =========================== style-guide */
+.dds.style-guide {
+    padding: 30px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.dds.style-guide-inner {
+    border: 1px dashed #aaa;
+    border-radius: 8px;
+    padding: 20px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+/* =========================== style-guide */
+
+.dds.icons {
+    display: inline-flex;
+    font-size: 0;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+}
+
+@import url("./gnb.css");
+@import url("./button.css");
+@import url("./input.css");
+@import url("./tabs.css");
+@import url("./profile.css");

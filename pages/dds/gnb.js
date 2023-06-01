@@ -3,17 +3,17 @@ import Router, { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Store
-import Store from "../_store/store";
+import Store from "../../_store/store";
 const store = new Store();
 //------------------------------------------------------------------------------- Store
 //------------------------------------------------------------------------------- View
-import View from "../_view/index.view";
+import View from "../../_view/dds/gnb.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {
     return (
         <>
-            <View props={props} />
+            <View props={props} store={store} />
         </>
     );
 });
