@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
-import { Input } from "antd-mobile";
+import { Input } from "antd";
 
 const Component = {
     default: (props) => {

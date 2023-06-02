@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
-import { Button, Tooltip, Space, Dropdown } from "antd-mobile";
+import { Button, Tooltip, Space, Dropdown } from "antd";
 
 const Component = {
     default: (props) => {
