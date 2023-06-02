@@ -1,16 +1,14 @@
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
-import { Avatar, Badge } from "antd";
+import { Avatar, Badge } from "antd-mobile";
+import DDS_Icons from "../../_lib/component/icons";
 
 const Component = {
     default: (props) => {
         return (
-            <>
-                <Badge count={props.badge ? props.badge : ""}>
-                    <Avatar {...props} className={`dds profile ${props.className}`}>
-                        {props.children}
-                    </Avatar>
-                </Badge>
-            </>
+            <div className={`dds profile ${props.className}`}>
+                <Avatar {...props}></Avatar>
+                <DDS_Icons.badgeCrown className="cert" />
+            </div>
         );
     },
 };

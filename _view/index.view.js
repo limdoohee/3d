@@ -19,6 +19,10 @@ const Home = observer((props) => {
     //     i18n.changeLanguage(lng);
     // };
 
+    React.useEffect(() => {
+        console.log(JSON.parse(document.querySelector("#__NEXT_DATA__").textContent).buildId);
+    }, []);
+
     return (
         <DDS_Layout.container>
             INDEX

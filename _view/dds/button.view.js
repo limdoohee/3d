@@ -6,6 +6,7 @@ import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Component
 import DDS_Layout from "../../_lib/component/layout";
 import DDS_Button from "../../_lib/component/button";
+import DDS_Icons from "../../_lib/component/icons";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
@@ -29,10 +30,20 @@ const Home = observer((props) => {
                     <h4>유형</h4>
                     <p>Button은 스타일 및 쓰임새에 따라 Contained Button, Outlined Button, Text Button, Icon Button 4가지로 분류. </p>
                     <div className="dds style-guide-inner">
-                        <DDS_Button.default className="dds button primary">Button primary</DDS_Button.default>
-                        <DDS_Button.default className="dds button secondary">Button secondary</DDS_Button.default>
-                        <DDS_Button.default className="dds button outline">Button outline</DDS_Button.default>
-                        <DDS_Button.default className="dds button text">Button text</DDS_Button.default>
+                        <div className="part">
+                            <DDS_Button.default className="dds button primary">Button primary</DDS_Button.default>
+                            <DDS_Button.default className="dds button secondary">Button secondary</DDS_Button.default>
+                            <DDS_Button.default className="dds button outline">Button outline</DDS_Button.default>
+                            <DDS_Button.default className="dds button text">Button text</DDS_Button.default>
+                        </div>
+                        <div className="part">
+                            <DDS_Button.default className="dds button primary" icon={<DDS_Icons.angleDown />}></DDS_Button.default>
+                            <DDS_Button.default className="dds button primary rounded" icon={<DDS_Icons.angleDown />}></DDS_Button.default>
+                            <DDS_Button.default className="dds button secondary" icon={<DDS_Icons.angleDown />}></DDS_Button.default>
+                            <DDS_Button.default className="dds button secondary rounded" icon={<DDS_Icons.angleUp />}></DDS_Button.default>
+                            <DDS_Button.default className="dds button none rounded" icon={<DDS_Icons.circleArrowUp />}></DDS_Button.default>
+                            <DDS_Button.default className="dds button none rounded" icon={<DDS_Icons.circleArrowUp className="large" />}></DDS_Button.default>
+                        </div>
                     </div>
                     <h4>크기</h4>
                     <div className="dds style-guide-inner">
