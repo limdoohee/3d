@@ -8,6 +8,7 @@ import { timestampToTime, handleEnterPress } from "../module/messageUtils";
 //------------------------------------------------------------------------------- Component
 import DDS_Input from "../../_lib/component/input";
 import DDS_Icons from "../../_lib/component/icons";
+import DDS_Profile from "../../_lib/component/profile";
 //------------------------------------------------------------------------------- Component
 
 const home = {
@@ -51,26 +52,28 @@ const home = {
             </div>
         );
     },
-    MessagePrint: ({ messages }) => {
+    MessagePrint: ({ messages, myId }) => {
         return (
-            <>
+            <ul className="messages">
                 {messages.map((item, key) => {
-                    if (item.messageType == "user") {
-                        return (
-                            <div key={key}>
-                                {item.sender && item.sender.nickname} : {item.message}
-                            </div>
-                        );
-                    }
-                    if (item.messageType == "file") {
-                        return (
-                            <div key={key}>
-                                {item.sender && item.sender.nickname} : {item.type} / {item.plainUrl}
-                            </div>
-                        );
-                    }
+                    return (
+                        <li key={key} className={item.sender.userId == myId ? "my" : null}>
+                            {item.messageType == "user" && (
+                                <>
+                                    <DDS_Profile.default src={item.sender.plainProfileUrl} />
+                                    <div className="message">{item.message}</div>
+                                    {/* {item.sender && item.sender.nickname} : */}
+                                </>
+                            )}
+                            {item.messageType == "file" && (
+                                <>
+                                    {item.sender && item.sender.nickname} :{item.type == "image/jpeg" || item.type == "image/png" ? <img src={item.plainUrl} /> : null}
+                                </>
+                            )}
+                        </li>
+                    );
                 })}
-            </>
+            </ul>
         );
     },
 };

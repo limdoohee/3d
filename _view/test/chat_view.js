@@ -8,6 +8,7 @@ const store = new Store();
 //------------------------------------------------------------------------------- Store
 //------------------------------------------------------------------------------- Component
 import ChatComponent from "../../_lib/component/chat";
+import DDS_Layout from "../../_lib/component/layout";
 //------------------------------------------------------------------------------- Component
 //------------------------------------------------------------------------------- Template
 import ChatTemplate from "../../_lib/template/chat";
@@ -30,7 +31,9 @@ const Home = observer((props) => {
             <Head>
                 <title>Chat Test</title>
             </Head>
-            <ChatTemplate.open store={props.store} />
+            <DDS_Layout.container>
+                <ChatTemplate.open store={props.store} />
+            </DDS_Layout.container>
         </>
     );
 });

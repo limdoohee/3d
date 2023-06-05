@@ -47,7 +47,7 @@ const Home = {
                 {chat.state.currentlyJoinedChannel && (
                     <div className="dk chat">
                         {/* <h1>{chat.state.currentlyJoinedChannel.name}</h1> */}
-                        <ChatComponent.MessagePrint messages={chat.state.messages} />
+                        <ChatComponent.MessagePrint messages={chat.state.messages} myId={chat.state.userIdInputValue} />
                         <ChatComponent.MessageInput chat={chat} value={chat.state.messageInputValue} sendMessage={chat.sendMessage.open} fileSelected={chat.state.file} />
                     </div>
                 )}
