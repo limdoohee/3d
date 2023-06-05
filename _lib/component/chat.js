@@ -5,6 +5,10 @@ import { observer } from "mobx-react-lite";
 import { makeAutoObservable, toJS, configure } from "mobx";
 import { timestampToTime, handleEnterPress } from "../module/messageUtils";
 
+//------------------------------------------------------------------------------- Component
+import DDS_input from "../../_lib/component/input";
+//------------------------------------------------------------------------------- Component
+
 const home = {
     MessageInput: ({ chat, value, sendMessage }) => {
         // Sendbird onMessageInputChange
@@ -32,6 +36,7 @@ const home = {
 
         return (
             <div className="message-input">
+                <DDS_input.default />
                 <input
                     placeholder="write a message"
                     value={value}

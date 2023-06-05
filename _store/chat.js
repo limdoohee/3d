@@ -335,6 +335,7 @@ class Store {
         },
     };
 
+    // Sendbird Get Operators
     async getChannelOperators(channel) {
         try {
             const query = channel.createOperatorListQuery();
@@ -343,6 +344,18 @@ class Store {
         } catch (error) {
             return [null, error];
         }
+    }
+
+    async joinChat({ name, id, url }) {
+        await (this.state = { ...this.state, userNameInputValue: name, userIdInputValue: id });
+        await this.connectSendbird({
+            // channelType: "openChannel",
+            callback: () => {
+                this.handleJoinChannel({ channelType: "openChannel", channelUrl: url });
+                // chat.loadChannels("openChannel", () => {
+                // });
+            },
+        });
     }
 }
 //////////////////////////// makeAutoObservable
