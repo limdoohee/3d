@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
-import { Space } from "antd-mobile";
+import { Space } from "antd";
 import { motion } from "framer-motion";
 
 const Component = {
