@@ -357,6 +357,24 @@ class Store {
             },
         });
     }
+
+    // Sendbird onFileInputChange
+    async onFileInputChange(e) {
+        if (e.currentTarget.files && e.currentTarget.files.length > 0) {
+            const fileMessageParams = {};
+            fileMessageParams.file = e.currentTarget.files[0];
+            this.state.currentlyJoinedChannel
+                .sendFileMessage(fileMessageParams)
+                .onSucceeded((message) => {
+                    const updatedMessages = [...this.state.messages, message];
+                    this.state = { ...this.state, messages: updatedMessages, messageInputValue: "", file: null };
+                })
+                .onFailed((error) => {
+                    console.log(error);
+                    console.log("failed");
+                });
+        }
+    }
 }
 //////////////////////////// makeAutoObservable
 

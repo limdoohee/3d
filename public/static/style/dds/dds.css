@@ -38,6 +38,16 @@
     gap: 10px;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
+}
+
+.dds.style-guide-inner .part {
+    border-radius: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
 }
 /* =========================== style-guide */
 
@@ -48,6 +58,10 @@
     justify-content: center;
     width: 24px;
     height: 24px;
+}
+.dds.icons.large {
+    width: 32px;
+    height: 32px;
 }
 
 @import url("./gnb.css");

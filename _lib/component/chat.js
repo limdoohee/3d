@@ -6,7 +6,8 @@ import { makeAutoObservable, toJS, configure } from "mobx";
 import { timestampToTime, handleEnterPress } from "../module/messageUtils";
 
 //------------------------------------------------------------------------------- Component
-import DDS_input from "../../_lib/component/input";
+import DDS_Input from "../../_lib/component/input";
+import DDS_Icons from "../../_lib/component/icons";
 //------------------------------------------------------------------------------- Component
 
 const home = {
@@ -36,15 +37,8 @@ const home = {
 
         return (
             <div className="message-input">
-                <DDS_input.default />
-                <input
-                    placeholder="write a message"
-                    value={value}
-                    onChange={onMessageInputChange}
-                    onKeyDown={(event) => {
-                        handleEnterPress(event, sendMessage);
-                    }}
-                />
+                <DDS_Input.default className="dds input secondary" placeholder="텍스트 입력" defaultValue="Input secondary suffix" suffix={<DDS_Icons.magnifyingGlass />} />
+                <input placeholder="write a message" value={value} onChange={onMessageInputChange} onKeyDown={onMessageInputChange} />
                 <div className="message-input-buttons">
                     <button className="send-message-button" onClick={sendMessage}>
                         Send Message
@@ -55,6 +49,28 @@ const home = {
                     <input id="upload" className="file-upload-button" type="file" hidden={true} onChange={onFileInputChange} onClick={() => {}} />
                 </div>
             </div>
+        );
+    },
+    MessagePrint: ({ messages }) => {
+        return (
+            <>
+                {messages.map((item, key) => {
+                    if (item.messageType == "user") {
+                        return (
+                            <div key={key}>
+                                {item.sender && item.sender.nickname} : {item.message}
+                            </div>
+                        );
+                    }
+                    if (item.messageType == "file") {
+                        return (
+                            <div key={key}>
+                                {item.sender && item.sender.nickname} : {item.type} / {item.plainUrl}
+                            </div>
+                        );
+                    }
+                })}
+            </>
         );
     },
 };

@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
-import { Layout, Space } from "antd";
+import { Space } from "antd-mobile";
 import { motion } from "framer-motion";
-
-const { Content } = Layout;
 
 const Component = {
     container: (props) => {
