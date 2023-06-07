@@ -6,7 +6,9 @@
     border: 0;
     font-size: 16px;
 }
-
+.dds.input:focus {
+    box-shadow: none;
+}
 .dds.input.rounded {
     border-radius: 38px;
 }
@@ -21,6 +23,7 @@
 }
 .dds.input.secondary {
     background: #f5f5f5;
+    border: 0;
 }
 .dds.input.secondary.ant-input-status-error {
     background: #fce9ea;
@@ -40,7 +43,11 @@
 }
 .dds.input.secondary.ant-input-affix-wrapper {
     background-color: #f5f5f5;
+    box-shadow: none;
 }
 .dds.input.secondary.ant-input-affix-wrapper input {
     background-color: #f5f5f5;
+}
+.dds.input.secondary.ant-input-affix-wrapper:focus {
+    background: #ededed;
 }

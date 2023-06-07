@@ -22,6 +22,9 @@ const Home = observer((props) => {
                             <Link href="/dds/gnb">gnb</Link>
                         </li>
                         <li>
+                            <Link href="/dds/chat">Chat</Link>
+                        </li>
+                        <li>
                             <Link href="/dds/icons">icons</Link>
                         </li>
                         <li>

@@ -50,6 +50,29 @@ class Store {
         this.state = { ...this.state, error: error.message };
     }
 
+    disconnect() {
+        if (this.sb) {
+            this.sb.disconnect();
+        }
+        this.state = {
+            currentlyJoinedChannel: null,
+            currentlyUpdatingChannel: null,
+            currentlyJoinedChannelOperators: [],
+            messages: [],
+            channels: [],
+            showChannelCreate: false,
+            messageInputValue: "",
+            userNameInputValue: "",
+            userIdInputValue: "",
+            channelNameInputValue: "",
+            settingUpUser: true,
+            file: null,
+            messageToUpdate: null,
+            loading: false,
+            error: false,
+        };
+    }
+
     // Sendbird 접속
     async connectSendbird({ callback }) {
         this.state.loading = true;

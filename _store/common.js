@@ -14,6 +14,7 @@ class Store {
 
     ui = {
         gnbOpen: false,
+        chatOpen: false,
     };
 
     constructor(store) {

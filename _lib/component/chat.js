@@ -1,4 +1,5 @@
 import _config from "next/config";
+import Router, { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 
 import { observer } from "mobx-react-lite";
@@ -15,6 +16,18 @@ import DDS_Button from "../../_lib/component/button";
 //------------------------------------------------------------------------------- Component
 
 const home = {
+    messageScrollDown: () => {
+        setTimeout(() => {
+            if (document.querySelector("#message-wrap")) {
+                var v = document.querySelector("#message-wrap").scrollHeight;
+                scroll.scrollTo(v, {
+                    smooth: true,
+                    duration: 0,
+                    containerId: "message-wrap",
+                });
+            }
+        }, 100);
+    },
     MessageInput: ({ chat, value, sendMessage }) => {
         // Sendbird onMessageInputChange
         const onMessageInputChange = (e) => {
@@ -31,13 +44,7 @@ const home = {
                     .onSucceeded((message) => {
                         const updatedMessages = [...chat.state.messages, message];
                         chat.updateState({ ...chat.state, messages: updatedMessages, messageInputValue: "", file: null });
-                        setTimeout(() => {
-                            var v = document.body.scrollHeight;
-                            scroll.scrollTo(v, {
-                                smooth: true,
-                                duration: 200,
-                            });
-                        }, 100);
+                        home.messageScrollDown();
                     })
                     .onFailed((error) => {
                         console.log(error);
@@ -49,11 +56,8 @@ const home = {
         const onSend = async () => {
             await sendMessage({
                 callback: () => {
-                    var v = document.body.scrollHeight;
-                    scroll.scrollTo(v, {
-                        smooth: true,
-                        duration: 200,
-                    });
+                    console.log("sendMessage");
+                    home.messageScrollDown();
                 },
             });
             // console.log("onSend", v);
@@ -84,19 +88,16 @@ const home = {
             </div>
         );
     },
-    MessagePrint: ({ messages, myId, loadMessagesPrev }) => {
+    MessagePrint: ({ store, messages, myId, loadMessagesPrev }) => {
+        const { common, chat } = store;
         const [more, setmore] = useState(true);
 
         useEffect(() => {
-            var v = document.body.scrollHeight;
-            scroll.scrollTo(v, {
-                smooth: true,
-                duration: 0,
-            });
-        }, []);
+            home.messageScrollDown();
+        }, [common.ui.chatOpen == true]);
 
         return (
-            <>
+            <div className="message-wrap" id="message-wrap">
                 <div className="more">
                     {more && (
                         <DDS_Button.default
@@ -136,7 +137,7 @@ const home = {
                         );
                     })}
                 </ul>
-            </>
+            </div>
         );
     },
 };

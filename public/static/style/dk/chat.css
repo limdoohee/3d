@@ -1,26 +1,48 @@
 .dk.chat {
     padding: 50px 0 54px 0;
     position: relative;
-    /* overflow-y: auto;
-    height: calc(100vh - 54px); */
+}
+.dk.chat .message-wrap {
+    overflow-y: auto;
+    height: calc(100vh - 110px);
+    padding: 0 24px;
 }
 .dk.chat .title {
-    position: fixed;
+    position: absolute;
     left: 0;
     top: 0;
     width: 100%;
     height: 50px;
     background-color: #fff;
-    padding: 20px;
+    padding: 20px 24px;
     z-index: 900;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
+.dk.chat .title .dds.button.none {
+    padding: 0;
+    min-width: auto;
+}
 .dk.chat .title .owner {
     display: flex;
     align-items: center;
     gap: 12px;
+}
+.dk.chat .title .owner .name {
+    display: flex;
+    flex-direction: column;
+}
+.dk.chat .title .owner .name strong {
+    display: flex;
+    align-items: center;
+}
+.dk.chat .title .owner .name small {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #969696;
 }
 .dk.chat .title .operators {
     display: flex;
@@ -87,14 +109,14 @@
     color: #bdbdbd;
 }
 .dk.chat .message-input {
-    position: fixed;
+    position: absolute;
     left: 0;
     bottom: 0;
     width: 100%;
     background-color: #fff;
     display: flex;
     align-items: center;
-    padding: 8px 20px;
+    padding: 8px 24px;
     gap: 10px;
     justify-content: space-between;
     z-index: 900;

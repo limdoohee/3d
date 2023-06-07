@@ -68,6 +68,26 @@
     height: 12px;
 }
 
+.ant-drawer.ant-drawer-right .ant-drawer-content-wrapper {
+    width: 100% !important;
+    box-shadow: none;
+    display: flex;
+    justify-content: flex-end;
+}
+.ant-drawer.ant-drawer-right .ant-drawer-content-wrapper-hidden {
+    display: none !important;
+}
+.ant-drawer.ant-drawer-right .ant-drawer-content-wrapper .ant-drawer-content {
+    box-shadow: -6px 0 16px 0 rgba(0, 0, 0, 0.08), -3px 0 6px -4px rgba(0, 0, 0, 0.12), -9px 0 28px 8px rgba(0, 0, 0, 0.05);
+}
+
+.ant-drawer.ant-drawer-right .ant-drawer-content-wrapper .ant-drawer-body {
+    padding: env(safe-area-inset-top) 0 0 0;
+}
+.dds.chat-drawer {
+    /* max-width: 260px; */
+}
+
 @import url("./gnb.css");
 @import url("./button.css");
 @import url("./input.css");

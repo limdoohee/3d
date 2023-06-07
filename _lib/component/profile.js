@@ -7,7 +7,7 @@ const Component = {
         return (
             <div className={`dds profile ${props.className}`}>
                 {/* <Badge count={<DDS_Icons.badgeCrown className="cert" />}> */}
-                <Badge>
+                <Badge dot={props.dot ? props.dot : false}>
                     <Avatar {...props}></Avatar>
                 </Badge>
             </div>

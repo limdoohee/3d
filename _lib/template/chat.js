@@ -11,39 +11,74 @@ import ChatComponent from "../component/chat";
 import DDS_Input from "../../_lib/component/input";
 import DDS_Icons from "../../_lib/component/icons";
 import DDS_Profile from "../../_lib/component/profile";
+import DDS_Button from "../../_lib/component/button";
+import { Drawer } from "antd";
 //------------------------------------------------------------------------------- Component
 
 const Home = {
     open: observer((props) => {
+        const router = useRouter();
         const { common, chat } = props.store;
+
+        useEffect(() => {
+            if (common.ui.chatOpen === true) {
+                chat.joinChat({ name: "JISUN", id: "JISUN", url: "sendbird_open_channel_10510_f7b58093d862c9af9af0f9499049cfd7e1469d5e" });
+            } else {
+                chat.disconnect();
+            }
+        }, [common.ui.chatOpen]);
+
+        useEffect(() => {
+            return () => {
+                onClose();
+            };
+        }, [router.asPath]);
+
+        const onClose = () => {
+            common.uiChange("chatOpen", false);
+        };
+
+        const ownerInfo = {
+            profile: { src: "", dot: "dot" },
+        };
 
         return (
             <>
-                <div className="dk chat">
-                    <div className="title">
-                        <div className="owner">
-                            <DDS_Icons.angleLeft />
-                            <DDS_Profile.default src={""} />
+                <Drawer className={"dds chat-drawer"} placement="right" onClose={onClose} open={common.ui.chatOpen} closable={false}>
+                    <div className="dk chat">
+                        <div className="title">
+                            <div className="owner">
+                                <DDS_Button.default className="dds button none" icon={<DDS_Icons.angleLeft />} onClick={onClose} />
+                                <DDS_Profile.default {...ownerInfo.profile} />
+                                <span className="name">
+                                    <strong>
+                                        이상욱 <DDS_Icons.badgeCheck />
+                                    </strong>
+                                    <small>현재 활동 중</small>
+                                </span>
+                            </div>
+                            <div className="operators">
+                                <DDS_Icons.user className="dds icons small" />
+                                {chat.state.currentlyJoinedChannelOperators.length}
+                            </div>
                         </div>
-                        <div className="operators">
-                            <DDS_Icons.user className="dds icons small" />
-                            {chat.state.currentlyJoinedChannelOperators.length}
-                        </div>
+                        {chat.state.currentlyJoinedChannel ? (
+                            <>
+                                {/* <h1>{chat.state.currentlyJoinedChannel.name}</h1> */}
+                                <ChatComponent.MessagePrint store={props.store} messages={chat.state.messages} myId={chat.state.userIdInputValue} loadMessagesPrev={chat.loadMessagesPrev.open} />
+                            </>
+                        ) : (
+                            <>
+                                {/* <div>
+                                    <div>{chat.sb ? "Sendbird Connect" : "Sendbird Disconnect"}</div>
+                                    <div>{chat.state.loading ? "Loading...." : ""}</div>
+                                    <div>{chat.state.error ? chat.state.error : ""}</div>
+                                </div> */}
+                            </>
+                        )}
+                        <ChatComponent.MessageInput chat={chat} value={chat.state.messageInputValue} sendMessage={chat.sendMessage.open} fileSelected={chat.state.file} />
                     </div>
-                    {chat.state.currentlyJoinedChannel ? (
-                        <>
-                            {/* <h1>{chat.state.currentlyJoinedChannel.name}</h1> */}
-                            <ChatComponent.MessagePrint messages={chat.state.messages} myId={chat.state.userIdInputValue} loadMessagesPrev={chat.loadMessagesPrev.open} />
-                        </>
-                    ) : (
-                        <div>
-                            <div>{chat.sb ? "Sendbird Connect" : "Sendbird Disconnect"}</div>
-                            <div>{chat.state.loading ? "Loading...." : ""}</div>
-                            <div>{chat.state.error ? chat.state.error : ""}</div>
-                        </div>
-                    )}
-                    <ChatComponent.MessageInput chat={chat} value={chat.state.messageInputValue} sendMessage={chat.sendMessage.open} fileSelected={chat.state.file} />
-                </div>
+                </Drawer>
             </>
         );
     }),
