@@ -250,17 +250,25 @@ class Store {
 
     // Sendbird 메세지 이전 내용 로드
     loadMessagesPrev = {
-        open: async (channel, messageId) => {
+        open: async ({ callback }) => {
+            var callbackReturn = true;
             const messageListParams = {};
             messageListParams.prevResultSize = 30;
             // messageListParams.reverse = true;
-            const prevMessage = await channel.getMessagesByMessageId(messageId, messageListParams);
+            var messageId = this.state.messages[0].messageId;
+            const prevMessage = await this.state.currentlyJoinedChannel.getMessagesByMessageId(messageId, messageListParams);
             if (prevMessage.length > 0) {
                 var mergeMessage = [...prevMessage, ...this.state.messages];
                 this.state = { ...this.state, messages: mergeMessage };
+
+                if (prevMessage.length < messageListParams.prevResultSize) {
+                    callbackReturn = false;
+                }
             } else {
                 alert("더 이상 가져올 메세지가 없습니다.");
+                callbackReturn = false;
             }
+            callback && callback(callbackReturn);
         },
     };
 
@@ -303,7 +311,7 @@ class Store {
 
     // Sendbird 메세지 보내기
     sendMessage = {
-        open: async () => {
+        open: async ({ callback }) => {
             const { messageToUpdate, currentlyJoinedChannel, messages } = this.state;
             if (messageToUpdate) {
                 const userMessageUpdateParams = {};
@@ -318,7 +326,7 @@ class Store {
                 currentlyJoinedChannel
                     .sendUserMessage(userMessageParams)
                     .onSucceeded(async (message) => {
-                        console.log("onSucceeded");
+                        // console.log("onSucceeded");
                         const updatedMessages = [...messages, message];
                         this.state = { ...this.state, messages: updatedMessages, messageInputValue: "" };
 
@@ -326,6 +334,7 @@ class Store {
                         // await Api.restPost(`https://86a3-175-209-16-141.ngrok-free.app/dks-api/v2/chatgpt/ask`, params)
                         //     .then((response) => response.json())
                         //     .then((data) => {});
+                        callback && callback();
                     })
                     .onFailed((error) => {
                         console.log(error);

@@ -63,6 +63,10 @@
     width: 32px;
     height: 32px;
 }
+.dds.icons.small {
+    width: 12px;
+    height: 12px;
+}
 
 @import url("./gnb.css");
 @import url("./button.css");

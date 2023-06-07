@@ -21,7 +21,7 @@ const Home = observer((props) => {
     //------------------------------------------------- Router isReady
     useEffect(() => {
         if (router.isReady && router.pathname == "/test/chat") {
-            chat.joinChat({ name: "kimjh", id: "kimjh", url: "sendbird_open_channel_10510_f7b58093d862c9af9af0f9499049cfd7e1469d5e" });
+            chat.joinChat({ name: "JISUN", id: "JISUN", url: "sendbird_open_channel_10510_f7b58093d862c9af9af0f9499049cfd7e1469d5e" });
         }
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady

@@ -10,7 +10,8 @@ import DDS_Layout from "../_lib/component/layout";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
-    const {} = props;
+    const { store } = props;
+    const { common } = store;
     const router = useRouter();
 
     const { t, i18n } = useTranslation();
@@ -20,13 +21,12 @@ const Home = observer((props) => {
     // };
 
     React.useEffect(() => {
-        console.log(JSON.parse(document.querySelector("#__NEXT_DATA__").textContent).buildId);
+        common.getBuildId();
     }, []);
 
     return (
         <DDS_Layout.container>
-            INDEX
-            {/* <div>{t(`description.part1`)}</div> */}
+            INDEX <p>buildId : {common.buildId}</p>
         </DDS_Layout.container>
     );
 });

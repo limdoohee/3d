@@ -10,6 +10,8 @@ configure({
 
 //////////////////////////// makeAutoObservable
 class Store {
+    buildId = null;
+
     ui = {
         gnbOpen: false,
     };
@@ -27,6 +29,10 @@ class Store {
     uiChange(key, value) {
         this.ui[key] = value;
         console.log(key, value);
+    }
+
+    getBuildId() {
+        this.buildId = JSON.parse(document.querySelector("#__NEXT_DATA__").textContent).buildId;
     }
 }
 //////////////////////////// makeAutoObservable
