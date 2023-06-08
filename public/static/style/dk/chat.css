@@ -154,3 +154,12 @@
     font-size: 14px;
     color: #969696;
 }
+
+.dk.chat .messages > li.date {
+    font-weight: 400;
+    font-size: 14px;
+    color: #969696;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}

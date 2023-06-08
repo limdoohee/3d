@@ -158,11 +158,10 @@ class Store {
             // setup connection event handlers
             const connectionHandler = new ConnectionHandler();
             connectionHandler.onReconnectSucceeded = async () => {
-                // console.log("onReconnectSucceeded");
+                console.log("onReconnectSucceeded");
                 const [messages, error] = await this.loadMessages.open(channelToJoin);
                 this.state = { ...this.state, messages: messages };
             };
-            this.sb.addConnectionHandler(uuid(), connectionHandler);
 
             //listen for incoming messages
             const channelHandler = new OpenChannelHandler();
@@ -186,6 +185,77 @@ class Store {
                 });
                 this.state = { ...this.state, messages: updatedMessages };
             };
+
+            // 메타데이터 업데이트
+            // const metadata = { onlineUsers: [] };
+            // channelHandler.onMetaDataCreated(metadata, (response, error) => {
+            //     console.log(`메타데이터가 업데이트되었습니다.`);
+            // });
+            // // channelHandler.onChannelChanged;
+            // channelHandler.onMessageReceived = (channel) => {
+            //     // 메타데이터 가져오기
+            //     channel.getMetaData(["onlineUsers"], (metadata, error) => {
+            //         if (error) {
+            //             console.error(error);
+            //             return;
+            //         }
+
+            //         const onlineUsers = response["onlineUsers"];
+            //         console.log(`현재 접속한 사용자 목록: ${onlineUsers.join(", ")}`);
+            //     });
+            // };
+
+            // // 사용자 입장
+            // channelToJoin.onUserEntered = (user) => {
+            //     // 메타데이터 업데이트: 사용자를 온라인 목록에 추가
+            //     channel.getMetaData(["onlineUsers"], (response, error) => {
+            //         if (error) {
+            //             console.error(error);
+            //             return;
+            //         }
+
+            //         const onlineUsers = response["onlineUsers"];
+            //         onlineUsers.push(user.userId);
+
+            //         const metadata = { onlineUsers };
+            //         channel.updateMetaData(metadata, (response, error) => {
+            //             if (error) {
+            //                 console.error(error);
+            //                 return;
+            //             }
+
+            //             console.log(`사용자 ${user.userId}이(가) 채널에 입장했습니다.`);
+            //         });
+            //     });
+            // };
+
+            // // 사용자 퇴장
+            // channelToJoin.onUserExited = (user) => {
+            //     // 메타데이터 업데이트: 사용자를 온라인 목록에서 제거
+            //     channel.getMetaData(["onlineUsers"], (response, error) => {
+            //         if (error) {
+            //             console.error(error);
+            //             return;
+            //         }
+
+            //         const onlineUsers = response["onlineUsers"];
+            //         const index = onlineUsers.indexOf(user.userId);
+            //         if (index !== -1) {
+            //             onlineUsers.splice(index, 1);
+
+            //             const metadata = { onlineUsers };
+            //             channel.updateMetaData(metadata, (response, error) => {
+            //                 if (error) {
+            //                     console.error(error);
+            //                     return;
+            //                 }
+
+            //                 console.log(`사용자 ${user.userId}이(가) 채널에서 나갔습니다.`);
+            //             });
+            //         }
+            //     });
+            // };
+
             this.sb.openChannel.addOpenChannelHandler(uuid(), channelHandler);
             this.state = { ...this.state, currentlyJoinedChannel: channelToJoin, messages: messages, loading: false, currentlyJoinedChannelOperators: operators };
 

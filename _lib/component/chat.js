@@ -117,23 +117,33 @@ const home = {
                 </div>
                 <ul className="messages">
                     {messages.map((item, key) => {
+                        var dateCheck = false;
+                        if (key > 0) {
+                            if (moment(item.createdAt).format("DD") !== moment(messages[key - 1].createdAt).format("DD")) {
+                                var dateCheck = true;
+                            }
+                        }
+
                         return (
-                            <li key={key} className={item.sender.userId == myId ? "my" : null}>
-                                {item.sender.userId !== myId && <DDS_Profile.default src={item.sender.plainProfileUrl} />}
-                                <div className="content">
-                                    {item.sender.userId !== myId && <div className="name">{item.sender.nickname}</div>}
-                                    <div className="inner">
-                                        {item.messageType == "user" && <div className="message">{item.message}</div>}
-                                        {item.messageType == "file" && (
-                                            <>
-                                                {/*  */}
-                                                {item.type == "image/jpeg" || item.type == "image/png" ? <img src={item.plainUrl} /> : null}
-                                            </>
-                                        )}
-                                        <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
+                            <React.Fragment key={key}>
+                                {dateCheck && <li className="date">{moment(item.createdAt).format("YYYY년 MM월 DD일")}</li>}
+                                <li className={item.sender.userId == myId ? "my" : null}>
+                                    {item.sender.userId !== myId && <DDS_Profile.default src={item.sender.plainProfileUrl} />}
+                                    <div className="content">
+                                        {item.sender.userId !== myId && <div className="name">{item.sender.nickname}</div>}
+                                        <div className="inner">
+                                            {item.messageType == "user" && <div className="message">{item.message}</div>}
+                                            {item.messageType == "file" && (
+                                                <>
+                                                    {/*  */}
+                                                    {item.type == "image/jpeg" || item.type == "image/png" ? <img src={item.plainUrl} /> : null}
+                                                </>
+                                            )}
+                                            <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
+                                        </div>
                                     </div>
-                                </div>
-                            </li>
+                                </li>
+                            </React.Fragment>
                         );
                     })}
                 </ul>
