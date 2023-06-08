@@ -25,6 +25,7 @@
     justify-content: center;
 }
 
+.dds.button.primary .ant-btn-icon .dds.icons svg path,
 .dds.button.primary.ant-btn-icon-only .ant-btn-icon .dds.icons svg path {
     fill: #fff;
 }
