@@ -8,5 +8,8 @@
         "title": "포인트",
         "information": "안내",
         "myPoints": "내 포인트"
+    },
+    "alarm": {
+        "title": "알림"
     }
 }

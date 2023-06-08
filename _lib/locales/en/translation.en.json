@@ -13,5 +13,8 @@
             "accumulate": "accumulate",
             "use": "use"
         }
+    },
+    "alarm": {
+        "title": "alarm"
     }
 }

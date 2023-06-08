@@ -16,6 +16,7 @@ class Store {
         gnbOpen: false,
         chatOpen: false,
         pointOpen: false,
+        alarmOpen: false,
     };
 
     constructor(store) {

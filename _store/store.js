@@ -4,6 +4,7 @@ import { makeAutoObservable, toJS, configure } from "mobx";
 import CommonStore from "./common";
 import ChatStore from "./chat";
 import PointStore from "./point";
+import AlarmStore from "./alarm";
 
 configure({
     enforceActions: "never",
@@ -15,6 +16,7 @@ class Store {
     common = new CommonStore(this);
     chat = new ChatStore(this);
     point = new PointStore(this);
+    alarm = new AlarmStore(this);
     //////////////////////////////// Store Call
 
     constructor() {
