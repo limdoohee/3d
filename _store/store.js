@@ -7,6 +7,7 @@ import LangStore from "./lang";
 import ChatStore from "./chat";
 import PointStore from "./point";
 import AlarmStore from "./alarm";
+import DropStore from "./drop";
 
 configure({
     enforceActions: "never",
@@ -21,6 +22,7 @@ class Store {
     point = new PointStore(this);
     alarm = new AlarmStore(this);
     lang = new LangStore(this);
+    drop = new DropStore(this);
     //////////////////////////////// Store Call
 
     constructor() {

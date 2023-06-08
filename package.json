@@ -25,6 +25,7 @@
         "dotenv": "^16.0.1",
         "env-cmd": "^10.1.0",
         "framer-motion": "^10.12.16",
+        "gsap": "^3.11.5",
         "i18next": "^22.5.0",
         "i18next-browser-languagedetector": "^7.0.1",
         "i18next-http-backend": "^2.2.1",
