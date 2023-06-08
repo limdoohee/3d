@@ -11,10 +11,16 @@ configure({
 //////////////////////////// makeAutoObservable
 class Store {
     data = {
-        startDate: "2023-05-26 11:36:00", // 드롭 오픈 시간
-        endDate: "2023-05-28 16:45:00", // 드롭 마감 시간
+        startDate: "2023-06-05 10:49:30", // 드롭 오픈 시간
+        endDate: "2023-06-05 11:02:40", // 드롭 마감 시간
         owner: 123,
-        status: "before",
+        status: "open",
+        myDrop: false,
+        url: "../../static/3d/275C_Popup.fbx",
+    };
+
+    next = {
+        startDate: "2023-06-06 08:49:30", // 드롭 오픈 시간
     };
 
     constructor(store) {

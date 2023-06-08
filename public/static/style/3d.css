@@ -1,34 +1,45 @@
-#ai {
-    border: 1px solid red;
+#space {
+    border: 1px solid blue;
     position: absolute;
-    /* z-index: 999; */
-    bottom: 0;
+    top: 0px;
     left: 0;
 }
 
-#box {
-    border: 1px solid blue;
-    position: absolute;
-    top: -200px;
-    left: 0;
+.drop {
+    position: relative;
+    z-index: 1;
+    top: 172px;
+    text-align: center;
+}
+
+.drop h2 {
+    font-family: Pretendard;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    text-align: center;
+    margin-bottom: 8px;
 }
 
 .userInfo {
     position: absolute;
     width: 90vw;
-    height: 20vh;
+    height: 6vh;
     background: #fff;
     border-radius: 10px;
-    top: 5vw;
+    top: 25vw;
     left: 5vw;
+    transition: all 0.5s ease-in-out;
 }
 
 .timerContainer {
     display: flex;
     flex-direction: row;
     -webkit-box-align: center;
+    justify-content: center;
     align-items: center;
-    margin-bottom: 30px;
+    margin-bottom: 16px;
 }
 
 .timerContainer.red .singleDigit {
@@ -57,7 +68,7 @@
     flex-direction: column;
     -webkit-box-align: center;
     align-items: center;
-    margin: 0px 5px;
+    margin: 0px 8px;
 }
 .digit:first-child {
     margin-left: 0;
@@ -65,7 +76,11 @@
 
 .digit .title {
     font-size: 12px;
-    margin-bottom: 5px;
+    font-weight: 400;
+    line-height: 12px;
+    letter-spacing: -0.02em;
+    text-align: center;
+    color: #bdbdbd;
 }
 
 .digit .digitContainer {
@@ -90,4 +105,8 @@
 
 .digit .singleDigit:first-child {
     margin-right: 2px;
+}
+
+.owner strong {
+    margin-left: 4px;
 }

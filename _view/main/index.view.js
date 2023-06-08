@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import { useTimer } from "react-timer-hook";
 import Ai from "../../_lib/module/component/ai";
-import MisteryBox from "../../_lib/module/component/misteryBox";
+import MisteryBox from "../../_lib/module/component/MisteryBox";
 
 const Home = observer((props) => {
     const { drop } = props.store;
+    let openTime;
+    let time = new Date();
 
     const Digit = ({ value, title }) => {
         const leftDigit = value >= 10 ? value.toString()[0] : "0";
@@ -26,8 +28,14 @@ const Home = observer((props) => {
         const { seconds, minutes, hours, days, totalSeconds } = useTimer({
             expiryTimestamp,
             onExpire: () => {
-                drop.dataChange("status", "ing");
-                console.warn("onExpire called");
+                if (drop.data.status === "open") {
+                    drop.dataChange("status", "close");
+                    console.warn("closed");
+                }
+                if (drop.data.status === "before") {
+                    drop.dataChange("status", "open");
+                    console.warn("opening");
+                }
             },
         });
         timerContainer = `timerContainer ${totalSeconds < 1800 ? "red" : ""}`;
@@ -44,40 +52,29 @@ const Home = observer((props) => {
         );
     };
 
-    // const [time, setTime] = useState(new Date());
-    // console.log("dd");
-    // before:예정, ing:진행
-    // const drop = {
-    //     startDate: "2023-05-26 09:28:00", // 드롭 오픈 시간
-    //     endDate: "2023-05-28 16:45:00", // 드롭 마감 시간
-    //     owner: 123,
-    //     status: "before",
-    // };
-
-    let time = new Date();
-    // const openTime = new Date(drop.openDate);
-    // const currTime = new Date();
-    // const diff = (openTime.getTime() - currTime.getTime()) / 1000;
-    // time.setSeconds(time.getSeconds() + diff);
-
     useEffect(() => {
-        // console.log(time);
-        const openTime = new Date(drop.data.startDate);
+        if (drop.data.status === "before") openTime = new Date(drop.data.startDate);
+        if (drop.data.status === "open") openTime = new Date(drop.data.endDate);
+        if (drop.data.status === "next") openTime = new Date(drop.next.startDate);
+
+        console.log(openTime);
         const currTime = new Date();
         const diff = (openTime.getTime() - currTime.getTime()) / 1000;
         time.setSeconds(time.getSeconds() + diff);
-    }, []);
+    }, [drop.data.status]);
 
     return (
         <>
             <div className="drop">
-                <h2>{drop.data.status === "before" ? "Upcoming" : "Started Drop"}</h2>
+                <h2>{drop.data.status === "open" ? "Started Drop" : "Upcoming"}</h2>
                 <Timer expiryTimestamp={time} />
-                <div className="owner">
-                    Owner <strong>{drop.data.owner}</strong>
-                </div>
+                {drop.data.status === "open" && (
+                    <div className="owner">
+                        Owner <strong>{drop.data.owner}</strong>
+                    </div>
+                )}
             </div>
-            <MisteryBox dropStatus={drop.data.status} />
+            <MisteryBox {...props} />
             {/* <Ai dropStatus={drop.data.status} /> */}
         </>
     );
