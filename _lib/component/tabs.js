@@ -3,10 +3,10 @@ import { Tabs } from "antd-mobile";
 
 const Component = {
     default: (props) => {
-        const { items, defaultActiveKey } = props;
+        const { items, defaultActiveKey, onChange } = props;
         return (
             <>
-                <Tabs defaultActiveKey={defaultActiveKey} className={`dds tabs ${props.className}`}>
+                <Tabs defaultActiveKey={defaultActiveKey} className={`dds tabs ${props.className}`} onChange={onChange}>
                     {items.map((item, key) => (
                         <Tabs.Tab title={item.label} key={key}>
                             {item.children}

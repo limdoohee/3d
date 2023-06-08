@@ -3,5 +3,10 @@
     "description": {
         "part1": "테스트1",
         "part2": "테스트2"
+    },
+    "point": {
+        "title": "포인트",
+        "information": "안내",
+        "myPoints": "내 포인트"
     }
 }

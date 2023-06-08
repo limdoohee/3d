@@ -39,6 +39,9 @@ const Home = observer((props) => {
                         <li>
                             <Link href="/dds/profile">Profile</Link>
                         </li>
+                        <li>
+                            <Link href="/dds/point">Point</Link>
+                        </li>
                     </ul>
                 </div>
             </DDS_Layout.container>

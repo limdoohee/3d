@@ -1,0 +1,145 @@
+.dk.point {
+    padding: 50px 0 0 0;
+}
+
+.dk.point .title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    padding: 20px 5px;
+    z-index: 900;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dk.point .title > * {
+    width: calc(100% / 3);
+    display: flex;
+    align-items: center;
+}
+.dk.point .title > *:last-child {
+    justify-content: flex-end;
+    padding: 0 20px 0 0;
+}
+.dk.point .title > h4 {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #1f1f1f;
+    justify-content: center;
+    text-transform: capitalize;
+}
+
+.dk.point .title > *:first-child .dds.button.none {
+    padding: 0;
+    min-width: 40px;
+    box-shadow: none;
+}
+
+.dk.point .title > *:last-child .dds.button.none {
+    padding: 0;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+    color: #969696;
+    box-shadow: none;
+    text-transform: capitalize;
+}
+
+.dk.point .title > *:last-child .dds.button.none svg {
+    width: 14px;
+    height: 14px;
+}
+.dk.point .title > *:last-child .dds.button.none svg path {
+    fill: #969696;
+}
+.dk.point .my-point {
+    box-sizing: content-box;
+    height: 104px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 12px solid #f5f5f5;
+}
+.dk.point .my-point p {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #969696;
+}
+.dk.point .my-point h3 {
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 100%;
+    letter-spacing: -0.04em;
+    color: #1f1f1f;
+    display: flex;
+    gap: 3px;
+    align-items: flex-end;
+}
+.dk.point .my-point h3 small {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #1f1f1f;
+}
+
+.dk.point .point-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 68px;
+    padding: 0 20px;
+}
+.dk.point .point-list li > div {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.dk.point .point-list li > div:first-child {
+    max-width: calc(100% - 80px);
+}
+.dk.point .point-list li > div:first-child strong {
+    font-weight: 700;
+    font-size: 16px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+.dk.point .point-list li > div:first-child span {
+    font-weight: 400;
+    font-size: 14px;
+    color: #969696;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: block;
+}
+.dk.point .point-list li > div:last-child {
+    min-width: 80px;
+}
+.dk.point .point-list li > div:last-child {
+    align-items: flex-end;
+}
+.dk.point .point-list li > div:last-child strong {
+    font-weight: 700;
+    font-size: 16px;
+    color: #969696;
+}
+.dk.point .point-list li > div:last-child span {
+    font-weight: 400;
+    font-size: 12px;
+    color: #bdbdbd;
+}
+.dk.point .point-list li > div:last-child strong.plus {
+    color: #fd6e24;
+}
