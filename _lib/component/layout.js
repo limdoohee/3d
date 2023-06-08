@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
-import { Space } from "antd";
 import { motion } from "framer-motion";
 
 const Component = {
     container: (props) => {
+        const { className, children } = props;
+
         return (
             <motion.div
                 initial={{ x: 50, opacity: 0, duration: 300 }}
@@ -14,12 +15,12 @@ const Component = {
                     stiffness: 260,
                     damping: 20,
                 }}
-                className={`dds container ${props.className}`}
-                {...props}
+                className={`dds container ${className}`}
             >
-                {props.children}
+                {children}
             </motion.div>
         );
     },
 };
+
 export default Component;

@@ -7,8 +7,6 @@ import Store from "../../_store/store";
 const store = new Store();
 //------------------------------------------------------------------------------- Store
 //------------------------------------------------------------------------------- Module
-import { useTranslation } from "react-i18next";
-import "../module/i18n";
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- Component
 import { Drawer } from "antd";
@@ -20,8 +18,7 @@ import DDS_Logos from "../../_lib/component/logos";
 const Home = {
     default: observer((props) => {
         const router = useRouter();
-        const { t, i18n } = useTranslation();
-        const { common, alarm } = props.store;
+        const { common, lang, alarm } = props.store;
 
         const [tabKey, settabKey] = useState(0);
 
@@ -51,7 +48,7 @@ const Home = {
                             <div>
                                 <DDS_Button.default className="dds button none" icon={<DDS_Icons.angleLeft />} onClick={onClose} />
                             </div>
-                            <h4>{t("alarm.title")}</h4>
+                            <h4>{lang.t("alarm.title")}</h4>
                             <div></div>
                         </div>
                         <ul className="alarm-list">

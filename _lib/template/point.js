@@ -7,8 +7,6 @@ import Store from "../../_store/store";
 const store = new Store();
 //------------------------------------------------------------------------------- Store
 //------------------------------------------------------------------------------- Module
-import { useTranslation } from "react-i18next";
-import "../module/i18n";
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- Component
 import { Drawer } from "antd";
@@ -20,8 +18,7 @@ import DDS_Tabs from "../../_lib/component/tabs";
 const Home = {
     default: observer((props) => {
         const router = useRouter();
-        const { t, i18n } = useTranslation();
-        const { common, point } = props.store;
+        const { common, lang, point } = props.store;
 
         const [tabKey, settabKey] = useState(0);
 
@@ -46,17 +43,17 @@ const Home = {
         const items = [
             {
                 key: 0,
-                label: t("point.tabs.all"),
+                label: lang.t("point.tabs.all"),
                 children: <PointList />,
             },
             {
                 key: 1,
-                label: t("point.tabs.accumulate"),
+                label: lang.t("point.tabs.accumulate"),
                 children: <PointList />,
             },
             {
                 key: 2,
-                label: t("point.tabs.use"),
+                label: lang.t("point.tabs.use"),
                 children: <PointList />,
             },
         ];
@@ -74,13 +71,13 @@ const Home = {
                             <div>
                                 <DDS_Button.default className="dds button none" icon={<DDS_Icons.angleLeft />} onClick={onClose} />
                             </div>
-                            <h4>{t("point.title")}</h4>
+                            <h4>{lang.t("point.title")}</h4>
                             <div>
-                                <DDS_Button.default className="dds button none">{t("point.information")}</DDS_Button.default>
+                                <DDS_Button.default className="dds button none">{lang.t("point.information")}</DDS_Button.default>
                             </div>
                         </div>
                         <div className="my-point">
-                            <p>{t("point.myPoints")}</p>
+                            <p>{lang.t("point.myPoints")}</p>
                             <h3>
                                 <small>
                                     <DDS_Icons.point />

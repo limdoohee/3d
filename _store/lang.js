@@ -11,15 +11,7 @@ configure({
 
 //////////////////////////// makeAutoObservable
 class Store {
-    buildId = null;
     i18n = i18n;
-
-    ui = {
-        gnbOpen: false,
-        chatOpen: false,
-        pointOpen: false,
-        alarmOpen: false,
-    };
 
     constructor(store) {
         this.store = store;
@@ -27,26 +19,11 @@ class Store {
     }
 
     changeLanguage(lng) {
-        i18n.changeLanguage(lng);
+        this.i18n.changeLanguage(lng);
     }
     t(key) {
         const { t } = useTranslation();
         return t(key);
-    }
-
-    debug(data) {
-        if (process.env.STAGE == "LOCAL" || process.env.STAGE == "DEVELOPMENT" || process.env.STAGE == "STAGING" || process.env.STAGE == "prodtest") {
-            console.log(`[Debug:${process.env.STAGE}]`, toJS(data));
-        }
-    }
-
-    uiChange(key, value) {
-        this.ui[key] = value;
-        console.log(key, value);
-    }
-
-    getBuildId() {
-        this.buildId = JSON.parse(document.querySelector("#__NEXT_DATA__").textContent).buildId;
     }
 }
 //////////////////////////// makeAutoObservable

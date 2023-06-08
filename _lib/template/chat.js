@@ -18,7 +18,7 @@ import { Drawer } from "antd";
 const Home = {
     open: observer((props) => {
         const router = useRouter();
-        const { common, chat } = props.store;
+        const { common, lang, chat } = props.store;
 
         useEffect(() => {
             if (common.ui.chatOpen === true) {

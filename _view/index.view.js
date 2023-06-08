@@ -2,23 +2,14 @@ import Head from "next/head";
 import Router, { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { observer } from "mobx-react-lite";
-import "../_lib/module/i18n";
-
-import { useTranslation } from "react-i18next";
 //------------------------------------------------------------------------------- Component
 import DDS_Layout from "../_lib/component/layout";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
     const { store } = props;
-    const { common } = store;
+    const { common, lang } = store;
     const router = useRouter();
-
-    const { t, i18n } = useTranslation();
-
-    // const changeLanguage = (lng) => {
-    //     i18n.changeLanguage(lng);
-    // };
 
     React.useEffect(() => {
         common.getBuildId();
@@ -26,6 +17,8 @@ const Home = observer((props) => {
 
     return (
         <DDS_Layout.container>
+            <div>{lang.i18n.language}</div>
+            <h1>{lang.t(`title`)}</h1>
             INDEX <p>buildId : {common.buildId}</p>
         </DDS_Layout.container>
     );

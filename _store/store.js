@@ -2,6 +2,7 @@
 import { makeAutoObservable, toJS, configure } from "mobx";
 //------------------------------------------------------------------------------- Module
 import CommonStore from "./common";
+import LangStore from "./lang";
 import ChatStore from "./chat";
 import PointStore from "./point";
 import AlarmStore from "./alarm";
@@ -17,6 +18,7 @@ class Store {
     chat = new ChatStore(this);
     point = new PointStore(this);
     alarm = new AlarmStore(this);
+    lang = new LangStore(this);
     //////////////////////////////// Store Call
 
     constructor() {
