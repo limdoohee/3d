@@ -2,6 +2,7 @@
 import { makeAutoObservable, toJS, configure } from "mobx";
 //------------------------------------------------------------------------------- Module
 import CommonStore from "./common";
+import AuthStore from "./auth";
 import LangStore from "./lang";
 import ChatStore from "./chat";
 import PointStore from "./point";
@@ -15,6 +16,7 @@ configure({
 class Store {
     //////////////////////////////// Store Call
     common = new CommonStore(this);
+    auth = new AuthStore(this);
     chat = new ChatStore(this);
     point = new PointStore(this);
     alarm = new AlarmStore(this);

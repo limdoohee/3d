@@ -14,7 +14,9 @@ import View from "../_view/index.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {
-    console.log(props);
+    const { auth } = store;
+
+    auth.setCheckLogin(props);
 
     return (
         <>

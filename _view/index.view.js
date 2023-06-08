@@ -8,11 +8,13 @@ import DDS_Layout from "../_lib/component/layout";
 
 const Home = observer((props) => {
     const { store } = props;
-    const { common, lang } = store;
+    const { common, lang, auth } = store;
     const router = useRouter();
 
     React.useEffect(() => {
         common.getBuildId();
+
+        common.debug(auth.loginResult);
     }, []);
 
     return (
