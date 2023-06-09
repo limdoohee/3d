@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 import SendbirdChat from "@sendbird/chat";
 import { OpenChannelModule, OpenChannelHandler } from "@sendbird/chat/openChannel";
 import { GroupChannelModule, GroupChannelFilter, GroupChannelListOrder, MessageFilter, MessageCollectionInitPolicy } from "@sendbird/chat/groupChannel";
+import { animateScroll as scroll, Events, scrollSpy, scroller, Element } from "react-scroll";
 //------------------------------------------------------------------------------- Module
 import Api from "../_lib/module/api";
 //------------------------------------------------------------------------------- Module
@@ -176,9 +177,20 @@ class Store {
             channelHandler.onMessageReceived = (channel, message) => {
                 const check = this.state.messages.findIndex((item) => item._iid == message._iid);
                 console.log("onMessageReceived", check);
-                if (!check) {
+                if (check < 1) {
                     const updatedMessages = [...this.state.messages, message];
                     this.state = { ...this.state, messages: updatedMessages };
+
+                    setTimeout(() => {
+                        if (document.querySelector("#message-wrap")) {
+                            var v = document.querySelector("#message-wrap").scrollHeight;
+                            scroll.scrollTo(v, {
+                                smooth: true,
+                                duration: 0,
+                                containerId: "message-wrap",
+                            });
+                        }
+                    }, 100);
                 }
             };
             channelHandler.onMessageDeleted = (channel, message) => {
