@@ -1,0 +1,49 @@
+.bottomModal {
+    border-radius: 16px 16px 0px 0px;
+}
+
+.bottomModal .ant-drawer-body {
+    padding: 32px 20px 20px;
+}
+
+.bottomModal .imgWrapper {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bottomModal .title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: -0.03em;
+    color: #1f1f1f;
+    margin-bottom: 12px;
+    white-space: pre-line;
+}
+
+.bottomModal .context {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    color: #1f1f1f;
+    margin-bottom: 36px;
+    white-space: pre-line;
+}
+
+.bottomModal .dds.button {
+    width: 100%;
+    justify-content: center;
+}
+
+.bottomModal .dds.button.large {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    margin-bottom: 15px;
+}
