@@ -123,6 +123,7 @@
 }
 .dk.chat .message-input .dds.input {
     width: 100%;
+    padding-right: 0;
 }
 .dk.chat .message-input .upload {
     position: relative;
@@ -145,14 +146,23 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 12px;
-    padding: 20px;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.dk.chat .more h6 {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: #969696;
+    text-align: center;
 }
 
 .dk.chat .more p {
     font-weight: 400;
     font-size: 14px;
     color: #969696;
+    text-align: center;
 }
 
 .dk.chat .messages > li.date {
