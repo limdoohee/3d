@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import Router, { useRouter } from "next/router";
-import { Drawer } from "antd";
+import { Drawer, Badge } from "antd";
 import { observer } from "mobx-react-lite";
 
 import DDS_Button from "../component/button";
@@ -29,6 +29,11 @@ const Component = {
             <>
                 <Drawer className={"dds gnb"} placement="right" onClose={onClose} open={common.ui.gnbOpen} closable={false}>
                     <div className="top">
+                        <DDS_Button.default className="dds button text">
+                            <Badge dot>
+                                <DDS_Icons.myGalleryBlackOn />
+                            </Badge>
+                        </DDS_Button.default>
                         <DDS_Button.default
                             className="dds button text"
                             onClick={() => {
@@ -43,7 +48,7 @@ const Component = {
                     </div>
                     <div className="personal">
                         <DDS_Profile.default badge={<DDS_Icons.badgeCrown className="cert" />} src="https://picsum.photos/id/237/200/300" />
-                        <strong>장후롱</strong>
+                        <strong>abcdefghigklmnopqrstdsfsdfsdf</strong>
                     </div>
                     <div className="point">
                         <span>내 포인트</span>

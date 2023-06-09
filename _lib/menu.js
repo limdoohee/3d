@@ -5,11 +5,11 @@ import DDS_Icons from "./component/icons";
 
 const Data = {
     gnb: [
-        { icon: () => <DDS_Icons.crown />, link: "", name: "Rank" },
-        { icon: () => <DDS_Icons.storeFilled />, link: "", name: "Drop list" },
+        // { icon: () => <DDS_Icons.crown />, link: "", name: "Rank" },
+        { icon: () => <DDS_Icons.drop />, link: "", name: "Drop list" },
         { icon: () => <DDS_Icons.bookFilled />, link: "", name: "Magazine" },
         { icon: () => <DDS_Icons.circleQuestion />, link: "", name: "FAQ" },
-        { icon: () => <DDS_Icons.envelopeOpenTest />, link: "", name: "Feedback" },
+        // { icon: () => <DDS_Icons.envelopeOpenTest />, link: "", name: "Feedback" },
     ],
 };
 

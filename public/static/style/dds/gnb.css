@@ -3,6 +3,8 @@
     display: flex;
 }
 .dds.gnb .ant-drawer-body {
+    padding-left: 24px !important;
+    padding-right: 24px !important;
 }
 .dds.gnb .ant-drawer-body .top {
     display: flex;
@@ -34,10 +36,11 @@
 }
 .dds.gnb .ant-drawer-body .personal strong {
     font-weight: 700;
-    font-size: 20px;
-    line-height: 100%;
-    letter-spacing: -0.03em;
+    font-size: 16px;
+    line-height: 130%;
+    letter-spacing: -0.02em;
     color: #1f1f1f;
+    word-break: break-all;
 }
 .dds.gnb .ant-drawer-body .point {
     padding: 16px;

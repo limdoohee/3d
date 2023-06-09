@@ -8,11 +8,12 @@ import DDS_Layout from "../../_lib/component/layout";
 import DDS_Gnb from "../../_lib/template/gnb";
 import DDS_Button from "../../_lib/component/button";
 import DDS_Icons from "../../_lib/component/icons";
+import MagazineTemplate from "../../_lib/template/magazine";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
     const { store } = props;
-    const { common } = store;
+    const { common, chat } = store;
     const router = useRouter();
 
     return (
@@ -28,17 +29,16 @@ const Home = observer((props) => {
                             Back
                         </DDS_Button.default>
                     </p>
-                    <h1>Gnb (status : {common.ui.gnbOpen ? "open" : "close"})</h1>
+                    <h1>Magazine (status : {common.ui.magazineOpen ? "open" : "close"})</h1>
                     <DDS_Button.default
                         onClick={() => {
-                            common.uiChange("gnbOpen", true);
+                            common.uiChange("magazineOpen", true);
                         }}
                         className="dds button text"
                     >
-                        <DDS_Icons.bars />
-                    <DDS_Gnb.default store={store}></DDS_Gnb.default>
+                        Magazine Open
                     </DDS_Button.default>
-                    <DDS_Layout.container></DDS_Layout.container>
+                    <MagazineTemplate.default store={props.store} />
                 </div>
             </DDS_Layout.container>
         </>

@@ -16,5 +16,8 @@
     },
     "alarm": {
         "title": "alarm"
+    },
+    "magazine": {
+        "title": "magazine"
     }
 }

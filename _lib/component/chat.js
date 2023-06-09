@@ -13,6 +13,7 @@ import DDS_Input from "../../_lib/component/input";
 import DDS_Icons from "../../_lib/component/icons";
 import DDS_Profile from "../../_lib/component/profile";
 import DDS_Button from "../../_lib/component/button";
+import DDS_Logos from "../../_lib/component/logos";
 //------------------------------------------------------------------------------- Component
 
 const home = {
@@ -54,12 +55,14 @@ const home = {
         };
 
         const onSend = async () => {
-            await sendMessage({
-                callback: () => {
-                    console.log("sendMessage");
-                    home.messageScrollDown();
-                },
-            });
+            if (chat.state.messageInputValue) {
+                await sendMessage({
+                    callback: () => {
+                        console.log("sendMessage");
+                        home.messageScrollDown();
+                    },
+                });
+            }
             // console.log("onSend", v);
         };
 
@@ -96,10 +99,14 @@ const home = {
             home.messageScrollDown();
         }, [common.ui.chatOpen == true]);
 
+        const clickProfile = (sender) => {
+            alert(sender.userId);
+        };
+
         return (
             <div className="message-wrap" id="message-wrap">
                 <div className="more">
-                    {more && (
+                    {/* {more && (
                         <DDS_Button.default
                             className="dds button secondary"
                             onClick={() => {
@@ -112,28 +119,75 @@ const home = {
                         >
                             이전 대화 보기
                         </DDS_Button.default>
-                    )}
-                    <p>{moment(messages[0].createdAt).format("YYYY년 MM월 DD일")}</p>
+                    )} */}
+                    <h6>
+                        실시간 채팅에 오신것을 환영해요!
+                        <br />
+                        운영정책을 위반할 시 채팅방 이용에 제한이 있을 수 있어요.
+                        <br />
+                        상대방을 존중하고 배려하는 대화방을 만들어주세요.
+                    </h6>
+                    <h6>
+                        <u>채팅 서비스 이용 안내 보기</u>
+                    </h6>
+                    <p>{moment(messages[0] && messages[0].createdAt).format("YYYY년 MM월 DD일")}</p>
                 </div>
                 <ul className="messages">
                     {messages.map((item, key) => {
+                        var dateCheck = false;
+                        if (key > 0) {
+                            if (moment(item.createdAt).format("DD") !== moment(messages[key - 1].createdAt).format("DD")) {
+                                var dateCheck = true;
+                            }
+                        }
+
                         return (
-                            <li key={key} className={item.sender.userId == myId ? "my" : null}>
-                                {item.sender.userId !== myId && <DDS_Profile.default src={item.sender.plainProfileUrl} />}
-                                <div className="content">
-                                    {item.sender.userId !== myId && <div className="name">{item.sender.nickname}</div>}
-                                    <div className="inner">
-                                        {item.messageType == "user" && <div className="message">{item.message}</div>}
-                                        {item.messageType == "file" && (
-                                            <>
-                                                {/*  */}
-                                                {item.type == "image/jpeg" || item.type == "image/png" ? <img src={item.plainUrl} /> : null}
-                                            </>
+                            <React.Fragment key={key}>
+                                {dateCheck && <li className="date">{moment(item.createdAt).format("YYYY년 MM월 DD일")}</li>}
+
+                                {item.sender ? (
+                                    <li className={item.sender.userId == myId ? "my" : null}>
+                                        {item.sender.userId !== myId && (
+                                            <DDS_Profile.default
+                                                src={item.sender.plainProfileUrl}
+                                                onClick={() => {
+                                                    clickProfile(item.sender);
+                                                }}
+                                            />
                                         )}
-                                        <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
-                                    </div>
-                                </div>
-                            </li>
+                                        <div className="content">
+                                            {item.sender.userId !== myId && <div className="name">{item.sender.nickname}</div>}
+                                            <div className="inner">
+                                                {item.messageType == "user" && <div className="message">{item.message}</div>}
+                                                {item.messageType == "file" && (
+                                                    <>
+                                                        {item.type}
+                                                        {item.plainUrl}
+                                                        {item.type == "image/jpeg" || item.type == "image/png" || item.type == "image/gif" ? <img src={item.plainUrl} /> : null}
+                                                    </>
+                                                )}
+                                                <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                ) : (
+                                    <li className={"admin"}>
+                                        <DDS_Logos.circle className={"small"} />
+                                        <div className="content">
+                                            <div className="inner">
+                                                {item.messageType == "admin" && <div className="message">{item.message}</div>}
+                                                {item.messageType == "file" && (
+                                                    <>
+                                                        {/*  */}
+                                                        {item.type == "image/jpeg" || item.type == "image/png" ? <img src={item.plainUrl} /> : null}
+                                                    </>
+                                                )}
+                                                <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                )}
+                            </React.Fragment>
                         );
                     })}
                 </ul>
