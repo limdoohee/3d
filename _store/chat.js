@@ -149,11 +149,11 @@ class Store {
 
             // const channelToJoin = this.state.channels.find((channel) => channel.url === channelUrl);
             await channelToJoin.enter();
-            const [messages, error] = await this.loadMessages.open(channelToJoin);
             const [operators, operatorsError] = await this.getChannelOperators(channelToJoin);
-            if (error) {
-                return this.onError(error);
-            }
+            // const [messages, error] = await this.loadMessages.open(channelToJoin);
+            // if (error) {
+            //     return this.onError(error);
+            // }
 
             // setup connection event handlers
             const connectionHandler = new ConnectionHandler();
@@ -166,17 +166,20 @@ class Store {
             //listen for incoming messages
             const channelHandler = new OpenChannelHandler();
             channelHandler.onMessageUpdated = (channel, message) => {
-                // console.log("onMessageUpdated");
+                console.log("onMessageUpdated");
                 const messageIndex = this.state.messages.findIndex((item) => item.messageId == message.messageId);
                 const updatedMessages = [...this.state.messages];
                 updatedMessages[messageIndex] = message;
-                // console.log("updatedMessages");
                 this.state = { ...this.state, messages: updatedMessages };
             };
+
             channelHandler.onMessageReceived = (channel, message) => {
-                // console.log("onMessageReceived");
-                const updatedMessages = [...this.state.messages, message];
-                this.state = { ...this.state, messages: updatedMessages };
+                const check = this.state.messages.findIndex((item) => item._iid == message._iid);
+                console.log("onMessageReceived", check);
+                if (!check) {
+                    const updatedMessages = [...this.state.messages, message];
+                    this.state = { ...this.state, messages: updatedMessages };
+                }
             };
             channelHandler.onMessageDeleted = (channel, message) => {
                 // console.log("onMessageDeleted");
@@ -257,9 +260,9 @@ class Store {
             // };
 
             this.sb.openChannel.addOpenChannelHandler(uuid(), channelHandler);
-            this.state = { ...this.state, currentlyJoinedChannel: channelToJoin, messages: messages, loading: false, currentlyJoinedChannelOperators: operators };
+            this.state = { ...this.state, currentlyJoinedChannel: channelToJoin, messages: [], loading: false, currentlyJoinedChannelOperators: operators };
 
-            console.log({ ...this.state, currentlyJoinedChannel: channelToJoin, messages: messages, loading: false, currentlyJoinedChannelOperators: operators });
+            console.log({ ...this.state, currentlyJoinedChannel: channelToJoin, messages: [], loading: false, currentlyJoinedChannelOperators: operators });
         }
         //////////////////////////////////////////////////////////////////// openChannel
 
@@ -317,7 +320,7 @@ class Store {
             try {
                 //list all messages
                 const messageListParams = {};
-                messageListParams.prevResultSize = 30;
+                messageListParams.prevResultSize = 0;
                 // messageListParams.reverse = true;
                 const unixMilliseconds = timeFlag ? timeFlag : new Date().getTime();
                 const messages = await channel.getMessagesByTimestamp(unixMilliseconds, messageListParams);

@@ -148,6 +148,15 @@
     fill: #969696;
 }
 
+.dds.logos svg {
+    width: 40px;
+    height: 40px;
+}
+.dds.logos.small svg {
+    width: 32px;
+    height: 32px;
+}
+
 @import url("./gnb.css");
 @import url("./button.css");
 @import url("./input.css");
