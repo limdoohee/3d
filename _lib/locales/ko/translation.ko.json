@@ -11,5 +11,8 @@
     },
     "alarm": {
         "title": "알림"
+    },
+    "magazine": {
+        "title": "매거진"
     }
 }

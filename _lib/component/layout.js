@@ -21,6 +21,15 @@ const Component = {
             </motion.div>
         );
     },
+    content: (props) => {
+        const { className, children } = props;
+
+        return (
+            <>
+                <div className={`dds content ${className}`}>{children}</div>
+            </>
+        );
+    },
 };
 
 export default Component;
