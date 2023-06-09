@@ -19,5 +19,12 @@
     },
     "magazine": {
         "title": "magazine"
+    },
+    "error": {
+        "404": {
+            "description1": "A temporary error has occurred.",
+            "description2": "please wait for a moment.",
+            "historyBack": "back to previous page"
+        }
     }
 }
