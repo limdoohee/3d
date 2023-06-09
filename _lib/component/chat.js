@@ -99,6 +99,10 @@ const home = {
             home.messageScrollDown();
         }, [common.ui.chatOpen == true]);
 
+        const clickProfile = (sender) => {
+            alert(sender.userId);
+        };
+
         return (
             <div className="message-wrap" id="message-wrap">
                 <div className="more">
@@ -143,15 +147,23 @@ const home = {
 
                                 {item.sender ? (
                                     <li className={item.sender.userId == myId ? "my" : null}>
-                                        {item.sender.userId !== myId && <DDS_Profile.default src={item.sender.plainProfileUrl} />}
+                                        {item.sender.userId !== myId && (
+                                            <DDS_Profile.default
+                                                src={item.sender.plainProfileUrl}
+                                                onClick={() => {
+                                                    clickProfile(item.sender);
+                                                }}
+                                            />
+                                        )}
                                         <div className="content">
                                             {item.sender.userId !== myId && <div className="name">{item.sender.nickname}</div>}
                                             <div className="inner">
                                                 {item.messageType == "user" && <div className="message">{item.message}</div>}
                                                 {item.messageType == "file" && (
                                                     <>
-                                                        {/*  */}
-                                                        {item.type == "image/jpeg" || item.type == "image/png" ? <img src={item.plainUrl} /> : null}
+                                                        {item.type}
+                                                        {item.plainUrl}
+                                                        {item.type == "image/jpeg" || item.type == "image/png" || item.type == "image/gif" ? <img src={item.plainUrl} /> : null}
                                                     </>
                                                 )}
                                                 <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
