@@ -4,8 +4,10 @@ import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
 import gsap from "gsap";
+import DDS_Modal from "../../component/modal";
 
 const MisteryBox = observer((props) => {
+    const [open, setOpen] = useState(false);
     const { drop } = props.store;
 
     let renderer1, renderer2;
@@ -122,9 +124,12 @@ const MisteryBox = observer((props) => {
                     object.position.y = 2;
                     mixer = new THREE.AnimationMixer(object);
                     const action = mixer.clipAction(object.animations[0]);
-                    action.clampWhenFinished = true;
+                    // action.clampWhenFinished = true;
                     action.loop = THREE.LoopOnce;
                     action.play();
+                    mixer.addEventListener("finished", function (e) {
+                        console.log("finished");
+                    });
 
                     object.traverse((child) => {
                         if (child instanceof THREE.Mesh) {
@@ -133,7 +138,9 @@ const MisteryBox = observer((props) => {
                     });
 
                     scene1.add(object);
-
+                    setTimeout(() => {
+                        setOpen(true);
+                    }, 1000);
                     clock = new THREE.Clock();
                 });
             }
@@ -303,8 +310,17 @@ const MisteryBox = observer((props) => {
         }
     }, [drop.data.status]);
 
+    const modalData = {
+        open,
+        title: "드롭 획득을 축하해요!",
+        context: "1,000포인트가 지급되었어요.\n이제 갤러리로 이동해볼까요?",
+        button: "갤러리로 이동",
+        linkUrl: "/gallery",
+    };
+
     return (
         <>
+            <DDS_Modal {...modalData} />
             <canvas id="space"></canvas>
             {/* <canvas id="drop1"></canvas> */}
         </>

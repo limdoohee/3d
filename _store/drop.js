@@ -11,8 +11,8 @@ configure({
 //////////////////////////// makeAutoObservable
 class Store {
     data = {
-        startDate: "2023-06-05 10:49:30", // 드롭 오픈 시간
-        endDate: "2023-06-05 11:02:40", // 드롭 마감 시간
+        startDate: "2023-06-09 10:00:30", // 드롭 오픈 시간
+        endDate: "2023-06-09 17:02:40", // 드롭 마감 시간
         owner: 123,
         status: "open",
         myDrop: false,

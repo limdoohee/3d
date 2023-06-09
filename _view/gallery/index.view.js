@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 // import Ai from "../../_lib/module/component/ai";
 import Detail from "../detail/index.view";
@@ -8,6 +8,10 @@ import { FBXLoader } from "three/addons/loaders/FBXLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
 import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import gsap from "gsap";
+
+import DDS_Icons from "../../_lib/component/icons";
+import { message } from "antd";
+import DDS_Modal from "../../_lib/component/modal";
 
 const scene = new THREE.Scene();
 let camera, renderer, controls;
@@ -60,6 +64,18 @@ const dropData = [
 ];
 
 const Home = observer((props) => {
+    const [messageApi, contextHolder] = message.useMessage();
+    const [open, setOpen] = useState(false);
+
+    const snackbar = () => {
+        messageApi.open({
+            type: "success",
+            content: `This is a prompt message for success, and it will disappear in 10 seconds`,
+            duration: 10,
+        });
+        // messageApi.info({ content: "Hello, Ant Design!", rtl: true });
+    };
+
     function init() {
         const canvas = document.getElementById("drop");
         profileArea = document.querySelector(".userInfo");
@@ -399,16 +415,55 @@ const Home = observer((props) => {
         setSpace();
         setDrop();
         render();
+        snackbar();
+        setTimeout(() => {
+            document.querySelector(".invite").classList.add("iconOnly");
+        }, 2000);
     }, []);
+
+    const modalData = {
+        open,
+        title: "친구도 나도 둘 다 받는 혜택!\n친구를 초대하고 드롭키친의 선물을 받아보세요.",
+        context: "아직 드롭키친 회원이 아닌 친구가 회원가입하면 드롭키친의 디지털 아트를 랜덤으로 지급받을 수 있어요.\n친구가 회원가입 할 때마다 나에게 300P가 주어져요.",
+        button: "초대하고 선물받기",
+        linkUrl: "/main",
+        img: "../../static/3d/perspective_matte.png",
+    };
 
     return (
         <>
+            {/* <Drawer
+                placement="bottom"
+                closable={false}
+                // onClose={onClose}
+                open={true}
+                height="bottom"
+            >
+                <h1>드롭 획득을 축하해요!</h1>
+                <h2>1,000포인트가 지급되었어요.</h2>
+                <h2>이제 갤러리로 이동해볼까요?</h2>
+                <DDS_Button.default className="dds button primary large bigButton">갤러리로 이동</DDS_Button.default>
+                <DDS_Button.default className="dds button text">나중에</DDS_Button.default>
+            </Drawer> */}
             <div className="userInfo">
+                {contextHolder}
                 Collectorman
-                <button>button test</button>
+            </div>
+            <div className="invite" onClick={() => setOpen(true)}>
+                <div className="iconWrapper">
+                    <DDS_Icons.envelopeOpenHeart />
+                </div>
+                <div className="text">
+                    <h5>친구도 나도 둘 다 받는 혜택!</h5>
+                    <h6>친구를 초대하고 포인트를 획득해보세요!</h6>
+                </div>
+                <div className="greyAngle">
+                    <DDS_Icons.angleRight />
+                </div>
             </div>
             <canvas id="drop"></canvas>
             <Detail />
+            <DDS_Modal {...modalData} />
         </>
     );
 });
