@@ -4,6 +4,7 @@
 const path = require("path");
 
 const nextConfig = {
+    transpilePackages: ["antd-mobile"],
     reactStrictMode: false,
     assetPrefix: "",
     trailingSlash: true,

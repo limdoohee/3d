@@ -24,6 +24,8 @@ const Home = observer((props) => {
             INDEX
             {/* <div>{t(`description.part1`)}</div> */}
         </DDS_Layout.container>
+
+        
     );
 });
 

@@ -1,7 +1,78 @@
 {
     "title": "title",
+    "common": {
+        "check": "Check"
+    },
     "description": {
         "part1": "test1",
         "part2": "test2"
+    },
+    "login": {
+        "main": {
+            "title": "By continuing, you agree are setting up a dropkitchen <br /> accout and agree to our <span>User Agreement</span> and <span>Privacy Policy.</span>",
+            "google": "Log in with Google",
+            "naver": "Log in with Naver",
+            "apple": "Log in with Apple",
+            "kakao": "Log in with Kakao",
+            "tooltip": "5,000P payout",
+            "language-select": "Select a language",
+            "signup": {
+                "title": "Sign up easily",
+                "google": "Sign up with Google",
+                "naver": "Sign up with Naver",
+                "apple": "Sign up with Apple",
+                "kakao": "Sign up with Kakao"
+            }
+        }
+    },
+    "auth": {
+        "terms": {
+            "title": "Drop Kitchen service terms and conditions please agree",
+            "all": "Agree all",
+            "list1": "[Required] Terms of Service",
+            "list2": "[Required] Collection and use of personal information",
+            "list3": "[Optional] Consent to receive benefits and marketing information",
+            "check": "agree and sign up"
+        },
+        "list1": {
+            "title": "Terms of Service",
+            "desc": " 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용  이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용  이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 이용약관 내용 "
+        },
+        "list2": {
+            "title": "test",
+            "desc": "test"
+        },
+        "list3": {
+            "title": "test",
+            "desc": "test"
+        },
+        "nickname": {
+            "title": "Please enter your nickname",
+            "label1": "email",
+            "label2": "Nickname",
+            "placeholder": "Enter your nickname",
+            "help-success": "Available nickname.",
+            "help-warning": "This nickname already exists."
+        },
+        "mobile": {
+            "title": "Please enter your phone number",
+            "label": "phone number",
+            "placeholder": "Enter mobile number",
+            "option": {
+                "value": ["82", "83", "84", "85", "86", "87"],
+                "label": ["korea", "korea", "korea", "korea", "korea"]
+            },
+            "sel-region": "Select country or region",
+            "certificate": {
+                "btn": "Authenticate",
+                "reBtn": "re-send",
+                "label": "Certification Number",
+                "placeholder": "Enter 6 digit authentication number"
+            }
+        },
+        "success": {
+            "desc1": "Dear, <br/> Congratulations on joining Drop Kitchen!",
+            "desc2": "Welcome we gave you <span>5,000P</span>!"
+        }
     }
 }

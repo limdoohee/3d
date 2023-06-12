@@ -1,0 +1,311 @@
+/* -------------------------------------------------------------------------- auth */
+.auth.ui {
+    padding: 20px;
+}
+.auth.ui input {
+    height: 48px;
+}
+.auth.ui button:disabled {
+    background-color: #f5f5f5 !important;
+    border: 0;
+    color: #bdbdbd !important;
+}
+/* -------------------------------------------------------------------------- auth */
+/* -------------------------------------------------------------------------- auth terms */
+.auth.terms {
+    padding: 20px;
+}
+.auth.terms > h2 {
+    font-size: 22px;
+    line-height: 130%;
+    margin-bottom: 12px;
+}
+.auth.terms .agree-list .adm-checkbox.all {
+    height: 56px;
+}
+.auth.terms .agree-list .adm-checkbox.all .adm-checkbox-custom-icon {
+    width: 24px;
+    display: flex;
+}
+.auth.terms .agree-list .adm-checkbox.all .adm-checkbox-content {
+    font-size: 20px;
+    padding-left: 8px;
+}
+.auth.terms .agree-list .each {
+    display: flex;
+    flex-direction: column;
+}
+.auth.terms .agree-list .each > .adm-space .adm-space-item {
+    height: 44px;
+    padding-left: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.auth.terms .agree-list .each > .adm-space .adm-checkbox-custom-icon {
+    display: flex;
+    width: 20px;
+    height: 20px;
+}
+.auth.terms .agree-list .each > .adm-space .adm-checkbox-content {
+    padding-left: 8px;
+    font-size: 16px;
+}
+.auth.terms .agree-list .each > .adm-space .adm-space-item > span {
+    display: flex;
+}
+
+.auth.ui .agree-check {
+    width: calc(100% - 40px);
+    position: fixed;
+    bottom: 34px;
+    left: 20px;
+    height: 48px;
+    background-color: #000;
+    color: #fff;
+    font-size: 16px;
+}
+
+.ant-drawer > div {
+    min-width: 100vw;
+}
+.modal.agreement {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    background-color: #fff;
+}
+.modal.agreement .ant-drawer-body {
+    padding: 0 13px !important;
+}
+.modal.agreement .ant-drawer-body > div:nth-child(1) {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 50px;
+    position: relative;
+}
+.modal.agreement .ant-drawer-body > div:nth-child(1) h3 {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+.modal.agreement .ant-drawer-body {
+    padding: 0 13px;
+}
+.modal.agreement .ant-drawer-body .terms {
+    padding: 20px 7px 18px;
+}
+.modal.agreement .ant-drawer-body .terms > h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+    line-height: 100%;
+}
+.modal.agreement .ant-drawer-body .terms > p {
+    line-height: 150%;
+    font-size: 16px;
+}
+
+/* -------------------------------------------------------------------------- auth terms */
+/* -------------------------------------------------------------------------- auth nickname */
+
+.auth.ui.nickname .nickname-list li {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px 0;
+}
+.auth.ui.nickname .nickname-list li > div:nth-child(1) {
+    display: flex;
+    justify-content: space-between;
+}
+.auth.ui.nickname .nickname-list li > div:nth-child(1) label {
+    font-size: 14px;
+    color: #404040;
+}
+.auth.ui.nickname .nickname-list li > div:nth-child(1) span {
+    color: #969696;
+    font-size: 14px;
+}
+
+.auth.ui.nickname .nickname-list li .input-area {
+    position: relative;
+}
+.auth.ui.nickname .nickname-list li .input-area span {
+    position: absolute;
+    right: 12px;
+    top: 15px;
+}
+.auth.ui.nickname .nickname-list li .input-area span img {
+    display: flex;
+    height: 18px;
+    width: 18px;
+}
+
+.auth.ui.nickname .nickname-list li .help {
+    font-size: 12px;
+    color: var(--color-green);
+}
+/* -------------------------------------------------------------------------- auth nickname */
+/* -------------------------------------------------------------------------- auth mobile */
+.auth.ui.mobile .mobile-list {
+    display: flex;
+    flex-direction: column;
+    margin-top: 32px;
+    gap: 8px 0;
+}
+.auth.ui.mobile .mobile-list .input-area .form label {
+    font-size: 14px;
+    color: #969696;
+}
+.auth.ui.mobile .mobile-list .input-area {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.auth.ui.mobile .mobile-list .input-area .form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px 0;
+    margin-bottom: 32px;
+    position: relative;
+}
+.auth.ui.mobile .mobile-list .input-area .form input {
+    border-radius: 8px;
+    font-size: 16px;
+    padding: 0 13px;
+    width: 100%;
+}
+.auth.ui.mobile .mobile-list.input-area .form label {
+    font-size: 14px;
+    color: #969696;
+}
+.auth.ui.mobile .mobile-list .input-area .form > div {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+.auth.ui.mobile .mobile-list .input-area .form:nth-child(2) > div {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--color-red);
+}
+.auth.ui.mobile .mobile-list .input-area .form strong {
+    display: flex;
+    align-items: center;
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 100;
+    font-size: 16px;
+}
+.auth.ui.mobile .mobile-list .input-area .form strong img {
+    width: 16px;
+    height: 16px;
+    margin-left: 4px;
+}
+
+.auth.ui.mobile .mobile-list .input-area .form:nth-child(2) {
+    position: relative;
+    flex-direction: row;
+}
+.auth.ui.mobile .mobile-list .input-area .form:nth-child(2) > input {
+    padding: 0 0 0 74px;
+}
+
+.auth.ui.mobile .mobile-list .input-area .form:nth-child(3) > span img {
+    width: 18px;
+    height: 18px;
+    position: absolute;
+    right: 15px;
+    top: 50%;
+}
+.auth.ui.mobile .mobile-list .input-area input::placeholder {
+    font-size: 16px;
+}
+.auth.ui.mobile .mobile-list .input-area .btn {
+    background-color: #000;
+    color: #fff;
+    height: 48px;
+    border: none;
+}
+.auth.ui.mobile .mobile-list .input-area .btn.send {
+    border-radius: 8px;
+    margin-left: 8px;
+    min-width: 87px;
+    transition: all 0.3s ease-in-out;
+}
+.auth.ui.mobile .mobile-list .input-area .sms-input::-webkit-textfield-decoration-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.auth.ui.mobile .mobile-list .input-area .sms-input::-webkit-textfield-decoration-container::after {
+    content: "Check";
+}
+.ant-message {
+    bottom: 20px !important;
+    top: unset !important;
+}
+.ant-message .message-info {
+    padding: 20px 20px 0px !important;
+}
+.ant-message .message-info.success .ant-message-notice-content .ant-message-custom-content > img {
+    display: none;
+}
+.ant-message .message-info .ant-message-notice-content {
+    width: 100%;
+    background-color: rgba(41, 41, 41, 0.9);
+    color: #fff;
+    line-height: 150%;
+    font-size: 16px;
+    padding: 16px;
+    text-align: left;
+    word-break: break-all;
+}
+.ant-message .message-info .ant-message-notice-content .ant-message-custom-content {
+    display: flex;
+    gap: 0 8px;
+}
+.ant-message .message-info .ant-message-notice-content .ant-message-custom-content > img {
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-self: flex-start;
+}
+.auth.ui.mobile .mobile-list .input-area .btn.certificate {
+    width: 100%;
+    transform: translateX(-20px);
+    position: fixed;
+    bottom: 0;
+}
+/* -------------------------------------------------------------------------- auth mobile */
+/* -------------------------------------------------------------------------- auth success */
+.auth.ui.success {
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+.auth.ui.success img {
+    width: 200px;
+    height: 200px;
+}
+.auth.ui.success h3 {
+    line-height: 150%;
+    font-size: 22px;
+    margin-top: 120px;
+}
+.auth.ui.success p {
+    font-size: 16px;
+    margin-top: 8px;
+}
+.auth.ui.success p span {
+    color: var(--color-orange);
+}
+/* -------------------------------------------------------------------------- auth success */
