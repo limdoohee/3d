@@ -4,15 +4,10 @@ import DDS_Button from "./button";
 import Link from "next/link";
 
 const Component = (props) => {
-    const [open, setOpen] = useState(false);
-
+    const { open, setOpen } = props;
     const onClose = () => {
         setOpen(false);
     };
-
-    useEffect(() => {
-        setOpen(props.open);
-    }, [props]);
 
     return (
         <Drawer placement="bottom" closable={false} onClose={onClose} open={open} height="bottom" className="bottomModal">

@@ -38,9 +38,22 @@ const Home = {
             common.uiChange("dropListOpen", false);
         };
 
+        const [open, setOpen] = useState(false);
+
+        const modalData = {
+            open: open,
+            setOpen: setOpen,
+            title: "드롭 획득을 축하해요!",
+            context: "1,000포인트가 지급되었어요.\n이제 갤러리로 이동해볼까요?",
+            button: "갤러리로 이동",
+            linkUrl: "/gallery",
+        };
+
+        // common.ui.dropListOpen;
+
         return (
             <>
-                <Drawer className={"dds drawer"} placement="right" onClose={onClose} open={common.ui.dropListOpen} closable={false}>
+                <Drawer className={"dds drawer"} placement="right" onClose={onClose} open={true} closable={false}>
                     <div className="dk drop-list">
                         <div className="title">
                             <div>
@@ -194,9 +207,17 @@ const Home = {
                             </li>
                         </ul>
                         <div className="bottom">
-                            <DDS.button.default className="dds button primary large block">미보유 드롭 받으러 가기</DDS.button.default>
+                            <DDS.button.default
+                                className="dds button primary large block"
+                                onClick={() => {
+                                    setOpen(true);
+                                }}
+                            >
+                                미보유 드롭 받으러 가기
+                            </DDS.button.default>
                         </div>
                     </div>
+                    <DDS.modal {...modalData} />
                 </Drawer>
             </>
         );

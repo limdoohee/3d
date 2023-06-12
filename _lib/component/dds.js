@@ -13,6 +13,7 @@ import profile from "../../_lib/component/profile";
 import tabs from "../../_lib/component/tabs";
 import progress from "../../_lib/component/progress";
 import chips from "../../_lib/component/chips";
+import modal from "../../_lib/component/modal";
 //------------------------------------------------------------------------------- Component
 
 const Home = {
@@ -26,6 +27,7 @@ const Home = {
     tabs: tabs,
     progress: progress,
     chips: chips,
+    modal: modal,
 };
 
 export default Home;
