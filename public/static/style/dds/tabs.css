@@ -1,10 +1,21 @@
-.dds.tabs {
-    overflow-x: auto;
+.dds.tabs .adm-tabs-header .adm-tabs-tab-list {
+    height: 48px;
 }
-.dds.tabs .ant-tabs-nav::before {
-    border-bottom: 1px solid #e6e6e6;
+.dds.tabs .adm-tabs-tab {
+    font-weight: 400;
+    font-size: 16px;
+    color: #bdbdbd;
 }
-.dds.tabs .ant-tabs-nav .ant-tabs-nav-wrap::before,
-.dds.tabs .ant-tabs-nav .ant-tabs-nav-wrap::after {
-    display: none;
+
+.dds.tabs .adm-tabs-tab-active {
+    font-weight: 400;
+    font-size: 16px;
+    color: #1f1f1f;
+}
+.dds.tabs .adm-tabs-content {
+    padding: 0;
+}
+
+.dds.tabs .adm-tabs-tab-line {
+    background-color: #1f1f1f;
 }

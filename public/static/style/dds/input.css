@@ -1,16 +1,38 @@
 .dds.input {
+    width: auto;
     height: 38px;
     padding: 0 12px;
     border-radius: 8px;
     border: 0;
     font-size: 16px;
-    width: auto;
+}
+.dds.input:focus {
+    box-shadow: none;
+}
+.dds.input.rounded {
+    border-radius: 38px;
 }
 .dds.input.primary {
     border: 1px solid #dadada;
 }
+.dds.input.primary:focus {
+    border: 1px solid #404040;
+}
+.dds.input.primary:disabled {
+    background: #f5f5f5;
+}
 .dds.input.secondary {
+    background: #f5f5f5;
+    border: 0;
+}
+.dds.input.secondary.ant-input-status-error {
+    background: #fce9ea;
+}
+.dds.input.secondary:focus {
     background: #ededed;
+}
+.dds.input.secondary:disabled {
+    background: #f5f5f5;
 }
 .dds.input.large {
     height: 48px;
@@ -18,4 +40,14 @@
 .dds.input.small {
     height: 30px;
     font-size: 14px;
+}
+.dds.input.secondary.ant-input-affix-wrapper {
+    background-color: #f5f5f5;
+    box-shadow: none;
+}
+.dds.input.secondary.ant-input-affix-wrapper input {
+    background-color: #f5f5f5;
+}
+.dds.input.secondary.ant-input-affix-wrapper:focus {
+    background: #ededed;
 }

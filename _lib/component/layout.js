@@ -1,12 +1,11 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
-import { Layout, Space } from "antd";
 import { motion } from "framer-motion";
-
-const { Content } = Layout;
 
 const Component = {
     container: (props) => {
+        const { className, children } = props;
+
         return (
             <motion.div
                 initial={{ x: 50, opacity: 0, duration: 300 }}
@@ -17,10 +16,9 @@ const Component = {
                     stiffness: 260,
                     damping: 20,
                 }}
-                className={`dds container ${props.className}`}
-                {...props}
+                className={`dds container ${className}`}
             >
-                {props.children}
+                {children}
             </motion.div>
         );
     },
@@ -38,5 +36,15 @@ const Component = {
             </div>
         );
     },
+    content: (props) => {
+        const { className, children } = props;
+
+        return (
+            <>
+                <div className={`dds content ${className}`}>{children}</div>
+            </>
+        );
+    },
 };
+
 export default Component;

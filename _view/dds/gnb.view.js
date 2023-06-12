@@ -28,7 +28,7 @@ const Home = observer((props) => {
                             Back
                         </DDS_Button.default>
                     </p>
-                    <h1>Gnb</h1>
+                    <h1>Gnb (status : {common.ui.gnbOpen ? "open" : "close"})</h1>
                     <DDS_Button.default
                         onClick={() => {
                             common.uiChange("gnbOpen", true);
@@ -36,8 +36,8 @@ const Home = observer((props) => {
                         className="dds button text"
                     >
                         <DDS_Icons.bars />
-                    </DDS_Button.default>
                     <DDS_Gnb.default store={store}></DDS_Gnb.default>
+                    </DDS_Button.default>
                     <DDS_Layout.container></DDS_Layout.container>
                 </div>
             </DDS_Layout.container>

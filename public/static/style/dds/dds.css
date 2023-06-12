@@ -18,7 +18,19 @@
         padding: 0 24px;
     }
 }
-/* =========================== container */
+/* =========================== container */s
+
+/* =========================== content */
+.dds.content {
+    padding: 50px 20px 0 20px;
+}
+
+@media (min-width: 640px) {
+    .dds.content {
+        padding: 50px 24px 0 24px;
+    }
+}
+/* =========================== content */
 
 /* =========================== style-guide */
 .dds.style-guide {
@@ -38,6 +50,16 @@
     gap: 10px;
     align-items: center;
     flex-wrap: wrap;
+    width: 100%;
+}
+
+.dds.style-guide-inner .part {
+    border-radius: 8px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
 }
 /* =========================== style-guide */
 
@@ -49,9 +71,107 @@
     width: 24px;
     height: 24px;
 }
+.dds.icons.large {
+    width: 32px;
+    height: 32px;
+}
+.dds.icons.small {
+    width: 12px;
+    height: 12px;
+}
+
+.ant-drawer.ant-drawer-right .ant-drawer-content-wrapper {
+    width: 100% !important;
+    box-shadow: none;
+    display: flex;
+    justify-content: flex-end;
+}
+.ant-drawer.ant-drawer-right .ant-drawer-content-wrapper-hidden {
+    display: none !important;
+}
+.ant-drawer.ant-drawer-right .ant-drawer-content-wrapper .ant-drawer-content {
+    box-shadow: -6px 0 16px 0 rgba(0, 0, 0, 0.08), -3px 0 6px -4px rgba(0, 0, 0, 0.12), -9px 0 28px 8px rgba(0, 0, 0, 0.05);
+}
+
+.ant-drawer.ant-drawer-right .ant-drawer-content-wrapper .ant-drawer-body {
+    padding: env(safe-area-inset-top) 0 0 0;
+}
+.dds.chat-drawer {
+    /* max-width: 260px; */
+}
+
+.dds.drawer .dk {
+    padding: 50px 0 0 0;
+}
+
+.dds.drawer .dk .title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    padding: 20px 5px;
+    z-index: 900;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dds.drawer .dk .title > * {
+    width: calc(100% / 3);
+    display: flex;
+    align-items: center;
+}
+.dds.drawer .dk .title > *:last-child {
+    justify-content: flex-end;
+    padding: 0 20px 0 0;
+}
+.dds.drawer .dk .title > h4 {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #1f1f1f;
+    justify-content: center;
+    text-transform: capitalize;
+}
+
+.dds.drawer .dk .title > *:first-child .dds.button.none {
+    padding: 0;
+    min-width: 40px;
+    box-shadow: none;
+}
+
+.dds.drawer .dk .title > *:last-child .dds.button.none {
+    padding: 0;
+    font-weight: 400;
+    font-size: 14px;
+    letter-spacing: -0.02em;
+    color: #969696;
+    box-shadow: none;
+    text-transform: capitalize;
+}
+
+.dds.drawer .dk .title > *:last-child .dds.button.none svg {
+    width: 14px;
+    height: 14px;
+}
+.dds.drawer .dk .title > *:last-child .dds.button.none svg path {
+    fill: #969696;
+}
+
+.dds.logos svg {
+    width: 40px;
+    height: 40px;
+}
+.dds.logos.small svg {
+    width: 32px;
+    height: 32px;
+}
 
 @import url("./gnb.css");
 @import url("./button.css");
 @import url("./input.css");
 @import url("./tabs.css");
 @import url("./profile.css");
+@import url("./modal.css");

@@ -4,13 +4,15 @@
     align-items: center;
     justify-content: center;
     position: relative;
+}
+.dds.profile .adm-avatar {
     width: 52px;
     height: 52px;
+    border-radius: 52px;
+    overflow: hidden;
 }
-.dds.profile .dds.icons svg path {
-    fill: #fff;
-}
-.dds.profile + .cert {
+.dds.profile .cert {
+    position: absolute;
     top: auto;
     bottom: 0;
     right: 0;

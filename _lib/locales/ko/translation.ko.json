@@ -54,5 +54,23 @@
             "desc2": "",
             "desc3": ""
         }
+    },
+    "point": {
+        "title": "포인트",
+        "information": "안내",
+        "myPoints": "내 포인트"
+    },
+    "alarm": {
+        "title": "알림"
+    },
+    "magazine": {
+        "title": "매거진"
+    },
+    "error": {
+        "404": {
+            "description1": "일시적인 오류가 발생했습니다.",
+            "description2": "일잠시만 기다려주세요.",
+            "historyBack": "이전 페이지로 돌아가기"
+        }
     }
 }

@@ -1,0 +1,209 @@
+.dk.chat {
+    padding: 50px 0 54px 0;
+    position: relative;
+    min-height: calc(100vh);
+}
+.dk.chat .message-wrap {
+    overflow-y: auto;
+    height: calc(100vh - 110px);
+    min-height: calc(100vh - 110px);
+    padding: 0 24px;
+    position: relative;
+}
+.dk.chat .message-wrap .bottom-down {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
+}
+.dk.chat .title {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 50px;
+    background-color: #fff;
+    padding: 20px 20px 20px 5px;
+    z-index: 900;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dk.chat .title .dds.button.none {
+    padding: 0;
+    min-width: auto;
+}
+.dk.chat .title .owner {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.dk.chat .title .owner .name {
+    display: flex;
+    flex-direction: column;
+}
+.dk.chat .title .owner .name strong {
+    display: flex;
+    align-items: center;
+}
+.dk.chat .title .owner .name small {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #969696;
+}
+.dk.chat .title .operators {
+    display: flex;
+    align-items: center;
+    font-size: 12px;
+    gap: 6px;
+    padding: 0 9px;
+    background: #f5f5f5;
+    border-radius: 4px;
+    height: 24px;
+}
+.dk.chat .messages {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.dk.chat .messages li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+}
+.dk.chat .messages li.my {
+    flex-direction: row-reverse;
+}
+.dk.chat .messages li .content {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+.dk.chat .messages li .content .name {
+    font-size: 14px;
+    color: #969696;
+    font-weight: 400;
+}
+.dk.chat .messages li .content .name {
+    font-size: 14px;
+    color: #969696;
+    font-weight: 400;
+}
+.dk.chat .messages li .content .inner {
+    display: flex;
+    align-items: flex-end;
+    gap: 6px;
+}
+.dk.chat .messages li.my .content .inner {
+    flex-direction: row-reverse;
+}
+.dk.chat .messages li .content .message {
+    background: #ededed;
+    border-radius: 16px;
+    padding: 12px;
+    word-break: break-all;
+}
+.dk.chat .messages li.my .content .message {
+    background: #1f1f1f;
+    color: #fff;
+}
+.dk.chat .messages li .content .date {
+    display: flex;
+    align-items: flex-end;
+    height: 100%;
+    font-weight: 400;
+    font-size: 14px;
+    color: #bdbdbd;
+}
+.dk.chat .message-input {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #fff;
+    display: flex;
+    align-items: center;
+    padding: 8px 20px;
+    gap: 10px;
+    justify-content: space-between;
+    z-index: 900;
+}
+.dk.chat .message-input .dds.input {
+    width: 100%;
+    padding-right: 0;
+}
+.dk.chat .message-input .upload {
+    position: relative;
+    overflow: hidden;
+}
+.dk.chat .message-input .upload .dds.icons svg path {
+    fill: #969696;
+}
+.dk.chat .message-input .dds.input .dds.icons.disabled svg path {
+    fill: #dadada;
+}
+.dk.chat .message-input .upload input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.dk.chat .more {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.dk.chat .more h6 {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: #969696;
+    text-align: center;
+}
+
+.dk.chat .more p {
+    font-weight: 400;
+    font-size: 14px;
+    color: #969696;
+    text-align: center;
+}
+
+.dk.chat .messages > li.date {
+    font-weight: 400;
+    font-size: 14px;
+    color: #969696;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.dk.chat .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px);
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dk.chat .upload-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh);
+    flex-direction: column;
+    z-index: 1500;
+}

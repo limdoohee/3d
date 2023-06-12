@@ -72,7 +72,32 @@
         },
         "success": {
             "desc1": "Dear, <br/> Congratulations on joining Drop Kitchen!",
-            "desc2": "Welcome we gave you <span>5,000P</span>!"
+            "desc2": "Welcome we gave you <span>5,000P</span>!",
+            "part1": "To get started, edit <1>src/App.js</1> and save to reload.",
+            "part2": "Switch language between english and german using buttons above."
+        }
+    },
+    "point": {
+        "title": "point",
+        "information": "guidance",
+        "myPoints": "My Points",
+        "tabs": {
+            "all": "all",
+            "accumulate": "accumulate",
+            "use": "use"
+        }
+    },
+    "alarm": {
+        "title": "alarm"
+    },
+    "magazine": {
+        "title": "magazine"
+    },
+    "error": {
+        "404": {
+            "description1": "A temporary error has occurred.",
+            "description2": "please wait for a moment.",
+            "historyBack": "back to previous page"
         }
     }
 }
