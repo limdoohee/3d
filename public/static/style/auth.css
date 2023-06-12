@@ -164,11 +164,12 @@
     display: flex;
     flex-direction: column;
 }
+
 .auth.ui.mobile .mobile-list .input-area .form {
     display: flex;
     flex-direction: column;
     gap: 8px 0;
-    margin-bottom: 32px;
+    margin: 8px 0 32px;
     position: relative;
 }
 .auth.ui.mobile .mobile-list .input-area .form input {
@@ -177,21 +178,16 @@
     padding: 0 13px;
     width: 100%;
 }
-.auth.ui.mobile .mobile-list.input-area .form label {
-    font-size: 14px;
-    color: #969696;
-}
-.auth.ui.mobile .mobile-list .input-area .form > div {
+.auth.ui.mobile .mobile-list .input-area .form > .time {
     display: flex;
     align-items: center;
     position: relative;
-}
-.auth.ui.mobile .mobile-list .input-area .form:nth-child(2) > div {
-    display: flex;
     justify-content: space-between;
-    font-size: 14px;
+}
+.auth.ui.mobile .mobile-list .input-area .form > .time > div {
     color: var(--color-red);
 }
+
 .auth.ui.mobile .mobile-list .input-area .form strong {
     display: flex;
     align-items: center;

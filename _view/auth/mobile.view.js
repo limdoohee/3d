@@ -209,7 +209,7 @@ const Home = observer((props) => {
                             </div>
                             {certificate && (
                                 <form className="form" onSubmit={handleConfirmCodeSubmit}>
-                                    <div>
+                                    <div className="time">
                                         <label>{t(`auth.mobile.certificate.label`)}</label>
                                         {<div>{formatTime(Math.floor(timer / 1000))}</div>}
                                     </div>
