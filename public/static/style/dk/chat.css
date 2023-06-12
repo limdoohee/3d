@@ -1,11 +1,19 @@
 .dk.chat {
     padding: 50px 0 54px 0;
     position: relative;
+    min-height: calc(100vh);
 }
 .dk.chat .message-wrap {
     overflow-y: auto;
     height: calc(100vh - 110px);
+    min-height: calc(100vh - 110px);
     padding: 0 24px;
+    position: relative;
+}
+.dk.chat .message-wrap .bottom-down {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
 }
 .dk.chat .title {
     position: absolute;
@@ -132,6 +140,9 @@
 .dk.chat .message-input .upload .dds.icons svg path {
     fill: #969696;
 }
+.dk.chat .message-input .dds.input .dds.icons.disabled svg path {
+    fill: #dadada;
+}
 .dk.chat .message-input .upload input {
     position: absolute;
     top: 0;
@@ -172,4 +183,27 @@
     display: flex;
     justify-content: center;
     padding: 20px;
+}
+
+.dk.chat .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px);
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dk.chat .upload-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh);
+    flex-direction: column;
+    z-index: 1500;
 }

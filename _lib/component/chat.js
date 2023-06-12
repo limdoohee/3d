@@ -38,13 +38,14 @@ const home = {
         // Sendbird onFileInputChange
         const onFileInputChange = async (e) => {
             if (e.currentTarget.files && e.currentTarget.files.length > 0) {
+                chat.updateState({ ...chat.state, uploadLoading: true });
                 const fileMessageParams = {};
                 fileMessageParams.file = e.currentTarget.files[0];
                 chat.state.currentlyJoinedChannel
                     .sendFileMessage(fileMessageParams)
                     .onSucceeded((message) => {
                         const updatedMessages = [...chat.state.messages, message];
-                        chat.updateState({ ...chat.state, messages: updatedMessages, messageInputValue: "", file: null });
+                        chat.updateState({ ...chat.state, messages: updatedMessages, messageInputValue: "", file: null, uploadLoading: false });
                         home.messageScrollDown();
                     })
                     .onFailed((error) => {
@@ -69,13 +70,13 @@ const home = {
         return (
             <div className="message-input">
                 <div className="upload">
-                    <DDS_Icons.plus className="dds icons large" />
+                    <DDS_Icons.plus className="dds icons" />
                     <input id="upload" type="file" onChange={onFileInputChange} onClick={() => {}} />
                 </div>
                 <DDS_Input.default
                     className="dds input secondary rounded"
-                    suffix={<DDS_Icons.circleArrowUp className="dds icons large" />}
-                    placeholder="write a message"
+                    suffix={<DDS_Icons.circleArrowUp className={`dds icons large ${chat.state.messageInputValue ? "" : "disabled"}`} />}
+                    placeholder="Send message"
                     value={value}
                     onChange={onMessageInputChange}
                     onKeyDown={(event) => handleEnterPress(event, onSend)}
@@ -103,8 +104,47 @@ const home = {
             alert(sender.userId);
         };
 
+        const [bottomDown, setbottomDown] = useState(false);
+        useEffect(() => {
+            var element = document.querySelector("#message-wrap");
+
+            // var hasVerticalScrollbar = element.scrollHeight > element.clientHeight;
+            // if (hasVerticalScrollbar) {
+            //     // 세로 스크롤바가 있는 경우
+            //     console.log("세로 스크롤바가 있습니다.");
+            // } else {
+            //     // 세로 스크롤바가 없는 경우
+            //     console.log("세로 스크롤바가 없습니다.");
+            // }
+
+            element.addEventListener(
+                "scroll",
+                (e) => {
+                    var hasVerticalScrollbar = element.scrollHeight > element.clientHeight;
+                    console.log(hasVerticalScrollbar, element.scrollHeight, element.scrollTop + element.clientHeight);
+                    if (hasVerticalScrollbar && element.scrollHeight - element.scrollTop - element.clientHeight > 50) {
+                        setbottomDown(true);
+                    } else {
+                        setbottomDown(false);
+                    }
+                },
+                false,
+            );
+        }, [messages]);
+
         return (
             <div className="message-wrap" id="message-wrap">
+                {bottomDown && (
+                    <div className="bottom-down">
+                        <DDS_Button.default
+                            className={"dds button primary rounded"}
+                            icon={<DDS_Icons.angleDown />}
+                            onClick={() => {
+                                home.messageScrollDown();
+                            }}
+                        />
+                    </div>
+                )}
                 <div className="more">
                     {/* {more && (
                         <DDS_Button.default
@@ -120,6 +160,7 @@ const home = {
                             이전 대화 보기
                         </DDS_Button.default>
                     )} */}
+                    <p>{moment(messages[0] && messages[0].createdAt).format("YYYY년 MM월 DD일")}</p>
                     <h6>
                         실시간 채팅에 오신것을 환영해요!
                         <br />
@@ -130,7 +171,6 @@ const home = {
                     <h6>
                         <u>채팅 서비스 이용 안내 보기</u>
                     </h6>
-                    <p>{moment(messages[0] && messages[0].createdAt).format("YYYY년 MM월 DD일")}</p>
                 </div>
                 <ul className="messages">
                     {messages.map((item, key) => {
@@ -159,13 +199,7 @@ const home = {
                                             {item.sender.userId !== myId && <div className="name">{item.sender.nickname}</div>}
                                             <div className="inner">
                                                 {item.messageType == "user" && <div className="message">{item.message}</div>}
-                                                {item.messageType == "file" && (
-                                                    <>
-                                                        {item.type}
-                                                        {item.plainUrl}
-                                                        {item.type == "image/jpeg" || item.type == "image/png" || item.type == "image/gif" ? <img src={item.plainUrl} /> : null}
-                                                    </>
-                                                )}
+                                                {item.messageType == "file" && <div className="message">{item.type == "image/jpeg" || item.type == "image/png" || item.type == "image/gif" ? <img src={item.plainUrl} /> : null}</div>}
                                                 <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
                                             </div>
                                         </div>
@@ -177,10 +211,10 @@ const home = {
                                             <div className="inner">
                                                 {item.messageType == "admin" && <div className="message">{item.message}</div>}
                                                 {item.messageType == "file" && (
-                                                    <>
+                                                    <div className="message">
                                                         {/*  */}
                                                         {item.type == "image/jpeg" || item.type == "image/png" ? <img src={item.plainUrl} /> : null}
-                                                    </>
+                                                    </div>
                                                 )}
                                                 <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
                                             </div>

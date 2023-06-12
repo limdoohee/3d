@@ -34,6 +34,7 @@ class Store {
         messageToUpdate: null,
         loading: false,
         error: false,
+        uploadLoading: false,
     };
 
     members = null;
