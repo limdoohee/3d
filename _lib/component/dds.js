@@ -11,6 +11,8 @@ import layout from "../../_lib/component/layout";
 import logos from "../../_lib/component/logos";
 import profile from "../../_lib/component/profile";
 import tabs from "../../_lib/component/tabs";
+import progress from "../../_lib/component/progress";
+import chips from "../../_lib/component/chips";
 //------------------------------------------------------------------------------- Component
 
 const Home = {
@@ -22,6 +24,8 @@ const Home = {
     logos: logos,
     profile: profile,
     tabs: tabs,
+    progress: progress,
+    chips: chips,
 };
 
 export default Home;

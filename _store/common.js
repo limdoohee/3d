@@ -20,6 +20,7 @@ class Store {
         pointOpen: false,
         alarmOpen: false,
         magazineOpen: false,
+        dropListOpen: false,
     };
 
     constructor(store) {

@@ -53,3 +53,12 @@
     width: 100%;
     display: block;
 }
+
+.dds.button:disabled {
+    background-color: #f5f5f5;
+    color: #bdbdbd;
+}
+
+.dds.button:disabled .dds.icons svg path {
+    fill: #bdbdbd;
+}

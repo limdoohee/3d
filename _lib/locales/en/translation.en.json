@@ -20,6 +20,9 @@
     "magazine": {
         "title": "magazine"
     },
+    "dropList": {
+        "title": "drop list"
+    },
     "error": {
         "404": {
             "description1": "A temporary error has occurred.",

@@ -35,6 +35,9 @@ const Home = observer((props) => {
                             <DDS_Button.default className="dds button secondary">Button secondary</DDS_Button.default>
                             <DDS_Button.default className="dds button outline">Button outline</DDS_Button.default>
                             <DDS_Button.default className="dds button text">Button text</DDS_Button.default>
+                            <DDS_Button.default className="dds button primary" disabled>
+                                Button primary
+                            </DDS_Button.default>
                         </div>
                         <div className="part">
                             <DDS_Button.default className="dds button primary" icon={<DDS_Icons.angleDown />}></DDS_Button.default>

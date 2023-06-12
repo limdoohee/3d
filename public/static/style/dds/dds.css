@@ -18,7 +18,8 @@
         padding: 0 24px;
     }
 }
-/* =========================== container */s
+/* =========================== container */
+s
 
 /* =========================== content */
 .dds.content {
@@ -175,3 +176,6 @@
 @import url("./tabs.css");
 @import url("./profile.css");
 @import url("./modal.css");
+@import url("./progress.css");
+
+@import url("./chips.css");
