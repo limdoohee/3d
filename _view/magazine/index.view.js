@@ -19,9 +19,21 @@ const Home = observer((props) => {
         common.debug(auth.loginResult);
     }, []);
 
+    const headerRight = [
+        () => (
+            <DDS.button.default
+                className="dds button none"
+                icon={<DDS.icons.bars />}
+                onClick={() => {
+                    common.uiChange("gnbOpen", true);
+                }}
+            />
+        ),
+    ];
+
     return (
         <DDS.layout.container>
-            <DK_template_header.default store={store} title={lang.t("magazine.title")} />
+            <DK_template_header.default store={store} title={lang.t("magazine.title")} right={headerRight} />
             <DK_template_GNB.default store={store} />
             {/* Content */}
             <DDS.layout.content>매거진</DDS.layout.content>

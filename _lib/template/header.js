@@ -17,7 +17,7 @@ import DK_template_GNB from "../../_lib/template/gnb";
 const Home = {
     default: observer((props) => {
         const router = useRouter();
-        const { title, back } = props;
+        const { title, back, right } = props;
         const { common, lang, auth } = props.store;
 
         return (
@@ -34,13 +34,9 @@ const Home = {
                     </div>
                     <h4>{title}</h4>
                     <div>
-                        <DDS.button.default
-                            className="dds button none"
-                            icon={<DDS.icons.bars />}
-                            onClick={() => {
-                                common.uiChange("gnbOpen", true);
-                            }}
-                        />
+                        {right.map((Item, key) => {
+                            return <Item key={key} />;
+                        })}
                     </div>
                 </div>
             </>

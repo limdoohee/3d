@@ -43,17 +43,23 @@ const Home = {
         const modalData = {
             open: open,
             setOpen: setOpen,
-            title: "드롭 획득을 축하해요!",
-            context: "1,000포인트가 지급되었어요.\n이제 갤러리로 이동해볼까요?",
-            button: "갤러리로 이동",
-            linkUrl: "/gallery",
+            title: "현재 드롭이 진행중이에요.",
+            context: "메인에서 드롭을 받을 수 있어요. 메인으로 이동해볼까요?",
+            confirm: {
+                label: "드롭 받으러 가기",
+                action: () => {
+                    // Router.push("/gallery");
+                },
+            },
+            cancel: {
+                label: "나중에",
+                action: () => {},
+            },
         };
-
-        // common.ui.dropListOpen;
 
         return (
             <>
-                <Drawer className={"dds drawer"} placement="right" onClose={onClose} open={true} closable={false}>
+                <Drawer className={"dds drawer"} placement="right" onClose={onClose} open={common.ui.dropListOpen} closable={false}>
                     <div className="dk drop-list">
                         <div className="title">
                             <div>
@@ -109,102 +115,6 @@ const Home = {
                                     <DDS.icons.cubePlus />
                                 </div>
                             </li>
-                            <li>
-                                <div className="left">
-                                    <div className="image">
-                                        <img src="" />
-                                        <span className="label now">NOW</span>
-                                    </div>
-                                    <div className="name">
-                                        <h4>Drop #4</h4>
-                                        <p>???</p>
-                                    </div>
-                                </div>
-                                <div className="right">
-                                    <DDS.chips.default className={"secondary"}>미보유</DDS.chips.default>
-                                    <DDS.icons.cubePlus />
-                                </div>
-                            </li>
-                            <li>
-                                <div className="left">
-                                    <div className="image">
-                                        <img src="" />
-                                        <span className="label now">NOW</span>
-                                    </div>
-                                    <div className="name">
-                                        <h4>Drop #4</h4>
-                                        <p>???</p>
-                                    </div>
-                                </div>
-                                <div className="right">
-                                    <DDS.chips.default className={"secondary"}>미보유</DDS.chips.default>
-                                    <DDS.icons.cubePlus />
-                                </div>
-                            </li>
-                            <li>
-                                <div className="left">
-                                    <div className="image">
-                                        <img src="" />
-                                        <span className="label now">NOW</span>
-                                    </div>
-                                    <div className="name">
-                                        <h4>Drop #4</h4>
-                                        <p>???</p>
-                                    </div>
-                                </div>
-                                <div className="right">
-                                    <DDS.chips.default className={"secondary"}>미보유</DDS.chips.default>
-                                    <DDS.icons.cubePlus />
-                                </div>
-                            </li>
-                            <li>
-                                <div className="left">
-                                    <div className="image">
-                                        <img src="" />
-                                        <span className="label now">NOW</span>
-                                    </div>
-                                    <div className="name">
-                                        <h4>Drop #4</h4>
-                                        <p>???</p>
-                                    </div>
-                                </div>
-                                <div className="right">
-                                    <DDS.chips.default className={"secondary"}>미보유</DDS.chips.default>
-                                    <DDS.icons.cubePlus />
-                                </div>
-                            </li>
-                            <li>
-                                <div className="left">
-                                    <div className="image">
-                                        <img src="" />
-                                        <span className="label now">NOW</span>
-                                    </div>
-                                    <div className="name">
-                                        <h4>Drop #4</h4>
-                                        <p>???</p>
-                                    </div>
-                                </div>
-                                <div className="right">
-                                    <DDS.chips.default className={"secondary"}>미보유</DDS.chips.default>
-                                    <DDS.icons.cubePlus />
-                                </div>
-                            </li>
-                            <li>
-                                <div className="left">
-                                    <div className="image">
-                                        <img src="" />
-                                        <span className="label now">NOW</span>
-                                    </div>
-                                    <div className="name">
-                                        <h4>Drop #4</h4>
-                                        <p>???</p>
-                                    </div>
-                                </div>
-                                <div className="right">
-                                    <DDS.chips.default className={"secondary"}>미보유</DDS.chips.default>
-                                    <DDS.icons.cubePlus />
-                                </div>
-                            </li>
                         </ul>
                         <div className="bottom">
                             <DDS.button.default
@@ -217,7 +127,7 @@ const Home = {
                             </DDS.button.default>
                         </div>
                     </div>
-                    <DDS.modal {...modalData} />
+                    <DDS.modal.bottom {...modalData} />
                 </Drawer>
             </>
         );
