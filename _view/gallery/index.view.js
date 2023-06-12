@@ -10,8 +10,9 @@ import { FontLoader } from "three/addons/loaders/FontLoader.js";
 import gsap from "gsap";
 
 import DDS_Icons from "../../_lib/component/icons";
-import { message } from "antd";
 import DDS_Modal from "../../_lib/component/modal";
+import { message, Progress, Avatar, Badge } from "antd";
+import Link from "next/link";
 
 const scene = new THREE.Scene();
 let camera, renderer, controls;
@@ -416,9 +417,9 @@ const Home = observer((props) => {
         setDrop();
         render();
         snackbar();
-        setTimeout(() => {
-            document.querySelector(".invite").classList.add("iconOnly");
-        }, 2000);
+        // setTimeout(() => {
+        //     document.querySelector(".invite").classList.add("iconOnly");
+        // }, 4000);
     }, []);
 
     const modalData = {
@@ -445,11 +446,48 @@ const Home = observer((props) => {
                 <DDS_Button.default className="dds button primary large bigButton">갤러리로 이동</DDS_Button.default>
                 <DDS_Button.default className="dds button text">나중에</DDS_Button.default>
             </Drawer> */}
+            {contextHolder}
             <div className="userInfo">
-                {contextHolder}
-                Collectorman
+                <div className="profile">
+                    <div>
+                        <Badge count={<DDS_Icons.pen />} className="profileMod">
+                            <Avatar
+                                size={64}
+                                src={<img src={"https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fshopping.phinf%2Fmain_4037083%2F40370838619.20230607071158.jpg%22&type=nf216_312&service=navermain"} alt="avatar" />}
+                            />
+                        </Badge>
+                    </div>
+                    <div>
+                        <h1>
+                            abcdefghigklmnopqrst
+                            <DDS_Icons.badgeCheck className="badge" />
+                        </h1>
+                        <h4>Hello, I’m heavy collector Hello, I’m heavy coll</h4>
+                        <div className="point">
+                            <DDS_Icons.point />
+                            115,000
+                            <DDS_Icons.userGroup className="inviteCount" />4
+                        </div>
+                    </div>
+                </div>
+                <Link href="dds">
+                    <div className="collection">
+                        <ul className="wrapper">
+                            <li className="title">
+                                <DDS_Icons.drop />
+                                Colletion
+                            </li>
+                            <li className="count">
+                                <strong>3</strong>
+                                <span className="slash">/</span>7
+                            </li>
+                        </ul>
+                        <Progress percent={30} showInfo={false} strokeColor={"#FD6E24"} className="asdf" />
+                    </div>
+                </Link>
             </div>
-            <div className="invite" onClick={() => setOpen(true)}>
+            {/* 마이갤러리 */}
+            {/* <div className="invite" onClick={() => setOpen(true)}>
                 <div className="iconWrapper">
                     <DDS_Icons.envelopeOpenHeart />
                 </div>
@@ -458,8 +496,18 @@ const Home = observer((props) => {
                     <h6>친구를 초대하고 포인트를 획득해보세요!</h6>
                 </div>
                 <div className="greyAngle">
-                    <DDS_Icons.angleRight />
+                    <DDS_Icons.envelopeOpenHeart />
                 </div>
+            </div> */}
+            {/* 작가갤러리 */}
+            <div className="btnWrapper">
+                <Link href="/magazine">
+                    <DDS_Icons.bookFilled />
+                </Link>
+                <Link href="/">
+                    <DDS_Icons.chat />
+                </Link>
+                <DDS_Icons.heart />
             </div>
             <canvas id="drop"></canvas>
             <Detail />

@@ -1,13 +1,27 @@
 import React, { useEffect, useState } from "react";
+import Router, { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 import { useTimer } from "react-timer-hook";
 import Ai from "../../_lib/module/component/ai";
 import MisteryBox from "../../_lib/module/component/MisteryBox";
 
 const Home = observer((props) => {
+    const router = useRouter();
     const { drop } = props.store;
     let openTime;
     let time = new Date();
+
+    //------------------------------------------------- Init Load
+    const initLoad = () => {
+        console.log("initLoad");
+        drop.getDrop();
+    };
+
+    //------------------------------------------------- Router isReady
+    useEffect(() => {
+        initLoad({ callback: (e) => {} });
+    }, [router.isReady, router.asPath]);
+    //------------------------------------------------- Router isReady
 
     const Digit = ({ value, title }) => {
         const leftDigit = value >= 10 ? value.toString()[0] : "0";
@@ -28,12 +42,12 @@ const Home = observer((props) => {
         const { seconds, minutes, hours, days, totalSeconds } = useTimer({
             expiryTimestamp,
             onExpire: () => {
-                if (drop.data.status === "open") {
-                    drop.dataChange("status", "close");
+                if (drop.data.status === "processing") {
+                    drop.dataChange("status", "closed");
                     console.warn("closed");
                 }
-                if (drop.data.status === "before") {
-                    drop.dataChange("status", "open");
+                if (drop.data.status === "ready") {
+                    drop.dataChange("status", "processing");
                     console.warn("opening");
                 }
             },
@@ -53,9 +67,10 @@ const Home = observer((props) => {
     };
 
     useEffect(() => {
-        if (drop.data.status === "before") openTime = new Date(drop.data.startDate);
-        if (drop.data.status === "open") openTime = new Date(drop.data.endDate);
-        if (drop.data.status === "next") openTime = new Date(drop.next.startDate);
+        initLoad();
+        if (drop.data.status === "ready") openTime = new Date(drop.data.startDate);
+        if (drop.data.status === "processing") openTime = new Date(drop.data.endDate);
+        if (drop.data.status === "closed") openTime = new Date(drop.next.startDate);
 
         console.log(openTime);
         const currTime = new Date();
@@ -66,9 +81,9 @@ const Home = observer((props) => {
     return (
         <>
             <div className="drop">
-                <h2>{drop.data.status === "open" ? "Started Drop" : "Upcoming"}</h2>
+                <h2>{drop.data.status === "processing" ? "Started Drop" : "Upcoming"}</h2>
                 <Timer expiryTimestamp={time} />
-                {drop.data.status === "open" && (
+                {drop.data.status === "processing" && (
                     <div className="owner">
                         Owner <strong>{drop.data.owner}</strong>
                     </div>
