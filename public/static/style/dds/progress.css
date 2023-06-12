@@ -1,0 +1,9 @@
+.dds.progress.ant-progress {
+}
+
+.dds.progress.ant-progress .ant-progress-outer .ant-progress-success-bg,
+.dds.progress.ant-progress .ant-progress-outer .ant-progress-bg {
+    background-color: #fd6e24;
+}
+.dds.progress.ant-progress .ant-progress-outer {
+}

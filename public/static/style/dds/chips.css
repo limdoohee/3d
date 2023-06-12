@@ -1,0 +1,21 @@
+.dds.chips {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 8px;
+    gap: 8px;
+    height: 24px;
+    border-radius: 4px;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+.dds.chips.primary {
+    background: #1f1f1f;
+    color: #fff;
+}
+
+.dds.chips.secondary {
+    background: #e6e6e6;
+    color: #969696;
+}
