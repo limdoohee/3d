@@ -4,13 +4,16 @@ import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
 import gsap from "gsap";
+import DDS_Modal from "../../component/modal";
+import { RectAreaLightHelper } from "three/addons/helpers/RectAreaLightHelper.js";
 
 const MisteryBox = observer((props) => {
+    const [open, setOpen] = useState(false);
     const { drop } = props.store;
 
     let renderer1, renderer2;
     let camera;
-    const scene1 = new THREE.Scene();
+    const scene = new THREE.Scene();
     const scene2 = new THREE.Scene();
     let mixer = new THREE.AnimationMixer();
     let clock = new THREE.Clock();
@@ -18,7 +21,7 @@ const MisteryBox = observer((props) => {
     const group = new THREE.Group();
     const [curr, setCurr] = useState(); //현재드롭
     const [next, setNext] = useState(); //다음드롭
-    // scene1.add(new THREE.GridHelper(20, 20, 0x737373));
+    // scene.add(new THREE.GridHelper(20, 20, 0x737373));
 
     function setSpace() {
         // scene.fog = new THREE.Fog(0xa0a0a0, 10, 50);
@@ -31,7 +34,7 @@ const MisteryBox = observer((props) => {
         renderer1.shadowMap.type = THREE.PCFSoftShadowMap;
         // document.body.appendChild(renderer.domElement);
 
-        camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 100);
+        camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
         camera.position.set(0, 4, 10);
         // camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 100);
 
@@ -41,41 +44,69 @@ const MisteryBox = observer((props) => {
         controls.target.set(0, 4, 0);
         controls.update();
 
-        // light
+        // DirectionalLight
         let light = new THREE.DirectionalLight(0xffffff, 0.4);
         light.position.set(0, 5, 1);
         light.castShadow = true;
-        // light.shadow.mapSize.width = 1042;
-        // light.shadow.mapSize.height = 1042;
-        scene1.add(light);
+        light.shadow.mapSize.width = 1042;
+        light.shadow.mapSize.height = 1042;
+        scene.add(light);
         // scene.add(new THREE.DirectionalLightHelper(light, 0.5, "red"));
-        scene1.add(new THREE.AmbientLight(0xffffff, 0.6));
+        scene.add(new THREE.AmbientLight(0xffffff, 0.6));
 
-        const pointLight = new THREE.PointLight(0xffffff, 0.3, 100);
+        let light2 = new THREE.DirectionalLight(0xffffff, 0.05);
+        light2.position.set(15, 5, -50);
+        light2.castShadow = true;
+        light2.shadow.mapSize.width = 1042;
+        light2.shadow.mapSize.height = 1042;
+        const targetObject1 = new THREE.Object3D();
+        targetObject1.position.set(0, 5, -50);
+        scene.add(targetObject1);
+        light2.target = targetObject1;
+        scene.add(light2);
+        // scene.add(new THREE.DirectionalLightHelper(light2, 1, "green"));
+
+        let light3 = new THREE.DirectionalLight(0xffffff, 0.05);
+        light3.position.set(-15, 5, -50);
+        light3.castShadow = true;
+        light3.shadow.mapSize.width = 1042;
+        light3.shadow.mapSize.height = 1042;
+        const targetObject2 = new THREE.Object3D();
+        targetObject2.position.set(0, 5, -50);
+        scene.add(targetObject2);
+        light3.target = targetObject2;
+        scene.add(light3);
+        // scene.add(new THREE.DirectionalLightHelper(light3, 1, "green"));
+
+        // PointLight
+        const pointLight = new THREE.PointLight(0xffffff, 0.1);
         pointLight.position.set(0, 4, 3);
-        // pointLight.castShadow = true;
-        scene1.add(pointLight);
-        const sphereSize = 1;
-        // scene.add(new THREE.PointLightHelper(pointLight, sphereSize, "blue"));
-
-        const geo = new THREE.BoxGeometry(4, 7, 10);
-        const mat = new THREE.MeshStandardMaterial({
-            color: "#f5f5f5",
-            side: THREE.BackSide,
-        });
-        const space = new THREE.Mesh(geo, mat);
-        space.position.y = 3.6;
-        space.name = "space";
-        scene1.add(space);
+        scene.add(pointLight);
+        // scene.add(new THREE.PointLightHelper(pointLight, 1, "blue"));
 
         const shadow = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), new THREE.ShadowMaterial({ opacity: 0.1 }));
+        // const shadow = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), new THREE.MeshBasicMaterial({ color: "red" }));
         shadow.position.y = 0.11;
         shadow.material.transparent = true;
         shadow.receiveShadow = true;
         shadow.rotateX(-Math.PI / 2);
         shadow.name = "shadow";
-        scene1.add(shadow);
+        scene.add(shadow);
 
+        loader.load("../../static/3d/MainPage.fbx", (object) => {
+            object.scale.set(0.7, 0.7, 0.7);
+            object.position.y = 3;
+            // object.position.z = 20;
+            // object.rotation.set(0.4, 0.5, 0);
+            // object.traverse((child) => {
+            //     if (child instanceof THREE.Mesh) {
+            //         child.material.transparent = true;
+            //         child.castShadow = true;
+            //     }
+            // });
+
+            scene.add(object);
+        });
         // event
         window.addEventListener("click", onTouchBox);
         // window.addEventListener("resize", onWindowResize);
@@ -95,11 +126,11 @@ const MisteryBox = observer((props) => {
 
         raycaster.setFromCamera(pointer, camera);
 
-        const intersects = raycaster.intersectObjects(scene1.children);
+        const intersects = raycaster.intersectObjects(scene.children);
         if (intersects.length > 0 && drop.data.status === "open") {
             // parentName = intersects[0].object.parent.name;
-            const shadow = scene1.getObjectByName("shadow");
-            const space = scene1.getObjectByName("space");
+            const shadow = scene.getObjectByName("shadow");
+            const space = scene.getObjectByName("space");
 
             // 데이터에 myDrop true 로 변경될 수 있도록 drop ID랑 mydrop:true 값 보내주기
 
@@ -122,9 +153,12 @@ const MisteryBox = observer((props) => {
                     object.position.y = 2;
                     mixer = new THREE.AnimationMixer(object);
                     const action = mixer.clipAction(object.animations[0]);
-                    action.clampWhenFinished = true;
+                    // action.clampWhenFinished = true;
                     action.loop = THREE.LoopOnce;
                     action.play();
+                    mixer.addEventListener("finished", function (e) {
+                        console.log("finished");
+                    });
 
                     object.traverse((child) => {
                         if (child instanceof THREE.Mesh) {
@@ -132,8 +166,10 @@ const MisteryBox = observer((props) => {
                         }
                     });
 
-                    scene1.add(object);
-
+                    scene.add(object);
+                    setTimeout(() => {
+                        setOpen(true);
+                    }, 1000);
                     clock = new THREE.Clock();
                 });
             }
@@ -144,7 +180,7 @@ const MisteryBox = observer((props) => {
         requestAnimationFrame(spaceRender);
         const delta = clock.getDelta();
         if (mixer) mixer.update(delta);
-        renderer1.render(scene1, camera);
+        renderer1.render(scene, camera);
     }
 
     function setDrop() {
@@ -233,7 +269,7 @@ const MisteryBox = observer((props) => {
         loader.load("../../static/3d/CuteBox.fbx", (object) => {
             setNext(object);
             object.scale.set(0.006, 0.006, 0.006);
-            object.position.y = 9;
+            object.position.y = 10;
             object.rotation.set(0.4, 0.5, 0);
             object.traverse((child) => {
                 if (child instanceof THREE.Mesh) {
@@ -242,9 +278,9 @@ const MisteryBox = observer((props) => {
                 }
             });
 
-            scene1.add(object);
+            scene.add(object);
         });
-        if (drop.data.status === "close") {
+        if (drop.data.status === "closed") {
             // 현재 드롭 밑으로 떨어짐
             gsap.to(curr.position, {
                 y: -5,
@@ -280,7 +316,7 @@ const MisteryBox = observer((props) => {
                         }
                     });
 
-                    scene1.add(object);
+                    scene.add(object);
                 });
             } else {
                 console.log("ddd");
@@ -297,14 +333,23 @@ const MisteryBox = observer((props) => {
                         }
                     });
 
-                    scene1.add(object);
+                    scene.add(object);
                 });
             }
         }
     }, [drop.data.status]);
 
+    const modalData = {
+        open,
+        title: "드롭 획득을 축하해요!",
+        context: "1,000포인트가 지급되었어요.\n이제 갤러리로 이동해볼까요?",
+        button: "갤러리로 이동",
+        linkUrl: "/gallery",
+    };
+
     return (
         <>
+            <DDS_Modal {...modalData} />
             <canvas id="space"></canvas>
             {/* <canvas id="drop1"></canvas> */}
         </>
