@@ -23,6 +23,8 @@ const Home = observer((props) => {
             <h1>{lang.t(`title`)}</h1>
             INDEX <p>buildId : {common.buildId}</p>
         </DDS_Layout.container>
+
+        
     );
 });
 

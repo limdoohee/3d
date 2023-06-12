@@ -11,21 +11,31 @@ configure({
 //////////////////////////// makeAutoObservable
 class Store {
     data = {
-        startDate: "2023-06-05 10:49:30", // 드롭 오픈 시간
-        endDate: "2023-06-05 11:02:40", // 드롭 마감 시간
+        id: 1,
+        startDate: "2023-06-12 10:00:30", // 드롭 오픈 시간
+        endDate: "2023-06-12 17:02:40", // 드롭 마감 시간
         owner: 123,
-        status: "open",
+        status: "ready",
         myDrop: false,
         url: "../../static/3d/275C_Popup.fbx",
     };
 
     next = {
-        startDate: "2023-06-06 08:49:30", // 드롭 오픈 시간
+        id: 2,
+        startDate: "2023-06-13 08:49:30", // 드롭 오픈 시간
     };
 
     constructor(store) {
         this.store = store;
         makeAutoObservable(this);
+    }
+
+    async getDrop() {
+        await Api.post(`/dks-api/v2/drop`)
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+            });
     }
 
     dataChange(key, value, callback) {
