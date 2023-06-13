@@ -13,7 +13,7 @@ import View from "../../_view/login/index.view";
 const Home = observer((props) => {
     return (
         <>
-            <View props={props} />
+            <View props={props} store={store} />
         </>
     );
 });

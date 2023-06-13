@@ -29,8 +29,8 @@ const Home = observer((props) => {
         <>
             <div className="auth ui success">
                 <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230612112553676_dk.webp" />
-                <h3 dangerouslySetInnerHTML={{ __html: t(`auth.success.desc1`) }} />
-                <p dangerouslySetInnerHTML={{ __html: t(`auth.success.desc2`) }} />
+                <h3 dangerouslySetInnerHTML={{ __html: t(`signup.success.desc1`) }} />
+                <p dangerouslySetInnerHTML={{ __html: t(`signup.success.desc2`) }} />
             </div>
         </>
     );

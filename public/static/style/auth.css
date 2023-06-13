@@ -145,6 +145,11 @@
 
 .auth.ui.nickname .nickname-list li .help {
     font-size: 12px;
+}
+.auth.ui.nickname .nickname-list li .help.warning {
+    color: var(--color-red);
+}
+.auth.ui.nickname .nickname-list li .help.success {
     color: var(--color-green);
 }
 /* -------------------------------------------------------------------------- auth nickname */

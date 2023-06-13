@@ -13,7 +13,7 @@ import { Drawer, Button } from "antd";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
-    const {} = props;
+    const { auth } = props.store;
     const router = useRouter();
     const { t, i18n } = useTranslation();
     const [openLang, setOpenLang] = useState(false);
@@ -70,7 +70,13 @@ const Home = observer((props) => {
                     <ul className="login-sns">
                         {login_data.map((l, idx) => {
                             return (
-                                <li key={l.id} className={l.className}>
+                                <li
+                                    key={idx}
+                                    className={l.className}
+                                    onClick={() => {
+                                        `${auth.login(`${l.className}`, router.asPath)}`;
+                                    }}
+                                >
                                     <img src={l.img} />
                                     <span>{l.login_title} </span>
                                 </li>
@@ -100,7 +106,7 @@ const Home = observer((props) => {
                     <ul className="login-sns">
                         {login_data.map((l, idx) => {
                             return (
-                                <li className={l.className} key={l.idx}>
+                                <li className={l.className} key={idx}>
                                     <img src={l.img} />
                                     <span>{l.signup_title} </span>
                                 </li>

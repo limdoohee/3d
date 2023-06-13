@@ -13,49 +13,51 @@ import Layout from "../../_lib/component/layout";
 //------------------------------------------------------------------------------- Antd
 import { Checkbox, Space, Button } from "antd-mobile";
 import { Drawer } from "antd";
+import { Fragment } from "react";
 //------------------------------------------------------------------------------- Antd
 //------------------------------------------------------------------------------- Component
 //------------------------------------------------------------------------------- Component
-
+const CheckboxGroup = Checkbox.Group;
 const Home = observer((props) => {
-    const {} = props;
     const router = useRouter();
     const { t, i18n } = useTranslation();
 
-    const items = Array.from({ length: 3 }, (_, idx) => t(`auth.terms.list${idx + 1}`));
-
-    const [value, setValue] = useState([""]);
-    const [isChecked, setIsChecked] = useState(false);
+    const items = Array.from({ length: 3 }, (_, idx) => t(`signup.terms.list${idx + 1}`));
+    const [saveValue, setSaveValue] = useState(false);
     const [open, setOpen] = useState(false);
     const [selectedList, setSelectedList] = useState({});
+    const [value, setValue] = useState([]);
 
     useEffect(() => {
-        setIsChecked(value.includes(items[0]) && value.includes(items[1]));
+        setSaveValue(value.includes(items[0]) && value.includes(items[1]));
+
+        const termsValue = value.includes(items[2]) ? "Y" : "N";
+        sessionStorage.setItem("IsTermsValue", termsValue);
     }, [value]);
 
-    // //////////////////////////////////////////////////////////////////
     const onClose = () => {
         setOpen(false);
     };
     const handleListClick = (list, idx) => {
         setSelectedList({
-            title: t(`auth.list${idx + 1}.title`),
-            desc: t(`auth.list${idx + 1}.desc`),
+            title: t(`signup.list${idx + 1}.title`),
+            desc: t(`signup.list${idx + 1}.desc`),
         });
         setOpen(true);
     };
+
     return (
         <>
             <div className="auth ui terms">
-                <h2>{t(`auth.terms.title`)}</h2>
+                <h2>{t(`signup.terms.title`)}</h2>
                 <div className="agree-list ">
                     <Checkbox
                         className="all"
-                        indeterminate={value.length > 0 && value.length < items.length}
-                        // checked={value.length == items.length}
                         icon={() =>
                             items.length == value.length ? <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230602093509971_dk.webp" /> : <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230602093522455_dk.webp" />
                         }
+                        indeterminate={false}
+                        checked={value.length === items.length}
                         onChange={(checked) => {
                             if (checked) {
                                 setValue(items);
@@ -64,7 +66,7 @@ const Home = observer((props) => {
                             }
                         }}
                     >
-                        {t(`auth.terms.all`)}
+                        {t(`signup.terms.all`)}
                     </Checkbox>
                     <div className="each">
                         <Checkbox.Group
@@ -75,9 +77,9 @@ const Home = observer((props) => {
                         >
                             <Space direction="vertical">
                                 {items.map((item, idx) => (
-                                    <>
+                                    <React.Fragment key={idx}>
                                         <Checkbox
-                                            key={idx + 1}
+                                            key={idx}
                                             value={item}
                                             icon={(checked) =>
                                                 checked ? <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230602093509971_dk.webp" /> : <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230602093522455_dk.webp" />
@@ -102,7 +104,7 @@ const Home = observer((props) => {
                                                 <p>{selectedList.desc}</p>
                                             </div>
                                         </Drawer>
-                                    </>
+                                    </React.Fragment>
                                 ))}
                             </Space>
                         </Checkbox.Group>
@@ -110,12 +112,12 @@ const Home = observer((props) => {
                 </div>
                 <Component.default
                     className="agree-check"
-                    disabled={!isChecked}
+                    disabled={!saveValue}
                     onClick={() => {
-                        Router.push("/auth/nickname");
+                        Router.push("/signup/nickname");
                     }}
                 >
-                    {t(`auth.terms.check`)}
+                    {t(`signup.terms.check`)}
                 </Component.default>
             </div>
         </>

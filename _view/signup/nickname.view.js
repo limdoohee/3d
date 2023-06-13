@@ -14,14 +14,32 @@ import { Checkbox, Space, Button } from "antd-mobile";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
+    const { common, auth } = props.store;
     const router = useRouter();
     const { t, i18n } = useTranslation();
+
+    //------------------------------------------------- Init Load
+    const initLoad = ({ callback }) => {
+        var params = { nickname: value };
+        auth.checkNickname(params, (e) => {
+            common.debug(e);
+            callback && callback(e);
+        });
+    };
+    //------------------------------------------------- Init Load
+
+    //------------------------------------------------- Router isReady
+    useEffect(() => {
+        if (router.isReady && router.pathname == "/signup/nickname") {
+            initLoad({ callback: (e) => {} });
+        }
+    }, [router.isReady, router.asPath]);
+    //------------------------------------------------- Router isReady
 
     const [byteCount, setByteCount] = useState(0);
     const [value, setValue] = useState("");
     const nicknameRef = useRef(null);
-
-    const items = Array.from({ length: 3 }, (_, idx) => t(`auth.terms-agreement.list${idx + 1}`));
+    const [isNicknameAvailable, setIsNicknameAvailable] = useState(null);
 
     const calculateByteCount = (text) => {
         let byteCount = 0;
@@ -36,27 +54,56 @@ const Home = observer((props) => {
         return byteCount;
     };
 
+    useEffect(() => {
+        const count = calculateByteCount(value);
+        setByteCount(count);
+
+        sessionStorage.setItem("IsNicknameValue", value.toString());
+    }, [value]);
+
+    useEffect(() => {
+        const inputValue = value;
+        let maxLength = 20;
+        if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(inputValue)) {
+            maxLength = 10;
+        }
+        if (inputValue.length > maxLength) {
+            setValue(inputValue.slice(0, maxLength));
+        }
+    }, [value]);
+
+    const handleNickName = (e) => {
+        var param = { nickname: value };
+
+        auth.checkNickname(param, (data) => {
+            common.debug(data);
+            if (data.result == "ok") {
+                console.log(value);
+                console.log(isNicknameAvailable);
+                setIsNicknameAvailable(true);
+            } else {
+                setIsNicknameAvailable(false);
+            }
+        });
+    };
+
     const handleClear = () => {
         setValue("");
         nicknameRef.current.focus();
     };
-    useEffect(() => {
-        const count = calculateByteCount(value);
-        setByteCount(count);
-    }, [value]);
 
     return (
         <>
             <div className="auth ui nickname">
-                <h2>{t(`auth.nickname.title`)}</h2>
+                <h2>{t(`signup.nickname.title`)}</h2>
                 <ul className="nickname-list">
                     <li>
-                        <label>{t(`auth.nickname.label1`)}</label>
+                        <label>{t(`signup.nickname.label1`)}</label>
                         <Input type="text" disabled value="abc@gmail.com" />
                     </li>
                     <li>
                         <div>
-                            <label className="warning">{t(`auth.nickname.label2`)}</label>
+                            <label className="warning">{t(`signup.nickname.label2`)}</label>
                             <span className="count">
                                 {value ? byteCount : 0} / <span>20</span>
                             </span>
@@ -65,19 +112,12 @@ const Home = observer((props) => {
                             <Input
                                 ref={nicknameRef}
                                 type="text"
-                                placeholder={t(`auth.nickname.placeholder`)}
+                                placeholder={t(`signup.nickname.placeholder`)}
                                 onChange={(e) => {
-                                    const inputValue = e.target.value;
-                                    let maxLength = 20;
-                                    if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(inputValue)) {
-                                        maxLength = 10;
-                                    }
-
-                                    if (inputValue.length > maxLength) {
-                                        setValue(inputValue.slice(0, maxLength));
-                                    } else {
-                                        setValue(inputValue);
-                                    }
+                                    setValue(e.target.value);
+                                }}
+                                onKeyUp={(e) => {
+                                    handleNickName(e);
                                 }}
                                 value={value}
                                 maxLength={20}
@@ -88,14 +128,14 @@ const Home = observer((props) => {
                                 </span>
                             )}
                         </div>
-                        <span className="help warning">{t(`auth.nickname.help-warning`)}</span>
+                        {value !== "" ? <p className={`help ${isNicknameAvailable ? "success" : "warning"}`}>{isNicknameAvailable ? t(`signup.nickname.help-success`) : t(`signup.nickname.help-warning`)}</p> : ""}
                     </li>
                 </ul>
                 <Component.default
                     className="agree-check"
-                    disabled={byteCount === 0}
+                    disabled={byteCount === 0 || !isNicknameAvailable}
                     onClick={() => {
-                        Router.push("/auth/mobile");
+                        Router.push("/signup/mobile");
                     }}
                 >
                     {t(`common.check`)}

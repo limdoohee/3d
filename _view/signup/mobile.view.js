@@ -19,6 +19,7 @@ import { Checkbox, Button } from "antd-mobile";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
+    const { common, auth } = props.store;
     const router = useRouter();
     const { t, i18n } = useTranslation();
 
@@ -29,12 +30,12 @@ const Home = observer((props) => {
     const phoneNumberRef = useRef(null);
     const confirmCodeRef = useRef(null);
     const [confirmationResult, setConfirmationResult] = useState(null);
-    const [login, setLogin] = useState(true);
     const [messageApi, contextHolder] = message.useMessage();
     const [phoneNumber, setPhoneNumber] = useState("");
     const [isCodeEntered, setIsCodeEntered] = useState(false);
     const [timer, setTimer] = useState(180 * 1000);
     const [confirmCodeSubmitTime, setConfirmCodeSubmitTime] = useState(null);
+    const [isTimerRunning, setIsTimerRunning] = useState(false);
 
     const handleToggle = (l, idx) => {
         setOpen(false);
@@ -46,11 +47,10 @@ const Home = observer((props) => {
 
     const options = [
         { ko: "한국", en: "korea", label: 82 },
-        { ko: "한국", en: "korea", label: 812 },
+        { ko: "한국", en: "korea", label: 44 },
     ];
     const [isCategorySelect, setIsCategorySelect] = useState([true, ...Array(options.length - 1).fill(false)]);
 
-    // 인증받기
     const MsgIcon = () => {
         return <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230607111211213_dk.webp" />;
     };
@@ -62,22 +62,18 @@ const Home = observer((props) => {
             icon: <MsgIcon />,
         });
     };
-    const handleChange = (e) => {
-        setPhoneNumber(e.target.value);
-    };
 
     const firebaseConfig = {
-        apiKey: "AIzaSyBZLsr9rPiODqvWsRch2LuiVktSdZ8eKTM",
-        authDomain: "test-6f78c.firebaseapp.com",
-        projectId: "test-6f78c",
-        storageBucket: "test-6f78c.appspot.com",
-        messagingSenderId: "538474652058",
-        appId: "1:538474652058:web:dc647d152cab249c575a23",
-        measurementId: "G-E03WK93X0R",
+        apiKey: "AIzaSyCTXH9QUGUDxJG9k_5nUeQGRVHX6BIKJDE",
+        authDomain: "test2-56417.firebaseapp.com",
+        projectId: "test2-56417",
+        storageBucket: "test2-56417.appspot.com",
+        messagingSenderId: "365267885594",
+        appId: "1:365267885594:web:91e8a32803734c6681fba3",
+        measurementId: "G-2C8SGDJVE5",
     };
     const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    auth.languageCode = "ko";
+    getAuth(app).languageCode = "ko";
 
     useEffect(() => {
         window.recaptchaVerifier = new RecaptchaVerifier(
@@ -86,22 +82,19 @@ const Home = observer((props) => {
                 size: "invisible",
                 timeout: 180000,
             },
-            auth,
+            getAuth(app),
         );
-
-        // ...
     }, []);
 
     const handleSendCode = () => {
         const appVerifier = window.recaptchaVerifier;
         const phoneNumber = phoneNumberRef.current.value;
-        const auth = getAuth();
-        signInWithPhoneNumber(auth, "+" + value + phoneNumber, appVerifier)
+        signInWithPhoneNumber(getAuth(), "+" + value + phoneNumber, appVerifier)
             .then((confirmationResult) => {
                 setConfirmationResult(confirmationResult);
                 setConfirmCodeSubmitTime(new Date());
-                setTimer(180 * 1000); // 타이머 초기화
-                setCode(""); // 코드 초기화
+                setTimer(180 * 1000);
+                setCode("");
                 info({
                     content: "인증번호가 전송되었습니다. ",
                     className: "success",
@@ -121,14 +114,19 @@ const Home = observer((props) => {
     useEffect(() => {
         if (confirmCodeSubmitTime) {
             let countdown = Math.floor((confirmCodeSubmitTime.getTime() + 180 * 1000 - Date.now()) / 1000);
+            setTimer(countdown * 1000);
+            setIsTimerRunning(true);
+
             const interval = setInterval(() => {
                 countdown -= 1;
                 setTimer(countdown * 1000);
 
                 if (countdown === 0) {
                     clearInterval(interval);
+                    setIsTimerRunning(false);
                 }
             }, 1000);
+
             return () => {
                 clearInterval(interval);
             };
@@ -161,18 +159,38 @@ const Home = observer((props) => {
                 });
             }
         };
+
+        var params = {
+            // clientId:,
+            // email:,
+            // uid:,
+            cellNo: phoneNumber,
+            username: sessionStorage.getItem("IsNicknameValue"),
+            adsAgree: sessionStorage.getItem("IsTermsValue"),
+            // magazineSeq: magazine.data.create.config.seq,
+            // title: magazine.data.create.config.title,
+            // content: JSON.stringify(magazine.data.create.cells),
+            // showStatus: magazine.data.create.config.visible,
+            // thumbnailType: magazine.data.create.config.thumbnailType,
+            // thumbnailUrl: magazine.data.create.config.thumbnailUrl,
+            // urlName: magazine.data.create.config.urlName,
+        };
+
         event.preventDefault();
         const authCode = confirmCodeRef.current.value;
         if (confirmationResult) {
-            confirmationResult
-                .confirm(authCode)
-                .then((result) => {
-                    localStorage.setItem("isLoggedIn", "true");
-                    Router.push("/auth/success");
-                })
-                .catch((error) => {
-                    firebaseError(error);
-                });
+            auth.phoneVerify(params, (e) => {
+                common.debug("e", e);
+                confirmationResult
+                    .confirm(authCode)
+                    .then((result) => {
+                        common.debug("e", e);
+                        common.debug("result", result);
+                    })
+                    .catch((error) => {
+                        common.debug("에러", error);
+                    });
+            });
         } else {
             alert("인증 요청이 이루어지지 않았습니다.");
         }
@@ -180,11 +198,11 @@ const Home = observer((props) => {
     return (
         <>
             <div className="auth ui mobile">
-                <h2>{t(`auth.mobile.title`)}</h2>
+                <h2>{t(`signup.mobile.title`)}</h2>
                 <div className="mobile-list">
                     <>
                         <div className="input-area">
-                            <label>{t(`auth.mobile.label`)}</label>
+                            <label>{t(`signup.mobile.label`)}</label>
                             <div className="form">
                                 <strong
                                     onClick={() => {
@@ -194,7 +212,16 @@ const Home = observer((props) => {
                                     +{value}
                                     <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230605162934932_dk.webp" />
                                 </strong>
-                                <input type="number" placeholder={t(`auth.mobile.placeholder`)} ref={phoneNumberRef} value={phoneNumber} onChange={handleChange} />
+                                <input
+                                    type="text"
+                                    placeholder={t(`signup.mobile.placeholder`)}
+                                    ref={phoneNumberRef}
+                                    value={phoneNumber}
+                                    onChange={(e) => {
+                                        const inputValue = e.target.value.replace(/[^0-9]/g, "");
+                                        setPhoneNumber(inputValue);
+                                    }}
+                                />
                                 <button
                                     className="btn send"
                                     id="phoneNumberButton"
@@ -204,20 +231,20 @@ const Home = observer((props) => {
                                     }}
                                     disabled={!phoneNumber}
                                 >
-                                    {certificate ? t(`auth.mobile.certificate.reBtn`) : t(`auth.mobile.certificate.btn`)}
+                                    {certificate ? t(`signup.mobile.certificate.reBtn`) : t(`signup.mobile.certificate.btn`)}
                                 </button>
                             </div>
                             {certificate && (
                                 <form className="form" onSubmit={handleConfirmCodeSubmit}>
                                     <div className="time">
-                                        <label>{t(`auth.mobile.certificate.label`)}</label>
-                                        {<div>{formatTime(Math.floor(timer / 1000))}</div>}
+                                        <label>{t(`signup.mobile.certificate.label`)}</label>
+                                        {isTimerRunning ? <div>{formatTime(Math.floor(timer / 1000))}</div> : <div>00:00</div>}
                                     </div>
 
                                     <input
                                         ref={confirmCodeRef}
                                         type="text"
-                                        placeholder={t(`auth.mobile.certificate.placeholder`)}
+                                        placeholder={t(`signup.mobile.certificate.placeholder`)}
                                         onChange={(e) => {
                                             setCode(e.target.value);
                                         }}
@@ -251,7 +278,7 @@ const Home = observer((props) => {
                         <Drawer
                             height={"auto"}
                             className="login drawer lang"
-                            title={t(`auth.mobile.sel-region`)}
+                            title={t(`signup.mobile.sel-region`)}
                             placement="bottom"
                             onClose={() => {
                                 setOpen(false);

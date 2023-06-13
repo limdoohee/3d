@@ -10,14 +10,14 @@ const store = new Store();
 import Layout from "../../_lib/component/layout";
 //------------------------------------------------------------------------------- Component
 //------------------------------------------------------------------------------- View
-import View from "../../_view/auth/mobile.view";
+import View from "../../_view/signup/terms.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {
     return (
         <>
             <Layout.back store={store}>
-                <View props={props} />
+                <View props={props} store={store} />
             </Layout.back>
         </>
     );

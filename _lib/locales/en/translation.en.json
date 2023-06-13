@@ -25,7 +25,7 @@
             }
         }
     },
-    "auth": {
+    "signup": {
         "terms": {
             "title": "Drop Kitchen service terms and conditions please agree",
             "all": "Agree all",
