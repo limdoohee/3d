@@ -18,17 +18,19 @@
         padding: 0 24px;
     }
 }
+.dds.container.fluid {
+    padding: 0;
+}
 /* =========================== container */
-s
 
 /* =========================== content */
 .dds.content {
-    padding: 50px 20px 0 20px;
+    padding: 50px 0 0 0;
 }
 
 @media (min-width: 640px) {
     .dds.content {
-        padding: 50px 24px 0 24px;
+        padding: 50px 0 0 0;
     }
 }
 /* =========================== content */
@@ -178,3 +180,4 @@ s
 @import url("./modal.css");
 @import url("./progress.css");
 @import url("./chips.css");
+@import url("./actionsheet.css");

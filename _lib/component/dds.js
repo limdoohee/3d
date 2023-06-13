@@ -14,6 +14,7 @@ import tabs from "../../_lib/component/tabs";
 import progress from "../../_lib/component/progress";
 import chips from "../../_lib/component/chips";
 import modal from "../../_lib/component/modal";
+import actionsheet from "../../_lib/component/actionsheet";
 //------------------------------------------------------------------------------- Component
 
 const Home = {
@@ -28,6 +29,7 @@ const Home = {
     progress: progress,
     chips: chips,
     modal: modal,
+    actionsheet: actionsheet,
 };
 
 export default Home;

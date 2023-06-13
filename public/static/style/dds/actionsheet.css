@@ -1,0 +1,39 @@
+.dds.actionsheet {
+    position: fixed;
+    left: 100% !important;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(0, 0, 0, 0.45);
+    pointer-events: auto;
+    opacity: 0;
+    display: none;
+    /* transition: all 0.3s ease; */
+    display: flex;
+    align-items: flex-end;
+}
+.dds.actionsheet.on {
+    opacity: 1;
+    left: 0 !important;
+}
+.dds.actionsheet .inner {
+    padding: 32px 0;
+    background-color: #fff;
+    width: 100%;
+    border-radius: 16px 16px 0px 0px;
+}
+.dds.actionsheet .inner ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 56px;
+    font-weight: 400;
+    font-size: 16px;
+    padding: 20px;
+}
+.dds.actionsheet .inner ul li .dds.icons svg {
+    width: 24px;
+    height: 24px;
+}
+.dds.actionsheet .inner ul li .dds.icons svg path {
+    fill: #fd6e24 !important;
+}

@@ -9,6 +9,7 @@
     padding: 0 5px;
     height: 50px;
     background-color: #fff;
+    z-index: 1000;
 }
 
 .dk.header > *:first-child .dds.button.none {
