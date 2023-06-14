@@ -18,12 +18,11 @@ const Home = observer((props) => {
     }, []);
 
     return (
-        // <DDS_Layout.container>
-        //     <div>{lang.i18n.language}</div>
-        //     <h1>{lang.t(`title`)}</h1>
-        //     INDEX <p>buildId : {common.buildId}</p>
-        // </DDS_Layout.container>
-        <></>
+        <DDS_Layout.container>
+            <div>{lang.i18n.language}</div>
+            <h1>{lang.t(`title`)}</h1>
+            INDEX <p>buildId : {common.buildId}</p>
+        </DDS_Layout.container>
     );
 });
 
