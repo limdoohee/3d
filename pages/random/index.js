@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Store
 import Store from "../../_store/store";
@@ -12,9 +12,12 @@ import View from "../../_view/random/index.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {
-    const { auth } = store;
+    const { auth, common } = store;
 
     auth.setCheckLogin(props);
+    useEffect(() => {
+        common.init();
+    }, []);
 
     return (
         <>

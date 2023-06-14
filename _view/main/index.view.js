@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 import { useTimer } from "react-timer-hook";
-import MisteryBox from "../../_lib/module/component/misteryBox";
+import MisteryBox from "../../_lib/module/component/MisteryBox";
 
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";

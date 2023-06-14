@@ -95,7 +95,8 @@
         "title": "drop list"
     },
     "random": {
-        "title": "random box"
+        "title": "random box",
+        "desc": "Open the random box and\nget the drop you've been wanting!!"
     },
     "error": {
         "404": {

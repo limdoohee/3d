@@ -8,6 +8,7 @@
 }
 .dds.modal.bottom .ant-modal-content {
     border-radius: 16px 16px 0px 0px;
+    padding: 32px 20px 20px;
 }
 
 .dds.modal.bottom .imgWrapper {
@@ -42,6 +43,7 @@
 .dds.modal.bottom .dds.button {
     width: 100%;
     justify-content: center;
+    margin: 0;
 }
 
 .dds.modal.bottom .dds.button.large {
