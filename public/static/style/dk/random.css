@@ -1,0 +1,162 @@
+.random {
+    position: relative;
+    height: calc(100vh - 50px);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.random .voucher {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 8px 16px;
+    gap: 16px;
+    isolation: isolate;
+    width: 78px;
+    height: 33.27px;
+    background: #f5f5f5;
+    border-radius: 50px;
+    top: 56px;
+}
+
+.random .voucher img {
+    width: 20px;
+}
+
+.random .voucher .chips {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    right: -4px;
+    top: -4px;
+    background: #fd6e24;
+    border-radius: 50px;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    line-height: 9px;
+}
+
+.random h2 {
+    text-align: center;
+    margin-bottom: 80px;
+}
+
+.random .bottom {
+    width: 100%;
+}
+
+.random .bottom .btnContainer {
+    display: flex;
+    gap: 8px;
+}
+
+.random .bottom .btnContainer .dds.button {
+    flex: 1;
+    justify-content: center;
+}
+
+.buyRandomBox > li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.buyRandomBox .box {
+    display: flex;
+    gap: 12px;
+    padding: 16px 0;
+}
+
+.buyRandomBox .box h6 {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+}
+
+.buyRandomBox .box .boxPoint {
+    display: flex;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 14px;
+    letter-spacing: -0.02em;
+    margin-top: 8px;
+}
+
+.buyRandomBox .box .boxPoint .dds.icons {
+    width: 14px;
+    height: 14px;
+    margin-right: 4px;
+}
+
+.buyRandomBox .option {
+    display: flex;
+    align-items: center;
+    padding: 6px 12px;
+    gap: 8px;
+    width: 104px;
+    height: 38px;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+.buyRandomBox .option .dds.icons svg {
+    width: 12px;
+    height: 12px;
+}
+
+.buyRandomBox .option .amount {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 10px 16px;
+    gap: 10px;
+
+    width: 40px;
+    height: 30px;
+
+    /* Base/White */
+
+    background: #ffffff;
+    border-radius: 4px;
+}
+
+.buyRandomBox .point {
+    padding: 12px 0 16px;
+}
+
+.buyRandomBox .point * {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    color: #969696;
+}
+
+.buyRandomBox .price {
+    padding-bottom: 12px;
+}
+
+.buyRandomBox .price h5 {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    color: #1f1f11;
+}
+
+.buyRandomBox .price h6 {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 20px;
+    letter-spacing: -0.03em;
+    color: #1f1f11;
+}
