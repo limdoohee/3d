@@ -21,11 +21,11 @@ const Home = (props) => {
             if (e.result) {
                 await cookie.remove("loginToken", { path: "/" });
                 await cookie.save("loginToken", router.query.token, { path: "/" });
-                Router.push("/");
+                router.push("/");
             }
         });
     } else {
-        Router.push("/login");
+        router.push("/login");
     }
     return <></>;
 };
