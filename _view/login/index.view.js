@@ -18,7 +18,8 @@ const Home = observer((props) => {
     const { t, i18n } = useTranslation();
     const [openLang, setOpenLang] = useState(false);
     const [openSignUp, setOpenSignUp] = useState(false);
-    const [translate, setTranslate] = useState("EN");
+    const [showTranslate, setShowTranslate] = useState("EN");
+    const [handleTranslate, setHandleTranslate] = useState("en");
 
     const lang_selected = [
         {
@@ -44,13 +45,17 @@ const Home = observer((props) => {
     };
 
     const handleToggle = (l, idx) => {
-        setTranslate(l.show);
+        setShowTranslate(l.show);
         setOpenLang(false);
         const newArr = Array(lang_selected.length).fill(false);
         newArr[idx] = true;
         setIsCategorySelect(newArr);
         i18n.changeLanguage(l.translate);
+        setHandleTranslate(l.translate);
     };
+    useEffect(() => {
+        sessionStorage.setItem("LangValue", handleTranslate);
+    }, [showTranslate]);
 
     const login_data = [
         { id: "1", login_title: t(`login.main.google`), signup_title: t(`login.main.signup.google`), className: "google", img: "https://asset.dropkitchen.xyz/contents/202305_dev/20230530104331221_dk.webp", signup: "Google로 가입하기" },
@@ -108,7 +113,7 @@ const Home = observer((props) => {
                             return (
                                 <li className={l.className} key={idx}>
                                     <img src={l.img} />
-                                    <span>{l.signup_title} </span>
+                                    <span>{l.signup_title}</span>
                                 </li>
                             );
                         })}
@@ -120,7 +125,7 @@ const Home = observer((props) => {
                         <span>
                             <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230601112943364_dk.webp" />
                         </span>
-                        {translate}
+                        {showTranslate}
                         <span>
                             <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230601112943266_dk.webp" />
                         </span>

@@ -40,7 +40,7 @@ const Home = {
         };
 
         const [loading, setloading] = useState(false);
-
+   
         useEffect(() => {
             if (chat.state.currentlyJoinedChannel && chat.sb && !chat.state.loading) {
                 setTimeout(() => {

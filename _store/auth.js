@@ -86,7 +86,7 @@ class Store {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 이용약관 동의
     async phoneVerify(params, callback) {
-        await Api.post(`/dks-api/v2/phone_verify`, params, this.store.auth.data.loginResult.loginToken)
+        await Api.post(`/dks-api/v2/phone_verify`, params, null)
             .then((response) => response.json())
             .then((data) => {
                 callback && callback(data.data ? data.data : data);

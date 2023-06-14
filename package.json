@@ -28,6 +28,7 @@
         "dotenv": "^16.0.1",
         "env-cmd": "^10.1.0",
         "firebase": "^9.22.0",
+        "firebase-admin": "^11.9.0",
         "framer-motion": "^10.12.16",
         "gsap": "^3.11.5",
         "i18next": "^22.5.0",

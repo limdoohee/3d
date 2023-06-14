@@ -146,8 +146,8 @@
 .auth.ui.nickname .nickname-list li .help {
     font-size: 12px;
 }
-.auth.ui.nickname .nickname-list li .help.warning {
-    color: var(--color-red);
+.auth.ui.nickname .nickname-list li .warning {
+    color: var(--color-red) !important;
 }
 .auth.ui.nickname .nickname-list li .help.success {
     color: var(--color-green);
@@ -214,7 +214,7 @@
     flex-direction: row;
 }
 .auth.ui.mobile .mobile-list .input-area .form:nth-child(2) > input {
-    padding: 0 0 0 74px;
+    padding: 0 0 0 87px;
 }
 
 .auth.ui.mobile .mobile-list .input-area .form:nth-child(3) > span img {
@@ -283,6 +283,13 @@
     position: fixed;
     bottom: 0;
 }
+.ant-drawer-content-wrapper:has(.drawer.lang) {
+    max-height: 72vh !important;
+}
+.ant-drawer-content.drawer.lang {
+    overflow-y: scroll;
+    height: 100vh;
+}
 /* -------------------------------------------------------------------------- auth mobile */
 /* -------------------------------------------------------------------------- auth success */
 .auth.ui.success {
@@ -294,13 +301,19 @@
     height: 100vh;
 }
 .auth.ui.success img {
-    width: 200px;
-    height: 200px;
+    width: 48vw;
+    height: 48vw;
+    max-width: 200px;
+    max-height: 200px;
 }
 .auth.ui.success h3 {
+    margin-top: 14vh;
+    display: inline;
+}
+.auth.ui.success h3 > * {
     line-height: 150%;
     font-size: 22px;
-    margin-top: 120px;
+    font-weight: 700;
 }
 .auth.ui.success p {
     font-size: 16px;

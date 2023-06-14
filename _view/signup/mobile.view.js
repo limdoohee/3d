@@ -7,10 +7,10 @@ import "../../_lib/module/i18n";
 import { useTranslation } from "react-i18next";
 import Component from "../../_lib/component/button";
 import { initializeApp } from "firebase/app";
-import { getAuth, signInWithPopup, GoogleAuthProvider, signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
+import { getAuth, onAuthStateChanged, signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 import firebase from "firebase/app";
 import "firebase/auth";
-
+import countryCodeData from "../../_lib/locales/en/countryCode.en.json";
 //------------------------------------------------------------------------------- Antd
 import { Input, Select, Drawer, Space, message } from "antd";
 import { Checkbox, Button } from "antd-mobile";
@@ -22,6 +22,27 @@ const Home = observer((props) => {
     const { common, auth } = props.store;
     const router = useRouter();
     const { t, i18n } = useTranslation();
+
+    //------------------------------------------------- Init Load
+    const initLoad = ({ callback }) => {
+        callback && callback();
+    };
+    //------------------------------------------------- Init Load
+
+    //------------------------------------------------- Router isReady
+    useEffect(() => {
+        if (router.isReady && router.pathname == "/signup/mobile") {
+            initLoad({
+                callback: (e) => {
+                    const translateSet = sessionStorage.getItem("LangValue");
+                    if (translateSet) {
+                        i18n.changeLanguage(translateSet);
+                    }
+                },
+            });
+        }
+    }, [router.isReady, router.asPath]);
+    //------------------------------------------------- Router isReady
 
     const [value, setValue] = useState("82");
     const [open, setOpen] = useState(false);
@@ -42,12 +63,12 @@ const Home = observer((props) => {
         const newArr = Array(options.length).fill(false);
         newArr[idx] = true;
         setIsCategorySelect(newArr);
-        setValue(l.label);
+        setValue(l.dial_code);
     };
 
     const options = [
         { ko: "한국", en: "korea", label: 82 },
-        { ko: "한국", en: "korea", label: 44 },
+        { ko: "한국", en: "korea", label: 1 },
     ];
     const [isCategorySelect, setIsCategorySelect] = useState([true, ...Array(options.length - 1).fill(false)]);
 
@@ -64,13 +85,14 @@ const Home = observer((props) => {
     };
 
     const firebaseConfig = {
-        apiKey: "AIzaSyCTXH9QUGUDxJG9k_5nUeQGRVHX6BIKJDE",
-        authDomain: "test2-56417.firebaseapp.com",
-        projectId: "test2-56417",
-        storageBucket: "test2-56417.appspot.com",
-        messagingSenderId: "365267885594",
-        appId: "1:365267885594:web:91e8a32803734c6681fba3",
-        measurementId: "G-2C8SGDJVE5",
+        apiKey: "AIzaSyCwZtLeU5e0_Fs-Rv435wGJVYNUSJsaKvg",
+        authDomain: "dropkitchen-bedde.firebaseapp.com",
+        databaseURL: "https://dropkitchen-bedde-default-rtdb.firebaseio.com",
+        projectId: "dropkitchen-bedde",
+        storageBucket: "dropkitchen-bedde.appspot.com",
+        messagingSenderId: "998669151634",
+        appId: "1:998669151634:web:0d49a1e3107633eeb9a54b",
+        measurementId: "G-6065J3XYB0",
     };
     const app = initializeApp(firebaseConfig);
     getAuth(app).languageCode = "ko";
@@ -96,17 +118,15 @@ const Home = observer((props) => {
                 setTimer(180 * 1000);
                 setCode("");
                 info({
-                    content: "인증번호가 전송되었습니다. ",
+                    content: t(`signup.mobile.message.success`),
                     className: "success",
                 });
                 setCertificate(true);
-                console.log("value", value);
                 console.log("appVerifier", appVerifier);
-                console.log("phoneNumber", phoneNumber);
             })
             .catch((error) => {
                 info({
-                    content: "인증 실패하였습니다. 입력한 정보가 맞는지 확인해주세요.",
+                    content: t(`signup.mobile.message.fail`),
                 });
             });
     };
@@ -140,59 +160,34 @@ const Home = observer((props) => {
     };
 
     const handleConfirmCodeSubmit = (event) => {
-        const firebaseError = (error) => {
-            if ("auth/invalid-verification-code" === error.code) {
-                info({
-                    content: "인증 실패하였습니다. 입력한 정보가 맞는지 확인해주세요.",
-                });
-            } else if ("auth/code-expired)" === error.code) {
-                info({
-                    content: "인증 실패하였습니다. 입력한 정보가 맞는지 확인해주세요.",
-                });
-            } else if ("auth/too-many-requests" === error.code) {
-                info({
-                    content: "인증 실패하였습니다. 입력한 정보가 맞는지 확인해주세요.",
-                });
-            } else {
-                info({
-                    content: "인증 실패하였습니다. 입력한 정보가 맞는지 확인해주세요.",
-                });
-            }
-        };
-
         var params = {
-            // clientId:,
-            // email:,
-            // uid:,
+            clientId: sessionStorage.getItem("loginClientId"),
+            email: sessionStorage.getItem("loginEmail"),
+            uid: getAuth().currentUser.uid,
+            lang: sessionStorage.getItem("LangValue"),
             cellNo: phoneNumber,
             username: sessionStorage.getItem("IsNicknameValue"),
             adsAgree: sessionStorage.getItem("IsTermsValue"),
-            // magazineSeq: magazine.data.create.config.seq,
-            // title: magazine.data.create.config.title,
-            // content: JSON.stringify(magazine.data.create.cells),
-            // showStatus: magazine.data.create.config.visible,
-            // thumbnailType: magazine.data.create.config.thumbnailType,
-            // thumbnailUrl: magazine.data.create.config.thumbnailUrl,
-            // urlName: magazine.data.create.config.urlName,
         };
 
         event.preventDefault();
         const authCode = confirmCodeRef.current.value;
         if (confirmationResult) {
             auth.phoneVerify(params, (e) => {
-                common.debug("e", e);
+                console.log("parmas", params);
                 confirmationResult
                     .confirm(authCode)
                     .then((result) => {
-                        common.debug("e", e);
-                        common.debug("result", result);
+                        console.log("e", e);
+                        console.log("result", result);
+                        Router.push("/signup/success");
                     })
                     .catch((error) => {
-                        common.debug("에러", error);
+                        console.log("에러", error);
                     });
             });
         } else {
-            alert("인증 요청이 이루어지지 않았습니다.");
+            alert(t(`signup.mobile.message.fail`));
         }
     };
     return (
@@ -284,18 +279,18 @@ const Home = observer((props) => {
                                 setOpen(false);
                             }}
                             open={open}
-                            closeIcon={<img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230601101932223_dk.webp" />}
+                            closeIcon={false}
                         >
-                            {options.map((l, idx) => (
+                            {countryCodeData.map((item, idx) => (
                                 <div
                                     className={isCategorySelect[idx] ? "selected" : ""}
                                     key={idx}
                                     onClick={() => {
-                                        handleToggle(l, idx);
+                                        handleToggle(item, idx);
                                     }}
                                 >
-                                    <strong>{l.ko}</strong>
-                                    <span>{l.label}</span>
+                                    <strong>{item.name}</strong>
+                                    <span>{item.dial_code}</span>
                                 </div>
                             ))}
                         </Drawer>

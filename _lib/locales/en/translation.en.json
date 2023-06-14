@@ -50,31 +50,29 @@
             "title": "Please enter your nickname",
             "label1": "email",
             "label2": "Nickname",
-            "placeholder": "Enter your nickname",
+            "placeholder": "",
             "help-success": "Available nickname.",
             "help-warning": "This nickname already exists."
         },
         "mobile": {
             "title": "Please enter your phone number",
             "label": "phone number",
-            "placeholder": "Enter mobile number",
-            "option": {
-                "value": ["82", "83", "84", "85", "86", "87"],
-                "label": ["korea", "korea", "korea", "korea", "korea"]
-            },
+            "placeholder": "",
             "sel-region": "Select country or region",
             "certificate": {
                 "btn": "Authenticate",
                 "reBtn": "re-send",
                 "label": "Certification Number",
                 "placeholder": "Enter 6 digit authentication number"
+            },
+            "message": {
+                "success": "Verification code has been sent.",
+                "fail": "Authentication failed. Please check that the information you entered is correct."
             }
         },
         "success": {
-            "desc1": "Dear, <br/> Congratulations on joining Drop Kitchen!",
-            "desc2": "Welcome we gave you <span>5,000P</span>!",
-            "part1": "To get started, edit <1>src/App.js</1> and save to reload.",
-            "part2": "Switch language between english and german using buttons above."
+            "desc1": ",<br/> Congratulations on joining Drop Kitchen!",
+            "desc2": "Welcome we gave you <span>5,000P</span>!"
         }
     },
     "point": {

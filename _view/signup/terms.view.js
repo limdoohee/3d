@@ -22,6 +22,26 @@ const Home = observer((props) => {
     const router = useRouter();
     const { t, i18n } = useTranslation();
 
+    //------------------------------------------------- Init Load
+    const initLoad = ({ callback }) => {
+        callback && callback();
+    };
+    //------------------------------------------------- Init Load
+    //------------------------------------------------- Router isReady
+    useEffect(() => {
+        if (router.isReady && router.pathname == "/signup/terms") {
+            initLoad({
+                callback: (e) => {
+                    const translateSet = sessionStorage.getItem("LangValue");
+                    if (translateSet) {
+                        i18n.changeLanguage(translateSet);
+                    }
+                },
+            });
+        }
+    }, [router.isReady, router.asPath]);
+    //------------------------------------------------- Router isReady
+
     const items = Array.from({ length: 3 }, (_, idx) => t(`signup.terms.list${idx + 1}`));
     const [saveValue, setSaveValue] = useState(false);
     const [open, setOpen] = useState(false);

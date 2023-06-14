@@ -31,7 +31,14 @@ const Home = observer((props) => {
     //------------------------------------------------- Router isReady
     useEffect(() => {
         if (router.isReady && router.pathname == "/signup/nickname") {
-            initLoad({ callback: (e) => {} });
+            initLoad({
+                callback: (e) => {
+                    const translateSet = sessionStorage.getItem("LangValue");
+                    if (translateSet) {
+                        i18n.changeLanguage(translateSet);
+                    }
+                },
+            });
         }
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
@@ -40,6 +47,7 @@ const Home = observer((props) => {
     const [value, setValue] = useState("");
     const nicknameRef = useRef(null);
     const [isNicknameAvailable, setIsNicknameAvailable] = useState(null);
+    const loginEmail = typeof window !== "undefined" ? sessionStorage.getItem("loginEmail") : null;
 
     const calculateByteCount = (text) => {
         let byteCount = 0;
@@ -99,11 +107,11 @@ const Home = observer((props) => {
                 <ul className="nickname-list">
                     <li>
                         <label>{t(`signup.nickname.label1`)}</label>
-                        <Input type="text" disabled value="abc@gmail.com" />
+                        <Input type="text" disabled value={loginEmail} />
                     </li>
                     <li>
                         <div>
-                            <label className="warning">{t(`signup.nickname.label2`)}</label>
+                            <label className={value !== "" && !isNicknameAvailable && "warning"}>{t(`signup.nickname.label2`)}</label>
                             <span className="count">
                                 {value ? byteCount : 0} / <span>20</span>
                             </span>

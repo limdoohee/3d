@@ -15,7 +15,7 @@ import View from "../../_view/signup/success.view";
 const Home = observer((props) => {
     return (
         <>
-            <View props={props} />
+            <View props={props} store={store} />
         </>
     );
 });
