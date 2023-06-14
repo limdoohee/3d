@@ -18,6 +18,8 @@ class Store {
         status: "ready",
         myDrop: false,
         url: "../../static/3d/275C_Popup.fbx",
+        //
+        dropList: { dropList: [] },
     };
 
     next = {
@@ -42,6 +44,16 @@ class Store {
         this.data[key] = value;
         callback && callback();
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회
+    async dropList(params, callback) {
+        await Api.get(`/dks-api/v2/drop_list`, params, this.store.auth.loginResult.loginToken)
+            .then((response) => response.json())
+            .then((data) => {
+                this.data.dropList = data.data;
+                callback && callback(data.data ? data.data : data);
+            });
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회
 }
 //////////////////////////// makeAutoObservable
 
