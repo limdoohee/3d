@@ -172,6 +172,14 @@
     height: 32px;
 }
 
+.dds.loading-full {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: var(--viewHeight);
+}
+
 @import url("./gnb.css");
 @import url("./button.css");
 @import url("./input.css");
