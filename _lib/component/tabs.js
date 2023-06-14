@@ -9,7 +9,7 @@ const Component = {
                 <Tabs defaultActiveKey={defaultActiveKey} className={`dds tabs ${props.className}`} onChange={onChange}>
                     {items.map((item, key) => (
                         <Tabs.Tab title={item.label} key={key}>
-                            {item.children}
+                            {item.children && item.children}
                         </Tabs.Tab>
                     ))}
                 </Tabs>

@@ -34,7 +34,7 @@ const pageFunc = {
                     // }
                     // datas = data.data ? data.data : { result: "none" };
 
-                    const result = await Api.post(`/dks-api/v2/check_login`, {}, testToken);
+                    const result = await Api.post(`/dks-api/v2/check_login`, {}, testToken, true);
                     const data = await result.json();
                     if (data.data) {
                         data.data["loginToken"] = testToken;
@@ -42,6 +42,8 @@ const pageFunc = {
                     datas = data.data ? data.data : { result: "none" };
                 }
             }
+
+            datas["lang"] = cookies.lang ? cookies.lang : "en";
 
             return datas;
         },
