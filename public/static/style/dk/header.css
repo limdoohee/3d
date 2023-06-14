@@ -13,7 +13,7 @@
 
 .dk.header > *:first-child .dds.button.none {
     padding: 0;
-    min-width: 40px;
+    min-width: 38px;
     box-shadow: none;
 }
 
@@ -25,4 +25,9 @@
     color: #969696;
     box-shadow: none;
     text-transform: capitalize;
+}
+
+.dk.header.top {
+    z-index: 1;
+    background: transparent;
 }

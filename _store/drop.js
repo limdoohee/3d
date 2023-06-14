@@ -12,8 +12,8 @@ configure({
 class Store {
     data = {
         id: 1,
-        startDate: "2023-06-12 10:00:30", // 드롭 오픈 시간
-        endDate: "2023-06-12 17:02:40", // 드롭 마감 시간
+        startDate: "2023-06-14 10:00:30", // 드롭 오픈 시간
+        endDate: "2023-06-14 17:02:40", // 드롭 마감 시간
         owner: 123,
         status: "ready",
         myDrop: false,
@@ -31,7 +31,7 @@ class Store {
     }
 
     async getDrop() {
-        await Api.post(`/dks-api/v2/drop`)
+        await Api.get(`/dks-api/v2/drop`)
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);

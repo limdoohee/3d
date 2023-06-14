@@ -4,8 +4,6 @@ import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
 import gsap from "gsap";
-import DDS_Modal from "../../component/modal";
-import { RectAreaLightHelper } from "three/addons/helpers/RectAreaLightHelper.js";
 
 const MisteryBox = observer((props) => {
     const [open, setOpen] = useState(false);
@@ -252,15 +250,8 @@ const MisteryBox = observer((props) => {
     }
 
     useEffect(() => {
-        // space render
         setSpace();
         spaceRender();
-
-        // file render
-        // setDrop();
-        // dropRender();
-
-        setTimeout(() => {}, 2000);
     }, []);
 
     useEffect(() => {
@@ -349,9 +340,7 @@ const MisteryBox = observer((props) => {
 
     return (
         <>
-            <DDS_Modal {...modalData} />
             <canvas id="space"></canvas>
-            {/* <canvas id="drop1"></canvas> */}
         </>
     );
 });

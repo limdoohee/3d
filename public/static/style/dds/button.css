@@ -17,7 +17,16 @@
 .dds.button.none {
     background-color: transparent;
 }
-
+.dds.button.badge::after {
+    content: "";
+    position: absolute;
+    top: -1px;
+    right: -1px;
+    width: 6px;
+    height: 6px;
+    background: #fd6e24;
+    border-radius: 5px;
+}
 .dds.button.ant-btn-icon-only {
     width: auto;
     min-width: 38px;
@@ -61,4 +70,13 @@
 
 .dds.button:disabled .dds.icons svg path {
     fill: #bdbdbd;
+}
+
+.dds.button.gallery {
+    background-color: #000;
+    border-radius: 50px;
+}
+
+.dds.button.gallery svg path {
+    fill: #fff;
 }
