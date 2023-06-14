@@ -57,21 +57,16 @@ const Home = observer((props) => {
     const [timer, setTimer] = useState(180 * 1000);
     const [confirmCodeSubmitTime, setConfirmCodeSubmitTime] = useState(null);
     const [isTimerRunning, setIsTimerRunning] = useState(false);
-    const [uid, setUid] = useState(null);
 
     const handleToggle = (l, idx) => {
         setOpen(false);
-        const newArr = Array(options.length).fill(false);
+        const newArr = Array(countryCodeData.length).fill(false);
         newArr[idx] = true;
         setIsCategorySelect(newArr);
         setValue(l.dial_code);
     };
 
-    const options = [
-        { ko: "한국", en: "korea", label: 82 },
-        { ko: "한국", en: "korea", label: 1 },
-    ];
-    const [isCategorySelect, setIsCategorySelect] = useState([true, ...Array(options.length - 1).fill(false)]);
+    const [isCategorySelect, setIsCategorySelect] = useState([true, ...Array(countryCodeData.length - 1).fill(false)]);
 
     const MsgIcon = () => {
         return <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230607111211213_dk.webp" />;
@@ -160,42 +155,41 @@ const Home = observer((props) => {
         return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
     };
 
-    useEffect(() => {
-        onAuthStateChanged(getAuth(), (user) => {
-            if (user) {
-                setUid(user.uid);
-            }
-        });
-    });
-
     const handleConfirmCodeSubmit = (event) => {
         var params = {
             clientId: sessionStorage.getItem("loginClientId"),
             email: sessionStorage.getItem("loginEmail"),
-            uid: uid,
+            uid: null,
             lang: sessionStorage.getItem("LangValue"),
             cellNo: phoneNumber,
-            username: sessionStorage.getItem("IsNicknameValue"),
+            nickname: sessionStorage.getItem("IsNicknameValue"),
             adsAgree: sessionStorage.getItem("IsTermsValue"),
+            terms1Agree: "Y",
+            terms2Agree: "Y",
         };
 
         event.preventDefault();
         const authCode = confirmCodeRef.current.value;
         if (confirmationResult) {
-            auth.phoneVerify(params, (e) => {
-                console.log("parmas", params);
-                confirmationResult
-                    .confirm(authCode)
-                    .then((result) => {
-                        console.log("e", e);
-                        console.log("result", result);
-                        Router.push("/signup/success");
-                    })
-                    .catch((error) => {
-                        alert("?");
-                        console.log("에러", error);
+            confirmationResult
+                .confirm(authCode)
+                .then((result) => {
+                    console.log(result);
+                    onAuthStateChanged(getAuth(), (user) => {
+                        if (user) {
+                            params.uid = user.uid;
+                            auth.phoneVerify(params, (e) => {
+                                console.log("parmas", params);
+                                router.push("/signup/success");
+                            });
+                        }
                     });
-            });
+                    console.log("result", result);
+                })
+                .catch((error) => {
+                    alert("?");
+                    console.log("에러", error);
+                });
         } else {
             alert(t(`signup.mobile.message.fail`));
         }
