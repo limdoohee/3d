@@ -181,9 +181,10 @@ const Home = observer((props) => {
                         if (user) {
                             params.uid = user.uid;
                             auth.phoneVerify(params, (e) => {
-                                cookie.save("loginToken", router.query.token, { path: "/" });
+                                cookie.save("loginToken", e.loginToken, { path: "/" });
                                 console.log("parmas", params);
                                 router.push("/signup/success");
+                                console.log("e", e);
                             });
                         }
                     });
