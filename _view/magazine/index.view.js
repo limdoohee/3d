@@ -145,6 +145,10 @@ const Home = observer((props) => {
         { key: "viewCount", label: "조회순" },
     ];
 
+    const onMove = (seq) => {
+        router.push(`/magazine/d/${seq}`);
+    };
+
     return (
         <DDS.layout.container className={"fluid"}>
             <DK_template_header.default store={store} title={lang.t("magazine.title")} right={headerRight} />
@@ -164,16 +168,23 @@ const Home = observer((props) => {
                         }}
                     >
                         {sortItems.map((e, i) => {
-                            return <>{e.key == sortValue && e.label}</>;
+                            return <React.Fragment key={i}>{e.key == sortValue && e.label}</React.Fragment>;
                         })}
                         <DDS.icons.angleDown />
                     </DDS.button.default>
                 </div>
+
                 <ul className="list">
                     {magazine.data.magazineList.list.map((item, key) => {
                         return (
                             <li key={key}>
-                                <div className="image" style={{ backgroundImage: `url(${item.thumbnailUrl})` }}>
+                                <div
+                                    className="image"
+                                    style={{ backgroundImage: `url(${item.thumbnailUrl})` }}
+                                    onClick={() => {
+                                        onMove(item.seq);
+                                    }}
+                                >
                                     <img src={""} />
                                 </div>
                                 <div className="category">
@@ -182,7 +193,13 @@ const Home = observer((props) => {
                                         <Date_Module.timeRemain.default time={item.updatedAt} />
                                     </span>
                                 </div>
-                                <h4>{item.title}</h4>
+                                <h4
+                                    onClick={() => {
+                                        onMove(item.seq);
+                                    }}
+                                >
+                                    {item.title}
+                                </h4>
                                 <dl>
                                     {item.hashTag.map((el, i) => (
                                         <dd key={i}>
@@ -193,9 +210,7 @@ const Home = observer((props) => {
                             </li>
                         );
                     })}
-                    <InView as="div" onChange={pageEnd}>
-                        <li></li>
-                    </InView>
+                    <InView as="li" onChange={pageEnd}></InView>
                 </ul>
                 <DDS.actionsheet.default
                     open={sortOpen}

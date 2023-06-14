@@ -14,9 +14,12 @@ import View from "../../_view/magazine/index.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {
-    const { auth } = store;
+    const { auth, common } = store;
 
     auth.setCheckLogin(props);
+    useEffect(() => {
+        common.init();
+    }, []);
 
     return (
         <>

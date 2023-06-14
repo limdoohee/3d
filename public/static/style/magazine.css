@@ -101,3 +101,74 @@
     letter-spacing: -0.02em;
     color: #575757;
 }
+
+.page-magazine .contents {
+    padding: 20px;
+}
+.page-magazine .contents .content p {
+    margin: 0 0 8px 0 !important;
+}
+/* .page-magazine .contents .content h1 {
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 110%;
+    letter-spacing: -0.03em;
+    color: #000000;
+    padding: 0 0 20px 0;
+    margin: 0 0 20px 0;
+    border-bottom: 1px solid #000;
+}
+.page-magazine .contents .content h2 {
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 110%;
+    letter-spacing: -0.03em;
+    color: #000000;
+    padding: 0 0 0 0;
+    margin: 0 0 10px 0;
+}
+.page-magazine .contents .content p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    color: #000000;
+    margin: 0 0 8px 0 !important;
+}
+.page-magazine .contents .content p + h4 {
+    margin: 50px 0 12px 0;
+}
+.page-magazine .contents .content h3 {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+    margin: 0 0 12px 0;
+}
+.page-magazine .contents .content h4 {
+    margin: 0 0 12px 0;
+}
+.page-magazine .contents .content h4 strong {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+    color: rgba(29, 82, 221, 0.8);
+}
+.page-magazine .contents .content p strong {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #000000;
+}
+.page-magazine .contents .content p img {
+    width: 100% !important;
+}
+.page-magazine .contents .content table {
+    padding: 100% !important;
+}
+.page-magazine .contents .content table tbody tr td {
+    padding: 10px !important;
+} */

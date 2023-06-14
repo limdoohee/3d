@@ -20,6 +20,12 @@
     background-color: #fff;
     width: 100%;
     border-radius: 16px 16px 0px 0px;
+    position: relative;
+    transition: all 0.2s ease-in-out;
+    transform: translateY(100%);
+}
+.dds.actionsheet.on .inner {
+    transform: translateY(0);
 }
 .dds.actionsheet .inner ul li {
     display: flex;
