@@ -1,10 +1,9 @@
-import { Cookie } from "@mui/icons-material";
 import Head from "next/head";
 import Router, { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import cookie from "react-cookies";
-import TagManager from "react-gtm-module";
-import ReactGA from "react-ga4";
+// import TagManager from "react-gtm-module";
+// import ReactGA from "react-ga4";
 //------------------------------------------------------------------------------- Module
 import Api from "../../_lib/module/api";
 //------------------------------------------------------------------------------- Module
