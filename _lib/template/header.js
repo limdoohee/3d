@@ -17,30 +17,32 @@ import DK_template_GNB from "../../_lib/template/gnb";
 const Home = {
     default: observer((props) => {
         const router = useRouter();
-        const { title, back } = props;
+        const { title, back, right, left } = props;
+        console.log(back);
         const { common, lang, auth } = props.store;
 
         return (
             <>
-                <div className="dk header">
+                <div className={`dk header ${props.className ? props.className : ""}`}>
                     <div>
-                        <DDS.button.default
-                            className="dds button none"
-                            icon={<DDS.icons.angleLeft />}
-                            onClick={() => {
-                                back ? back() : Router.back();
-                            }}
-                        />
+                        {left ? (
+                            <>{left}</>
+                        ) : (
+                            <DDS.button.default
+                                className="dds button none"
+                                icon={<DDS.icons.angleLeft />}
+                                onClick={() => {
+                                    back ? back() : Router.back();
+                                }}
+                            />
+                        )}
                     </div>
                     <h4>{title}</h4>
-                    <div>
-                        <DDS.button.default
-                            className="dds button none"
-                            icon={<DDS.icons.bars />}
-                            onClick={() => {
-                                common.uiChange("gnbOpen", true);
-                            }}
-                        />
+                    <div style={{ display: "flex", minWidth: right ? "unset" : "38px" }}>
+                        {right &&
+                            right.map((Item, key) => {
+                                return <Item key={key} />;
+                            })}
                     </div>
                 </div>
             </>

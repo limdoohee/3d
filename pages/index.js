@@ -15,8 +15,20 @@ import View from "../_view/index.view";
 
 const Home = observer((props) => {
     const { auth } = store;
+    const router = useRouter();
 
+    console.log(props.result);
     auth.setCheckLogin(props);
+
+    useEffect(() => {
+        if (props.result == "ok") {
+            Router.push("/main");
+            // location.href = "/main";
+        } else {
+            Router.push("/login");
+            // location.href = "/login";
+        }
+    }, []);
 
     return (
         <>

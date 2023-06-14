@@ -91,6 +91,12 @@
     "magazine": {
         "title": "magazine"
     },
+    "dropList": {
+        "title": "drop list"
+    },
+    "random": {
+        "title": "random box"
+    },
     "error": {
         "404": {
             "description1": "A temporary error has occurred.",

@@ -1,5 +1,7 @@
 //------------------------------------------------------------------------------- Module
 import { makeAutoObservable, toJS, configure } from "mobx";
+import copy from "copy-to-clipboard";
+import { BrowserView, MobileView, isBrowser, isMobile, isAndroid } from "react-device-detect";
 //------------------------------------------------------------------------------- Module//------------------------------------------------------------------------------- Module
 import Api from "../_lib/module/api";
 import i18n from "../_lib/module/i18n";
@@ -20,6 +22,7 @@ class Store {
         pointOpen: false,
         alarmOpen: false,
         magazineOpen: false,
+        dropListOpen: false,
     };
 
     constructor(store) {
@@ -48,6 +51,46 @@ class Store {
 
     getBuildId() {
         this.buildId = JSON.parse(document.querySelector("#__NEXT_DATA__").textContent).buildId;
+    }
+
+    onShare(props) {
+        const { title, description, url, text } = props;
+        var broswerInfo = navigator.userAgent;
+        var webViewCheck = broswerInfo.indexOf(";;;aos;") !== -1 ? true : false;
+        if (isMobile) {
+            if (isAndroid && webViewCheck) {
+                window.AndroidShareHandler.share("", "", url);
+            } else {
+                if (navigator.share) {
+                    navigator.share({
+                        title: title ? title : "", // 공유될 제목
+                        text: text ? text : "", // 공유될 설명
+                        url: url, // 공유될 URL
+                    });
+                } else {
+                    copy(`${url}`);
+                    // this.snackbarOpen(
+                    //     true,
+                    //     <div className="snackbar-contents info-green">
+                    //         <h4>{description ? description : "링크가 복사되었습니다.1"}</h4>
+                    //     </div>,
+                    // );
+                }
+            }
+        } else {
+            copy(`${url}`);
+            // this.snackbarOpen(
+            //     true,
+            //     <div className="snackbar-contents info-green">
+            //         <h4>{description ? description : "링크가 복사되었습니다.2"}</h4>
+            //     </div>,
+            // );
+        }
+    }
+
+    init() {
+        // localStorage 기본 언어 설정
+        localStorage.getItem("lang") && this.store.lang.changeLanguage(localStorage.getItem("lang"));
     }
 }
 //////////////////////////// makeAutoObservable

@@ -1,12 +1,16 @@
-.bottomModal {
+.dds.modal.bottom {
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    max-width: 100%;
+    padding: 0;
+}
+.dds.modal.bottom .ant-modal-content {
     border-radius: 16px 16px 0px 0px;
 }
 
-.bottomModal .ant-drawer-body {
-    padding: 32px 20px 20px;
-}
-
-.bottomModal .imgWrapper {
+.dds.modal.bottom .imgWrapper {
     width: 160px;
     height: 160px;
     margin: 0 auto 20px;
@@ -15,7 +19,7 @@
     justify-content: center;
 }
 
-.bottomModal .title {
+.dds.modal.bottom .title {
     font-size: 20px;
     font-weight: 700;
     line-height: 26px;
@@ -25,7 +29,7 @@
     white-space: pre-line;
 }
 
-.bottomModal .context {
+.dds.modal.bottom .context {
     font-size: 16px;
     font-weight: 400;
     line-height: 24px;
@@ -35,12 +39,12 @@
     white-space: pre-line;
 }
 
-.bottomModal .dds.button {
+.dds.modal.bottom .dds.button {
     width: 100%;
     justify-content: center;
 }
 
-.bottomModal .dds.button.large {
+.dds.modal.bottom .dds.button.large {
     font-size: 16px;
     font-weight: 400;
     line-height: 16px;

@@ -88,6 +88,12 @@
     "magazine": {
         "title": "매거진"
     },
+    "dropList": {
+        "title": "드롭 리스트"
+    },
+    "random": {
+        "title": "랜덤박스"
+    },
     "error": {
         "404": {
             "description1": "일시적인 오류가 발생했습니다.",
