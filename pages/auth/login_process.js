@@ -25,7 +25,7 @@ const Home = (props) => {
             }
         });
     } else {
-        router.push("/login");
+        <></>;
     }
     return <></>;
 };
