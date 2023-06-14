@@ -290,6 +290,19 @@
     overflow-y: scroll;
     height: 100vh;
 }
+.ant-drawer-content.drawer.lang .ant-drawer-body {
+    padding: 0 0 44px;
+}
+.ant-drawer-content.drawer.lang .ant-drawer-body > div {
+    padding: 20px;
+    font-size: 16px;
+}
+.ant-drawer-content.drawer.lang .ant-drawer-body > div > span:last-child {
+    color: #969696;
+}
+.ant-drawer-content.drawer.lang .ant-drawer-body > div.selected {
+    background-color: #f5f5f5;
+}
 /* -------------------------------------------------------------------------- auth mobile */
 /* -------------------------------------------------------------------------- auth success */
 .auth.ui.success {

@@ -57,6 +57,7 @@ const Home = observer((props) => {
     const [timer, setTimer] = useState(180 * 1000);
     const [confirmCodeSubmitTime, setConfirmCodeSubmitTime] = useState(null);
     const [isTimerRunning, setIsTimerRunning] = useState(false);
+    const [uid, setUid] = useState(null);
 
     const handleToggle = (l, idx) => {
         setOpen(false);
@@ -159,11 +160,19 @@ const Home = observer((props) => {
         return `${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
     };
 
+    useEffect(() => {
+        onAuthStateChanged(getAuth(), (user) => {
+            if (user) {
+                setUid(user.uid);
+            }
+        });
+    });
+
     const handleConfirmCodeSubmit = (event) => {
         var params = {
             clientId: sessionStorage.getItem("loginClientId"),
             email: sessionStorage.getItem("loginEmail"),
-            uid: getAuth().currentUser.uid,
+            uid: uid,
             lang: sessionStorage.getItem("LangValue"),
             cellNo: phoneNumber,
             username: sessionStorage.getItem("IsNicknameValue"),
@@ -183,6 +192,7 @@ const Home = observer((props) => {
                         Router.push("/signup/success");
                     })
                     .catch((error) => {
+                        alert("?");
                         console.log("에러", error);
                     });
             });
@@ -289,8 +299,8 @@ const Home = observer((props) => {
                                         handleToggle(item, idx);
                                     }}
                                 >
-                                    <strong>{item.name}</strong>
-                                    <span>{item.dial_code}</span>
+                                    <span>{item.name}</span>
+                                    <span>+{item.dial_code}</span>
                                 </div>
                             ))}
                         </Drawer>

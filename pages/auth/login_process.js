@@ -70,40 +70,12 @@ const Home = (props) => {
                 // sessionStorage.setItem("bannerOn", true);
                 await cookie.remove("loginToken", { path: "/" });
                 await cookie.save("loginToken", router.query.token, { path: "/" });
-
-                Router.push("/signup/success");
+                Router.push("/");
             }
         });
     } else {
-        if (router.query.errorCode) {
-            auth.errorCode({ code: router.query.errorCode }, (e) => {
-                // common.debug(e);
-                alert(e.error);
-                Router.push("/login");
-            });
-        }
+        Router.push("/login");
     }
-
-    // useEffect(() => {
-    //     if (router.query.token) {
-    //         console.log(1);
-    //         auth.checkLoginJwt(router.query.token, async (e) => {
-    //             common.debug(e);
-    //             if (e.result) {
-    //                 // localStorage.setItem("loginToken", router.query.token);
-    //                 await cookie.remove("loginToken", { path: "/" });
-    //                 await cookie.save("loginToken", router.query.token, { path: "/" });
-    //                 var url = "";
-    //                 let urlCheck = () => {
-    //                     url = sessionStorage.getItem("loginPath") ? sessionStorage.getItem("loginPath") : "/";
-    //                 };
-    //                 await urlCheck();
-    //                 await sessionStorage.removeItem("loginPath");
-    //                 Router.push(url);
-    //             }
-    //         });
-    //     }
-    // }, []);
     return <></>;
 };
 

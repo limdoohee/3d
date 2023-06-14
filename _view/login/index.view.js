@@ -111,7 +111,13 @@ const Home = observer((props) => {
                     <ul className="login-sns">
                         {login_data.map((l, idx) => {
                             return (
-                                <li className={l.className} key={idx}>
+                                <li
+                                    className={l.className}
+                                    key={idx}
+                                    onClick={() => {
+                                        `${auth.login(`${l.className}`, router.asPath)}`;
+                                    }}
+                                >
                                     <img src={l.img} />
                                     <span>{l.signup_title}</span>
                                 </li>
@@ -132,7 +138,7 @@ const Home = observer((props) => {
                     </h3>
                     <Drawer
                         height={"auto"}
-                        className="login drawer lang"
+                        className="login drawer"
                         title={t(`login.main.language-select`)}
                         placement="bottom"
                         onClose={() => {
