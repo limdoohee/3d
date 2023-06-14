@@ -11,6 +11,8 @@ import { getAuth, onAuthStateChanged, signInWithPhoneNumber, RecaptchaVerifier }
 import firebase from "firebase/app";
 import "firebase/auth";
 import countryCodeData from "../../_lib/locales/en/countryCode.en.json";
+import cookie from "react-cookies";
+
 //------------------------------------------------------------------------------- Antd
 import { Input, Select, Drawer, Space, message } from "antd";
 import { Checkbox, Button } from "antd-mobile";
@@ -179,6 +181,7 @@ const Home = observer((props) => {
                         if (user) {
                             params.uid = user.uid;
                             auth.phoneVerify(params, (e) => {
+                                cookie.save("loginToken", router.query.token, { path: "/" });
                                 console.log("parmas", params);
                                 router.push("/signup/success");
                             });
