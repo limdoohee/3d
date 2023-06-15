@@ -88,6 +88,10 @@
     "magazine": {
         "title": "매거진"
     },
+    "setting": {
+        "title": "설정",
+        "profile": { "title": "내 정보 수정" }
+    },
     "dropList": {
         "title": "드롭 리스트"
     },
