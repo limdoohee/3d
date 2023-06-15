@@ -27,7 +27,7 @@ const pageFunc = {
                 cookies = await cookie.parse(context.req.headers.cookie);
 
                 if (cookies.loginToken) {
-                    const result = await Api.post(`/dks-api/v1/check_login`, {}, cookies.loginToken ? cookies.loginToken : null);
+                    const result = await Api.post(`/dks-api/v1/check_login`, {}, cookies.loginToken ? cookies.loginToken : null, true);
                     const data = await result.json();
                     if (data.data) {
                         data.data["loginToken"] = cookies.loginToken;
