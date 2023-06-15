@@ -74,6 +74,18 @@
     width: 24px;
     height: 24px;
 }
+/* --------------------------- custom */
+.dds.icons.checked path {
+    fill: var(--color-orange);
+}
+.dds.icons.unchecked path {
+    fill: #dadada;
+}
+.dds.icons.next path {
+    fill: #969696;
+}
+
+/* --------------------------- custom */
 .dds.icons.large {
     width: 32px;
     height: 32px;

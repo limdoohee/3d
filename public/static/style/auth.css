@@ -41,6 +41,10 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
+    gap: 0 12px;
+}
+.auth.terms .agree-list .each > .adm-space .adm-space-item label {
+    align-items: flex-start;
 }
 .auth.terms .agree-list .each > .adm-space .adm-checkbox-custom-icon {
     display: flex;
@@ -53,8 +57,17 @@
 }
 .auth.terms .agree-list .each > .adm-space .adm-space-item > span {
     display: flex;
+    min-width: 16px;
+    min-height: 16px;
+    height: 16px;
+    width: 16px;
 }
 
+.auth.terms .agree-list .each > .adm-space .adm-space-item > span svg {
+    width: 16px;
+    height: 16px;
+    display: flex;
+}
 .auth.ui .agree-check {
     width: calc(100% - 40px);
     position: fixed;
@@ -136,9 +149,6 @@
     position: absolute;
     right: 12px;
     top: 15px;
-}
-.auth.ui.nickname .nickname-list li .input-area span img {
-    display: flex;
     height: 18px;
     width: 18px;
 }
@@ -203,10 +213,14 @@
     z-index: 100;
     font-size: 16px;
 }
-.auth.ui.mobile .mobile-list .input-area .form strong img {
+.auth.ui.mobile .mobile-list .input-area .form strong span {
     width: 16px;
     height: 16px;
     margin-left: 4px;
+}
+.auth.ui.mobile .mobile-list .input-area .form strong svg {
+    width: 16px;
+    height: 16px;
 }
 
 .auth.ui.mobile .mobile-list .input-area .form:nth-child(2) {
@@ -217,12 +231,12 @@
     padding: 0 0 0 87px;
 }
 
-.auth.ui.mobile .mobile-list .input-area .form:nth-child(3) > span img {
+.auth.ui.mobile .mobile-list .input-area .form:nth-child(3) > .xmark-02 {
     width: 18px;
     height: 18px;
     position: absolute;
     right: 15px;
-    top: 50%;
+    top: 56%;
 }
 .auth.ui.mobile .mobile-list .input-area input::placeholder {
     font-size: 16px;
@@ -254,7 +268,7 @@
 .ant-message .message-info {
     padding: 20px 20px 0px !important;
 }
-.ant-message .message-info.success .ant-message-notice-content .ant-message-custom-content > img {
+.ant-message .message-info.success .ant-message-notice-content .ant-message-custom-content > span:first-child {
     display: none;
 }
 .ant-message .message-info .ant-message-notice-content {
@@ -271,7 +285,7 @@
     display: flex;
     gap: 0 8px;
 }
-.ant-message .message-info .ant-message-notice-content .ant-message-custom-content > img {
+.ant-message .message-info .ant-message-notice-content .ant-message-custom-content > span:first-child {
     width: 20px;
     height: 20px;
     display: flex;

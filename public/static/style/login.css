@@ -7,14 +7,15 @@
     height: calc(100vh - 82px);
 }
 .login.wrap .inner {
-    padding: 0 20px;
+    padding: 0 20px 9vh;
 }
 .login.wrap .inner h1 {
     max-width: 200px;
     display: flex;
 }
 .login.wrap .inner > p {
-    padding: 24px 0 48px;
+    padding: 24px 0 120px;
+    line-height: 150%;
 }
 
 .login.wrap .inner > p > span {
@@ -30,6 +31,10 @@
     height: 48px;
     border-radius: 8px;
 }
+.login-sns li svg {
+    width: 20px;
+    height: 20px;
+}
 .login-sns li.google {
     border: 1px solid #dadada;
 }
@@ -37,6 +42,11 @@
     background-color: #000;
     color: #fff;
 }
+.login-sns li.apple path,
+.login-sns li.naver path {
+    fill: #fff;
+}
+
 .login-sns li.naver {
     background-color: #1ec800;
     color: #fff;
@@ -58,7 +68,9 @@
     justify-content: center;
     gap: 0 12px;
     font-size: 14px;
-    color: var(--color-gray-2);
+}
+.login.wrap .inner > .help p {
+    color: #969696;
 }
 .login.wrap .inner > .help strong {
     color: var(--color-orange);
@@ -77,6 +89,9 @@
     line-height: 2;
     justify-content: center;
     align-items: flex-end;
+}
+.login.wrap .language-select {
+    padding-bottom: 48px;
 }
 .login.wrap .language-select > h3 {
     display: flex;

@@ -1,6 +1,9 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { motion } from "framer-motion";
+//------------------------------------------------------------------------------- Component
+import DDS_Icons from "../../_lib/component/icons";
+//------------------------------------------------------------------------------- Component
 
 const Component = {
     container: (props) => {
@@ -29,8 +32,7 @@ const Component = {
         return (
             <div className="ui back">
                 <h2 onClick={() => router.back()}>
-                    <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230601154911889_dk.webp" />
-                    {/* {title && <stron>{title}</stron>} */}
+                    <DDS_Icons.angleLeft className="dds icons" />
                 </h2>
                 {props.children}
             </div>

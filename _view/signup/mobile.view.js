@@ -1,11 +1,9 @@
 ("use client");
-import Head from "next/head";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
 import "../../_lib/module/i18n";
 import { useTranslation } from "react-i18next";
-import Component from "../../_lib/component/button";
 import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 import firebase from "firebase/app";
@@ -14,14 +12,15 @@ import countryCodeData from "../../_lib/locales/en/countryCode.en.json";
 import cookie from "react-cookies";
 
 //------------------------------------------------------------------------------- Antd
-import { Input, Select, Drawer, Space, message } from "antd";
-import { Checkbox, Button } from "antd-mobile";
+import { Drawer, message } from "antd";
 //------------------------------------------------------------------------------- Antd
 //------------------------------------------------------------------------------- Component
+import DDS_Icons from "../../_lib/component/icons";
+
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
-    const { common, auth } = props.store;
+    const { auth } = props.store;
     const router = useRouter();
     const { t, i18n } = useTranslation();
 
@@ -35,7 +34,7 @@ const Home = observer((props) => {
     useEffect(() => {
         if (router.isReady && router.pathname == "/signup/mobile") {
             initLoad({
-                callback: (e) => {
+                callback: () => {
                     const translateSet = sessionStorage.getItem("LangValue");
                     if (translateSet) {
                         i18n.changeLanguage(translateSet);
@@ -70,15 +69,12 @@ const Home = observer((props) => {
 
     const [isCategorySelect, setIsCategorySelect] = useState([true, ...Array(countryCodeData.length - 1).fill(false)]);
 
-    const MsgIcon = () => {
-        return <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230607111211213_dk.webp" />;
-    };
     const info = ({ content, className }) => {
         messageApi.info({
             content: content,
             duration: 2,
             className: `message-info ${className}`,
-            icon: <MsgIcon />,
+            icon: <DDS_Icons.snackbarCircle />,
         });
     };
 
@@ -191,8 +187,9 @@ const Home = observer((props) => {
                     console.log("result", result);
                 })
                 .catch((error) => {
-                    alert("?");
-                    console.log("에러", error);
+                    info({
+                        content: t(`signup.mobile.message.fail`),
+                    });
                 });
         } else {
             alert(t(`signup.mobile.message.fail`));
@@ -213,7 +210,7 @@ const Home = observer((props) => {
                                     }}
                                 >
                                     +{value}
-                                    <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230605162934932_dk.webp" />
+                                    <DDS_Icons.caretDown />
                                 </strong>
                                 <input
                                     type="text"
@@ -266,14 +263,13 @@ const Home = observer((props) => {
                                         </button>
                                     ) : null}
                                     {code && (
-                                        <span
+                                        <DDS_Icons.xmark_02
+                                            className="xmark-02"
                                             onClick={() => {
                                                 setCode("");
                                                 confirmCodeRef.current.focus();
                                             }}
-                                        >
-                                            <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230605132550204_dk.webp" />
-                                        </span>
+                                        />
                                     )}
                                 </form>
                             )}
