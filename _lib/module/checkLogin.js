@@ -27,18 +27,7 @@ const pageFunc = {
                 cookies = await cookie.parse(context.req.headers.cookie);
 
                 if (cookies.loginToken) {
-<<<<<<< HEAD
                     const result = await Api.post(`/dks-api/v1/check_login`, {}, cookies.loginToken ? cookies.loginToken : null);
-=======
-                    // const result = await Api.post(`/dks-api/v1/check_login`, {}, cookies.loginToken ? cookies.loginToken : null);
-                    // const data = await result.json();
-                    // if (data.data) {
-                    //     data.data["loginToken"] = cookies.loginToken;
-                    // }
-                    // datas = data.data ? data.data : { result: "none" };
-
-                    const result = await Api.post(`/dks-api/v2/check_login`, {}, testToken, true);
->>>>>>> mango
                     const data = await result.json();
                     if (data.data) {
                         data.data["loginToken"] = cookies.loginToken;
@@ -53,8 +42,6 @@ const pageFunc = {
                     // datas = data.data ? data.data : { result: "none" };
                 }
             }
-
-            datas["lang"] = cookies.lang ? cookies.lang : "en";
 
             return datas;
         },
