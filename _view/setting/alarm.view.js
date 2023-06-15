@@ -49,39 +49,40 @@ const Home = observer((props) => {
 
     return (
         <DDS.layout.container className={"fluid"}>
-            <DK_template_header.default store={store} title={lang.t("setting.profile.title")} right={headerRight} />
+            <DK_template_header.default store={store} title={lang.t("setting.title")} right={headerRight} />
             <DK_template_GNB.default store={store} />
             {/* Content */}
             <DDS.layout.content>
-                <div className="page-setting sub">
-                    <div className="account">
-                        <div className="profile">
-                            <div className="inner">
-                                <DDS.profile.default />
-                                <div className="camera">
-                                    <DDS.icons.camera />
-                                </div>
+                <div className="page-setting main">
+                    <dl>
+                        <dd className="none">
+                            <div className="alarm-info">
+                                <h4>광고성 정보 수신 동의</h4>
+                                <p>
+                                    드롭, 이벤트 및 다양한 혜택과 정보 알림을
+                                    <br />
+                                    받기 위해서 기기 알림을 켜주세요!
+                                </p>
                             </div>
-                            <DDS.button.default className="dds button none">현재 사진 삭제</DDS.button.default>
-                        </div>
-                        <ul className="form">
-                            <li>
-                                <h5>
-                                    <strong>닉네임</strong>
-                                    <span>20/20</span>
-                                </h5>
-                                <DDS.input.default className="dds input primary" placeholder="닉네임을 입력해주세요" />
-                                <p>이미 존재하는 닉네임입니다.</p>
-                            </li>
-                            <li>
-                                <h5>
-                                    <strong>소개</strong>
-                                    <span>00/50</span>
-                                </h5>
-                                <DDS.input.textarea rows={4} placeholder="소개글을 입력해주세요" maxLength={6} className="dds input primary" />
-                            </li>
-                        </ul>
-                    </div>
+                            <span>
+                                <DDS.button.default className="dds button primary small">알림 켜기</DDS.button.default>
+                            </span>
+                        </dd>
+                    </dl>
+                    <dl>
+                        <dd className="none">
+                            <h4>광고성 정보 수신 동의</h4>
+                            <span>
+                                <DDS.switch.default />
+                            </span>
+                        </dd>
+                        <dd className="none">
+                            <h4>서비스 알림 동의</h4>
+                            <span>
+                                <DDS.switch.default />
+                            </span>
+                        </dd>
+                    </dl>
                 </div>
             </DDS.layout.content>
             {/* Content */}

@@ -2,20 +2,20 @@
     min-height: 100vh;
     background-color: #f5f5f5;
 }
-.page-setting.main dl {
+.page-setting dl {
     padding: 0;
     margin: 0;
     border-bottom: 12px solid #f5f5f5;
     background-color: #fff;
 }
-.page-setting.main dl dt {
+.page-setting dl dt {
     padding: 20px 20px 6px 20px;
     margin: 0;
     font-weight: 400;
     font-size: 14px;
     color: #af6262;
 }
-.page-setting.main dl dd {
+.page-setting dl dd {
     padding: 20px;
     margin: 0;
     display: flex;
@@ -23,54 +23,154 @@
     align-items: center;
     cursor: pointer;
 }
-.page-setting.main dl dd:active {
+.page-setting dl dd:active {
     background-color: #f5f5f5;
 }
-.page-setting.main dl dd > h4 {
+.page-setting dl dd.none:active {
+    background-color: transparent;
+}
+.page-setting dl dd > h4 {
     font-weight: 700;
     font-size: 16px;
 }
-.page-setting.main dl dd > span {
+.page-setting dl dd > span {
     display: flex;
     align-items: center;
     gap: 8px;
 }
-.page-setting.main dl dd > span strong {
+.page-setting dl dd > span strong {
     font-weight: 400;
     font-size: 14px;
     letter-spacing: -0.02em;
     color: #bdbdbd;
 }
-.page-setting.main dl dd > span .icons {
+.page-setting dl dd > span .icons {
     width: 16px;
     height: 16px;
 }
 
-.page-setting.main dl dd > span .icons svg path {
+.page-setting dl dd > span .icons svg path {
     fill: #969696;
 }
 
-.page-setting.main dl dd .profile {
+.page-setting dl dd .profile {
     display: flex;
     align-items: center;
     gap: 12px;
 }
-.page-setting.main dl dd .profile .name {
+.page-setting dl dd .profile .name {
     display: flex;
     flex-direction: column;
     gap: 8px;
 }
-.page-setting.main dl dd .profile .name h4 {
+.page-setting dl dd .profile .name h4 {
     font-weight: 700;
     font-size: 16px;
     line-height: 100%;
     letter-spacing: -0.02em;
     color: #1f1f1f;
 }
-.page-setting.main dl dd .profile .name p {
+.page-setting dl dd .profile .name p {
     font-weight: 400;
     font-size: 14px;
     line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #969696;
+}
+
+.page-setting.sub .account > .profile {
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 23px;
+}
+.page-setting.sub .account > .profile > .dds.button {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #fd6e24;
+    height: auto;
+}
+
+.page-setting.sub .account > .profile .inner {
+    width: 80px;
+    height: 80px;
+    position: relative;
+}
+.page-setting.sub .account > .profile .inner .dds.profile .ant-avatar {
+    width: 80px;
+    height: 80px;
+}
+.page-setting.sub .account > .profile .inner .camera {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background: #f5f5f5;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 100%;
+    border: 3px solid #fff;
+    box-sizing: content-box;
+}
+.page-setting.sub .account > .profile .inner .camera .icons {
+    width: 14px;
+    height: 14px;
+}
+.page-setting.sub .account > .form {
+    padding: 12px 20px 0 20px;
+    display: flex;
+    gap: 32px;
+    flex-direction: column;
+    width: 100%;
+}
+.page-setting.sub .account > .form li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.page-setting.sub .account > .form li h5 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #969696;
+    display: flex;
+    justify-content: space-between;
+}
+.page-setting.sub .account > .form li h5 strong {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #969696;
+}
+.page-setting.sub .account > .form li p {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #e02431;
+}
+.page-setting.sub .account > .form li textarea.ant-input {
+    height: 120px;
+    padding: 16px 12px;
+}
+
+.page-setting .alarm-info {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+}
+.page-setting .alarm-info p {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
     letter-spacing: -0.02em;
     color: #969696;
 }
