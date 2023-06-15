@@ -75,8 +75,8 @@
     height: 24px;
 }
 .dds.icons svg {
-    width: 24px;
-    height: 24px;
+    width: 100%;
+    height: 100%;
 }
 /* --------------------------- custom */
 .dds.icons.checked path {
