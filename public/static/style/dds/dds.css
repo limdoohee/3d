@@ -74,15 +74,24 @@
     width: 24px;
     height: 24px;
 }
+.dds.icons svg {
+    width: 24px;
+    height: 24px;
+}
 /* --------------------------- custom */
 .dds.icons.checked path {
     fill: var(--color-orange);
 }
+
 .dds.icons.unchecked path {
     fill: #dadada;
 }
 .dds.icons.next path {
     fill: #969696;
+}
+.dds.icons.xmark-02 svg {
+    width: 18px;
+    height: 18px;
 }
 
 /* --------------------------- custom */
@@ -100,6 +109,9 @@
     box-shadow: none;
     display: flex;
     justify-content: flex-end;
+}
+.ant-drawer.ant-drawer-right .ant-drawer-content {
+    box-shadow: none !important;
 }
 .ant-drawer.ant-drawer-right .ant-drawer-content-wrapper-hidden {
     display: none !important;

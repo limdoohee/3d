@@ -31,6 +31,10 @@
     height: 48px;
     border-radius: 8px;
 }
+.login-sns li > span:has(svg) {
+    width: 20px !important;
+    height: 20px !important;
+}
 .login-sns li svg {
     width: 20px;
     height: 20px;

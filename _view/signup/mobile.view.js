@@ -93,7 +93,8 @@ const Home = observer((props) => {
 
     useEffect(() => {
         window.recaptchaVerifier = new RecaptchaVerifier(
-            "recaptcha-container",
+            // "recaptcha-container",
+            "phoneNumberButton",
             {
                 size: "invisible",
                 timeout: 180000,
@@ -299,7 +300,7 @@ const Home = observer((props) => {
                             ))}
                         </Drawer>
                         {contextHolder}
-                        <div id="recaptcha-container"></div>
+                        {/* <div id="recaptcha-container"></div> */}
                     </>
                 </div>
             </div>

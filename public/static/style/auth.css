@@ -51,6 +51,10 @@
     width: 20px;
     height: 20px;
 }
+.auth.terms .agree-list .each > .adm-space .adm-checkbox-custom-icon span {
+    width: 20px;
+    height: 20px;
+}
 .auth.terms .agree-list .each > .adm-space .adm-checkbox-content {
     padding-left: 8px;
     font-size: 16px;
