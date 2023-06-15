@@ -3,6 +3,7 @@
 @import url("./alarm.css");
 @import url("./header.css");
 @import url("./dropList.css");
+@import url("./random.css");
 
 .dk.error {
     min-height: 100vh;

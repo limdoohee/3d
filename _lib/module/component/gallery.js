@@ -101,8 +101,7 @@ const Gallery = forwardRef(function Gallery(props, ref) {
     let mixer = new THREE.AnimationMixer();
     let clock = new THREE.Clock();
 
-    let profileArea;
-    let detailArea;
+    let profileArea, detailArea, btnArea;
 
     let beforePosition = -1;
     let column;
@@ -118,6 +117,7 @@ const Gallery = forwardRef(function Gallery(props, ref) {
                     setBack(false);
                     detailArea.style.top = "120vh";
                     profileArea.style.opacity = 1;
+                    btnArea.style.opacity = 1;
 
                     gsap.to(column.children[0].material, {
                         duration: 1,
@@ -155,6 +155,7 @@ const Gallery = forwardRef(function Gallery(props, ref) {
         const canvas = document.getElementById("space");
         profileArea = document.querySelector(".userInfo");
         detailArea = document.querySelector(".detail");
+        btnArea = document.querySelector(".btn");
 
         // render hive
         renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
@@ -273,6 +274,7 @@ const Gallery = forwardRef(function Gallery(props, ref) {
                 setBack(true);
                 detailArea.style.top = 0;
                 profileArea.style.opacity = 0;
+                btnArea.style.opacity = 0;
                 column = scene.getObjectByName("column" + parent.name.replace(/[^0-9]/g, ""));
                 window.column = column;
                 if (!window.controls) window.controls = controls;

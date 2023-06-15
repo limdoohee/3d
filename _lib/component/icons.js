@@ -810,5 +810,15 @@ const Component = {
             </svg>
         </span>
     ),
+    minus: (props) => (
+        <span {...props} className={`dds icons ${props.className ? props.className : null}`}>
+            <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                    d="M21.7055 13.1533C22.345 13.1533 22.8594 12.6389 22.8594 11.9995C22.8594 11.3649 22.345 10.8456 21.7055 10.8456H14.0132H11.7055H4.01322C3.3762 10.8456 2.85938 11.3649 2.85938 12C2.85938 12.637 3.3762 13.1533 4.01322 13.1533H11.7055H14.0132H21.7055Z"
+                    fill="black"
+                />
+            </svg>
+        </span>
+    ),
 };
 export default Component;

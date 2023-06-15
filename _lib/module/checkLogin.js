@@ -27,23 +27,21 @@ const pageFunc = {
                 cookies = await cookie.parse(context.req.headers.cookie);
 
                 if (cookies.loginToken) {
-                    // const result = await Api.post(`/dks-api/v1/check_login`, {}, cookies.loginToken ? cookies.loginToken : null);
-                    // const data = await result.json();
-                    // if (data.data) {
-                    //     data.data["loginToken"] = cookies.loginToken;
-                    // }
-                    // datas = data.data ? data.data : { result: "none" };
-
-                    const result = await Api.post(`/dks-api/v2/check_login`, {}, testToken, true);
+                    const result = await Api.post(`/dks-api/v2/check_login`, {}, cookies.loginToken ? cookies.loginToken : null, true);
                     const data = await result.json();
                     if (data.data) {
-                        data.data["loginToken"] = testToken;
+                        data.data["loginToken"] = cookies.loginToken;
                     }
-                    datas = data.data ? data.data : { result: "none" };
+                    datas = data.data ? data.data : { result: "none", cookie: cookies.loginToken };
+
+                    // const result = await Api.post(`/dks-api/v2/check_login`, {}, testToken);
+                    // const data = await result.json();
+                    // if (data.data) {
+                    //     data.data["loginToken"] = testToken;
+                    // }
+                    // datas = data.data ? data.data : { result: "none" };
                 }
             }
-
-            datas["lang"] = cookies.lang ? cookies.lang : "en";
 
             return datas;
         },
