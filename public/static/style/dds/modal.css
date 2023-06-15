@@ -1,0 +1,55 @@
+.dds.modal.bottom {
+    position: absolute;
+    top: auto;
+    right: auto;
+    bottom: 0;
+    max-width: 100%;
+    padding: 0;
+}
+.dds.modal.bottom .ant-modal-content {
+    border-radius: 16px 16px 0px 0px;
+    padding: 32px 20px 20px;
+}
+
+.dds.modal.bottom .imgWrapper {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dds.modal.bottom .title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: -0.03em;
+    color: #1f1f1f;
+    margin-bottom: 12px;
+    white-space: pre-line;
+}
+
+.dds.modal.bottom .context {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    color: #1f1f1f;
+    margin-bottom: 36px;
+    white-space: pre-line;
+}
+
+.dds.modal.bottom .dds.button {
+    width: 100%;
+    justify-content: center;
+    margin: 0;
+}
+
+.dds.modal.bottom .dds.button.large {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+    margin-bottom: 15px;
+}

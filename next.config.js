@@ -8,6 +8,7 @@ const { generateBuildId } = require("next/dist/build/generate-build-id");
 const moment = require("moment");
 
 const nextConfig = {
+    transpilePackages: ["antd-mobile"],
     reactStrictMode: false,
     assetPrefix: "",
     trailingSlash: true,

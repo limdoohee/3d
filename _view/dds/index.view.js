@@ -17,18 +17,16 @@ const Home = observer((props) => {
             <DDS_Layout.container>
                 <div className="dds style-guide">
                     <h1>DDS Style Guide</h1>
+                    <h4>Component</h4>
                     <ul>
-                        <li>
-                            <Link href="/dds/gnb">gnb</Link>
-                        </li>
-                        <li>
-                            <Link href="/dds/chat">Chat</Link>
-                        </li>
                         <li>
                             <Link href="/dds/icons">icons</Link>
                         </li>
                         <li>
                             <Link href="/dds/button">Button</Link>
+                        </li>
+                        <li>
+                            <Link href="/dds/input">Input</Link>
                         </li>
                         <li>
                             <Link href="/dds/input">Input</Link>
@@ -40,10 +38,31 @@ const Home = observer((props) => {
                             <Link href="/dds/profile">Profile</Link>
                         </li>
                         <li>
+                            <Link href="/dds/progress">Progress</Link>
+                        </li>
+                        <li>
+                            <Link href="/dds/chips">Chips</Link>
+                        </li>
+                    </ul>
+                    <h4>Template</h4>
+                    <ul>
+                        <li>
+                            <Link href="/dds/gnb">gnb</Link>
+                        </li>
+                        <li>
+                            <Link href="/dds/chat">Chat</Link>
+                        </li>
+                        <li>
                             <Link href="/dds/point">Point</Link>
                         </li>
                         <li>
                             <Link href="/dds/alarm">Alarm</Link>
+                        </li>
+                        <li>
+                            <Link href="/dds/magazine">Magazine</Link>
+                        </li>
+                        <li>
+                            <Link href="/dds/drop_list">Drop list</Link>
                         </li>
                     </ul>
                 </div>

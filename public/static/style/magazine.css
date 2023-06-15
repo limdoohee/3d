@@ -1,0 +1,174 @@
+.page-magazine .search {
+    padding: 20px;
+    background-color: #fff;
+}
+.page-magazine .search .dds.input {
+    width: 100%;
+}
+.page-magazine .search .dds.input .dds.icons {
+    width: 18px;
+    height: 18px;
+}
+.page-magazine .search .dds.input .dds.icons svg path {
+    fill: #969696;
+}
+.page-magazine .dds.tabs {
+    background-color: #fff;
+}
+.page-magazine .sticky {
+    top: 50px !important;
+    z-index: 1000;
+}
+.page-magazine .dds.tabs .adm-tabs-header {
+    padding: 0 20px;
+}
+.page-magazine .sort {
+    padding: 12px 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+.page-magazine .sort .ant-btn {
+    border: 0;
+    display: flex;
+    align-items: center;
+    box-shadow: none;
+    gap: 5px;
+    padding: 0;
+}
+.page-magazine .sort .ant-btn svg {
+    width: 12px;
+    height: 12px;
+}
+
+.page-magazine .list {
+    padding: 0 20px 20px 20px;
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+}
+.page-magazine .list li {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+.page-magazine .list li .image {
+    background: #d9d9d9;
+    border-radius: 8px;
+    height: 188.44px;
+    margin: 0 0 8px 0;
+    background-size: cover;
+}
+.page-magazine .list li .category {
+    font-weight: 400;
+    font-size: 12px;
+    color: #969696;
+    display: flex;
+    justify-content: space-between;
+}
+.page-magazine .list li .category strong {
+    color: #fd6e24;
+    font-weight: 400;
+    font-size: 12px;
+    text-transform: uppercase;
+}
+.page-magazine .list li h4 {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 130%;
+    letter-spacing: -0.02em;
+    color: #1f1f1f;
+}
+.page-magazine .list li dl {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    gap: 8px;
+}
+.page-magazine .list li dl dd {
+    padding: 0;
+    margin: 0;
+    background: #f5f5f5;
+    border-radius: 4px;
+    height: 20px;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+}
+.page-magazine .list li dl dd a {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #575757;
+}
+
+.page-magazine .contents {
+    padding: 20px;
+}
+.page-magazine .contents .content p {
+    margin: 0 0 8px 0 !important;
+}
+/* .page-magazine .contents .content h1 {
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 110%;
+    letter-spacing: -0.03em;
+    color: #000000;
+    padding: 0 0 20px 0;
+    margin: 0 0 20px 0;
+    border-bottom: 1px solid #000;
+}
+.page-magazine .contents .content h2 {
+    font-weight: 800;
+    font-size: 36px;
+    line-height: 110%;
+    letter-spacing: -0.03em;
+    color: #000000;
+    padding: 0 0 0 0;
+    margin: 0 0 10px 0;
+}
+.page-magazine .contents .content p {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 150%;
+    letter-spacing: -0.02em;
+    color: #000000;
+    margin: 0 0 8px 0 !important;
+}
+.page-magazine .contents .content p + h4 {
+    margin: 50px 0 12px 0;
+}
+.page-magazine .contents .content h3 {
+    font-weight: 700;
+    font-size: 32px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+    margin: 0 0 12px 0;
+}
+.page-magazine .contents .content h4 {
+    margin: 0 0 12px 0;
+}
+.page-magazine .contents .content h4 strong {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 100%;
+    letter-spacing: -0.03em;
+    color: rgba(29, 82, 221, 0.8);
+}
+.page-magazine .contents .content p strong {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #000000;
+}
+.page-magazine .contents .content p img {
+    width: 100% !important;
+}
+.page-magazine .contents .content table {
+    padding: 100% !important;
+}
+.page-magazine .contents .content table tbody tr td {
+    padding: 10px !important;
+} */

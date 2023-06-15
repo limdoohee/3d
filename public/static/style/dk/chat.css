@@ -1,11 +1,19 @@
 .dk.chat {
     padding: 50px 0 54px 0;
     position: relative;
+    min-height: calc(100vh);
 }
 .dk.chat .message-wrap {
     overflow-y: auto;
     height: calc(100vh - 110px);
+    min-height: calc(100vh - 110px);
     padding: 0 24px;
+    position: relative;
+}
+.dk.chat .message-wrap .bottom-down {
+    position: fixed;
+    bottom: 70px;
+    right: 20px;
 }
 .dk.chat .title {
     position: absolute;
@@ -14,7 +22,7 @@
     width: 100%;
     height: 50px;
     background-color: #fff;
-    padding: 20px 24px;
+    padding: 20px 20px 20px 5px;
     z-index: 900;
     display: flex;
     justify-content: space-between;
@@ -116,13 +124,14 @@
     background-color: #fff;
     display: flex;
     align-items: center;
-    padding: 8px 24px;
+    padding: 8px 20px;
     gap: 10px;
     justify-content: space-between;
     z-index: 900;
 }
 .dk.chat .message-input .dds.input {
     width: 100%;
+    padding-right: 0;
 }
 .dk.chat .message-input .upload {
     position: relative;
@@ -130,6 +139,9 @@
 }
 .dk.chat .message-input .upload .dds.icons svg path {
     fill: #969696;
+}
+.dk.chat .message-input .dds.input .dds.icons.disabled svg path {
+    fill: #dadada;
 }
 .dk.chat .message-input .upload input {
     position: absolute;
@@ -145,12 +157,53 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    gap: 12px;
-    padding: 20px;
+    gap: 20px;
+    padding: 20px 0;
+}
+
+.dk.chat .more h6 {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    color: #969696;
+    text-align: center;
 }
 
 .dk.chat .more p {
     font-weight: 400;
     font-size: 14px;
     color: #969696;
+    text-align: center;
+}
+
+.dk.chat .messages > li.date {
+    font-weight: 400;
+    font-size: 14px;
+    color: #969696;
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+}
+
+.dk.chat .loading {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 100px);
+    flex-direction: column;
+    gap: 20px;
+}
+
+.dk.chat .upload-loading {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.3);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: calc(100vh);
+    flex-direction: column;
+    z-index: 1500;
 }

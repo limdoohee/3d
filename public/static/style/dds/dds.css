@@ -18,7 +18,22 @@
         padding: 0 24px;
     }
 }
+.dds.container.fluid {
+    padding: 0;
+}
 /* =========================== container */
+
+/* =========================== content */
+.dds.content {
+    padding: 50px 0 0 0;
+}
+
+@media (min-width: 640px) {
+    .dds.content {
+        padding: 50px 0 0 0;
+    }
+}
+/* =========================== content */
 
 /* =========================== style-guide */
 .dds.style-guide {
@@ -148,8 +163,29 @@
     fill: #969696;
 }
 
+.dds.logos svg {
+    width: 40px;
+    height: 40px;
+}
+.dds.logos.small svg {
+    width: 32px;
+    height: 32px;
+}
+
+.dds.loading-full {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: var(--viewHeight);
+}
+
 @import url("./gnb.css");
 @import url("./button.css");
 @import url("./input.css");
 @import url("./tabs.css");
 @import url("./profile.css");
+@import url("./modal.css");
+@import url("./progress.css");
+@import url("./chips.css");
+@import url("./actionsheet.css");

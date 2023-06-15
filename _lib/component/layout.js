@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { motion } from "framer-motion";
 
@@ -19,6 +20,29 @@ const Component = {
             >
                 {children}
             </motion.div>
+        );
+    },
+    // /////////////////////////////////////////////////////////////////////////////////////// Back
+    back: (props) => {
+        const router = useRouter();
+
+        return (
+            <div className="ui back">
+                <h2 onClick={() => router.back()}>
+                    <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230601154911889_dk.webp" />
+                    {/* {title && <stron>{title}</stron>} */}
+                </h2>
+                {props.children}
+            </div>
+        );
+    },
+    content: (props) => {
+        const { className, children } = props;
+
+        return (
+            <>
+                <div className={`dds content ${className}`}>{children}</div>
+            </>
         );
     },
 };

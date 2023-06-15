@@ -20,7 +20,17 @@ class Store {
 
     changeLanguage(lng) {
         this.i18n.changeLanguage(lng);
+        localStorage.setItem("lang", lng);
     }
+
+    check() {
+        if (localStorage.getItem("lang")) {
+            return localStorage.getItem("lang");
+        } else {
+            return this.i18n.language;
+        }
+    }
+
     t(key) {
         const { t } = useTranslation();
         return t(key);

@@ -5,6 +5,7 @@ import { v4 as uuid } from "uuid";
 import SendbirdChat from "@sendbird/chat";
 import { OpenChannelModule, OpenChannelHandler } from "@sendbird/chat/openChannel";
 import { GroupChannelModule, GroupChannelFilter, GroupChannelListOrder, MessageFilter, MessageCollectionInitPolicy } from "@sendbird/chat/groupChannel";
+import { animateScroll as scroll, Events, scrollSpy, scroller, Element } from "react-scroll";
 //------------------------------------------------------------------------------- Module
 import Api from "../_lib/module/api";
 //------------------------------------------------------------------------------- Module
@@ -33,6 +34,7 @@ class Store {
         messageToUpdate: null,
         loading: false,
         error: false,
+        uploadLoading: false,
     };
 
     members = null;
@@ -149,35 +151,48 @@ class Store {
 
             // const channelToJoin = this.state.channels.find((channel) => channel.url === channelUrl);
             await channelToJoin.enter();
-            const [messages, error] = await this.loadMessages.open(channelToJoin);
             const [operators, operatorsError] = await this.getChannelOperators(channelToJoin);
-            if (error) {
-                return this.onError(error);
-            }
+            // const [messages, error] = await this.loadMessages.open(channelToJoin);
+            // if (error) {
+            //     return this.onError(error);
+            // }
 
             // setup connection event handlers
             const connectionHandler = new ConnectionHandler();
             connectionHandler.onReconnectSucceeded = async () => {
-                // console.log("onReconnectSucceeded");
+                console.log("onReconnectSucceeded");
                 const [messages, error] = await this.loadMessages.open(channelToJoin);
                 this.state = { ...this.state, messages: messages };
             };
-            this.sb.addConnectionHandler(uuid(), connectionHandler);
 
             //listen for incoming messages
             const channelHandler = new OpenChannelHandler();
             channelHandler.onMessageUpdated = (channel, message) => {
-                // console.log("onMessageUpdated");
+                console.log("onMessageUpdated");
                 const messageIndex = this.state.messages.findIndex((item) => item.messageId == message.messageId);
                 const updatedMessages = [...this.state.messages];
                 updatedMessages[messageIndex] = message;
-                // console.log("updatedMessages");
                 this.state = { ...this.state, messages: updatedMessages };
             };
+
             channelHandler.onMessageReceived = (channel, message) => {
-                // console.log("onMessageReceived");
-                const updatedMessages = [...this.state.messages, message];
-                this.state = { ...this.state, messages: updatedMessages };
+                const check = this.state.messages.findIndex((item) => item._iid == message._iid);
+                console.log("onMessageReceived", check);
+                if (check < 1) {
+                    const updatedMessages = [...this.state.messages, message];
+                    this.state = { ...this.state, messages: updatedMessages };
+
+                    setTimeout(() => {
+                        if (document.querySelector("#message-wrap")) {
+                            var v = document.querySelector("#message-wrap").scrollHeight;
+                            scroll.scrollTo(v, {
+                                smooth: true,
+                                duration: 0,
+                                containerId: "message-wrap",
+                            });
+                        }
+                    }, 100);
+                }
             };
             channelHandler.onMessageDeleted = (channel, message) => {
                 // console.log("onMessageDeleted");
@@ -186,10 +201,81 @@ class Store {
                 });
                 this.state = { ...this.state, messages: updatedMessages };
             };
-            this.sb.openChannel.addOpenChannelHandler(uuid(), channelHandler);
-            this.state = { ...this.state, currentlyJoinedChannel: channelToJoin, messages: messages, loading: false, currentlyJoinedChannelOperators: operators };
 
-            console.log({ ...this.state, currentlyJoinedChannel: channelToJoin, messages: messages, loading: false, currentlyJoinedChannelOperators: operators });
+            // 메타데이터 업데이트
+            // const metadata = { onlineUsers: [] };
+            // channelHandler.onMetaDataCreated(metadata, (response, error) => {
+            //     console.log(`메타데이터가 업데이트되었습니다.`);
+            // });
+            // // channelHandler.onChannelChanged;
+            // channelHandler.onMessageReceived = (channel) => {
+            //     // 메타데이터 가져오기
+            //     channel.getMetaData(["onlineUsers"], (metadata, error) => {
+            //         if (error) {
+            //             console.error(error);
+            //             return;
+            //         }
+
+            //         const onlineUsers = response["onlineUsers"];
+            //         console.log(`현재 접속한 사용자 목록: ${onlineUsers.join(", ")}`);
+            //     });
+            // };
+
+            // // 사용자 입장
+            // channelToJoin.onUserEntered = (user) => {
+            //     // 메타데이터 업데이트: 사용자를 온라인 목록에 추가
+            //     channel.getMetaData(["onlineUsers"], (response, error) => {
+            //         if (error) {
+            //             console.error(error);
+            //             return;
+            //         }
+
+            //         const onlineUsers = response["onlineUsers"];
+            //         onlineUsers.push(user.userId);
+
+            //         const metadata = { onlineUsers };
+            //         channel.updateMetaData(metadata, (response, error) => {
+            //             if (error) {
+            //                 console.error(error);
+            //                 return;
+            //             }
+
+            //             console.log(`사용자 ${user.userId}이(가) 채널에 입장했습니다.`);
+            //         });
+            //     });
+            // };
+
+            // // 사용자 퇴장
+            // channelToJoin.onUserExited = (user) => {
+            //     // 메타데이터 업데이트: 사용자를 온라인 목록에서 제거
+            //     channel.getMetaData(["onlineUsers"], (response, error) => {
+            //         if (error) {
+            //             console.error(error);
+            //             return;
+            //         }
+
+            //         const onlineUsers = response["onlineUsers"];
+            //         const index = onlineUsers.indexOf(user.userId);
+            //         if (index !== -1) {
+            //             onlineUsers.splice(index, 1);
+
+            //             const metadata = { onlineUsers };
+            //             channel.updateMetaData(metadata, (response, error) => {
+            //                 if (error) {
+            //                     console.error(error);
+            //                     return;
+            //                 }
+
+            //                 console.log(`사용자 ${user.userId}이(가) 채널에서 나갔습니다.`);
+            //             });
+            //         }
+            //     });
+            // };
+
+            this.sb.openChannel.addOpenChannelHandler(uuid(), channelHandler);
+            this.state = { ...this.state, currentlyJoinedChannel: channelToJoin, messages: [], loading: false, currentlyJoinedChannelOperators: operators };
+
+            console.log({ ...this.state, currentlyJoinedChannel: channelToJoin, messages: [], loading: false, currentlyJoinedChannelOperators: operators });
         }
         //////////////////////////////////////////////////////////////////// openChannel
 
@@ -247,7 +333,7 @@ class Store {
             try {
                 //list all messages
                 const messageListParams = {};
-                messageListParams.prevResultSize = 30;
+                messageListParams.prevResultSize = 0;
                 // messageListParams.reverse = true;
                 const unixMilliseconds = timeFlag ? timeFlag : new Date().getTime();
                 const messages = await channel.getMessagesByTimestamp(unixMilliseconds, messageListParams);

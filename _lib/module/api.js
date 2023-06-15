@@ -2,12 +2,18 @@ import _config from "next/config";
 const publicRuntimeConfig = _config().publicRuntimeConfig;
 const apiUrl = process.env.API_URL;
 const session = publicRuntimeConfig.session;
+import cookie from "cookie";
 
 const api = {
     get(path, params, token) {
         let url = apiUrl + path;
         if (params) {
             url += "?" + new URLSearchParams(params);
+            if (localStorage.getItem("lang")) {
+                url += `&lang=${localStorage.getItem("lang")}`;
+            }
+        } else {
+            url += `?lang=${localStorage.getItem("lang")}`;
         }
         let options = {
             method: "GET",
@@ -27,8 +33,13 @@ const api = {
         }
         return fetch(url, options);
     },
-    post(path, params, token) {
+    post(path, params, token, ssr) {
         let url = apiUrl + path;
+        if (!ssr) {
+            if (localStorage.getItem("lang")) {
+                url += `?lang=${localStorage.getItem("lang")}`;
+            }
+        }
         let options = {
             url: url,
             method: "POST",

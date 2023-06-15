@@ -36,8 +36,8 @@ const Home = observer((props) => {
                         className="dds button text"
                     >
                         <DDS_Icons.bars />
-                    </DDS_Button.default>
                     <DDS_Gnb.default store={store}></DDS_Gnb.default>
+                    </DDS_Button.default>
                     <DDS_Layout.container></DDS_Layout.container>
                 </div>
             </DDS_Layout.container>
