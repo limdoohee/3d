@@ -1,16 +1,15 @@
 ("use client");
-import Head from "next/head";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
 import "../../_lib/module/i18n";
 import { useTranslation } from "react-i18next";
-import Component from "../../_lib/component/button";
 //------------------------------------------------------------------------------- Antd
 import { Input } from "antd";
-import { Checkbox, Space, Button } from "antd-mobile";
 //------------------------------------------------------------------------------- Antd
 //------------------------------------------------------------------------------- Component
+import Component from "../../_lib/component/button";
+import DDS_Icons from "../../_lib/component/icons";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
@@ -52,12 +51,7 @@ const Home = observer((props) => {
     const calculateByteCount = (text) => {
         let byteCount = 0;
         for (let i = 0; i < text.length; i++) {
-            const charCode = text.charCodeAt(i);
-            if (charCode <= 0x7f) {
-                byteCount += 1;
-            } else {
-                byteCount += 2;
-            }
+            byteCount += 1;
         }
         return byteCount;
     };
@@ -67,17 +61,6 @@ const Home = observer((props) => {
         setByteCount(count);
 
         sessionStorage.setItem("IsNicknameValue", value.toString());
-    }, [value]);
-
-    useEffect(() => {
-        const inputValue = value;
-        let maxLength = 20;
-        if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(inputValue)) {
-            maxLength = 10;
-        }
-        if (inputValue.length > maxLength) {
-            setValue(inputValue.slice(0, maxLength));
-        }
     }, [value]);
 
     const handleNickName = (e) => {
@@ -93,6 +76,14 @@ const Home = observer((props) => {
                 setIsNicknameAvailable(false);
             }
         });
+    };
+
+    const inputNickname = (e) => {
+        const inputValue = e.target.value;
+        const alphanumericRegex = /^[a-zA-Z0-9]*$/;
+        if (alphanumericRegex.test(inputValue)) {
+            setValue(inputValue);
+        }
     };
 
     const handleClear = () => {
@@ -122,28 +113,25 @@ const Home = observer((props) => {
                                 type="text"
                                 placeholder={t(`signup.nickname.placeholder`)}
                                 onChange={(e) => {
-                                    setValue(e.target.value);
+                                    inputNickname(e);
                                 }}
                                 onKeyUp={(e) => {
                                     handleNickName(e);
                                 }}
                                 value={value}
                                 maxLength={20}
+                                minLength={3}
                             />
-                            {value && (
-                                <span onClick={handleClear}>
-                                    <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230605132550204_dk.webp" />
-                                </span>
-                            )}
+                            {value && <DDS_Icons.xmark_02 className="xmark-02" onClick={handleClear} />}
                         </div>
                         {value !== "" ? <p className={`help ${isNicknameAvailable ? "success" : "warning"}`}>{isNicknameAvailable ? t(`signup.nickname.help-success`) : t(`signup.nickname.help-warning`)}</p> : ""}
                     </li>
                 </ul>
                 <Component.default
                     className="agree-check"
-                    disabled={byteCount === 0 || !isNicknameAvailable}
+                    disabled={byteCount === 0 || byteCount <= 2 || !isNicknameAvailable}
                     onClick={() => {
-                        Router.push("/signup/mobile");
+                        router.push("/signup/mobile");
                     }}
                 >
                     {t(`common.check`)}

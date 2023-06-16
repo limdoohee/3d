@@ -1,23 +1,18 @@
 ("use client");
-import Head from "next/head";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import "../../_lib/module/i18n";
 import { useTranslation } from "react-i18next";
-import Component from "../../_lib/component/button";
-import { useDrag } from "@use-gesture/react";
-import { a, useSpring, config } from "@react-spring/web";
-import Layout from "../../_lib/component/layout";
 
 //------------------------------------------------------------------------------- Antd
-import { Checkbox, Space, Button } from "antd-mobile";
+import { Checkbox, Space } from "antd-mobile";
 import { Drawer } from "antd";
-import { Fragment } from "react";
 //------------------------------------------------------------------------------- Antd
 //------------------------------------------------------------------------------- Component
+import Component from "../../_lib/component/button";
+import DDS_Icons from "../../_lib/component/icons";
 //------------------------------------------------------------------------------- Component
-const CheckboxGroup = Checkbox.Group;
 const Home = observer((props) => {
     const router = useRouter();
     const { t, i18n } = useTranslation();
@@ -55,9 +50,6 @@ const Home = observer((props) => {
         sessionStorage.setItem("IsTermsValue", termsValue);
     }, [value]);
 
-    const onClose = () => {
-        setOpen(false);
-    };
     const handleListClick = (list, idx) => {
         setSelectedList({
             title: t(`signup.list${idx + 1}.title`),
@@ -73,9 +65,7 @@ const Home = observer((props) => {
                 <div className="agree-list ">
                     <Checkbox
                         className="all"
-                        icon={() =>
-                            items.length == value.length ? <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230602093509971_dk.webp" /> : <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230602093522455_dk.webp" />
-                        }
+                        icon={() => (items.length == value.length ? <DDS_Icons.check className="checked" /> : <DDS_Icons.checkEmpty className="unchecked" />)}
                         indeterminate={false}
                         checked={value.length === items.length}
                         onChange={(checked) => {
@@ -98,32 +88,11 @@ const Home = observer((props) => {
                             <Space direction="vertical">
                                 {items.map((item, idx) => (
                                     <React.Fragment key={idx}>
-                                        <Checkbox
-                                            key={idx}
-                                            value={item}
-                                            icon={(checked) =>
-                                                checked ? <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230602093509971_dk.webp" /> : <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230602093522455_dk.webp" />
-                                            }
-                                        >
+                                        <Checkbox key={idx} value={item} icon={(checked) => (checked ? <DDS_Icons.check className="checked" /> : <DDS_Icons.checkEmpty className="unchecked" />)}>
                                             {item}
                                         </Checkbox>
-                                        <span onClick={() => handleListClick(item, idx)}>
-                                            <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230601162101262_dk.webp" />
-                                        </span>
-                                        <Drawer className="modal agreement" placement={"right"} closable={false} onClose={onClose} open={open} width={1500}>
-                                            <div
-                                                onClick={() => {
-                                                    setOpen(false);
-                                                }}
-                                            >
-                                                <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230601154911889_dk.webp" />
-                                                {<h3>{selectedList.title}</h3>}
-                                            </div>
-                                            <div className="terms">
-                                                {<h2>{selectedList.title}</h2>}
-                                                <p>{selectedList.desc}</p>
-                                            </div>
-                                        </Drawer>
+                                        <DDS_Icons.angleRight className="next" onClick={() => handleListClick(item, idx)} />
+                                        <SignupDrawer open={open} setOpen={setOpen} selectedList={selectedList} />
                                     </React.Fragment>
                                 ))}
                             </Space>
@@ -134,7 +103,7 @@ const Home = observer((props) => {
                     className="agree-check"
                     disabled={!saveValue}
                     onClick={() => {
-                        Router.push("/signup/nickname");
+                        router.push("/signup/nickname");
                     }}
                 >
                     {t(`signup.terms.check`)}
@@ -145,3 +114,30 @@ const Home = observer((props) => {
 });
 
 export default Home;
+
+// ---------------------------------------------------------------- drawer
+
+export const SignupDrawer = observer((props) => {
+    const { open, setOpen, selectedList } = props;
+
+    const onClose = () => {
+        setOpen(false);
+    };
+
+    return (
+        <Drawer className="modal agreement" placement={"right"} closable={false} onClose={onClose} open={open} width={1500}>
+            <div>
+                <DDS_Icons.angleLeft
+                    onClick={() => {
+                        setOpen(false);
+                    }}
+                />
+                {<h3>{selectedList.title}</h3>}
+            </div>
+            <div className="terms">
+                {<h2>{selectedList.title}</h2>}
+                <p>{selectedList.desc}</p>
+            </div>
+        </Drawer>
+    );
+});
