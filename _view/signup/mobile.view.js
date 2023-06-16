@@ -197,28 +197,6 @@ const Home = observer((props) => {
         }
     };
 
-    const [keyboardHeight, setKeyboardHeight] = useState(0);
-
-    useEffect(() => {
-        const handleKeyboardShow = (e) => {
-            const keyboardHeight = e.target.innerHeight - window.innerHeight;
-            setKeyboardHeight(keyboardHeight);
-        };
-
-        const handleKeyboardHide = () => {
-            setKeyboardHeight(0);
-        };
-
-        window.addEventListener("resize", handleKeyboardShow);
-        window.addEventListener("orientationchange", handleKeyboardShow);
-        window.addEventListener("focusout", handleKeyboardHide);
-
-        return () => {
-            window.removeEventListener("resize", handleKeyboardShow);
-            window.removeEventListener("orientationchange", handleKeyboardShow);
-            window.removeEventListener("focusout", handleKeyboardHide);
-        };
-    }, []);
     return (
         <>
             <div className="auth ui mobile">
@@ -285,7 +263,7 @@ const Home = observer((props) => {
                                         autoComplete="“one-time-code”"
                                     />
                                     {isCodeEntered || code ? (
-                                        <button className="btn certificate" id="phoneNumberButton" type="submit" style={{ transform: `translateY(-${keyboardHeight}px)` }}>
+                                        <button className="btn certificate" id="phoneNumberButton" type="submit">
                                             {t(`common.check`)}
                                         </button>
                                     ) : null}
