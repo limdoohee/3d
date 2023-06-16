@@ -51,12 +51,7 @@ const Home = observer((props) => {
     const calculateByteCount = (text) => {
         let byteCount = 0;
         for (let i = 0; i < text.length; i++) {
-            const charCode = text.charCodeAt(i);
-            if (charCode <= 0x7f) {
-                byteCount += 1;
-            } else {
-                byteCount += 2;
-            }
+            byteCount += 1;
         }
         return byteCount;
     };
@@ -66,17 +61,6 @@ const Home = observer((props) => {
         setByteCount(count);
 
         sessionStorage.setItem("IsNicknameValue", value.toString());
-    }, [value]);
-
-    useEffect(() => {
-        const inputValue = value;
-        let maxLength = 20;
-        if (/[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/.test(inputValue)) {
-            maxLength = 10;
-        }
-        if (inputValue.length > maxLength) {
-            setValue(inputValue.slice(0, maxLength));
-        }
     }, [value]);
 
     const handleNickName = (e) => {
@@ -92,6 +76,14 @@ const Home = observer((props) => {
                 setIsNicknameAvailable(false);
             }
         });
+    };
+
+    const inputNickname = (e) => {
+        const inputValue = e.target.value;
+        const alphanumericRegex = /^[a-zA-Z0-9]*$/;
+        if (alphanumericRegex.test(inputValue)) {
+            setValue(inputValue);
+        }
     };
 
     const handleClear = () => {
@@ -121,13 +113,14 @@ const Home = observer((props) => {
                                 type="text"
                                 placeholder={t(`signup.nickname.placeholder`)}
                                 onChange={(e) => {
-                                    setValue(e.target.value);
+                                    inputNickname(e);
                                 }}
                                 onKeyUp={(e) => {
                                     handleNickName(e);
                                 }}
                                 value={value}
                                 maxLength={20}
+                                minLength={3}
                             />
                             {value && <DDS_Icons.xmark_02 className="xmark-02" onClick={handleClear} />}
                         </div>
@@ -136,7 +129,7 @@ const Home = observer((props) => {
                 </ul>
                 <Component.default
                     className="agree-check"
-                    disabled={byteCount === 0 || !isNicknameAvailable}
+                    disabled={byteCount === 0 || byteCount <= 2 || !isNicknameAvailable}
                     onClick={() => {
                         router.push("/signup/mobile");
                     }}
