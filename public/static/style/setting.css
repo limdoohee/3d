@@ -134,6 +134,26 @@
     flex-direction: column;
     gap: 8px;
 }
+.page-setting.sub .account > .form li h4 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.page-setting.sub .account > .form li h4 strong {
+    font-weight: 400;
+    font-size: 16px;
+    color: #1f1f1f;
+}
+.page-setting.sub .account > .form li h4 .kakao {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    background: #feeb00;
+}
+.page-setting.sub .account > .form li h4 .kakao .icons {
+    width: 12px;
+    height: 12px;
+}
 .page-setting.sub .account > .form li h5 {
     font-weight: 400;
     font-size: 14px;
@@ -142,6 +162,7 @@
     color: #969696;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 .page-setting.sub .account > .form li h5 strong {
     font-weight: 400;
@@ -160,6 +181,26 @@
 .page-setting.sub .account > .form li textarea.ant-input {
     height: 120px;
     padding: 16px 12px;
+}
+.page-setting.sub .account > .form li .phone {
+    display: flex;
+    gap: 8px;
+}
+.page-setting.sub .account > .form li .phone .input {
+    width: 100%;
+}
+.page-setting.sub .account > .form li .phone .input .button {
+    display: flex;
+    gap: 8px;
+    padding: 0;
+}
+.page-setting.sub .confirm {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+.page-setting.sub .confirm .button {
+    border-radius: 0;
 }
 
 .page-setting .alarm-info {

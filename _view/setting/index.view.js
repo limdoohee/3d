@@ -89,7 +89,7 @@ const Home = observer((props) => {
                         <dt>계정</dt>
                         <dd
                             onClick={() => {
-                                Router.push(`/setting/auth`);
+                                Router.push(`/setting/account`);
                             }}
                         >
                             <h4>계정 정보</h4>
