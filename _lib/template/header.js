@@ -18,7 +18,6 @@ const Home = {
     default: observer((props) => {
         const router = useRouter();
         const { title, back, right, left } = props;
-        console.log(back);
         const { common, lang, auth } = props.store;
 
         return (

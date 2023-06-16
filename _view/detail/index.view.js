@@ -23,23 +23,15 @@ const Home = observer((props) => {
 
     useEffect(() => {
         setCount(addComma(count));
+        setMore(false);
     }, []);
 
     return (
-        <div className="detail" style={{ backgroundColor: more ? "rgba(255,255,255,0.5" : "transparent" }}>
-            {/* <div className="hold">
-                    <button>보유중</button>
-                </div> */}
+        <div className="detail" style={{ backgroundColor: more ? "rgba(255,255,255,0.5" : "transparent", height: more ? "100vh" : "0" }}>
             <div className="wrapper">
                 <div className="info">
                     <div className="artist">
                         <div>
-                            {/* <Avatar
-                            style={{
-                                backgroundColor: "#000000",
-                            }}
-                            src={<img src={"../../static/img/defaultProfile.png"} className="profile" alt="profile" />}
-                        /> */}
                             <Avatar icon={<UserOutlined />} />
                             <span className="name">abcdefghijklmnopqrst</span>
                         </div>

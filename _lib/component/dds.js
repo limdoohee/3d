@@ -16,6 +16,7 @@ import chips from "../../_lib/component/chips";
 import modal from "../../_lib/component/modal";
 import actionsheet from "../../_lib/component/actionsheet";
 import switchC from "../../_lib/component/switch";
+import message from "../../_lib/component/message";
 //------------------------------------------------------------------------------- Component
 
 const Home = {
@@ -32,6 +33,7 @@ const Home = {
     modal: modal,
     actionsheet: actionsheet,
     switch: switchC,
+    message: message,
 };
 
 export default Home;
