@@ -10,7 +10,7 @@ import { Drawer } from "antd";
 //------------------------------------------------------------------------------- Antd
 //------------------------------------------------------------------------------- Component
 import DDS_Icons from "../../_lib/component/icons";
-import DDS_Logos from "../../_lib/component/icons";
+import DDS_Logos from "../../_lib/component/logos";
 import SignupDrawer from "../signup/terms.view";
 //------------------------------------------------------------------------------- Component
 
@@ -24,6 +24,8 @@ const Home = observer((props) => {
     const [handleTranslate, setHandleTranslate] = useState("en");
     const [open, setOpen] = useState(false);
     const [showTerms, setShowTerms] = useState(null);
+    const [recentLogin, setRecentLogin] = useState("");
+
     const lang_selected = [
         {
             lang: "English",
@@ -61,10 +63,10 @@ const Home = observer((props) => {
     }, [showTranslate]);
 
     const login_data = [
-        { id: "1", login_title: t(`login.main.google`), signup_title: t(`login.main.signup.google`), className: "google", img: <DDS_Icons.google className="" /> },
-        { id: "2", login_title: t(`login.main.apple`), signup_title: t(`login.main.signup.apple`), className: "apple", img: <DDS_Icons.apple className="sns" /> },
-        { id: "3", login_title: t(`login.main.naver`), signup_title: t(`login.main.signup.naver`), className: "naver", img: <DDS_Icons.naver className="sns" /> },
-        { id: "4", login_title: t(`login.main.kakao`), signup_title: t(`login.main.signup.kakao`), className: "kakao", img: <DDS_Icons.kakao className="sns" /> },
+        { id: "1", login_title: t(`login.main.google`), signup_title: t(`login.main.signup.google`), className: "google", img: <DDS_Icons.google /> },
+        { id: "2", login_title: t(`login.main.apple`), signup_title: t(`login.main.signup.apple`), className: "apple", img: <DDS_Icons.apple /> },
+        { id: "3", login_title: t(`login.main.naver`), signup_title: t(`login.main.signup.naver`), className: "naver", img: <DDS_Icons.naver /> },
+        { id: "4", login_title: t(`login.main.kakao`), signup_title: t(`login.main.signup.kakao`), className: "kakao", img: <DDS_Icons.kakao /> },
     ];
 
     useEffect(() => {
@@ -78,6 +80,9 @@ const Home = observer((props) => {
                 setShowTerms("agreement");
             }
         });
+
+        const recentLoginValue = localStorage.getItem("recentLogin");
+        setRecentLogin(recentLoginValue);
     }, []);
 
     const onClose = () => {
@@ -88,8 +93,7 @@ const Home = observer((props) => {
             <div className="login wrap">
                 <div className="inner">
                     <h1>
-                        {/* <DDS_Logos.circle /> */}
-                        <img src="https://asset.dropkitchen.xyz/contents/202305_dev/20230526113606908_dk.webp" />
+                        <DDS_Logos.default />
                     </h1>
                     <p id="login-desc" dangerouslySetInnerHTML={{ __html: t(`login.main.title`) }} />
 
@@ -120,6 +124,7 @@ const Home = observer((props) => {
                                 >
                                     {l.img}
                                     <span>{l.login_title} </span>
+                                    {recentLogin === l.className.toUpperCase() && <span className="recent">{t(`login.main.recent`)}</span>}
                                 </li>
                             );
                         })}
@@ -181,7 +186,7 @@ const Home = observer((props) => {
                             setOpenLang(false);
                         }}
                         open={openLang}
-                        closeIcon={<img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230601101932223_dk.webp" />}
+                        closeIcon={false}
                     >
                         {lang_selected.map((l, idx) => {
                             return (
@@ -192,7 +197,7 @@ const Home = observer((props) => {
                                     }}
                                 >
                                     {l.lang}
-                                    {isCategorySelect[idx] && <img src="https://asset.dropkitchen.xyz/contents/202305_dev/20230530132727224_dk.webp" />}
+                                    {isCategorySelect[idx] && <DDS_Icons.check className="checked login" />}
                                 </div>
                             );
                         })}

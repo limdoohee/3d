@@ -196,6 +196,29 @@ const Home = observer((props) => {
             alert(t(`signup.mobile.message.fail`));
         }
     };
+
+    const [keyboardHeight, setKeyboardHeight] = useState(0);
+
+    useEffect(() => {
+        const handleKeyboardShow = (e) => {
+            const keyboardHeight = e.target.innerHeight - window.innerHeight;
+            setKeyboardHeight(keyboardHeight);
+        };
+
+        const handleKeyboardHide = () => {
+            setKeyboardHeight(0);
+        };
+
+        window.addEventListener("resize", handleKeyboardShow);
+        window.addEventListener("orientationchange", handleKeyboardShow);
+        window.addEventListener("focusout", handleKeyboardHide);
+
+        return () => {
+            window.removeEventListener("resize", handleKeyboardShow);
+            window.removeEventListener("orientationchange", handleKeyboardShow);
+            window.removeEventListener("focusout", handleKeyboardHide);
+        };
+    }, []);
     return (
         <>
             <div className="auth ui mobile">
@@ -218,9 +241,10 @@ const Home = observer((props) => {
                                     placeholder={t(`signup.mobile.placeholder`)}
                                     ref={phoneNumberRef}
                                     value={phoneNumber}
+                                    inputMode="numeric"
                                     onChange={(e) => {
-                                        const inputValue = e.target.value.replace(/[^0-9]/g, "");
-                                        setPhoneNumber(inputValue);
+                                        // const inputValue = e.target.value.replace(/[^0-9]/g, "");
+                                        setPhoneNumber(e.target.value);
                                     }}
                                 />
                                 <button
@@ -257,9 +281,11 @@ const Home = observer((props) => {
                                         }}
                                         value={code}
                                         maxLength={6}
+                                        inputMode="numeric"
+                                        autoComplete="“one-time-code”"
                                     />
                                     {isCodeEntered || code ? (
-                                        <button className="btn certificate" id="phoneNumberButton" type="submit">
+                                        <button className="btn certificate" id="phoneNumberButton" type="submit" style={{ transform: `translateY(-${keyboardHeight}px)` }}>
                                             {t(`common.check`)}
                                         </button>
                                     ) : null}

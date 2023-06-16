@@ -22,7 +22,8 @@
                 "naver": "Naver로 가입하기",
                 "apple": "Apple로 가입하기",
                 "kakao": "Kakao로 가입하기"
-            }
+            },
+            "recent": "최근 로그인"
         }
     },
     "signup": {

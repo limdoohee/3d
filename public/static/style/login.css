@@ -12,6 +12,10 @@
 .login.wrap .inner h1 {
     max-width: 200px;
     display: flex;
+    width: 50vw;
+}
+.login.wrap .inner h1 svg {
+    width: 100%;
 }
 .login.wrap .inner > p {
     padding: 24px 0 120px;
@@ -30,6 +34,7 @@
     gap: 0 8px;
     height: 48px;
     border-radius: 8px;
+    position: relative;
 }
 .login-sns li > span:has(svg) {
     width: 20px !important;
@@ -60,6 +65,20 @@
 }
 .login-sns li:last-child {
     margin-bottom: 0;
+}
+.login-sns li .recent {
+    position: absolute;
+    right: 8px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+    min-width: 61px;
+    
+    height: 20px;
+    font-size: 10px;
+    color: #404040;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .login.wrap .inner > .help {
     margin-top: 32px;

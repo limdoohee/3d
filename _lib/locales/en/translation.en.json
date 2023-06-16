@@ -22,7 +22,8 @@
                 "naver": "Sign up with Naver",
                 "apple": "Sign up with Apple",
                 "kakao": "Sign up with Kakao"
-            }
+            },
+            "recent": "recent login"
         }
     },
     "signup": {

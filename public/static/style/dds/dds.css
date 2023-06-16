@@ -79,6 +79,10 @@
     height: 100%;
 }
 /* --------------------------- custom */
+.dds.icons.checked.login {
+    width: 20px;
+    height: 20px;
+}
 .dds.icons.checked path {
     fill: var(--color-orange);
 }
