@@ -43,6 +43,7 @@ const Home = observer((props) => {
             common.debug(e);
             callback && callback(e);
             setpage(page + 1);
+            console.log(magazine.data.magazineList.page.totalPages);
         });
     };
     //------------------------------------------------- Init Load

@@ -41,8 +41,9 @@ const Component = {
                                 className="dds button primary large"
                                 onClick={async () => {
                                     confirm.action && (await confirm.action());
-                                    onClose();
+                                    confirm.close ? confirm.close() : onClose();
                                 }}
+                                key="primary"
                             >
                                 {confirm.label}
                             </DDS.button.default>
@@ -54,6 +55,7 @@ const Component = {
                                     cancel.action && (await cancel.action());
                                     onClose();
                                 }}
+                                key="text"
                             >
                                 {cancel.label}
                             </DDS.button.default>

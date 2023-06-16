@@ -12,8 +12,8 @@ configure({
 class Store {
     data = {
         id: 1,
-        startDate: "2023-06-14 10:00:30", // 드롭 오픈 시간
-        endDate: "2023-06-14 17:02:40", // 드롭 마감 시간
+        startDate: "2023-06-22 10:00:30", // 드롭 오픈 시간
+        endDate: "2023-06-24 17:02:40", // 드롭 마감 시간
         owner: 123,
         status: "ready",
         myDrop: false,
