@@ -9,6 +9,7 @@ import PointStore from "./point";
 import AlarmStore from "./alarm";
 import DropStore from "./drop";
 import MagazineStore from "./magazine";
+import GalleryStore from "./gallery";
 
 configure({
     enforceActions: "never",
@@ -25,6 +26,7 @@ class Store {
     lang = new LangStore(this);
     drop = new DropStore(this);
     magazine = new MagazineStore(this);
+    gallery = new GalleryStore(this);
     //////////////////////////////// Store Call
 
     constructor() {

@@ -88,7 +88,7 @@ const Home = observer((props) => {
             className="dds button none gallery badge"
             icon={<DDS.icons.myGalleryBlackOn />}
             onClick={() => {
-                router.push("/userGallery");
+                router.push("/userGallery/?memberSeq=20");
             }}
         />
     );
