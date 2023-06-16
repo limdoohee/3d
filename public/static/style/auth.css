@@ -174,7 +174,7 @@
     margin-top: 32px;
     gap: 8px 0;
 }
-.auth.ui.mobile .mobile-list .input-area .form label {
+.auth.ui.mobile .mobile-list .input-area label {
     font-size: 14px;
     color: #969696;
 }
@@ -190,6 +190,16 @@
     gap: 8px 0;
     margin: 8px 0 32px;
     position: relative;
+}
+.auth.ui.mobile .mobile-list .input-area .form:nth-child(2) > div:first-child {
+    display: inline-flex;
+    border-radius: 8px;
+    border: 1px solid #dadada;
+}
+
+.auth.ui.mobile .mobile-list .input-area .form:nth-child(2) > div input {
+    padding: 0;
+    border: none;
 }
 .auth.ui.mobile .mobile-list .input-area .form input {
     border-radius: 8px;
@@ -210,12 +220,8 @@
 .auth.ui.mobile .mobile-list .input-area .form strong {
     display: flex;
     align-items: center;
-    position: absolute;
-    left: 12px;
-    top: 50%;
-    transform: translateY(-50%);
-    z-index: 100;
     font-size: 16px;
+    padding: 0 12px;
 }
 .auth.ui.mobile .mobile-list .input-area .form strong span {
     width: 16px;
@@ -240,7 +246,80 @@
     height: 18px;
     position: absolute;
     right: 15px;
-    top: 32%;
+    top: 56%;
+}
+
+.page-setting.sub .account > .form {
+    padding: 12px 20px 0 20px;
+    display: flex;
+    gap: 32px;
+    flex-direction: column;
+    width: 100%;
+}
+.page-setting.sub .account > .form li {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.page-setting.sub .account > .form li h4 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.page-setting.sub .account > .form li h4 strong {
+    font-weight: 400;
+    font-size: 16px;
+    color: #1f1f1f;
+}
+.page-setting.sub .account > .form li h4 .kakao {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    background: #feeb00;
+}
+.page-setting.sub .account > .form li h4 .kakao .icons {
+    width: 12px;
+    height: 12px;
+}
+.page-setting.sub .account > .form li h5 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #969696;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.page-setting.sub .account > .form li h5 strong {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #969696;
+}
+.page-setting.sub .account > .form li p {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #e02431;
+}
+.page-setting.sub .account > .form li textarea.ant-input {
+    height: 120px;
+    padding: 16px 12px;
+}
+.page-setting.sub .account > .form li .phone {
+    display: flex;
+    gap: 8px;
+}
+.page-setting.sub .account > .form li .phone .input {
+    width: 100%;
+}
+.page-setting.sub .account > .form li .phone .input .button {
+    display: flex;
+    gap: 8px;
+    padding: 0;
 }
 .auth.ui.mobile .mobile-list .input-area input::placeholder {
     font-size: 16px;

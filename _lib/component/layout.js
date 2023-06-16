@@ -31,7 +31,7 @@ const Component = {
 
         return (
             <div className="ui back">
-                <h2 onClick={() => router.back()}>
+                <h2 onClick={() => (router.path === "signup/terms/" ? router.push("/") : router.back())}>
                     <DDS_Icons.angleLeft className="dds icons" />
                 </h2>
                 {props.children}

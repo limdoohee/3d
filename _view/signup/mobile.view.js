@@ -93,8 +93,8 @@ const Home = observer((props) => {
 
     useEffect(() => {
         window.recaptchaVerifier = new RecaptchaVerifier(
-            // "recaptcha-container",
-            "phoneNumberButton",
+            "recaptcha-container",
+            // "phoneNumberButton",
             {
                 size: "invisible",
                 timeout: 180000,
@@ -206,25 +206,27 @@ const Home = observer((props) => {
                         <div className="input-area">
                             <label>{t(`signup.mobile.label`)}</label>
                             <div className="form">
-                                <strong
-                                    onClick={() => {
-                                        setOpen(true);
-                                    }}
-                                >
-                                    +{value}
-                                    <DDS_Icons.caretDown />
-                                </strong>
-                                <input
-                                    type="text"
-                                    placeholder={t(`signup.mobile.placeholder`)}
-                                    ref={phoneNumberRef}
-                                    value={phoneNumber}
-                                    inputMode="numeric"
-                                    onChange={(e) => {
-                                        // const inputValue = e.target.value.replace(/[^0-9]/g, "");
-                                        setPhoneNumber(e.target.value);
-                                    }}
-                                />
+                                <div>
+                                    <strong
+                                        onClick={() => {
+                                            setOpen(true);
+                                        }}
+                                    >
+                                        +{value}
+                                        <DDS_Icons.caretDown />
+                                    </strong>
+                                    <input
+                                        type="text"
+                                        placeholder={t(`signup.mobile.placeholder`)}
+                                        ref={phoneNumberRef}
+                                        value={phoneNumber}
+                                        inputMode="numeric"
+                                        onChange={(e) => {
+                                            // const inputValue = e.target.value.replace(/[^0-9]/g, "");
+                                            setPhoneNumber(e.target.value);
+                                        }}
+                                    />
+                                </div>
                                 <button
                                     className="btn send"
                                     id="phoneNumberButton"
@@ -241,9 +243,8 @@ const Home = observer((props) => {
                                 <form className="form" onSubmit={handleConfirmCodeSubmit}>
                                     <div className="time">
                                         <label>{t(`signup.mobile.certificate.label`)}</label>
-                                        {isTimerRunning ? <div>{formatTime(Math.floor(timer / 1000))}</div> : <div>00:00</div>}
+                                        {isTimerRunning ? <div>{formatTime(Math.floor(timer / 1000))}</div> : <div>시간만료</div>}
                                     </div>
-
                                     <input
                                         ref={confirmCodeRef}
                                         type="text"
@@ -304,7 +305,7 @@ const Home = observer((props) => {
                             ))}
                         </Drawer>
                         {contextHolder}
-                        {/* <div id="recaptcha-container"></div> */}
+                        <div id="recaptcha-container"></div>
                     </>
                 </div>
             </div>
