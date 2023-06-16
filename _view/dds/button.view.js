@@ -45,7 +45,7 @@ const Home = observer((props) => {
                             <DDS_Button.default className="dds button secondary" icon={<DDS_Icons.angleDown />}></DDS_Button.default>
                             <DDS_Button.default className="dds button secondary rounded" icon={<DDS_Icons.angleUp />}></DDS_Button.default>
                             <DDS_Button.default className="dds button none rounded" icon={<DDS_Icons.circleArrowUp />}></DDS_Button.default>
-                            <DDS_Button.default className="dds button none rounded" icon={<DDS_Icons.circleArrowUp className="large" />}></DDS_Button.default>
+                            <DDS_Button.default className="dds button none rounded large" icon={<DDS_Icons.circleArrowUp />}></DDS_Button.default>
                         </div>
                     </div>
                     <h4>크기</h4>
