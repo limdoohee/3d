@@ -186,6 +186,13 @@
     letter-spacing: -0.02em;
     color: #969696;
 }
+.page-setting.sub .account > .form li h5 span {
+    color: var(--color-red);
+}
+.page-setting.sub .account > .form li:has(input:focus) h5 strong {
+    color: #404040;
+}
+
 .page-setting.sub .account > .form li p {
     font-weight: 400;
     font-size: 12px;
@@ -208,6 +215,9 @@
     display: flex;
     gap: 8px;
     padding: 0;
+}
+.page-setting.sub .account > .form li .phone > .button {
+    padding: 0 16px;
 }
 .page-setting.sub .confirm {
     position: fixed;

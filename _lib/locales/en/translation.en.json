@@ -14,6 +14,8 @@
             "naver": "Log in with Naver",
             "apple": "Log in with Apple",
             "kakao": "Log in with Kakao",
+            "help": "Don’t have an account?",
+            "signUp": "Sign Up",
             "tooltip": "5,000P payout",
             "language-select": "Select a language",
             "signup": {
@@ -64,11 +66,13 @@
                 "btn": "Authenticate",
                 "reBtn": "re-send",
                 "label": "Certification Number",
-                "placeholder": "Enter 6 digit authentication number"
+                "placeholder": "Enter 6 digit authentication number",
+                "over":"end time"
             },
             "message": {
                 "success": "Verification code has been sent.",
-                "fail": "Authentication failed. Please check that the information you entered is correct."
+                "fail": "Authentication failed. Please check that the information you entered is correct.",
+                "over": "Input timed out. Please request the verification code again."
             }
         },
         "success": {

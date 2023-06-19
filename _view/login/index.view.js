@@ -131,10 +131,12 @@ const Home = observer((props) => {
                     </ul>
                     <div className="help">
                         <div>
-                            <p>Don’t have an account?</p>
-                            <strong onClick={showSignUp}>Sign Up</strong>
+                            <p>{t(`login.main.help`)}</p>
+                            <strong onClick={showSignUp}>
+                                {t(`login.main.signUp`)}
+                                <span className="tooltip">{t(`login.main.tooltip`)}</span>
+                            </strong>
                         </div>
-                        <span className="tooltip">{t(`login.main.tooltip`)}</span>
                     </div>
                 </div>
 
