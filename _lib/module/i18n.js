@@ -25,7 +25,7 @@ i18n.use(Backend)
         resources,
         fallbackLng: "en",
         lng: "en", //default 국가 코드
-        debug: true,
+        debug: false,
         interpolation: { escapeValue: false },
     });
 

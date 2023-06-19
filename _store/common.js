@@ -1,4 +1,5 @@
 //------------------------------------------------------------------------------- Module
+import Router, { useRouter } from "next/router";
 import { makeAutoObservable, toJS, configure } from "mobx";
 import copy from "copy-to-clipboard";
 import { BrowserView, MobileView, isBrowser, isMobile, isAndroid } from "react-device-detect";
@@ -92,6 +93,23 @@ class Store {
         // localStorage 기본 언어 설정
         localStorage.getItem("lang") && this.store.lang.changeLanguage(localStorage.getItem("lang"));
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회
+    async analysisSubmit(params, callback) {
+        await this.getBuildId();
+        params.memberSeq = this.store.auth.loginResult.seq;
+        params.screenUrl = Router.asPath;
+        params.fromType = Router.query.fromType ? Router.query.fromType : null;
+        params.buildId = this.buildId;
+        this.debug(params);
+        await await Api.post(`/dks-api/v2/analysis/submit`, params, this.store.auth.loginResult.loginToken)
+            .then((response) => response.json())
+            .then((data) => {
+                this.debug(data.data ? data.data : data);
+                callback && callback(data.data ? data.data : data);
+            });
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회
 }
 //////////////////////////// makeAutoObservable
 

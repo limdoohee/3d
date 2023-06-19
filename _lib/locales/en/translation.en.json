@@ -101,7 +101,16 @@
     },
     "random": {
         "title": "random box",
-        "desc": "Open the random box and\nget the drop you've been wanting!!"
+        "desc": "Open the random box and\nget the drop you've been wanting!!",
+        "modal": {
+            "title": "Buy a Random Box",
+            "boxName": "Random Box",
+            "point": "Retention points",
+            "payment": "Total payment points",
+            "helper": "out of points",
+            "confirm": "Buy now",
+            "close": "close"
+        }
     },
     "setting": {
         "title": "setting",

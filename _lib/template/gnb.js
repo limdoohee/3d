@@ -29,7 +29,7 @@ const Component = {
             <>
                 <Drawer className={"dds gnb"} placement="right" onClose={onClose} open={common.ui.gnbOpen} closable={false}>
                     <div className="top">
-                        <DDS_Button.default className="dds button text">
+                        {/* <DDS_Button.default className="dds button text">
                             <Badge dot>
                                 <DDS_Icons.myGalleryBlackOn />
                             </Badge>
@@ -41,8 +41,13 @@ const Component = {
                             }}
                         >
                             <DDS_Icons.gear />
-                        </DDS_Button.default>
-                        <DDS_Button.default className="dds button text">
+                        </DDS_Button.default> */}
+                        <DDS_Button.default
+                            className="dds button text"
+                            onClick={() => {
+                                Router.push("/");
+                            }}
+                        >
                             <DDS_Icons.house />
                         </DDS_Button.default>
                     </div>

@@ -36,16 +36,27 @@ const Home = observer((props) => {
     //------------------------------------------------- Router isReady
 
     const headerRight = [
-        () => (
-            <DDS.button.default
-                className="dds button none"
-                icon={<DDS.icons.bars />}
-                onClick={() => {
-                    common.uiChange("gnbOpen", true);
-                }}
-            />
-        ),
+        // () => (
+        //     <DDS.button.default
+        //         className="dds button none"
+        //         icon={<DDS.icons.bars />}
+        //         onClick={() => {
+        //             common.uiChange("gnbOpen", true);
+        //         }}
+        //     />
+        // ),
     ];
+
+    const [inputNickname, setinputNickname] = useState({ value: auth.loginResult.name, result: false });
+
+    const complete = () => {
+        // analysisSubmit
+        common.analysisSubmit({
+            component: "button",
+            componentId: "button_complete",
+            action: "click",
+        });
+    };
 
     return (
         <DDS.layout.container className={"fluid"}>
@@ -60,18 +71,14 @@ const Home = observer((props) => {
                                 <DDS.profile.default />
                                 <div className="camera">
                                     <DDS.icons.camera />
+                                    <input type="file" />
                                 </div>
                             </div>
                             <DDS.button.default className="dds button none">현재 사진 삭제</DDS.button.default>
                         </div>
                         <ul className="form">
                             <li>
-                                <h5>
-                                    <strong>닉네임</strong>
-                                    <span>20/20</span>
-                                </h5>
-                                <DDS.input.default className="dds input primary" placeholder="닉네임을 입력해주세요" />
-                                <p>이미 존재하는 닉네임입니다.</p>
+                                <NickNameInput value={inputNickname} setvalue={setinputNickname} store={store} />
                             </li>
                             <li>
                                 <h5>
@@ -82,6 +89,11 @@ const Home = observer((props) => {
                             </li>
                         </ul>
                     </div>
+                    <div className="save">
+                        <DDS.button.default className="dds button primary block large" disabled={inputNickname.result ? false : true} onClick={complete}>
+                            수정 완료
+                        </DDS.button.default>
+                    </div>
                 </div>
             </DDS.layout.content>
             {/* Content */}
@@ -90,3 +102,44 @@ const Home = observer((props) => {
 });
 
 export default Home;
+
+//////////////////////////////////////////////////////////////////////// NickNameInput
+const NickNameInput = (props) => {
+    const { value, setvalue, store } = props;
+    const { common, auth } = store;
+
+    const onChange = (e) => {
+        var v = e.target.value;
+        setvalue((prevstate) => ({ ...prevstate, value: v }));
+        var params = { nickname: v };
+        auth.checkNickname(params, (e) => {
+            common.debug(e);
+            sethelpText(e.id ? e.message : "");
+            setvalue((prevstate) => ({ ...prevstate, result: e.id ? false : true }));
+            if (e.id) {
+            }
+        });
+    };
+
+    const inputSetting = {
+        className: "dds input primary",
+        placeholder: "닉네임을 입력해주세요",
+        onKeyUp: onChange,
+        // onKeyDown: onChange,
+        maxLength: 20,
+    };
+
+    const [helpText, sethelpText] = useState("");
+
+    return (
+        <>
+            <h5>
+                <strong>닉네임</strong>
+                <span>{value.value.length}/20</span>
+            </h5>
+            <DDS.input.default {...inputSetting} />
+            <p>{helpText}</p>
+        </>
+    );
+};
+//////////////////////////////////////////////////////////////////////// NickNameInput
