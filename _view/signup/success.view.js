@@ -36,12 +36,10 @@ const Home = observer((props) => {
     useEffect(() => {
         setNickName(sessionStorage.getItem("IsNicknameValue"));
 
-        //     setTimeout(() => {
-        //         router.push("/");
-        //     }, 3000);
+        setTimeout(() => {
+            router.push("/");
+        }, 3000);
     }, []);
-
-
 
     return (
         <>
