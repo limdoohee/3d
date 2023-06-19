@@ -48,6 +48,7 @@ const Home = observer((props) => {
     ];
 
     const [inputNickname, setinputNickname] = useState({ value: auth.loginResult.name, result: false });
+    const [introduction, setintroduction] = useState({ value: auth.loginResult.introduction, result: false });
 
     const complete = () => {
         // analysisSubmit
@@ -55,6 +56,15 @@ const Home = observer((props) => {
             component: "button",
             componentId: "button_complete",
             action: "click",
+        });
+    };
+
+    const imageUpload = (e, k) => {
+        const formData = new FormData();
+        formData.append("file", e.target.files[0]);
+        // console.log(e.target.files[0]);
+        auth.uploadProfileImage(formData, (res) => {
+            common.debug(res);
         });
     };
 
@@ -71,7 +81,7 @@ const Home = observer((props) => {
                                 <DDS.profile.default />
                                 <div className="camera">
                                     <DDS.icons.camera />
-                                    <input type="file" />
+                                    <input type="file" onChange={imageUpload} />
                                 </div>
                             </div>
                             <DDS.button.default className="dds button none">현재 사진 삭제</DDS.button.default>
@@ -81,11 +91,7 @@ const Home = observer((props) => {
                                 <NickNameInput value={inputNickname} setvalue={setinputNickname} store={store} />
                             </li>
                             <li>
-                                <h5>
-                                    <strong>소개</strong>
-                                    <span>00/50</span>
-                                </h5>
-                                <DDS.input.textarea rows={4} placeholder="소개글을 입력해주세요" maxLength={6} className="dds input primary" />
+                                <IntroductionInput value={introduction} setvalue={setintroduction} store={store} />
                             </li>
                         </ul>
                     </div>
@@ -127,6 +133,7 @@ const NickNameInput = (props) => {
         onKeyUp: onChange,
         // onKeyDown: onChange,
         maxLength: 20,
+        defaultValue: value.value,
     };
 
     const [helpText, sethelpText] = useState("");
@@ -135,7 +142,7 @@ const NickNameInput = (props) => {
         <>
             <h5>
                 <strong>닉네임</strong>
-                <span>{value.value.length}/20</span>
+                <span>{value.value ? value.value.length : 0}/20</span>
             </h5>
             <DDS.input.default {...inputSetting} />
             <p>{helpText}</p>
@@ -143,3 +150,38 @@ const NickNameInput = (props) => {
     );
 };
 //////////////////////////////////////////////////////////////////////// NickNameInput
+
+//////////////////////////////////////////////////////////////////////// IntroductionInput
+const IntroductionInput = (props) => {
+    const { value, setvalue, store } = props;
+    const { common, auth } = store;
+
+    const onChange = (e) => {
+        var v = e.target.value;
+        setvalue((prevstate) => ({ ...prevstate, value: v }));
+    };
+
+    const inputSetting = {
+        className: "dds input primary",
+        placeholder: "소개글을 입력해주세요",
+        onKeyUp: onChange,
+        // onKeyDown: onChange,
+        defaultValue: value.value,
+        rows: 4,
+        maxLength: 6,
+    };
+
+    const [helpText, sethelpText] = useState("");
+
+    return (
+        <>
+            <h5>
+                <strong>소개</strong>
+                <span>{value.value ? value.value.length : 0}/50</span>
+            </h5>
+            <DDS.input.textarea {...inputSetting} />
+            <p>{helpText}</p>
+        </>
+    );
+};
+//////////////////////////////////////////////////////////////////////// IntroductionInput

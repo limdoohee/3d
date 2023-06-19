@@ -104,12 +104,15 @@ const api = {
     multipart(path, params, token) {
         let url = apiUrl + path;
         let options = {
+            // url: url,
+            method: "POST",
             headers: {
-                "Content-Type": "multipart/form-data",
+                // "Content-Type": "multipart/form-data",
                 "Access-Control-Allow-Origin": "*",
                 "Access-Control-Allow-Credentials": true,
                 withCredentials: true,
             },
+            body: params,
         };
         if (token) {
             options.headers["Authorization"] = `Bearer ${token}`;
@@ -117,7 +120,7 @@ const api = {
         if (session) {
             options.headers["X-NFT-DEV-EMAIL"] = session;
         }
-        return fetch(url, params, options);
+        return fetch(url, options);
     },
     restMultipart(path, params, token) {
         let url = path;

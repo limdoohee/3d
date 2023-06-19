@@ -18,8 +18,13 @@ const Home = observer((props) => {
 
     auth.setCheckLogin(props);
     console.log(props);
+
     useEffect(() => {
-        common.init();
+        if (props.result == "ok") {
+            common.init();
+        } else {
+            Router.push("/login");
+        }
     }, []);
 
     return (

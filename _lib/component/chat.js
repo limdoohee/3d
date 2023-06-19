@@ -200,9 +200,9 @@ const home = {
                                             <div className="inner">
                                                 {item.messageType == "user" && <div className="message">{item.message}</div>}
                                                 {item.messageType == "file" && (
-                                                    <div className="message">
+                                                    <div className="message image">
                                                         {/*  */}
-                                                        {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.plainUrl}?auth=${process.env.SENDBIRD_APP_ID}`} /> : null}
+                                                        {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.url}`} /> : null}
                                                     </div>
                                                 )}
                                                 <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
@@ -216,9 +216,9 @@ const home = {
                                             <div className="inner">
                                                 {item.messageType == "admin" && <div className="message">{item.message}</div>}
                                                 {item.messageType == "file" && (
-                                                    <div className="message">
+                                                    <div className="message image">
                                                         {/*  */}
-                                                        {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.plainUrl}?auth=${process.env.SENDBIRD_APP_ID}`} /> : null}
+                                                        {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.url}`} /> : null}
                                                     </div>
                                                 )}
                                                 <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>

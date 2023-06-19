@@ -17,9 +17,10 @@ const Home = observer((props) => {
     const { auth } = store;
     const router = useRouter();
 
-    console.log(props.result);
+    // 로그인 정보 스토어에 담는 함수
     auth.setCheckLogin(props);
 
+    // 로그인 분기
     useEffect(() => {
         if (props.result == "ok") {
             Router.push("/main");
