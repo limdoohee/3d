@@ -14,6 +14,8 @@
             "naver": "Naver로 시작하기",
             "apple": "Apple로 시작하기",
             "kakao": "Kakao로 시작하기",
+            "help": "계정이 없나요?",
+            "signUp": "가입하기",
             "tooltip": "5,000P 즉시 지급",
             "language-select": "언어 선택",
             "signup": {
@@ -51,9 +53,10 @@
             "title": "닉네임을 입력해주세요",
             "label1": "이메일",
             "label2": "닉네임 (20byte 이내)",
-            "placeholder": "닉네임 입력",
+            "placeholder": "닉네임을 입력해주세요.",
             "help-success": "사용 가능한 닉네임입니다.",
-            "help-warning": "이미 존재하는 닉네임입니다."
+            "help-warning": "최소 3글자 이상 영문, 숫자만 사용 가능합니다.",
+            "help-already": "이미 존재하는 닉네임입니다."
         },
 
         "mobile": {
@@ -65,11 +68,13 @@
                 "btn": "인증하기",
                 "reBtn": "재전송",
                 "label": "인증번호",
-                "placeholder": "인증번호 6자리 입력"
+                "placeholder": "인증번호 6자리 입력",
+                "over": "시간만료"
             },
             "message": {
                 "success": "인증번호가 전송되었습니다.",
-                "fail": "인증 실패하였습니다. 입력한 정보가 맞는지 확인해주세요."
+                "fail": "인증 실패하였습니다. 입력한 정보가 맞는지 확인해주세요.",
+                "over": "입력 시간을 초과했습니다. 인증번호를 다시 요청해주세요."
             }
         },
 
@@ -98,7 +103,16 @@
     },
     "random": {
         "title": "랜덤박스",
-        "desc": "랜덤박스를 열고\n갖고 싶던 드롭을 얻어보세요!"
+        "desc": "랜덤박스를 열고\n갖고 싶던 드롭을 얻어보세요!",
+        "modal": {
+            "title": "랜덤박스 구매하기",
+            "boxName": "랜덤박스",
+            "point": "보유 포인트",
+            "payment": "총 결제 포인트",
+            "helper": "포인트가 부족합니다.",
+            "confirm": "바로 구매",
+            "close": "닫기"
+        }
     },
     "error": {
         "404": {

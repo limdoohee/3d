@@ -65,6 +65,12 @@ const Home = observer((props) => {
                             <Link href="/dds/drop_list">Drop list</Link>
                         </li>
                     </ul>
+                    <h4>Test</h4>
+                    <ul>
+                        <li>
+                            <Link href="/dds/analysis">analysis</Link>
+                        </li>
+                    </ul>
                 </div>
             </DDS_Layout.container>
         </>

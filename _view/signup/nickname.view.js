@@ -78,13 +78,14 @@ const Home = observer((props) => {
         });
     };
 
-    const inputNickname = (e) => {
-        const inputValue = e.target.value;
-        const alphanumericRegex = /^[a-zA-Z0-9]*$/;
-        if (alphanumericRegex.test(inputValue)) {
-            setValue(inputValue);
-        }
-    };
+    // 특수문자 처리
+    // const inputNickname = (e) => {
+    //     const inputValue = e.target.value;
+    //     const alphanumericRegex = /^[a-zA-Z0-9]*$/;
+    //     if (alphanumericRegex.test(inputValue)) {
+    //         setValue(inputValue);
+    //     }
+    // };
 
     const handleClear = () => {
         setValue("");
@@ -113,7 +114,7 @@ const Home = observer((props) => {
                                 type="text"
                                 placeholder={t(`signup.nickname.placeholder`)}
                                 onChange={(e) => {
-                                    inputNickname(e);
+                                    setValue(e.target.value);
                                 }}
                                 onKeyUp={(e) => {
                                     handleNickName(e);
@@ -124,7 +125,16 @@ const Home = observer((props) => {
                             />
                             {value && <DDS_Icons.xmark_02 className="xmark-02" onClick={handleClear} />}
                         </div>
-                        {value !== "" ? <p className={`help ${isNicknameAvailable ? "success" : "warning"}`}>{isNicknameAvailable ? t(`signup.nickname.help-success`) : t(`signup.nickname.help-warning`)}</p> : ""}
+
+                        {value !== "" ? (
+                            value.length < 3 || !/^[a-zA-Z0-9]+$/.test(value) ? (
+                                <p className="help warning">{t(`signup.nickname.help-warning`)}</p>
+                            ) : (
+                                <p className={`help ${isNicknameAvailable ? "success" : "warning"}`}>{isNicknameAvailable ? t(`signup.nickname.help-success`) : t(`signup.nickname.help-already`)}</p>
+                            )
+                        ) : (
+                            ""
+                        )}
                     </li>
                 </ul>
                 <Component.default

@@ -8,7 +8,8 @@ import { initializeApp } from "firebase/app";
 import { getAuth, onAuthStateChanged, signInWithPhoneNumber, RecaptchaVerifier } from "firebase/auth";
 import firebase from "firebase/app";
 import "firebase/auth";
-import countryCodeData from "../../_lib/locales/en/countryCode.en.json";
+import countryCodeDataEN from "../../_lib/locales/en/countryCode.en.json";
+import countryCodeDataKo from "../../_lib/locales/ko/countryCode.ko.json";
 import cookie from "react-cookies";
 
 //------------------------------------------------------------------------------- Antd
@@ -61,13 +62,13 @@ const Home = observer((props) => {
 
     const handleToggle = (l, idx) => {
         setOpen(false);
-        const newArr = Array(countryCodeData.length).fill(false);
+        const newArr = Array(countryCodeDataEN.length).fill(false);
         newArr[idx] = true;
         setIsCategorySelect(newArr);
         setValue(l.dial_code);
     };
 
-    const [isCategorySelect, setIsCategorySelect] = useState([true, ...Array(countryCodeData.length - 1).fill(false)]);
+    const [isCategorySelect, setIsCategorySelect] = useState([true, ...Array(countryCodeDataEN.length - 1).fill(false)]);
 
     const info = ({ content, className }) => {
         messageApi.info({
@@ -94,7 +95,6 @@ const Home = observer((props) => {
     useEffect(() => {
         window.recaptchaVerifier = new RecaptchaVerifier(
             "recaptcha-container",
-            // "phoneNumberButton",
             {
                 size: "invisible",
                 timeout: 180000,
@@ -181,7 +181,6 @@ const Home = observer((props) => {
                                 cookie.save("loginToken", e.loginToken, { path: "/" });
                                 console.log("parmas", params);
                                 router.push("/signup/success");
-                                console.log("e", e);
                             });
                         }
                     });
@@ -195,6 +194,13 @@ const Home = observer((props) => {
         } else {
             alert(t(`signup.mobile.message.fail`));
         }
+
+        if (isTimerRunning && timer === 0) {
+            info({
+                content: t(`signup.mobile.message.over`),
+                className: "success",
+            });
+        }
     };
 
     return (
@@ -204,40 +210,41 @@ const Home = observer((props) => {
                 <div className="mobile-list">
                     <>
                         <div className="input-area">
-                            <label>{t(`signup.mobile.label`)}</label>
                             <div className="form">
-                                <div>
-                                    <strong
+                                <label>{t(`signup.mobile.label`)}</label>
+                                <div className="inner">
+                                    <div>
+                                        <strong
+                                            onClick={() => {
+                                                setOpen(true);
+                                            }}
+                                        >
+                                            +{value}
+                                            <DDS_Icons.caretDown />
+                                        </strong>
+                                        <input
+                                            type="text"
+                                            placeholder={t(`signup.mobile.placeholder`)}
+                                            ref={phoneNumberRef}
+                                            value={phoneNumber}
+                                            inputMode="numeric"
+                                            onChange={(e) => {
+                                                setPhoneNumber(e.target.value);
+                                            }}
+                                        />
+                                    </div>
+                                    <button
+                                        className="btn send"
+                                        id="phoneNumberButton"
+                                        type="button"
                                         onClick={() => {
-                                            setOpen(true);
+                                            handleSendCode();
                                         }}
+                                        disabled={!phoneNumber}
                                     >
-                                        +{value}
-                                        <DDS_Icons.caretDown />
-                                    </strong>
-                                    <input
-                                        type="text"
-                                        placeholder={t(`signup.mobile.placeholder`)}
-                                        ref={phoneNumberRef}
-                                        value={phoneNumber}
-                                        inputMode="numeric"
-                                        onChange={(e) => {
-                                            // const inputValue = e.target.value.replace(/[^0-9]/g, "");
-                                            setPhoneNumber(e.target.value);
-                                        }}
-                                    />
+                                        {certificate ? t(`signup.mobile.certificate.reBtn`) : t(`signup.mobile.certificate.btn`)}
+                                    </button>
                                 </div>
-                                <button
-                                    className="btn send"
-                                    id="phoneNumberButton"
-                                    type="button"
-                                    onClick={() => {
-                                        handleSendCode();
-                                    }}
-                                    disabled={!phoneNumber}
-                                >
-                                    {certificate ? t(`signup.mobile.certificate.reBtn`) : t(`signup.mobile.certificate.btn`)}
-                                </button>
                             </div>
                             {certificate && (
                                 <form className="form" onSubmit={handleConfirmCodeSubmit}>
@@ -291,18 +298,20 @@ const Home = observer((props) => {
                             open={open}
                             closeIcon={false}
                         >
-                            {countryCodeData.map((item, idx) => (
-                                <div
-                                    className={isCategorySelect[idx] ? "selected" : ""}
-                                    key={idx}
-                                    onClick={() => {
-                                        handleToggle(item, idx);
-                                    }}
-                                >
-                                    <span>{item.name}</span>
-                                    <span>+{item.dial_code}</span>
-                                </div>
-                            ))}
+                            {i18n.language === "ko"
+                                ? countryCodeDataKo
+                                : countryCodeDataEN.map((item, idx) => (
+                                      <div
+                                          className={isCategorySelect[idx] ? "selected" : ""}
+                                          key={idx}
+                                          onClick={() => {
+                                              handleToggle(item, idx);
+                                          }}
+                                      >
+                                          <span>{item.name}</span>
+                                          <span>+{item.dial_code}</span>
+                                      </div>
+                                  ))}
                         </Drawer>
                         {contextHolder}
                         <div id="recaptcha-container"></div>

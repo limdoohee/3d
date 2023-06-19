@@ -21,16 +21,30 @@ import Gallery from "../../_lib/module/component/gallery";
 const Home = observer((props) => {
     const router = useRouter();
     const { store } = props;
-    const { drop, common } = store;
+    const { drop, common, gallery } = store;
     const [open, setOpen] = useState(false);
     const [back, setBack] = useState(false);
     const ref = useRef(null);
 
+    //------------------------------------------------- Init Load
+    const initLoad = ({ initCheck, callback }) => {
+        var params = { sendbirdId: "dropkitchen_member_" + router.query.memberSeq };
+        gallery.getData(params, (e) => {
+            common.debug(e);
+            callback && callback(e);
+        });
+    };
+    //------------------------------------------------- Init Load
+
+    //------------------------------------------------- Router isReady
     useEffect(() => {
-        setTimeout(() => {
-            document.querySelector(".invite").classList.add("iconOnly");
-        }, 4000);
-    }, []);
+        if (router.isReady && router.pathname == "/userGallery") {
+            initLoad({
+                callback: (e) => {},
+            });
+        }
+    }, [router.isReady, router.asPath]);
+    //------------------------------------------------- Router isReady
 
     const modalData = {
         // open,
@@ -71,18 +85,14 @@ const Home = observer((props) => {
         ),
     ];
 
-    const test1 = () => {
-        console.log("dddd");
-    };
-
-    const test2 = () => {
+    const goGallery = () => {
         ref.current.back();
     };
 
     return (
         <>
             <DDS.layout.container>
-                <DK_template_header.default store={store} className="top" right={headerRight} back={back && test2} />
+                <DK_template_header.default store={store} className="top" right={headerRight} back={back && goGallery} />
                 <DK_template_GNB.default store={store} />
                 <DDS.layout.content>
                     <div className="userInfo">
@@ -92,19 +102,22 @@ const Home = observer((props) => {
                                     <Avatar
                                         size={64}
                                         src={<img src={"https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fshopping.phinf%2Fmain_4037083%2F40370838619.20230607071158.jpg%22&type=nf216_312&service=navermain"} alt="avatar" />}
+                                        // src={<img src={gallery.data.profileImage} alt="avatar" />}
                                     />
                                 </Badge>
                             </div>
                             <div>
                                 <h1>
-                                    abcdefghigklmnopqrst
+                                    {gallery.data.nickname}
                                     <DDS_Icons.badgeCheck className="badge" />
                                 </h1>
-                                <h4>Hello, I’m heavy collector Hello, I’m heavy coll</h4>
+                                {/* <h4>Hello, I’m heavy collector Hello, I’m heavy coll</h4> */}
+                                <h4>{gallery.data.introduction}</h4>
                                 <div className="point">
                                     <DDS_Icons.point />
-                                    115,000
-                                    <DDS_Icons.userGroup className="inviteCount" />4
+                                    {gallery.data.pointBalance}
+                                    <DDS_Icons.userGroup className="inviteCount" />
+                                    {gallery.data.inviteCnt}
                                 </div>
                             </div>
                         </div>
@@ -116,17 +129,18 @@ const Home = observer((props) => {
                                         Colletion
                                     </li>
                                     <li className="count">
-                                        <strong>3</strong>
-                                        <span className="slash">/</span>7
+                                        <strong>{gallery.data.myDropCnt}</strong>
+                                        <span className="slash">/</span>
+                                        {gallery.data.totalDropCnt}
                                     </li>
                                 </ul>
-                                <Progress percent={30} showInfo={false} strokeColor={"#FD6E24"} className="asdf" />
+                                <Progress percent={(gallery.data.myDropCnt / gallery.data.totalDropCnt) * 100} showInfo={false} strokeColor={"#FD6E24"} className="asdf" />
                             </div>
                         </Link>
                     </div>
                     {/* 마이갤러리 */}
                     <div className="btn">
-                        <div className="invite" onClick={() => setOpen(true)}>
+                        {/* <div className="invite" onClick={() => setOpen(true)}>
                             <div className="iconWrapper">
                                 <DDS_Icons.envelopeOpenHeart />
                             </div>
@@ -137,16 +151,16 @@ const Home = observer((props) => {
                             <div className="greyAngle">
                                 <DDS_Icons.envelopeOpenHeart />
                             </div>
-                        </div>
+                        </div> */}
                         {/* 작가갤러리 */}
-                        {/* <div className="wrapper">
-                            <div>
+                        <div className="wrapper">
+                            {/* <div>
                                 <DDS_Icons.bookFilled
                                     onClick={() => {
                                         router.push("magazine");
                                     }}
                                 />
-                            </div>
+                            </div> */}
                             <div>
                                 <DDS_Icons.chat
                                     onClick={() => {
@@ -154,24 +168,18 @@ const Home = observer((props) => {
                                     }}
                                 />
                             </div>
-                            <div>
+                            {/* <div>
                                 <DDS_Icons.heart className="like" />
                                 <h6>14K</h6>
-                            </div>
-                        </div> */}
+                            </div> */}
+                        </div>
                     </div>
-                    <Gallery {...props} back={back} setBack={setBack} ref={ref} />
+                    <Gallery {...gallery} back={back} setBack={setBack} ref={ref} />
                     <Detail />
                     <ChatTemplate.open store={props.store} />
                 </DDS.layout.content>
             </DDS.layout.container>
         </>
-        // <form>
-        //     <MyInput label="Enter your name:" ref={ref} />
-        //     <button type="button" onClick={handleClick}>
-        //         Edit
-        //     </button>
-        // </form>
     );
 });
 

@@ -59,6 +59,7 @@
 .random .bottom .btnContainer .dds.button {
     flex: 1;
     justify-content: center;
+    height: 48px;
 }
 
 .buyRandomBox > li {
@@ -107,6 +108,10 @@
     border-radius: 4px;
 }
 
+.buyRandomBox .option .dds.icons.disabled svg path {
+    fill: #bdbdbd;
+}
+
 .buyRandomBox .option .dds.icons svg {
     width: 12px;
     height: 12px;
@@ -141,11 +146,11 @@
     color: #969696;
 }
 
-.buyRandomBox .price {
+.buyRandomBox .payment {
     padding-bottom: 12px;
 }
 
-.buyRandomBox .price h5 {
+.buyRandomBox .payment h5 {
     font-size: 16px;
     font-weight: 400;
     line-height: 16px;
@@ -153,10 +158,37 @@
     color: #1f1f11;
 }
 
-.buyRandomBox .price h6 {
+.buyRandomBox .payment h6 {
     font-size: 20px;
     font-weight: 700;
     line-height: 20px;
     letter-spacing: -0.03em;
     color: #1f1f11;
+}
+
+.buyRandomBox .helper {
+    display: none;
+    justify-content: end;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 12px;
+    letter-spacing: -0.02em;
+    color: #e02431;
+}
+
+.buyRandomBox .helper.on {
+    display: flex;
+}
+
+.buyRandomBox .helper .dds.icons {
+    width: 12px;
+    height: 12px;
+}
+
+.buyRandomBox .helper svg path {
+    fill: #e02431;
+}
+
+.buyingMessage {
+    margin-bottom: 58px;
 }

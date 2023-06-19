@@ -20,6 +20,7 @@
 .login.wrap .inner > p {
     padding: 24px 0 120px;
     line-height: 150%;
+    height: calc(100vh - 80vh);
 }
 
 .login.wrap .inner > p > span {
@@ -72,7 +73,7 @@
     background-color: #f5f5f5;
     border-radius: 4px;
     min-width: 61px;
-    
+
     height: 20px;
     font-size: 10px;
     color: #404040;
@@ -97,11 +98,12 @@
 }
 .login.wrap .inner > .help strong {
     color: var(--color-orange);
+    position: relative;
 }
 .login.wrap .inner > .help .tooltip {
-    position: relative;
-    left: 50%;
-    transform: translate(33%, 18%);
+    position: absolute;
+    left: 0%;
+    transform: translate(-18%, 18%);
     width: 93px;
     height: 29px;
     background-size: contain;
@@ -114,7 +116,7 @@
     align-items: flex-end;
 }
 .login.wrap .language-select {
-    padding-bottom: 48px;
+    padding-bottom: 16px;
 }
 .login.wrap .language-select > h3 {
     display: flex;
