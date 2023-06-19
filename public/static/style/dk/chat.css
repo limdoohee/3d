@@ -108,6 +108,12 @@
     background: #1f1f1f;
     color: #fff;
 }
+.dk.chat .messages li .content .message.image {
+    width: 50%;
+}
+.dk.chat .messages li .content .message.image img {
+    border-radius: 6px;
+}
 .dk.chat .messages li .content .date {
     display: flex;
     align-items: flex-end;

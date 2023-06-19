@@ -12,7 +12,7 @@ import menuData from "../menu";
 const Component = {
     default: observer((props) => {
         const { store } = props;
-        const { common } = store;
+        const { common, auth } = store;
         const router = useRouter();
 
         const onClose = () => {
@@ -53,12 +53,12 @@ const Component = {
                     </div>
                     <div className="personal">
                         <DDS_Profile.default badge={<DDS_Icons.badgeCrown className="cert" />} src="https://picsum.photos/id/237/200/300" />
-                        <strong>abcdefghigklmnopqrstdsfsdfsdf</strong>
+                        <strong>{auth.loginResult.name}</strong>
                     </div>
                     <div className="point">
                         <span>내 포인트</span>
                         <strong>
-                            3000
+                            {common.numberFormat(auth.loginResult.pointAmount)}
                             <small>P</small>
                         </strong>
                     </div>
