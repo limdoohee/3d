@@ -123,6 +123,15 @@
     border-radius: 100%;
     border: 3px solid #fff;
     box-sizing: content-box;
+    overflow: hidden;
+}
+.page-setting.sub .account > .profile .inner .camera input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
 }
 .page-setting.sub .account > .profile .inner .camera .icons {
     width: 14px;

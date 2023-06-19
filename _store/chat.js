@@ -86,7 +86,7 @@ class Store {
         const sendbirdChat = await SendbirdChat.init(sendbirdSetting);
 
         try {
-            await sendbirdChat.connect(this.state.userIdInputValue);
+            await sendbirdChat.connect(this.state.userIdInputValue, process.env.SENDBIRD_APP_ID);
             this.store.common.debug("Sendbird connect Success");
         } catch (e) {
             this.store.common.debug("error", e);
