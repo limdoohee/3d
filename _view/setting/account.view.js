@@ -59,7 +59,7 @@ const Home = observer((props) => {
         ),
     ];
 
-    const [step, setStep] = useState(2);
+    const [step, setStep] = useState(1);
 
     return (
         <DDS.layout.container className={"fluid"}>
@@ -104,7 +104,7 @@ const Home = observer((props) => {
                         </div>
                     </div>
                 )}
-                {step == 2 && <PhoneChange store={store} />}
+                {step == 2 && <PhoneChange store={store} setStep={setStep} />}
             </DDS.layout.content>
             {/* Content */}
         </DDS.layout.container>
@@ -114,6 +114,7 @@ const Home = observer((props) => {
 export default Home;
 
 const PhoneChange = observer((props) => {
+    const { setStep } = props;
     const { member, auth } = props.store;
     const { t, i18n } = useTranslation();
     const router = useRouter();
@@ -249,7 +250,8 @@ const PhoneChange = observer((props) => {
 
                             member.changePhoneNo(params, (e) => {
                                 console.log("params", params);
-                                router.push("/setting");
+                                // router.push("/setting");
+                                setStep(1);
                                 console.log("e", e);
                             });
                         }
