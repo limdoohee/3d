@@ -8,7 +8,7 @@ import DDS from "../../_lib/component/dds";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
-    const {} = props;
+    const { store } = props;
     const router = useRouter();
 
     return (
@@ -38,12 +38,12 @@ const Home = observer((props) => {
                             </DDS.button.default>
                         </div>
                         <div className="part">
-                            <DDS.button.default className="dds button primary" icon={<DDS_Icons.angleDown />}></DDS.button.default>
-                            <DDS.button.default className="dds button primary rounded" icon={<DDS_Icons.angleDown />}></DDS.button.default>
-                            <DDS.button.default className="dds button secondary" icon={<DDS_Icons.angleDown />}></DDS.button.default>
-                            <DDS.button.default className="dds button secondary rounded" icon={<DDS_Icons.angleUp />}></DDS.button.default>
-                            <DDS.button.default className="dds button none rounded" icon={<DDS_Icons.circleArrowUp />}></DDS.button.default>
-                            <DDS.button.default className="dds button none rounded large" icon={<DDS_Icons.circleArrowUp />}></DDS.button.default>
+                            <DDS.button.default className="dds button primary" icon={<DDS.icons.angleDown />}></DDS.button.default>
+                            <DDS.button.default className="dds button primary rounded" icon={<DDS.icons.angleDown />}></DDS.button.default>
+                            <DDS.button.default className="dds button secondary" icon={<DDS.icons.angleDown />}></DDS.button.default>
+                            <DDS.button.default className="dds button secondary rounded" icon={<DDS.icons.angleUp />}></DDS.button.default>
+                            <DDS.button.default className="dds button none rounded" icon={<DDS.icons.circleArrowUp />}></DDS.button.default>
+                            <DDS.button.default className="dds button none rounded large" icon={<DDS.icons.circleArrowUp />}></DDS.button.default>
                         </div>
                     </div>
                     <h4>크기</h4>
