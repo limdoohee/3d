@@ -3,7 +3,6 @@ import Router, { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Component
-import DDS_Layout from "../_lib/component/layout";
 import DDS from "../_lib/component/dds";
 //------------------------------------------------------------------------------- Component
 
@@ -19,7 +18,7 @@ const Home = observer((props) => {
     }, []);
 
     return (
-        <DDS_Layout.container>
+        <DDS.layout.container store={store}>
             <div className="dk error">
                 <div className="center">
                     <h3>Oops...</h3>
@@ -40,7 +39,7 @@ const Home = observer((props) => {
                     </DDS.button.default>
                 </div>
             </div>
-        </DDS_Layout.container>
+        </DDS.layout.container>
     );
 });
 

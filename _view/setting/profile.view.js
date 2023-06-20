@@ -49,6 +49,8 @@ const Home = observer((props) => {
 
     const [inputNickname, setinputNickname] = useState({ value: auth.loginResult.name, result: false });
     const [introduction, setintroduction] = useState({ value: auth.loginResult.introduction, result: false });
+    const [imageSeq, setimageSeq] = useState();
+    const [submitCheck, setsubmitCheck] = useState(false);
 
     const complete = () => {
         // analysisSubmit
@@ -57,6 +59,20 @@ const Home = observer((props) => {
             componentId: "button_complete",
             action: "click",
         });
+
+        var params = {};
+        inputNickname.value !== auth.loginResult.name && (params.nickname = inputNickname.value);
+        introduction.value !== auth.loginResult.introduction && (params.introduction = introduction.value);
+        imageSeq && (params.profileImageSeq = imageSeq.imageSeq);
+        console.log(params);
+        auth.changeProfile(params, (res) => {
+            console.log("changeProfile", res);
+            if (res.result == "ok") {
+                auth.checkLoginCSR({}, (re) => {
+                    console.log("checkLoginCSR", re);
+                });
+            }
+        });
     };
 
     const imageUpload = (e, k) => {
@@ -64,46 +80,58 @@ const Home = observer((props) => {
         formData.append("file", e.target.files[0]);
         // console.log(e.target.files[0]);
         auth.uploadProfileImage(formData, (res) => {
-            common.debug(res);
+            if (res.imageSeq) {
+                setimageSeq(res);
+            }
         });
     };
 
+    useEffect(() => {
+        if (imageSeq || inputNickname.value !== auth.loginResult.name || introduction.value !== auth.loginResult.introduction) {
+            setsubmitCheck(true);
+        } else {
+            setsubmitCheck(false);
+        }
+    }, [imageSeq, inputNickname, introduction]);
+
     return (
-        <DDS.layout.container className={"fluid"}>
-            <DK_template_header.default store={store} title={lang.t("setting.profile.title")} right={headerRight} />
-            <DK_template_GNB.default store={store} />
-            {/* Content */}
-            <DDS.layout.content>
-                <div className="page-setting sub">
-                    <div className="account">
-                        <div className="profile">
-                            <div className="inner">
-                                <DDS.profile.default />
-                                <div className="camera">
-                                    <DDS.icons.camera />
-                                    <input type="file" onChange={imageUpload} />
+        <>
+            <DDS.layout.container className={"fluid"}>
+                <DK_template_header.default store={store} title={lang.t("setting.profile.title")} right={headerRight} />
+                <DK_template_GNB.default store={store} />
+                {/* Content */}
+                <DDS.layout.content>
+                    <div className="page-setting sub">
+                        <div className="account">
+                            <div className="profile">
+                                <div className="inner">
+                                    <DDS.profile.default src={auth.loginResult.profileImage ? auth.loginResult.profileImage : null} />
+                                    <div className="camera">
+                                        <DDS.icons.camera />
+                                        <input type="file" onChange={imageUpload} />
+                                    </div>
                                 </div>
+                                <DDS.button.default className="dds button none">현재 사진 삭제</DDS.button.default>
                             </div>
-                            <DDS.button.default className="dds button none">현재 사진 삭제</DDS.button.default>
+                            <ul className="form">
+                                <li>
+                                    <NickNameInput value={inputNickname} setvalue={setinputNickname} store={store} />
+                                </li>
+                                <li>
+                                    <IntroductionInput value={introduction} setvalue={setintroduction} store={store} />
+                                </li>
+                            </ul>
                         </div>
-                        <ul className="form">
-                            <li>
-                                <NickNameInput value={inputNickname} setvalue={setinputNickname} store={store} />
-                            </li>
-                            <li>
-                                <IntroductionInput value={introduction} setvalue={setintroduction} store={store} />
-                            </li>
-                        </ul>
+                        <div className="save">
+                            <DDS.button.default className="dds button primary block large" onClick={complete} disabled={submitCheck ? false : true}>
+                                수정 완료
+                            </DDS.button.default>
+                        </div>
                     </div>
-                    <div className="save">
-                        <DDS.button.default className="dds button primary block large" disabled={inputNickname.result ? false : true} onClick={complete}>
-                            수정 완료
-                        </DDS.button.default>
-                    </div>
-                </div>
-            </DDS.layout.content>
-            {/* Content */}
-        </DDS.layout.container>
+                </DDS.layout.content>
+                {/* Content */}
+            </DDS.layout.container>
+        </>
     );
 });
 
@@ -168,7 +196,7 @@ const IntroductionInput = (props) => {
         // onKeyDown: onChange,
         defaultValue: value.value,
         rows: 4,
-        maxLength: 6,
+        // maxLength: 6,
     };
 
     const [helpText, sethelpText] = useState("");

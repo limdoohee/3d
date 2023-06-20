@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, createRef, forwardRef } from "react
 import { observer } from "mobx-react-lite";
 import { Spin } from "antd";
 //------------------------------------------------------------------------------- Component
-import DDS_Layout from "../_lib/component/layout";
+import DDS from "../_lib/component/dds";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
@@ -19,12 +19,12 @@ const Home = observer((props) => {
     }, []);
 
     return (
-        <DDS_Layout.container>
+        <DDS.layout.container store={store}>
             <div className="dds loading-full">
                 {" "}
                 <Spin />
             </div>
-        </DDS_Layout.container>
+        </DDS.layout.container>
     );
 });
 

@@ -28,7 +28,7 @@ const Home = observer((props) => {
 
     return (
         <>
-            <DDS.layout.container>
+            <DDS.layout.container store={store}>
                 <div className="dds style-guide">
                     <p>
                         <DDS.button.default

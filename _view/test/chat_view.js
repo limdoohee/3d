@@ -7,14 +7,14 @@ import Store from "../../_store/store";
 const store = new Store();
 //------------------------------------------------------------------------------- Store
 //------------------------------------------------------------------------------- Component
-import ChatComponent from "../../_lib/component/chat";
-import DDS_Layout from "../../_lib/component/layout";
+import DDS from "../../_lib/component/dds";
 //------------------------------------------------------------------------------- Component
 //------------------------------------------------------------------------------- Template
 import ChatTemplate from "../../_lib/template/chat";
 //------------------------------------------------------------------------------- Template
 
 const Home = observer((props) => {
+    const { store } = props;
     const { common, chat } = props.store;
     const router = useRouter();
 
@@ -31,9 +31,9 @@ const Home = observer((props) => {
             <Head>
                 <title>Chat Test</title>
             </Head>
-            <DDS_Layout.container>
+            <DDS.layout.container store={store}>
                 <ChatTemplate.open store={props.store} />
-            </DDS_Layout.container>
+            </DDS.layout.container>
         </>
     );
 });

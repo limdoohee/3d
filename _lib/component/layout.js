@@ -1,13 +1,17 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { motion } from "framer-motion";
+import { message } from "antd";
 //------------------------------------------------------------------------------- Component
 import DDS_Icons from "../../_lib/component/icons";
 //------------------------------------------------------------------------------- Component
 
 const Component = {
     container: (props) => {
-        const { className, children } = props;
+        const { className, children, store } = props;
+        const { common } = store;
+        const [messageApi, contextHolder] = message.useMessage();
+        common.messageApiLoad(messageApi);
 
         return (
             <motion.div
@@ -21,6 +25,7 @@ const Component = {
                 }}
                 className={`dds container ${className}`}
             >
+                {contextHolder}
                 {children}
             </motion.div>
         );

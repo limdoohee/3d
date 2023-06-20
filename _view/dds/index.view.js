@@ -4,17 +4,16 @@ import Router, { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Component
-import DDS_Layout from "../../_lib/component/layout";
-import DDS_Button from "../../_lib/component/button";
+import DDS from "../../_lib/component/dds";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
-    const {} = props;
+    const { store } = props;
     const router = useRouter();
 
     return (
         <>
-            <DDS_Layout.container>
+            <DDS.layout.container store={store}>
                 <div className="dds style-guide">
                     <h1>DDS Style Guide</h1>
                     <h4>Component</h4>
@@ -42,6 +41,9 @@ const Home = observer((props) => {
                         </li>
                         <li>
                             <Link href="/dds/chips">Chips</Link>
+                        </li>
+                        <li>
+                            <Link href="/dds/message">Message</Link>
                         </li>
                     </ul>
                     <h4>Template</h4>
@@ -72,7 +74,7 @@ const Home = observer((props) => {
                         </li>
                     </ul>
                 </div>
-            </DDS_Layout.container>
+            </DDS.layout.container>
         </>
     );
 });

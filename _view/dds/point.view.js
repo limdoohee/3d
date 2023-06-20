@@ -4,10 +4,7 @@ import Router, { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Component
-import DDS_Layout from "../../_lib/component/layout";
-import DDS_Gnb from "../../_lib/template/gnb";
-import DDS_Button from "../../_lib/component/button";
-import DDS_Icons from "../../_lib/component/icons";
+import DDS from "../../_lib/component/dds";
 import PointTemplate from "../../_lib/template/point";
 //------------------------------------------------------------------------------- Component
 
@@ -18,29 +15,29 @@ const Home = observer((props) => {
 
     return (
         <>
-            <DDS_Layout.container>
+            <DDS.layout.container store={store}>
                 <div className="dds style-guide">
                     <p>
-                        <DDS_Button.default
+                        <DDS.button.default
                             onClick={(e) => {
                                 router.push("/dds");
                             }}
                         >
                             Back
-                        </DDS_Button.default>
+                        </DDS.button.default>
                     </p>
                     <h1>Point (status : {common.ui.pointOpen ? "open" : "close"})</h1>
-                    <DDS_Button.default
+                    <DDS.button.default
                         onClick={() => {
                             common.uiChange("pointOpen", true);
                         }}
                         className="dds button text"
                     >
                         Point Open
-                    </DDS_Button.default>
+                    </DDS.button.default>
                     <PointTemplate.default store={props.store} />
                 </div>
-            </DDS_Layout.container>
+            </DDS.layout.container>
         </>
     );
 });

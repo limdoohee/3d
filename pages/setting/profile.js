@@ -29,7 +29,10 @@ const Home = observer((props) => {
 
     return (
         <>
-            <View props={props} store={store} />
+            {common.pageInit && (
+                //
+                <View props={props} store={store} />
+            )}
         </>
     );
 });

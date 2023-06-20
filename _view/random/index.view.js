@@ -122,7 +122,7 @@ const Home = observer((props) => {
     };
 
     return (
-        <DDS.layout.container>
+        <DDS.layout.container store={store}>
             {/* {contextHolder} */}
             <DK_template_header.default store={store} title={lang.t("random.title")} />
             {/* Content */}

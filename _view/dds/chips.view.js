@@ -10,12 +10,12 @@ import DDS_Icons from "../../_lib/component/icons";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
-    const {} = props;
+    const { store } = props;
     const router = useRouter();
 
     return (
         <>
-            <DDS.layout.container>
+            <DDS.layout.container store={store}>
                 <div className="dds style-guide">
                     <p>
                         <DDS.button.default

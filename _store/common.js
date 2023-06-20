@@ -28,6 +28,8 @@ class Store {
 
     pageInit = false;
 
+    messageApi = null;
+
     constructor(store) {
         this.store = store;
         makeAutoObservable(this);
@@ -117,6 +119,10 @@ class Store {
             });
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회
+
+    messageApiLoad(el) {
+        this.messageApi = el;
+    }
 }
 //////////////////////////// makeAutoObservable
 
