@@ -69,7 +69,7 @@ const Gallery = forwardRef(function Gallery(props, ref) {
         // },
         // {
         //     id: 12,
-        //     url: "../../static/3d/JangaNo/JangaNo_Linear_V04.fbx",
+        //     url: "../../static/3d/JangaNo/JangaNo_Linear_test005.fbx",
         //     colorMap: "../../static/3d/JangaNo/D_JangaNo.jpg",
         //     normalMap: "../../static/3d/JangaNo/N_JangaNo.jpg",
         // },
@@ -87,6 +87,7 @@ const Gallery = forwardRef(function Gallery(props, ref) {
 
     let beforePosition = -1;
     let column, parent, space, hiddenIndex;
+    let dropLength;
 
     // Limits;
     let maxX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
@@ -99,103 +100,6 @@ const Gallery = forwardRef(function Gallery(props, ref) {
     let positionZ = 10;
     let phi;
     let theta;
-
-    // useImperativeHandle(ref, () => ({
-    //     backOfDetail,
-    // }));
-    // useImperativeHandle(
-    //     ref,
-    //     () => {
-    //         return {
-    //             back() {
-    //                 setBack(false);
-    //                 profileArea.style.opacity = 1;
-    //                 btnArea.style.opacity = 1;
-
-    //                 // 에셋
-    //                 gsap.to(parent.children[0].position, {
-    //                     duration: 1,
-    //                     y: 0,
-    //                     ease: "power3.inOut",
-    //                 });
-
-    //                 gsap.to(controls.target, {
-    //                     duration: 1,
-    //                     x: parent.position.x,
-    //                     y: 0,
-    //                     z: 0,
-    //                     ease: "power3.inOut",
-    //                     onUpdate: function () {
-    //                         controls.update();
-    //                     },
-    //                 });
-
-    //                 gsap.to(camera, {
-    //                     fov: 50,
-    //                     duration: 1,
-    //                     ease: "power4.inOut",
-    //                     onUpdate: function () {
-    //                         camera.updateProjectionMatrix();
-    //                     },
-    //                 });
-
-    //                 gsap.to(camera.position, {
-    //                     duration: 1,
-    //                     ease: "power3.inOut",
-    //                     x: parent.position.x,
-    //                     y: 0,
-    //                     z: 10,
-    //                     onUpdate: function () {
-    //                         camera.updateProjectionMatrix();
-    //                     },
-    //                 });
-
-    //                 setTimeout(() => {
-    //                     hiddenIndex.forEach((e) => {
-    //                         // 에셋
-    //                         gsap.to(scene.getObjectByName("drop" + e).children[0].material, {
-    //                             duration: 1,
-    //                             opacity: 1,
-    //                             ease: "power3.inOut",
-    //                         });
-    //                     });
-
-    //                     for (let i = 0; i < dropData.length; i++) {
-    //                         // 포디움
-    //                         gsap.to(scene.getObjectByName("column" + i).children[0].material, {
-    //                             duration: 1,
-    //                             opacity: 1,
-    //                             ease: "power3.inOut",
-    //                         });
-    //                     }
-
-    //                     for (let i = 1; i <= 5; i++) {
-    //                         // 배경
-    //                         scene.getObjectByName("space" + i) &&
-    //                             gsap.to(scene.getObjectByName("space" + i).children[0].material, {
-    //                                 duration: 1,
-    //                                 opacity: 1,
-    //                                 ease: "power3.inOut",
-    //                             });
-    //                     }
-    //                 }, 200);
-
-    //                 beforePosition = -1;
-    //                 controls.touches = {
-    //                     ONE: THREE.TOUCH.PAN,
-    //                 };
-    //                 controls.enablePan = true;
-    //                 controls.enableRotate = false;
-
-    //                 maxX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
-    //                 minX = 0;
-    //                 maxZ = 4;
-    //                 minZ = 0;
-    //             },
-    //         };
-    //     },
-    //     [],
-    // );
 
     function init() {
         const canvas = document.getElementById("space");
@@ -247,8 +151,8 @@ const Gallery = forwardRef(function Gallery(props, ref) {
         controls.minDistance = 5;
         controls.maxDistance = 15;
         controls.enableRotate = false;
-        controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-        controls.dampingFactor = 0.05;
+        // controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+        // controls.dampingFactor = 0.05;
         controls.update();
 
         window.addEventListener("click", clickDrop);
@@ -354,6 +258,7 @@ const Gallery = forwardRef(function Gallery(props, ref) {
             });
         } else {
             for (let i = 0; i < dropData.length; i++) {
+                dropLength = i;
                 if (dropData[i].url) {
                     // 포디움
                     fbx.load("../../static/3d/podium/Podium.fbx", (obj) => {
@@ -421,7 +326,12 @@ const Gallery = forwardRef(function Gallery(props, ref) {
     }
 
     function render() {
-        // animate();
+        // console.log(dropLength);
+        // scene.getObjectByName(dropLength);
+        for (let i = 0; i <= dropLength; i++) {
+            if (scene.getObjectByName("drop" + i)) scene.getObjectByName("drop" + i).rotation.y += 0.01;
+        }
+
         requestAnimationFrame(render);
         renderer.render(scene, camera);
     }

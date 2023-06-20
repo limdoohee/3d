@@ -32,9 +32,11 @@
 }
 
 .detail .wrapper {
+    width: 100%;
     position: absolute;
     bottom: 0;
-    padding-right: 20px;
+    left: 0;
+    padding: 0 20px;
 }
 
 .detail .wrapper > div {
