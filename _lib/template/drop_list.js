@@ -30,7 +30,7 @@ const Home = {
 
         //------------------------------------------------- Router isReady
         useEffect(() => {
-            if (router.isReady && router.pathname == "/drop") {
+            if (router.isReady) {
                 common.getBuildId();
                 initLoad({
                     callback: (e) => {},

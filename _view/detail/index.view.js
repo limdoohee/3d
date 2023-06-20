@@ -227,7 +227,7 @@ const Home = observer((props) => {
 
     return (
         <>
-            <DDS.layout.container className={`detailWrapper ${more ? "more" : ""}`}>
+            <DDS.layout.container className={`detailWrapper ${more ? "more" : ""}`} store={store}>
                 <DK_template_header.default store={store} className="top" right={headerRight} />
                 <DK_template_GNB.default store={store} />
                 <DDS.layout.content>
