@@ -41,6 +41,7 @@ class Store {
         },
         selected: 21,
         detail: {},
+        dropList: { dropList: [] },
     };
 
     constructor(store) {
