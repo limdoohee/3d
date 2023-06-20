@@ -56,7 +56,7 @@ const Home = observer((props) => {
     ];
 
     return (
-        <DDS.layout.container className={"fluid"}>
+        <DDS.layout.container className={"fluid"} store={store}>
             <DK_template_header.default store={store} title={""} right={headerRight} />
             <DK_template_GNB.default store={store} />
             {/* Content */}
