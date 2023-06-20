@@ -99,7 +99,7 @@ const Home = observer((props) => {
     return (
         <>
             <DDS.layout.container store={store}>
-                <DK_template_header.default store={store} className="top" right={headerRight} back={back && goGallery} />
+                <DK_template_header.default store={store} className="top" right={headerRight} />
                 <DK_template_GNB.default store={store} />
                 <DDS.layout.content>
                     <div className="userInfo">
