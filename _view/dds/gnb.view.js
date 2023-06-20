@@ -4,10 +4,8 @@ import Router, { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Component
-import DDS_Layout from "../../_lib/component/layout";
+import DDS from "../../_lib/component/dds";
 import DDS_Gnb from "../../_lib/template/gnb";
-import DDS_Button from "../../_lib/component/button";
-import DDS_Icons from "../../_lib/component/icons";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
@@ -17,30 +15,29 @@ const Home = observer((props) => {
 
     return (
         <>
-            <DDS_Layout.container>
+            <DDS.layout.container store={store}>
                 <div className="dds style-guide">
                     <p>
-                        <DDS_Button.default
+                        <DDS.button.default
                             onClick={(e) => {
                                 router.push("/dds");
                             }}
                         >
                             Back
-                        </DDS_Button.default>
+                        </DDS.button.default>
                     </p>
                     <h1>Gnb (status : {common.ui.gnbOpen ? "open" : "close"})</h1>
-                    <DDS_Button.default
+                    <DDS.button.default
                         onClick={() => {
                             common.uiChange("gnbOpen", true);
                         }}
                         className="dds button text"
                     >
-                        <DDS_Icons.bars />
-                    <DDS_Gnb.default store={store}></DDS_Gnb.default>
-                    </DDS_Button.default>
-                    <DDS_Layout.container></DDS_Layout.container>
+                        <DDS.icons.bars />
+                        <DDS_Gnb.default store={store}></DDS_Gnb.default>
+                    </DDS.button.default>
                 </div>
-            </DDS_Layout.container>
+            </DDS.layout.container>
         </>
     );
 });

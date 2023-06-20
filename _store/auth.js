@@ -17,6 +17,10 @@ class Store {
         },
     };
 
+    loginResult = {
+        result: null,
+    };
+
     constructor(store) {
         this.store = store;
         makeAutoObservable(this);
@@ -58,9 +62,10 @@ class Store {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 체크로그인
     async checkLoginCSR({}, callback) {
-        await Api.post(`/dks-api/v2/check_login`, {}, cookie.load("loginToken") ? cookie.load("loginToken") : null)
+        await Api.post(`/dks-api/v2/check_login`, {}, this.store.auth.loginResult.loginToken)
             .then((response) => response.json())
             .then((data) => {
+                this.loginResult = data.data;
                 callback && callback(data.data);
             });
     }
@@ -113,6 +118,17 @@ class Store {
             });
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////// imageUpload
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 프로필 변경
+    async changeProfile(params, callback) {
+        await Api.post(`/dks-api/v2/change_profile`, params, this.store.auth.loginResult.loginToken)
+            // await Api.post(`/dks-api/v2/check_username`, params, this.store.auth.data.loginResult.loginToken)
+            .then((response) => response.json())
+            .then((data) => {
+                callback && callback(data.data ? data.data : data);
+            });
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 프로필 변경
 }
 //////////////////////////// makeAutoObservable
 
