@@ -113,6 +113,10 @@
     overflow: auto;
 }
 
+.detail .info {
+    width: calc(100% - 40px);
+}
+
 .detail .wrapper .iconWrapper {
     display: flex;
     flex-direction: column;
