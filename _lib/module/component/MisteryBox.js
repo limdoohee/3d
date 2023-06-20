@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
+
+import DDS from "../../component/dds";
 import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
@@ -7,7 +9,7 @@ import gsap from "gsap";
 
 const MisteryBox = observer((props) => {
     const [open, setOpen] = useState(false);
-    const { drop } = props.store;
+    const { drop, lang } = props.store;
 
     let renderer1, renderer2;
     let camera;
@@ -16,14 +18,10 @@ const MisteryBox = observer((props) => {
     let mixer = new THREE.AnimationMixer();
     let clock = new THREE.Clock();
     const loader = new FBXLoader();
-    const group = new THREE.Group();
     const [curr, setCurr] = useState(); //현재드롭
     const [next, setNext] = useState(); //다음드롭
-    // scene.add(new THREE.GridHelper(20, 20, 0x737373));
 
     function setSpace() {
-        // scene.fog = new THREE.Fog(0xa0a0a0, 10, 50);
-
         const canvas = document.getElementById("space");
         renderer1 = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
         renderer1.setPixelRatio(window.devicePixelRatio);
@@ -125,7 +123,7 @@ const MisteryBox = observer((props) => {
         raycaster.setFromCamera(pointer, camera);
 
         const intersects = raycaster.intersectObjects(scene.children);
-        if (intersects.length > 0 && drop.data.status === "open") {
+        if (intersects.length > 0 && drop.data.curr.status === "processing") {
             // parentName = intersects[0].object.parent.name;
             const shadow = scene.getObjectByName("shadow");
             const space = scene.getObjectByName("space");
@@ -144,10 +142,9 @@ const MisteryBox = observer((props) => {
                 gsap.to(shadow.material, { opacity: 0, duration: 1 });
                 gsap.to(space, { receiveShadow: true, duration: 1, delay: 0.5 });
 
-                loader.load(drop.data.url, (object) => {
-                    drop.dataChange("myDrop", true);
+                loader.load(`../../static/3d/${drop.data.curr.dropRound}/Popup.fbx`, (object) => {
                     setCurr(object);
-                    object.scale.set(0.15, 0.15, 0.15);
+                    object.scale.multiplyScalar(0.12);
                     object.position.y = 2;
                     mixer = new THREE.AnimationMixer(object);
                     const action = mixer.clipAction(object.animations[0]);
@@ -331,16 +328,26 @@ const MisteryBox = observer((props) => {
     }, [drop.data.status]);
 
     const modalData = {
-        open,
-        title: "드롭 획득을 축하해요!",
-        context: "1,000포인트가 지급되었어요.\n이제 갤러리로 이동해볼까요?",
-        button: "갤러리로 이동",
-        linkUrl: "/gallery",
+        open: open,
+        setOpen: setOpen,
+        title: lang.t("misteryBox.modal.title"),
+        context: lang.t("misteryBox.modal.context"),
+        confirm: {
+            label: lang.t("misteryBox.modal.confirm"),
+            action: () => {
+                // Router.push("/gallery");
+            },
+        },
+        cancel: {
+            label: lang.t("misteryBox.modal.close"),
+            action: () => {},
+        },
     };
 
     return (
         <>
             <canvas id="space"></canvas>
+            <DDS.modal.bottom {...modalData} />
         </>
     );
 });

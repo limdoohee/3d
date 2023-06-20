@@ -51,12 +51,7 @@
     width: 100%;
 }
 
-.random .bottom .btnContainer {
-    display: flex;
-    gap: 8px;
-}
-
-.random .bottom .btnContainer .dds.button {
+.random .bottom .dds.button {
     flex: 1;
     justify-content: center;
     height: 48px;

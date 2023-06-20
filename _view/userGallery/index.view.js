@@ -1,30 +1,24 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
-import Detail from "../detail/index.view";
-
-import * as THREE from "three";
-import { FBXLoader } from "three/addons/loaders/FBXLoader.js";
-import { MapControls } from "three/addons/controls/MapControls.js";
-import gsap from "gsap";
 
 import DDS_Icons from "../../_lib/component/icons";
-import { message, Progress, Avatar, Badge } from "antd";
+import { Progress, Avatar, Badge } from "antd";
 import Link from "next/link";
 
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
 import DK_template_GNB from "../../_lib/template/gnb";
-import ChatTemplate from "../../_lib/template/chat";
 import Gallery from "../../_lib/module/component/gallery";
+import ChatTemplate from "../../_lib/template/chat";
+import PointTemplate from "../../_lib/template/point";
+import AlarmTemplate from "../../_lib/template/alarm";
 
 const Home = observer((props) => {
     const router = useRouter();
     const { store } = props;
-    const { drop, common, gallery } = store;
+    const { common, lang, gallery } = store;
     const [open, setOpen] = useState(false);
-    const [back, setBack] = useState(false);
-    const ref = useRef(null);
 
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {
@@ -46,22 +40,13 @@ const Home = observer((props) => {
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
 
-    const modalData = {
-        // open,
-        title: "친구도 나도 둘 다 받는 혜택!\n친구를 초대하고 드롭키친의 선물을 받아보세요.",
-        context: "아직 드롭키친 회원이 아닌 친구가 회원가입하면 드롭키친의 디지털 아트를 랜덤으로 지급받을 수 있어요.\n친구가 회원가입 할 때마다 나에게 300P가 주어져요.",
-        button: "초대하고 선물받기",
-        linkUrl: "/main",
-        img: "../../static/3d/perspective_matte.png",
-    };
-
     const headerRight = [
         () => (
             <DDS.button.default
-                className="dds button none"
-                icon={<DDS.icons.cube />}
+                className="dds button none gallery badge"
+                icon={<DDS.icons.myGalleryBlackOn />}
                 onClick={() => {
-                    router.push("/random");
+                    router.push("/userGallery?memberSeq=20");
                 }}
             />
         ),
@@ -77,6 +62,15 @@ const Home = observer((props) => {
         () => (
             <DDS.button.default
                 className="dds button none"
+                icon={<DDS.icons.bell />}
+                onClick={() => {
+                    common.uiChange("alarmOpen", true);
+                }}
+            />
+        ),
+        () => (
+            <DDS.button.default
+                className="dds button none"
                 icon={<DDS.icons.bars />}
                 onClick={() => {
                     common.uiChange("gnbOpen", true);
@@ -85,18 +79,31 @@ const Home = observer((props) => {
         ),
     ];
 
-    const goGallery = () => {
-        ref.current.back();
+    const modalData = {
+        open: open,
+        setOpen: setOpen,
+        title: lang.t("gallery.modal.title"),
+        context: lang.t("gallery.modal.context"),
+        confirm: {
+            label: lang.t("gallery.modal.confirm"),
+            action: () => {
+                // Router.push("/gallery");
+            },
+        },
+        cancel: {
+            label: lang.t("gallery.modal.close"),
+            action: () => {},
+        },
     };
 
     return (
         <>
             <DDS.layout.container>
-                <DK_template_header.default store={store} className="top" right={headerRight} back={back && goGallery} />
+                <DK_template_header.default store={store} className="top" right={headerRight} />
                 <DK_template_GNB.default store={store} />
                 <DDS.layout.content>
                     <div className="userInfo">
-                        <div className="profile">
+                        <div className={`profile ${!gallery.data.introduction && "center"}`}>
                             <div>
                                 <Badge count={<DDS_Icons.pen />} className="profileMod">
                                     <Avatar
@@ -107,19 +114,42 @@ const Home = observer((props) => {
                                 </Badge>
                             </div>
                             <div>
-                                <h1>
-                                    {gallery.data.nickname}
-                                    <DDS_Icons.badgeCheck className="badge" />
-                                </h1>
-                                {/* <h4>Hello, I’m heavy collector Hello, I’m heavy coll</h4> */}
+                                <div className="nickname">
+                                    <p>{gallery.data.nickname}</p>
+                                    <DDS.chips.default className="third">ARTIST</DDS.chips.default>
+                                </div>
                                 <h4>{gallery.data.introduction}</h4>
                                 <div className="point">
-                                    <DDS_Icons.point />
+                                    <DDS_Icons.point
+                                        onClick={() => {
+                                            common.uiChange("pointOpen", true);
+                                        }}
+                                    />
                                     {gallery.data.pointBalance}
-                                    <DDS_Icons.userGroup className="inviteCount" />
+                                    <DDS_Icons.userPlus className="inviteCount" />
                                     {gallery.data.inviteCnt}
                                 </div>
                             </div>
+                        </div>
+                        <div className="ddsBtnWrapper">
+                            <DDS.button.default
+                                className="dds button primary"
+                                icon={<DDS.icons.paperPlane />}
+                                onClick={() => {
+                                    setOpen(true);
+                                }}
+                            >
+                                invite
+                            </DDS.button.default>
+                            <DDS.button.default
+                                className="dds button secondary"
+                                icon={<DDS.icons.cube />}
+                                onClick={(e) => {
+                                    router.push("/random");
+                                }}
+                            >
+                                Lucky Box
+                            </DDS.button.default>
                         </div>
                         <Link href="dds">
                             <div className="collection">
@@ -174,9 +204,11 @@ const Home = observer((props) => {
                             </div> */}
                         </div>
                     </div>
-                    <Gallery {...gallery} back={back} setBack={setBack} ref={ref} />
-                    <Detail />
+                    <Gallery {...props} />
+                    <DDS.modal.bottom {...modalData} />
                     <ChatTemplate.open store={props.store} />
+                    <PointTemplate.default store={props.store} />
+                    <AlarmTemplate.default store={props.store} />
                 </DDS.layout.content>
             </DDS.layout.container>
         </>

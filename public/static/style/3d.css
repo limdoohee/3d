@@ -52,21 +52,24 @@
 .userInfo .profile {
     display: flex;
     gap: 16px;
+    margin-bottom: 12px;
 }
 
-.userInfo .profile h1 {
+.userInfo .profile.center {
+    align-items: center;
+}
+
+.userInfo .profile .nickname {
     display: flex;
     align-items: center;
-    font-size: 16px;
-    font-weight: 700;
-    line-height: 16px;
-    letter-spacing: -0.02em;
 }
-
-.userInfo .profile h1 .badge {
-    width: 16px;
-    height: 16px;
-    margin-left: 4px;
+.userInfo .profile .nickname p {
+    font-weight: 700;
+    font-size: 16px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
 }
 
 .userInfo .profile h4 {
@@ -100,6 +103,17 @@
 
 .userInfo .profile .point .inviteCount {
     margin-left: 20px;
+}
+
+.userInfo .ddsBtnWrapper .dds.button {
+    flex: 1;
+    justify-content: center;
+    height: 30px;
+}
+
+.userInfo .ddsBtnWrapper .dds.button .dds.icons {
+    width: 14px;
+    height: 14px;
 }
 
 .userInfo .collection {

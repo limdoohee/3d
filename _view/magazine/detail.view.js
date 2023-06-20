@@ -22,7 +22,7 @@ const Home = observer((props) => {
 
     //------------------------------------------------- Init Load
     const initLoad = ({ callback }) => {
-        var params = { magazineSeq: router.query.seq };
+        const params = { magazineSeq: router.query.seq };
         magazine.magazineDetail(params, (e) => {
             common.debug(e);
             callback && callback(e);

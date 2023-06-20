@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useImperativeHandle, forwardRef } from "react";
+import Router, { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
@@ -7,23 +8,27 @@ import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import gsap from "gsap";
 
 const Gallery = forwardRef(function Gallery(props, ref) {
-    const gallery = props.data;
-    // const dropData = gallery.collection;
+    const router = useRouter();
+    const { store } = props;
+    const { drop, common, lang, gallery } = store;
+    // console.log(gallery.data.collection);
+
+    // const dropData = gallery.data.collection;
 
     const dropData = [
         {
             id: 1,
-            url: "../../static/3d/KominJeong/KominJeong_LinearSpin.fbx",
-            bumpMap: "../../static/3d/KominJeong/DSP_KominJeong.jpg", // 바깥쪽
-            colorMap: "../../static/3d/KominJeong/D_KominJeong.jpg", // 안쪽
+            url: "../../static/3d/3/LinearSpin.fbx",
+            bumpMap: "../../static/3d/3/DSP_KominJeong.jpg",
+            colorMap: "../../static/3d/3/D_KominJeong.jpg",
             specularMap: "",
         },
         {
             id: 3,
-            url: "../../static/3d/DoCoin/DoCoin_LinearSpin.fbx",
-            bumpMap: "../../static/3d/DoCoin/DSP_DoCoin.png",
-            colorMap: "../../static/3d/DoCoin/D_DoCoin.png",
-            specularMap: "../../static/3d/DoCoin/SPC_DoCoin.png",
+            url: "../../static/3d/2/LinearSpin.fbx",
+            bumpMap: "../../static/3d/2/DSP_DoCoin.png",
+            colorMap: "../../static/3d/2/D_DoCoin.png",
+            specularMap: "../../static/3d/2/SPC_DoCoin.png",
             alphaMap: "",
             detail: {
                 artistImg: "../../static/3d/image_17.png",
@@ -37,25 +42,37 @@ const Gallery = forwardRef(function Gallery(props, ref) {
 
         {
             id: 5,
-            url: "../../static/3d/275C/275C_LinearSpin.fbx",
-            colorMap: "../../static/3d/275C/D_275C.png",
+            url: "../../static/3d/1/LinearSpin.fbx",
+            colorMap: "../../static/3d/1/D_275C.png",
         },
         {
             id: 6,
-            url: "../../static/3d/275C/275C_LinearSpin.fbx",
-            colorMap: "../../static/3d/275C/D_275C.png",
+            url: "../../static/3d/1/LinearSpin.fbx",
+            colorMap: "../../static/3d/1/D_275C.png",
         },
         {
             id: 8,
-            url: "../../static/3d/KominJeong/KominJeong_LinearSpin.fbx",
-            bumpMap: "../../static/3d/KominJeong/DSP_KominJeong.jpg", // 바깥쪽
-            colorMap: "../../static/3d/KominJeong/D_KominJeong.jpg", // 안쪽
+            url: "../../static/3d/3/Popup.fbx",
+            bumpMap: "../../static/3d/3/DSP_KominJeong.jpg",
+            colorMap: "../../static/3d/3/D_KominJeong.jpg",
         },
         {
-            id: 10,
-            url: "../../static/3d/275C/275C_LinearSpin.fbx",
-            colorMap: "../../static/3d/275C/D_275C.png",
+            id: 21,
+            url: "../../static/3d/1/LinearSpin.fbx",
+            colorMap: "../../static/3d/1/D_275C.png",
         },
+        // {
+        //     id: 11,
+        //     url: "../../static/3d/ButterCup/ButterCup_Linear.fbx",
+        //     bumpMap: "../../static/3d/ButterCup/DSP_ButterCup.jpg",
+        //     colorMap: "../../static/3d/ButterCup/D_ButterCup.jpg",
+        // },
+        // {
+        //     id: 12,
+        //     url: "../../static/3d/JangaNo/JangaNo_Linear_V04.fbx",
+        //     colorMap: "../../static/3d/JangaNo/D_JangaNo.jpg",
+        //     normalMap: "../../static/3d/JangaNo/N_JangaNo.jpg",
+        // },
     ];
 
     const { back, setBack } = props;
@@ -68,7 +85,7 @@ const Gallery = forwardRef(function Gallery(props, ref) {
     let mixer = new THREE.AnimationMixer();
     let clock = new THREE.Clock();
 
-    let profileArea, detailArea, btnArea;
+    let profileArea, btnArea;
 
     let beforePosition = -1;
     let column, parent, space, hiddenIndex;
@@ -94,7 +111,6 @@ const Gallery = forwardRef(function Gallery(props, ref) {
             return {
                 back() {
                     setBack(false);
-                    detailArea.style.bottom = "-100vh";
                     profileArea.style.opacity = 1;
                     btnArea.style.opacity = 1;
 
@@ -186,7 +202,6 @@ const Gallery = forwardRef(function Gallery(props, ref) {
     function init() {
         const canvas = document.getElementById("space");
         profileArea = document.querySelector(".userInfo");
-        detailArea = document.querySelector(".detail");
         btnArea = document.querySelector(".btn");
 
         // render hive
@@ -296,99 +311,13 @@ const Gallery = forwardRef(function Gallery(props, ref) {
         raycaster.setFromCamera(pointer, camera);
 
         const intersects = raycaster.intersectObjects(scene.children);
+
         if (intersects.length > 0) {
             parent = intersects[0].object.parent;
+
             if (parent.name.includes("drop")) {
-                setBack(true);
-                detailArea.style.bottom = 0;
-                profileArea.style.opacity = 0;
-                btnArea.style.opacity = 0;
-                column = scene.getObjectByName("column" + parent.name.replace(/[^0-9]/g, ""));
-
-                // 에셋
-                gsap.to(parent.children[0].position, {
-                    duration: 1,
-                    y: 20,
-                    ease: "power3.inOut",
-                });
-
-                hiddenIndex = dropData
-                    .map((e, i) => {
-                        return i !== parseInt(parent.name.replace(/[^0-9]/g, "")) && i;
-                    })
-                    .filter((e) => Number.isInteger(e));
-
-                hiddenIndex.forEach((e) => {
-                    // 에셋
-                    gsap.to(scene.getObjectByName("drop" + e).children[0].material, {
-                        duration: 1,
-                        opacity: 0,
-                        ease: "power3.inOut",
-                    });
-                });
-
-                for (let i = 0; i < dropData.length; i++) {
-                    // 포디움
-                    gsap.to(scene.getObjectByName("column" + i).children[0].material, {
-                        duration: 1,
-                        opacity: 0,
-                        ease: "power3.inOut",
-                    });
-                }
-
-                for (let i = 1; i <= 5; i++) {
-                    // 배경
-                    scene.getObjectByName("space" + i) &&
-                        gsap.to(scene.getObjectByName("space" + i).children[0].material, {
-                            duration: 1,
-                            opacity: 0,
-                            ease: "power3.inOut",
-                        });
-                }
-
-                gsap.to(controls.target, {
-                    duration: 1,
-                    x: parent.position.x,
-                    y: 0,
-                    z: 0,
-                    ease: "power3.inOut",
-                    onUpdate: function () {
-                        controls.update();
-                    },
-                });
-
-                gsap.to(camera, {
-                    fov: 30,
-                    duration: 1,
-                    ease: "power4.inOut",
-                    onUpdate: function () {
-                        camera.updateProjectionMatrix();
-                    },
-                });
-
-                gsap.to(camera.position, {
-                    duration: 1,
-                    ease: "power3.inOut",
-                    x: parent.position.x,
-                    y: 0,
-                    z: 10,
-                    onUpdate: function () {
-                        camera.updateProjectionMatrix();
-                    },
-                });
-
-                beforePosition = parent.position.x;
-                controls.touches = {
-                    ONE: THREE.TOUCH.ROTATE,
-                };
-                controls.enablePan = false;
-                controls.enableRotate = true;
-                controls.update();
-
-                maxX = parent.position.x + 50;
-                minX = -10;
-                maxZ = parent.position.x + 50;
-                minZ = -10;
+                drop.dataChange("selected", dropData[parent.name.replace(/[^0-9]/g, "")].id);
+                router.push("/detail/" + dropData[parent.name.replace(/[^0-9]/g, "")].id);
             }
         }
     }
@@ -412,17 +341,6 @@ const Gallery = forwardRef(function Gallery(props, ref) {
                 scene.add(obj);
             });
         }
-        // fbx.load("../../static/3d/gallery/gallery1.fbx", (obj) => {
-        //     obj.scale.multiplyScalar(0.3);
-        //     obj.position.z = 10;
-        //     obj.traverse(function (child) {
-        //         if (child.isMesh) {
-        //             child.castShadow = true;
-        //             child.receiveShadow = true;
-        //         }
-        //     });
-        //     scene.add(obj);
-        // });
     }
 
     const setDrop = () => {
@@ -463,21 +381,24 @@ const Gallery = forwardRef(function Gallery(props, ref) {
 
                     // 드롭
                     fbx.load(dropData[i].url, (obj) => {
-                        obj.scale.multiplyScalar(0.05);
+                        obj.scale.set(0.05, 0.05, 0.05);
                         obj.position.set(i * 2.5, -0.8, 0);
                         obj.traverse(function (child) {
                             if (child.isMesh) {
                                 let colorMap,
                                     bumpMap,
-                                    specularMap = null;
+                                    specularMap,
+                                    normalMap = null;
                                 if (dropData[i].colorMap) colorMap = new THREE.TextureLoader().load(dropData[i].colorMap);
                                 if (dropData[i].bumpMap) bumpMap = new THREE.TextureLoader().load(dropData[i].bumpMap);
                                 if (dropData[i].specularMap) specularMap = new THREE.TextureLoader().load(dropData[i].specularMap);
+                                if (dropData[i].normalMap) normalMap = new THREE.TextureLoader().load(dropData[i].normalMap);
 
                                 const material = new THREE.MeshPhongMaterial({
                                     map: colorMap,
                                     bumpMap,
                                     specularMap,
+                                    normalMap,
                                     transparent: true,
                                 });
 
@@ -497,35 +418,6 @@ const Gallery = forwardRef(function Gallery(props, ref) {
                 }
             }
         }
-        // fbx.load("../../static/3d/275C/275C_LinearSpin.fbx", (obj) => {
-        //     obj.scale.multiplyScalar(0.05);
-        //     obj.position.set(2.5, 0, 0);
-        //     obj.traverse(function (child) {
-        //         if (child.isMesh) {
-        //             let colorMap,
-        //                 bumpMap,
-        //                 specularMap = null;
-        //             colorMap = new THREE.TextureLoader().load("../../static/3d/275C/D_275C.png");
-
-        //             const material = new THREE.MeshPhongMaterial({
-        //                 map: colorMap,
-        //                 bumpMap,
-        //                 specularMap,
-        //             });
-
-        //             child.material = material;
-        //             child.castShadow = true;
-        //             child.receiveShadow = true;
-        //         }
-        //     });
-        //     obj.name = "drop1";
-
-        //     mixer = new THREE.AnimationMixer(obj);
-        //     mixer.clipAction(obj.animations[0]).play();
-        //     mixers.push(mixer);
-
-        //     scene.add(obj);
-        // });
     };
 
     function animate() {

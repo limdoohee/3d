@@ -135,7 +135,7 @@ const Home = observer((props) => {
                     </div>
                     <div className="bottom">
                         <h2>{lang.t("random.desc")}</h2>
-                        <div className="btnContainer">
+                        <div className="ddsBtnWrapper">
                             <DDS.button.default
                                 className={`dds button ${randomBox > 0 ? "secondary" : "primary"}`}
                                 onClick={() => {

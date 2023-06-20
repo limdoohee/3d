@@ -15,6 +15,7 @@ const Component = forwardRef(function Component(props, ref) {
             return {
                 open() {
                     messageApi.open({
+                        icon: props.icon,
                         content: props.content,
                         // duration: 100,
                         // message 컴포넌트는 body 바로 아래 element 이므록 고유한 className으로 작성할 것
