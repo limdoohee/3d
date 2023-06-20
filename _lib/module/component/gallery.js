@@ -85,8 +85,6 @@ const Gallery = forwardRef(function Gallery(props, ref) {
     let mixer = new THREE.AnimationMixer();
     let clock = new THREE.Clock();
 
-    let profileArea, btnArea;
-
     let beforePosition = -1;
     let column, parent, space, hiddenIndex;
 
@@ -105,105 +103,102 @@ const Gallery = forwardRef(function Gallery(props, ref) {
     // useImperativeHandle(ref, () => ({
     //     backOfDetail,
     // }));
-    useImperativeHandle(
-        ref,
-        () => {
-            return {
-                back() {
-                    setBack(false);
-                    profileArea.style.opacity = 1;
-                    btnArea.style.opacity = 1;
+    // useImperativeHandle(
+    //     ref,
+    //     () => {
+    //         return {
+    //             back() {
+    //                 setBack(false);
+    //                 profileArea.style.opacity = 1;
+    //                 btnArea.style.opacity = 1;
 
-                    // 에셋
-                    gsap.to(parent.children[0].position, {
-                        duration: 1,
-                        y: 0,
-                        ease: "power3.inOut",
-                    });
+    //                 // 에셋
+    //                 gsap.to(parent.children[0].position, {
+    //                     duration: 1,
+    //                     y: 0,
+    //                     ease: "power3.inOut",
+    //                 });
 
-                    gsap.to(controls.target, {
-                        duration: 1,
-                        x: parent.position.x,
-                        y: 0,
-                        z: 0,
-                        ease: "power3.inOut",
-                        onUpdate: function () {
-                            controls.update();
-                        },
-                    });
+    //                 gsap.to(controls.target, {
+    //                     duration: 1,
+    //                     x: parent.position.x,
+    //                     y: 0,
+    //                     z: 0,
+    //                     ease: "power3.inOut",
+    //                     onUpdate: function () {
+    //                         controls.update();
+    //                     },
+    //                 });
 
-                    gsap.to(camera, {
-                        fov: 50,
-                        duration: 1,
-                        ease: "power4.inOut",
-                        onUpdate: function () {
-                            camera.updateProjectionMatrix();
-                        },
-                    });
+    //                 gsap.to(camera, {
+    //                     fov: 50,
+    //                     duration: 1,
+    //                     ease: "power4.inOut",
+    //                     onUpdate: function () {
+    //                         camera.updateProjectionMatrix();
+    //                     },
+    //                 });
 
-                    gsap.to(camera.position, {
-                        duration: 1,
-                        ease: "power3.inOut",
-                        x: parent.position.x,
-                        y: 0,
-                        z: 10,
-                        onUpdate: function () {
-                            camera.updateProjectionMatrix();
-                        },
-                    });
+    //                 gsap.to(camera.position, {
+    //                     duration: 1,
+    //                     ease: "power3.inOut",
+    //                     x: parent.position.x,
+    //                     y: 0,
+    //                     z: 10,
+    //                     onUpdate: function () {
+    //                         camera.updateProjectionMatrix();
+    //                     },
+    //                 });
 
-                    setTimeout(() => {
-                        hiddenIndex.forEach((e) => {
-                            // 에셋
-                            gsap.to(scene.getObjectByName("drop" + e).children[0].material, {
-                                duration: 1,
-                                opacity: 1,
-                                ease: "power3.inOut",
-                            });
-                        });
+    //                 setTimeout(() => {
+    //                     hiddenIndex.forEach((e) => {
+    //                         // 에셋
+    //                         gsap.to(scene.getObjectByName("drop" + e).children[0].material, {
+    //                             duration: 1,
+    //                             opacity: 1,
+    //                             ease: "power3.inOut",
+    //                         });
+    //                     });
 
-                        for (let i = 0; i < dropData.length; i++) {
-                            // 포디움
-                            gsap.to(scene.getObjectByName("column" + i).children[0].material, {
-                                duration: 1,
-                                opacity: 1,
-                                ease: "power3.inOut",
-                            });
-                        }
+    //                     for (let i = 0; i < dropData.length; i++) {
+    //                         // 포디움
+    //                         gsap.to(scene.getObjectByName("column" + i).children[0].material, {
+    //                             duration: 1,
+    //                             opacity: 1,
+    //                             ease: "power3.inOut",
+    //                         });
+    //                     }
 
-                        for (let i = 1; i <= 5; i++) {
-                            // 배경
-                            scene.getObjectByName("space" + i) &&
-                                gsap.to(scene.getObjectByName("space" + i).children[0].material, {
-                                    duration: 1,
-                                    opacity: 1,
-                                    ease: "power3.inOut",
-                                });
-                        }
-                    }, 200);
+    //                     for (let i = 1; i <= 5; i++) {
+    //                         // 배경
+    //                         scene.getObjectByName("space" + i) &&
+    //                             gsap.to(scene.getObjectByName("space" + i).children[0].material, {
+    //                                 duration: 1,
+    //                                 opacity: 1,
+    //                                 ease: "power3.inOut",
+    //                             });
+    //                     }
+    //                 }, 200);
 
-                    beforePosition = -1;
-                    controls.touches = {
-                        ONE: THREE.TOUCH.PAN,
-                    };
-                    controls.enablePan = true;
-                    controls.enableRotate = false;
+    //                 beforePosition = -1;
+    //                 controls.touches = {
+    //                     ONE: THREE.TOUCH.PAN,
+    //                 };
+    //                 controls.enablePan = true;
+    //                 controls.enableRotate = false;
 
-                    maxX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
-                    minX = 0;
-                    maxZ = 4;
-                    minZ = 0;
-                },
-            };
-        },
-        [],
-    );
+    //                 maxX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
+    //                 minX = 0;
+    //                 maxZ = 4;
+    //                 minZ = 0;
+    //             },
+    //         };
+    //     },
+    //     [],
+    // );
 
     function init() {
         const canvas = document.getElementById("space");
-        profileArea = document.querySelector(".userInfo");
-        btnArea = document.querySelector(".btn");
-
         // render hive
         renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
         renderer.setPixelRatio(window.devicePixelRatio);
@@ -409,9 +404,9 @@ const Gallery = forwardRef(function Gallery(props, ref) {
                         });
                         obj.name = "drop" + i;
 
-                        mixer = new THREE.AnimationMixer(obj);
-                        mixer.clipAction(obj.animations[0]).play();
-                        mixers.push(mixer);
+                        // mixer = new THREE.AnimationMixer(obj);
+                        // mixer.clipAction(obj.animations[0]).play();
+                        // mixers.push(mixer);
 
                         scene.add(obj);
                     });
@@ -426,7 +421,7 @@ const Gallery = forwardRef(function Gallery(props, ref) {
     }
 
     function render() {
-        animate();
+        // animate();
         requestAnimationFrame(render);
         renderer.render(scene, camera);
     }
