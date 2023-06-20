@@ -109,6 +109,30 @@
             "close": "close"
         }
     },
+    "main": {
+        "modal": {
+            "title": "Receive notifications from dropkitchen",
+            "context": "Get notifications for drops, events, and other services.",
+            "confirm": "Get notifications",
+            "close": "Later"
+        }
+    },
+    "misteryBox": {
+        "modal": {
+            "title": "드롭 획득을 축하해요!",
+            "context": "1,000포인트가 지급되었어요.\n이제 갤러리로 이동해볼까요?",
+            "confirm": "갤러리로 이동",
+            "close": "나중에"
+        }
+    },
+    "gallery": {
+        "modal": {
+            "title": "Your friends and you both win!\nInvite your friends and get a gift from Dropkitchen.",
+            "context": "When a friend who isn't already a DropKit member signs up, you'll receive a random piece of DropKit digital art.\nEvery time a friend signs up, you'll receive 300 P.",
+            "confirm": "Invite and receive gifts",
+            "close": "Later"
+        }
+    },
     "error": {
         "404": {
             "description1": "A temporary error has occurred.",

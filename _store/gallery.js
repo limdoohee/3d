@@ -33,6 +33,7 @@ class Store {
         await Api.get(`/dks-api/v2/gallery`, params, this.store.auth.loginResult.loginToken)
             .then((response) => response.json())
             .then((data) => {
+                console.log(data);
                 this.data = data.data;
                 callback && callback(data.data ? data.data : data);
             });
