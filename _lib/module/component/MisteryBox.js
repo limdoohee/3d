@@ -22,8 +22,7 @@ const MisteryBox = observer((props) => {
     const loader = new FBXLoader();
     const [curr, setCurr] = useState(); //현재드롭
     const [next, setNext] = useState(); //다음드롭
-    let dropSeq;
-    let dropOwn;
+    let dropSeq, dropRound;
 
     const messageData = {
         icon: <DDS.icons.circleExclamation />,
@@ -149,8 +148,14 @@ const MisteryBox = observer((props) => {
                 gsap.to(shadow.material, { opacity: 0, duration: 1 });
                 gsap.to(space, { receiveShadow: true, duration: 1, delay: 0.5 });
 
-                dropSeq = drop.data.curr.status === "closed" ? drop.data.next.dropSeq : drop.data.curr.dropSeq;
-                loader.load(`../../static/3d/${dropSeq}/Popup.fbx`, (object) => {
+                if (drop.data.curr.status === "closed") {
+                    dropSeq = drop.data.next.dropSeq;
+                    dropRound = drop.data.next.dropRound;
+                } else {
+                    dropSeq = drop.data.curr.dropSeq;
+                    dropRound = drop.data.curr.dropRound;
+                }
+                loader.load(`../../static/3d/${dropRound}/Popup.fbx`, (object) => {
                     setCurr(object);
                     object.scale.multiplyScalar(0.12);
                     object.position.y = 2;
@@ -251,6 +256,8 @@ const MisteryBox = observer((props) => {
     useEffect(() => {
         if (drop.data.curr.status) {
             dropSeq = drop.data.curr.dropSeq;
+            dropRound = drop.data.curr.dropRound;
+
             // 다음 드롭
             loader.load("../../static/3d/CuteBox.fbx", (object) => {
                 setNext(object);
@@ -284,7 +291,7 @@ const MisteryBox = observer((props) => {
             } else {
                 if (drop.data.curr.dropOwnFlag) {
                     // 받은 드롭 파일
-                    loader.load(`../../static/3d/${dropSeq}/Popup.fbx`, (object) => {
+                    loader.load(`../../static/3d/${dropRound}/Popup.fbx`, (object) => {
                         setCurr(object);
                         object.scale.multiplyScalar(0.12);
                         object.position.y = 2;

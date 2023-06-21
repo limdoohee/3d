@@ -30,13 +30,13 @@ const Gallery = observer((props) => {
     let dropLength;
 
     // Limits;
-    let maxX = gallery.data.myDropCnt - 1 < 1 ? 2.5 : (gallery.data.myDropCnt - 1) * 2.5;
+    let maxX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
     let minX = 0;
     let maxZ = 4;
     let minZ = 0;
 
     // // State
-    let positionX = gallery.data.myDropCnt - 1 < 1 ? 2.5 : (gallery.data.myDropCnt - 1) * 2.5;
+    let positionX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
     let positionZ = 10;
     let phi;
     let theta;
@@ -52,7 +52,7 @@ const Gallery = observer((props) => {
 
         // camera
         camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
-        gallery.data.myDropCnt === 0 ? camera.position.set(0, 0, 10) : camera.position.set((gallery.data.myDropCnt - 1) * 2.5, 0, 10);
+        dropData.length === 0 ? camera.position.set(0, 0, 10) : camera.position.set((dropData.length - 1) * 2.5, 0, 10);
 
         // light
         let light = new THREE.DirectionalLight(0xffffff, 1);
@@ -71,7 +71,7 @@ const Gallery = observer((props) => {
 
         // controls
         controls = new MapControls(camera, renderer.domElement);
-        gallery.data.myDropCnt === 0 ? controls.target.set(0, 0, 0) : controls.target.set((gallery.data.myDropCnt - 1) * 2.5, 0, 0);
+        dropData.length === 0 ? controls.target.set(0, 0, 0) : controls.target.set((dropData.length - 1) * 2.5, 0, 0);
         controls.touches = {
             ONE: THREE.TOUCH.PAN,
         };
@@ -134,7 +134,7 @@ const Gallery = observer((props) => {
     }
 
     function setSpace() {
-        const space = Math.ceil(gallery.data.myDropCnt / 7) + 1;
+        const space = Math.ceil(dropData.length / 7) + 1;
         for (let i = 1; i <= space; i++) {
             fbx.load("../../static/3d/gallery/gallery" + i + ".fbx", (obj) => {
                 obj.scale.multiplyScalar(0.3);
@@ -155,7 +155,7 @@ const Gallery = observer((props) => {
     }
 
     const setDrop = () => {
-        if (gallery.data.myDropCnt === 0) {
+        if (dropData.length === 0) {
             fbx.load("../../static/3d/podium/Podium.fbx", (obj) => {
                 obj.scale.multiplyScalar(0.3);
                 obj.position.set(0, 0, 0.8);
@@ -169,9 +169,8 @@ const Gallery = observer((props) => {
                 scene.add(obj);
             });
         } else {
-            for (let i = 0; i < gallery.data.myDropCnt; i++) {
+            for (let i = 0; i < dropData.length; i++) {
                 dropLength = i;
-                console.log(dropData[i]);
                 if (dropData[i].url) {
                     // 포디움
                     fbx.load("../../static/3d/podium/Podium.fbx", (obj) => {
@@ -255,7 +254,7 @@ const Gallery = observer((props) => {
         setSpace();
         setDrop();
         render();
-    }, [gallery.data.myDropCnt]);
+    }, [dropData.length]);
 
     return (
         <>
