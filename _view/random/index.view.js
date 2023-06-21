@@ -113,7 +113,7 @@ const Home = observer((props) => {
     };
 
     const buyingCallback = () => {
-        ref.current.open();
+        common.messageApi.open(messageData);
     };
 
     const messageData = {
@@ -147,7 +147,6 @@ const Home = observer((props) => {
                             {randomBox > 0 && <DDS.button.default className="dds button primary">랜덤박스 열기</DDS.button.default>}
                         </div>
                     </div>
-                    <DDS.message ref={ref} {...messageData} />
                 </div>
             </DDS.layout.content>
             <DDS.modal.bottom {...modalData} />

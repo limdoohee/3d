@@ -1,80 +1,20 @@
-import React, { useEffect, useState, useImperativeHandle, forwardRef } from "react";
+import React, { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
+import assets from "./assets.json";
+
 import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import gsap from "gsap";
 
-const Gallery = forwardRef(function Gallery(props, ref) {
+const Gallery = observer((props) => {
     const router = useRouter();
-    const { store } = props;
-    const { drop, common, lang, gallery } = store;
-    // console.log(gallery.data.collection);
+    const { gallery } = props.store;
 
-    // const dropData = gallery.data.collection;
-
-    const dropData = [
-        {
-            id: 1,
-            url: "../../static/3d/3/LinearSpin.fbx",
-            bumpMap: "../../static/3d/3/DSP_KominJeong.jpg",
-            colorMap: "../../static/3d/3/D_KominJeong.jpg",
-            specularMap: "",
-        },
-        {
-            id: 3,
-            url: "../../static/3d/2/LinearSpin.fbx",
-            bumpMap: "../../static/3d/2/DSP_DoCoin.png",
-            colorMap: "../../static/3d/2/D_DoCoin.png",
-            specularMap: "../../static/3d/2/SPC_DoCoin.png",
-            alphaMap: "",
-            detail: {
-                artistImg: "../../static/3d/image_17.png",
-                artistName: "abcdefghijklmnopqrst",
-                artName: "A SWEET DAY",
-                owner: 1024,
-                artDesc:
-                    "작품설명  작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 작품설명 ",
-            },
-        },
-
-        {
-            id: 5,
-            url: "../../static/3d/1/LinearSpin.fbx",
-            colorMap: "../../static/3d/1/D_275C.png",
-        },
-        {
-            id: 6,
-            url: "../../static/3d/1/LinearSpin.fbx",
-            colorMap: "../../static/3d/1/D_275C.png",
-        },
-        {
-            id: 8,
-            url: "../../static/3d/3/Popup.fbx",
-            bumpMap: "../../static/3d/3/DSP_KominJeong.jpg",
-            colorMap: "../../static/3d/3/D_KominJeong.jpg",
-        },
-        {
-            id: 21,
-            url: "../../static/3d/1/LinearSpin.fbx",
-            colorMap: "../../static/3d/1/D_275C.png",
-        },
-        // {
-        //     id: 11,
-        //     url: "../../static/3d/ButterCup/ButterCup_Linear.fbx",
-        //     bumpMap: "../../static/3d/ButterCup/DSP_ButterCup.jpg",
-        //     colorMap: "../../static/3d/ButterCup/D_ButterCup.jpg",
-        // },
-        // {
-        //     id: 12,
-        //     url: "../../static/3d/JangaNo/JangaNo_Linear_test005.fbx",
-        //     colorMap: "../../static/3d/JangaNo/D_JangaNo.jpg",
-        //     normalMap: "../../static/3d/JangaNo/N_JangaNo.jpg",
-        // },
-    ];
-
+    let dropData = gallery.data.collection;
+    dropData = gallery.data.myDropCnt === 0 ? [] : assets.filter((e) => dropData.map((e) => e.dropRound).includes(e.id));
     const { back, setBack } = props;
 
     const scene = new THREE.Scene();
@@ -90,13 +30,13 @@ const Gallery = forwardRef(function Gallery(props, ref) {
     let dropLength;
 
     // Limits;
-    let maxX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
+    let maxX = gallery.data.myDropCnt - 1 < 1 ? 2.5 : (gallery.data.myDropCnt - 1) * 2.5;
     let minX = 0;
     let maxZ = 4;
     let minZ = 0;
 
     // // State
-    let positionX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
+    let positionX = gallery.data.myDropCnt - 1 < 1 ? 2.5 : (gallery.data.myDropCnt - 1) * 2.5;
     let positionZ = 10;
     let phi;
     let theta;
@@ -112,26 +52,15 @@ const Gallery = forwardRef(function Gallery(props, ref) {
 
         // camera
         camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
-        // dropData.length === 0 ? camera.position.set(0, 0, 10) : camera.position.set((dropData.length - 1) * 2.5, 0, 10);
-        camera.position.set((dropData.length - 1) * 2.5, 0, 10);
-        // camera.position.set(0, 1, 5);
-
-        // camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 100);
-        // camera.position.set(0, 0, 5);
+        gallery.data.myDropCnt === 0 ? camera.position.set(0, 0, 10) : camera.position.set((gallery.data.myDropCnt - 1) * 2.5, 0, 10);
 
         // light
         let light = new THREE.DirectionalLight(0xffffff, 1);
         light.position.set(10, 7, 0);
-        // light.castShadow = true;
-        // scene.add(light);
-        // scene.add(new THREE.DirectionalLightHelper(light, 1, "red"));
         scene.add(new THREE.AmbientLight(0xffffff, 0.2));
 
         const pointLight = new THREE.PointLight(0xffffff, 0.4, 100);
         pointLight.position.set(7, 3, -5);
-        // pointLight.castShadow = true;
-        // pointLight.shadow.mapSize.width = 2048;
-        // pointLight.shadow.mapSize.height = 2048;
         scene.add(pointLight);
         const sphereSize = 1;
         const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize, "red");
@@ -139,51 +68,35 @@ const Gallery = forwardRef(function Gallery(props, ref) {
 
         const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x333333, 0.6);
         scene.add(hemisphereLight);
-        // scene.add(new THREE.HemisphereLightHelper(hemisphereLight, 5));
 
         // controls
         controls = new MapControls(camera, renderer.domElement);
-        // dropData.length === 0 ? controls.target.set(0, 0, 0) : controls.target.set((dropData.length - 1) * 2.5, 0, 0);
-        controls.target.set((dropData.length - 1) * 2.5, 0, 0);
+        gallery.data.myDropCnt === 0 ? controls.target.set(0, 0, 0) : controls.target.set((gallery.data.myDropCnt - 1) * 2.5, 0, 0);
         controls.touches = {
             ONE: THREE.TOUCH.PAN,
         };
         controls.minDistance = 5;
         controls.maxDistance = 15;
         controls.enableRotate = false;
-        // controls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
-        // controls.dampingFactor = 0.05;
         controls.update();
 
         window.addEventListener("click", clickDrop);
 
         controls.addEventListener("change", () => {
-            // let shallWeUpdateAngle = false;
-
             const x = controls.target.x;
             if (x < minX || x > maxX) {
                 controls.target.setX(x < minX ? minX : maxX);
                 camera.position.setX(positionX);
-                // shallWeUpdateAngle = true;
             }
 
             const z = controls.target.z;
             if (z < minZ || z > maxZ) {
                 controls.target.setZ(z < minZ ? minZ : maxZ);
                 camera.position.setZ(positionZ);
-                // shallWeUpdateAngle = true;
             }
 
-            // if (shallWeUpdateAngle) {
-            //     const distance = camera.position.distanceTo(controls.target);
-            //     camera.position.set(distance * Math.sin(phi) * Math.sin(theta) + controls.target.x, distance * Math.cos(phi) + controls.target.y, distance * Math.sin(phi) * Math.cos(theta) + controls.target.z);
-            // }
-
-            // Updating state
             if (!isNaN(camera.position.x)) positionX = camera.position.x;
             if (!isNaN(camera.position.z)) positionZ = camera.position.z;
-            // phi = controls.getPolarAngle();
-            // theta = controls.getAzimuthalAngle();
         });
 
         // 첫 로딩시, 화면 줌인
@@ -214,15 +127,14 @@ const Gallery = forwardRef(function Gallery(props, ref) {
         if (intersects.length > 0) {
             parent = intersects[0].object.parent;
 
-            if (parent.name.includes("drop")) {
-                drop.dataChange("selected", dropData[parent.name.replace(/[^0-9]/g, "")].id);
-                router.push("/detail/" + dropData[parent.name.replace(/[^0-9]/g, "")].id);
-            }
+            // if (parent.name.includes("drop")) {
+            //     router.push("/detail/" + dropData[parent.name.replace(/[^0-9]/g, "")].id);
+            // }
         }
     }
 
     function setSpace() {
-        const space = Math.ceil(dropData.length / 7) + 1;
+        const space = Math.ceil(gallery.data.myDropCnt / 7) + 1;
         for (let i = 1; i <= space; i++) {
             fbx.load("../../static/3d/gallery/gallery" + i + ".fbx", (obj) => {
                 obj.scale.multiplyScalar(0.3);
@@ -243,7 +155,7 @@ const Gallery = forwardRef(function Gallery(props, ref) {
     }
 
     const setDrop = () => {
-        if (dropData.length === 0) {
+        if (gallery.data.myDropCnt === 0) {
             fbx.load("../../static/3d/podium/Podium.fbx", (obj) => {
                 obj.scale.multiplyScalar(0.3);
                 obj.position.set(0, 0, 0.8);
@@ -257,8 +169,9 @@ const Gallery = forwardRef(function Gallery(props, ref) {
                 scene.add(obj);
             });
         } else {
-            for (let i = 0; i < dropData.length; i++) {
+            for (let i = 0; i < gallery.data.myDropCnt; i++) {
                 dropLength = i;
+                console.log(dropData[i]);
                 if (dropData[i].url) {
                     // 포디움
                     fbx.load("../../static/3d/podium/Podium.fbx", (obj) => {
@@ -281,7 +194,7 @@ const Gallery = forwardRef(function Gallery(props, ref) {
 
                     // 드롭
                     fbx.load(dropData[i].url, (obj) => {
-                        obj.scale.set(0.05, 0.05, 0.05);
+                        obj.scale.multiplyScalar(0.05);
                         obj.position.set(i * 2.5, -0.8, 0);
                         obj.traverse(function (child) {
                             if (child.isMesh) {
@@ -326,11 +239,12 @@ const Gallery = forwardRef(function Gallery(props, ref) {
     }
 
     function render() {
-        // console.log(dropLength);
         // scene.getObjectByName(dropLength);
         for (let i = 0; i <= dropLength; i++) {
             if (scene.getObjectByName("drop" + i)) scene.getObjectByName("drop" + i).rotation.y += 0.01;
         }
+
+        // animate();
 
         requestAnimationFrame(render);
         renderer.render(scene, camera);
@@ -341,7 +255,7 @@ const Gallery = forwardRef(function Gallery(props, ref) {
         setSpace();
         setDrop();
         render();
-    }, []);
+    }, [gallery.data.myDropCnt]);
 
     return (
         <>

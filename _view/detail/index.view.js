@@ -7,18 +7,16 @@ import { Avatar, Button } from "antd";
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
 import DK_template_GNB from "../../_lib/template/gnb";
+import AlarmTemplate from "../../_lib/template/alarm";
 
 import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
-import { MapControls } from "three/addons/controls/MapControls.js";
-
-import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { ArcballControls } from "three/addons/controls/ArcballControls.js";
 
 const Home = observer((props) => {
     const router = useRouter();
     const { store } = props;
-    const { drop, common } = store;
+    const { drop, common, auth } = store;
 
     // const [count, setCount] = useState(1024);
     const [more, setMore] = useState(false);
@@ -54,7 +52,6 @@ const Home = observer((props) => {
 
     //------------------------------------------------- Router isReady
     useEffect(() => {
-        console.log(router.pathname);
         if (router.isReady && router.pathname == "/detail/[seq]") {
             setMore(false);
             initLoad({
@@ -116,7 +113,6 @@ const Home = observer((props) => {
         fbx.load("../../static/3d/1/Popup.fbx", (obj) => {
             obj.scale.multiplyScalar(0.06);
             obj.position.y = -0.35;
-            console.log(obj);
             obj.traverse(function (child) {
                 if (child.isMesh) {
                     let colorMap,
@@ -147,10 +143,6 @@ const Home = observer((props) => {
             // mixers.push(mixer);
 
             scene.add(obj);
-
-            let box3 = new THREE.Box3().setFromObject(obj);
-            let size = new THREE.Vector3();
-            console.log(box3, box3.getSize(size));
         });
     };
 
@@ -178,7 +170,7 @@ const Home = observer((props) => {
                 className="dds button none gallery badge"
                 icon={<DDS.icons.myGalleryBlackOn />}
                 onClick={() => {
-                    router.push("/userGallery?memberSeq=20");
+                    router.push("/userGallery?memberSeq=" + auth.loginResult.seq);
                 }}
             />
         ),
@@ -221,7 +213,7 @@ const Home = observer((props) => {
         if (drop.data.detail.dropOwnFlag) {
             // ar 이동
         } else {
-            ref.current.open();
+            common.messageApi.open(messageData);
         }
     };
 
@@ -234,60 +226,60 @@ const Home = observer((props) => {
                     <div className="detail" style={{ height: more ? "calc(100vh - 50px)" : "0" }}>
                         <h6 className="dropNo">Drop #{drop.data.detail.dropRound}</h6>
                         <div className="wrapper">
-                            <div>
-                                <div className="info">
-                                    <div className="artist">
-                                        <span className="name">{drop.data.detail.artistName}</span>
-                                        {more && <DDS.icons.circleChevronDown className="dds icons" onClick={moreClick} />}
-                                    </div>
-                                    <h4 className="artName">{drop.data.detail.artName}</h4>
-                                    <div className="desc" style={{ height }} ref={nameInput}>
-                                        {drop.data.detail.artDescription}
-                                    </div>
-                                    {!more && (
-                                        <div className="more" onClick={moreClick}>
-                                            MORE INFO
-                                            <DDS.icons.angleRight className="dds icons small" style={{ marginLeft: "8px" }} />
-                                        </div>
-                                    )}
+                            {/* <div> */}
+                            <div className="info">
+                                <div className="artist">
+                                    <span className="name">{drop.data.detail.artistName}</span>
+                                    {more && <DDS.icons.circleChevronDown className="dds icons" onClick={moreClick} />}
                                 </div>
-                                <ul className={`iconWrapper ${more ? "more" : ""}`}>
-                                    <li className="profileWrapper">
-                                        {/* 작가 프로필 사진 */}
-                                        <DDS.profile.default icon={<UserOutlined />} src="https://picsum.photos/id/237/200/300" />
-                                        <DDS.icons.circlePlusFill />
-                                    </li>
-                                    <li className="likeWrapper">
-                                        {/* 좋아요 */}
-                                        {like ? <DDS.icons.heartFill onClick={likeClick} /> : <DDS.icons.heart onClick={likeClick} />}
-                                        <p>123</p>
-                                    </li>
-                                    <li className="ownerWrapper">
-                                        {/* owner 수 */}
-                                        <DDS.icons.userGroup />
-                                        {addComma(`${drop.data.detail.ownerCnt}`)}
-                                    </li>
-                                    <li>
-                                        {/* 채팅 */}
-                                        <DDS.icons.chat />
-                                    </li>
-                                    <li>
-                                        {/* 매거진 */}
-                                        <DDS.icons.bookFilled
-                                            onClick={() => {
-                                                router.push(`/magazine/?keyword=${drop.data.detail.artistName}`);
-                                            }}
-                                        />
-                                    </li>
-                                </ul>
+                                <h4 className="artName">{drop.data.detail.artName}</h4>
+                                <div className="desc" style={{ height }} ref={nameInput}>
+                                    {drop.data.detail.artDescription}
+                                </div>
+                                {!more && (
+                                    <div className="more" onClick={moreClick}>
+                                        MORE INFO
+                                        <DDS.icons.angleRight className="dds icons small" style={{ marginLeft: "8px" }} />
+                                    </div>
+                                )}
                             </div>
-                            <DDS.message ref={ref} {...messageData} />
+                            <ul className={`iconWrapper ${more ? "more" : ""}`}>
+                                <li className="profileWrapper">
+                                    {/* 작가 프로필 사진 */}
+                                    <DDS.profile.default icon={<UserOutlined />} src="https://picsum.photos/id/237/200/300" />
+                                    <DDS.icons.circlePlusFill />
+                                </li>
+                                <li className="likeWrapper">
+                                    {/* 좋아요 */}
+                                    {like ? <DDS.icons.heartFill onClick={likeClick} /> : <DDS.icons.heart onClick={likeClick} />}
+                                    <p>123</p>
+                                </li>
+                                <li className="ownerWrapper">
+                                    {/* owner 수 */}
+                                    <DDS.icons.userGroup />
+                                    {addComma(`${drop.data.detail.ownerCnt}`)}
+                                </li>
+                                <li>
+                                    {/* 채팅 */}
+                                    <DDS.icons.chat />
+                                </li>
+                                <li>
+                                    {/* 매거진 */}
+                                    <DDS.icons.bookFilled
+                                        onClick={() => {
+                                            router.push(`/magazine/?keyword=${drop.data.detail.artistName}`);
+                                        }}
+                                    />
+                                </li>
+                            </ul>
+                            {/* </div> */}
                             <DDS.button.default className="dds button primary large ar" onClick={arClick} icon={<DDS.icons.ar />}>
                                 View in AR
                             </DDS.button.default>
                         </div>
                     </div>
                     <canvas id="space"></canvas>
+                    <AlarmTemplate.default store={props.store} />
                 </DDS.layout.content>
             </DDS.layout.container>
         </>

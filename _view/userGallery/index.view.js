@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Router, { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
@@ -17,8 +17,9 @@ import AlarmTemplate from "../../_lib/template/alarm";
 const Home = observer((props) => {
     const router = useRouter();
     const { store } = props;
-    const { common, lang, gallery } = store;
+    const { common, lang, gallery, auth } = store;
     const [open, setOpen] = useState(false);
+    const ref = useRef(null);
 
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {
@@ -41,15 +42,17 @@ const Home = observer((props) => {
     //------------------------------------------------- Router isReady
 
     const headerRight = [
-        () => (
-            <DDS.button.default
-                className="dds button none gallery badge"
-                icon={<DDS.icons.myGalleryBlackOn />}
-                onClick={() => {
-                    router.push("/userGallery?memberSeq=20");
-                }}
-            />
-        ),
+        () =>
+            !gallery.data.ownFlag && (
+                <DDS.button.default
+                    className="dds button none gallery badge"
+                    icon={<DDS.icons.myGalleryBlackOn />}
+                    onClick={() => {
+                        router.push("/userGallery?memberSeq=" + auth.loginResult.seq);
+                    }}
+                />
+                // <div></div>
+            ),
         () => (
             <DDS.button.default
                 className="dds button none"
@@ -103,55 +106,68 @@ const Home = observer((props) => {
                 <DK_template_GNB.default store={store} />
                 <DDS.layout.content>
                     <div className="userInfo">
-                        <div className={`profile ${!gallery.data.introduction && "center"}`}>
+                        <div className={`profile ${ref.current?.offsetHeight < 69 ? "center" : ""}`}>
                             <div>
-                                <Badge count={<DDS_Icons.pen />} className="profileMod">
+                                {gallery.data.ownFlag ? (
+                                    <Badge count={<DDS_Icons.pen />} className="profileMod">
+                                        <Avatar
+                                            size={64}
+                                            src={<img src={"https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fshopping.phinf%2Fmain_4037083%2F40370838619.20230607071158.jpg%22&type=nf216_312&service=navermain"} alt="avatar" />}
+                                            // src={<img src={gallery.data.profileImage} alt="avatar" />}
+                                        />{" "}
+                                    </Badge>
+                                ) : (
                                     <Avatar
                                         size={64}
                                         src={<img src={"https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fshopping.phinf%2Fmain_4037083%2F40370838619.20230607071158.jpg%22&type=nf216_312&service=navermain"} alt="avatar" />}
                                         // src={<img src={gallery.data.profileImage} alt="avatar" />}
                                     />
-                                </Badge>
+                                )}
                             </div>
-                            <div>
+                            <div ref={ref}>
                                 <div className="nickname">
                                     <p>{gallery.data.nickname}</p>
-                                    <DDS.chips.default className="third">ARTIST</DDS.chips.default>
+                                    {gallery.data.artistFlag && <DDS.chips.default className="third">ARTIST</DDS.chips.default>}
                                 </div>
                                 <h4>{gallery.data.introduction}</h4>
-                                <div className="point">
-                                    <DDS_Icons.point
-                                        onClick={() => {
-                                            common.uiChange("pointOpen", true);
-                                        }}
-                                    />
-                                    {gallery.data.pointBalance}
-                                    <DDS_Icons.userPlus className="inviteCount" />
-                                    {gallery.data.inviteCnt}
-                                </div>
+
+                                {gallery.data.ownFlag && (
+                                    <div className="point">
+                                        <DDS_Icons.point
+                                            onClick={() => {
+                                                common.uiChange("pointOpen", true);
+                                            }}
+                                        />
+                                        {gallery.data.pointBalance}
+                                        <DDS_Icons.userPlus className="inviteCount" />
+                                        {gallery.data.inviteCnt}
+                                    </div>
+                                )}
                             </div>
                         </div>
-                        <div className="ddsBtnWrapper">
-                            <DDS.button.default
-                                className="dds button primary"
-                                icon={<DDS.icons.paperPlane />}
-                                onClick={() => {
-                                    setOpen(true);
-                                }}
-                            >
-                                invite
-                            </DDS.button.default>
-                            <DDS.button.default
-                                className="dds button secondary"
-                                icon={<DDS.icons.cube />}
-                                onClick={(e) => {
-                                    router.push("/random");
-                                }}
-                            >
-                                Lucky Box
-                            </DDS.button.default>
-                        </div>
-                        <Link href="dds">
+                        {gallery.data.ownFlag && (
+                            <div className="ddsBtnWrapper">
+                                <DDS.button.default
+                                    className="dds button primary"
+                                    icon={<DDS.icons.paperPlane />}
+                                    onClick={() => {
+                                        setOpen(true);
+                                    }}
+                                >
+                                    invite
+                                </DDS.button.default>
+                                <DDS.button.default
+                                    className="dds button secondary"
+                                    icon={<DDS.icons.cube />}
+                                    onClick={(e) => {
+                                        router.push("/random");
+                                    }}
+                                >
+                                    Lucky Box
+                                </DDS.button.default>
+                            </div>
+                        )}
+                        <Link href="/drop">
                             <div className="collection">
                                 <ul className="wrapper">
                                     <li className="title">
@@ -168,43 +184,7 @@ const Home = observer((props) => {
                             </div>
                         </Link>
                     </div>
-                    {/* 마이갤러리 */}
-                    <div className="btn">
-                        {/* <div className="invite" onClick={() => setOpen(true)}>
-                            <div className="iconWrapper">
-                                <DDS_Icons.envelopeOpenHeart />
-                            </div>
-                            <div className="text">
-                                <h5>친구도 나도 둘 다 받는 혜택!</h5>
-                                <h6>친구를 초대하고 포인트를 획득해보세요!</h6>
-                            </div>
-                            <div className="greyAngle">
-                                <DDS_Icons.envelopeOpenHeart />
-                            </div>
-                        </div> */}
-                        {/* 작가갤러리 */}
-                        <div className="wrapper">
-                            {/* <div>
-                                <DDS_Icons.bookFilled
-                                    onClick={() => {
-                                        router.push("magazine");
-                                    }}
-                                />
-                            </div> */}
-                            <div>
-                                <DDS_Icons.chat
-                                    onClick={() => {
-                                        common.uiChange("chatOpen", true);
-                                    }}
-                                />
-                            </div>
-                            {/* <div>
-                                <DDS_Icons.heart className="like" />
-                                <h6>14K</h6>
-                            </div> */}
-                        </div>
-                    </div>
-                    <Gallery {...props} />
+                    {gallery.data.galleryLink && <Gallery store={props.store} />}
                     <DDS.modal.bottom {...modalData} />
                     <ChatTemplate.open store={props.store} />
                     <PointTemplate.default store={props.store} />
