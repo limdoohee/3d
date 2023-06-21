@@ -98,20 +98,20 @@
 }
 /* @ckeditor/ckeditor5-image/theme/image.css */
 .ck-content .image {
-    display: table;
+    /* display: table;
     clear: both;
-    text-align: center;
+    text-align: center; */
     margin: 0.9em auto;
-    min-width: 50px;
-    width: 100% !important;
+    /* min-width: 50px;
+    width: 100% !important; */
 }
 .ck-content img {
-    display: table;
+    /* display: table;
     clear: both;
     text-align: center;
-    margin: 0.9em auto;
+    margin: 0.9em auto; */
     min-width: 50px;
-    width: 100% !important;
+    width: 100%;
 }
 /* @ckeditor/ckeditor5-image/theme/image.css */
 .ck-content .image img {

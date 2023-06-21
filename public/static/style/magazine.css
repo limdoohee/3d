@@ -57,6 +57,7 @@
     height: 188.44px;
     margin: 0 0 8px 0;
     background-size: cover;
+    background-position: center;
 }
 .page-magazine .list li .category {
     font-weight: 400;

@@ -14,20 +14,20 @@ const Component = {
         common.messageApiLoad(messageApi);
 
         return (
-            <motion.div
-                initial={{ x: 50, opacity: 0, duration: 300 }}
-                animate={{ x: 0, opacity: 1, duration: 300 }}
-                exit={{ x: 50, opacity: 0, duration: 300 }}
-                transition={{
-                    type: "spring",
-                    stiffness: 260,
-                    damping: 20,
-                }}
+            <div
+                // initial={{ x: 50, opacity: 0, duration: 300 }}
+                // animate={{ x: 0, opacity: 1, duration: 300 }}
+                // exit={{ x: 50, opacity: 0, duration: 300 }}
+                // transition={{
+                //     type: "spring",
+                //     stiffness: 260,
+                //     damping: 20,
+                // }}
                 className={`dds container ${className}`}
             >
                 {contextHolder}
                 {children}
-            </motion.div>
+            </div>
         );
     },
     // /////////////////////////////////////////////////////////////////////////////////////// Back

@@ -9,8 +9,7 @@ import { useTranslation } from "react-i18next";
 import { Drawer } from "antd";
 //------------------------------------------------------------------------------- Antd
 //------------------------------------------------------------------------------- Component
-import DDS_Icons from "../../_lib/component/icons";
-import DDS_Logos from "../../_lib/component/logos";
+import DDS from "../../_lib/component/dds";
 import SignupDrawer from "../signup/terms.view";
 //------------------------------------------------------------------------------- Component
 
@@ -63,10 +62,10 @@ const Home = observer((props) => {
     }, [showTranslate]);
 
     const login_data = [
-        { id: "1", login_title: t(`login.main.google`), signup_title: t(`login.main.signup.google`), className: "google", img: <DDS_Icons.google /> },
-        { id: "2", login_title: t(`login.main.apple`), signup_title: t(`login.main.signup.apple`), className: "apple", img: <DDS_Icons.apple /> },
-        { id: "3", login_title: t(`login.main.naver`), signup_title: t(`login.main.signup.naver`), className: "naver", img: <DDS_Icons.naver /> },
-        { id: "4", login_title: t(`login.main.kakao`), signup_title: t(`login.main.signup.kakao`), className: "kakao", img: <DDS_Icons.kakao /> },
+        { id: "1", login_title: t(`login.main.google`), signup_title: t(`login.main.signup.google`), className: "google", img: <DDS.icons.google /> },
+        { id: "2", login_title: t(`login.main.apple`), signup_title: t(`login.main.signup.apple`), className: "apple", img: <DDS.icons.apple /> },
+        { id: "3", login_title: t(`login.main.naver`), signup_title: t(`login.main.signup.naver`), className: "naver", img: <DDS.icons.naver /> },
+        { id: "4", login_title: t(`login.main.kakao`), signup_title: t(`login.main.signup.kakao`), className: "kakao", img: <DDS.icons.kakao /> },
     ];
 
     useEffect(() => {
@@ -93,13 +92,13 @@ const Home = observer((props) => {
             <div className="login wrap">
                 <div className="inner">
                     <h1>
-                        <DDS_Logos.default />
+                        <DDS.logos.default />
                     </h1>
                     <p id="login-desc" dangerouslySetInnerHTML={{ __html: t(`login.main.title`) }} />
 
                     <Drawer className="modal agreement" placement={"right"} closable={false} onClose={onClose} open={open} width={1500}>
                         <div>
-                            <DDS_Icons.angleLeft
+                            <DDS.icons.angleLeft
                                 onClick={() => {
                                     setOpen(false);
                                 }}
@@ -199,7 +198,7 @@ const Home = observer((props) => {
                                     }}
                                 >
                                     {l.lang}
-                                    {isCategorySelect[idx] && <DDS_Icons.check className="checked login" />}
+                                    {isCategorySelect[idx] && <DDS.icons.check className="checked login" />}
                                 </div>
                             );
                         })}

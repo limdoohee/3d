@@ -41,7 +41,7 @@ class Store {
         },
         selected: 21,
         detail: {},
-        dropList: { dropList: [] },
+        dropList: { dropList: [], totalDropCnt: 0, myDropCnt: 0 },
     };
 
     constructor(store) {
@@ -85,7 +85,9 @@ class Store {
         await Api.get(`/dks-api/v2/drop_list`, params, this.store.auth.loginResult.loginToken)
             .then((response) => response.json())
             .then((data) => {
-                this.data.dropList = data.data;
+                if (data.data) {
+                    this.data.dropList = data.data;
+                }
                 callback && callback(data.data ? data.data : data);
             });
     }

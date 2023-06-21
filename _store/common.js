@@ -51,7 +51,6 @@ class Store {
 
     uiChange(key, value) {
         this.ui[key] = value;
-        console.log(key, value);
     }
 
     numberFormat(val) {
@@ -101,6 +100,8 @@ class Store {
         // localStorage 기본 언어 설정
         localStorage.getItem("lang") && this.store.lang.changeLanguage(localStorage.getItem("lang"));
         this.pageInit = true;
+        this.debug("페이지 Init 완료");
+        this.debug(this.pageInit);
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회

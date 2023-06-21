@@ -7,9 +7,17 @@ import "@babel/polyfill";
 import { appWithTranslation } from "next-i18next";
 import { AnimatePresence } from "framer-motion";
 //------------------------------------------------------------------------------- Module
+//------------------------------------------------------------------------------- Store
+import Store from "../_store/store";
+const store = new Store();
+//------------------------------------------------------------------------------- Store
+//------------------------------------------------------------------------------- CSS
 import "../public/static/style/global.css";
+//------------------------------------------------------------------------------- CSS
+//------------------------------------------------------------------------------- ANTD
 import { ConfigProvider } from "antd";
 import theme from "../_lib/theme";
+//------------------------------------------------------------------------------- ANTD
 
 const MyApp = (props) => {
     const { Component, pageProps, router } = props;
@@ -33,7 +41,7 @@ const MyApp = (props) => {
             </Head>
             <ConfigProvider theme={theme}>
                 <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
-                    <Component {...pageProps} key={router.asPath} />
+                    <Component {...pageProps} key={router.asPath} store={store} />
                 </AnimatePresence>
             </ConfigProvider>
         </>

@@ -28,6 +28,7 @@ class Store {
 
     setCheckLogin(value) {
         this.loginResult = value;
+        this.store.common.debug(value);
     }
 
     login(type, path) {

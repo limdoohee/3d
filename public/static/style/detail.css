@@ -41,7 +41,7 @@
 
 .detail .wrapper > div {
     display: flex;
-    align-items: end;
+    align-items: flex-end;
 }
 
 .detail .hold {
