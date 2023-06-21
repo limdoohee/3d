@@ -12,25 +12,25 @@ configure({
 class Store {
     data = {
         curr: {
-            // dropSeq: 2,
+            // dropSeq: 3,
             // status: "processing",
-            // startAt: "2023-06-12 14:23:31",
-            // endAt: "2023-06-20 11:25:55",
-            // artSeq: 2,
+            // startAt: "2023-06-21 11:23:31",
+            // endAt: "2023-06-21 13:44:59",
+            // artSeq: 3,
             // artName: "작품2",
             // artistName: "dev_test",
             // amount: 2000,
             // contentUrl: "https://asset.dropkitchen.xyz/contents/202303_prod/YeonYeoIn_Daily_Attendance_Check_00.mp4",
             // thumbnailUrl: "https://asset.dropkitchen.xyz/contents/202304_dev/20230405151809635_dk.webp",
             // ownerCnt: 1,
-            // dropOwnFlag: null,
+            // dropOwnFlag: false,
         },
         next: {
-            // dropSeq: 3,
+            // dropSeq: 1,
             // status: "ready",
-            // startAt: "2023-06-20 11:25:56",
-            // endAt: "2023-06-24 11:25:56",
-            // artSeq: 3,
+            // startAt: "2023-06-21 13:45:00",
+            // endAt: "2023-06-23 11:25:56",
+            // artSeq: 2,
             // artName: "작품3",
             // artistName: "dev_test",
             // amount: 2000,
@@ -39,7 +39,6 @@ class Store {
             // ownerCnt: 0,
             // dropOwnFlag: null,
         },
-        selected: 21,
         detail: {},
     };
 
@@ -59,7 +58,7 @@ class Store {
     }
 
     async getDetail(params, callback) {
-        await Api.get(`/dks-api/v2/drop_detail`, params, "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMCIsImlhdCI6MTY4NjE5NzIzNH0.LyXlQGghMW2WQM0CA0TZTdnHRNjjzWXX9t2uu_IPSKE")
+        await Api.get(`/dks-api/v2/drop_detail`, params, this.store.auth.loginResult.loginToken)
             .then((response) => response.json())
             .then((data) => {
                 this.data.detail = data.data.drop;
@@ -68,7 +67,15 @@ class Store {
     }
 
     async updateLike(params, callback) {
-        await Api.post(`/dks-api/v2/like_art`, params, "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMCIsImlhdCI6MTY4NjE5NzIzNH0.LyXlQGghMW2WQM0CA0TZTdnHRNjjzWXX9t2uu_IPSKE")
+        await Api.post(`/dks-api/v2/like_art`, params, this.store.auth.loginResult.loginToken)
+            .then((response) => response.json())
+            .then((data) => {
+                callback && callback(data.data ? data.data : data);
+            });
+    }
+
+    async dropArt(params, callback) {
+        await Api.post(`/dks-api/v2/drop_art`, params, this.store.auth.loginResult.loginToken)
             .then((response) => response.json())
             .then((data) => {
                 callback && callback(data.data ? data.data : data);
@@ -76,7 +83,7 @@ class Store {
     }
 
     dataChange(key, value, callback) {
-        this.data[key] = value;
+        this.data.curr[key] = value;
         callback && callback();
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회

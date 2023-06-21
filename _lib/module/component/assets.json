@@ -1,0 +1,20 @@
+[
+    {
+        "id": "1",
+        "url": "../../static/3d/1/LinearSpin.fbx",
+        "bumpMap": "../../static/3d/1/DSP_KominJeong.jpg",
+        "colorMap": "../../static/3d/1/D_KominJeong.jpg"
+    },
+    {
+        "id": "2",
+        "url": "../../static/3d/2/LinearSpin.fbx",
+        "bumpMap": "../../static/3d/2/DSP_DoCoin.png",
+        "colorMap": "../../static/3d/2/D_DoCoin.png",
+        "specularMap": "../../static/3d/2/SPC_DoCoin.png"
+    },
+    {
+        "id": "3",
+        "url": "../../static/3d/3/LinearSpin.fbx",
+        "colorMap": "../../static/3d/3/D_275C.png"
+    }
+]

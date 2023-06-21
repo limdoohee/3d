@@ -8,7 +8,7 @@ const Component = {
 
         return (
             <>
-                <Switch {...props} className={`dds switch ${className}`} />
+                <Switch {...props} className={`dds switch ${className}`} onChange={props.onChange} />
             </>
         );
     },

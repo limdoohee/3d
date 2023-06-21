@@ -13,13 +13,16 @@ import AlarmTemplate from "../../_lib/template/alarm";
 const Home = observer((props) => {
     const router = useRouter();
     const { store } = props;
-    const { drop, lang, common } = store;
+    const { drop, lang, common, auth } = store;
+    const [changeTime, setTime] = useState();
+    const [open, setOpen] = useState(false);
+    const [notice, setNotice] = useState(false);
+
+    /** 타이머 관련 변수 */
     let openTime;
     let time = new Date();
     const currTime = new Date();
     let diff;
-    const [changeTime, setTime] = useState();
-    const [open, setOpen] = useState(false);
 
     const Digit = ({ value, title }) => {
         const leftDigit = value >= 10 ? value.toString()[0] : "0";
@@ -37,7 +40,7 @@ const Home = observer((props) => {
 
     let timerContainer;
     const Timer = ({ expiryTimestamp }) => {
-        console.log("expiryTimestamp", expiryTimestamp);
+        // console.log("expiryTimestamp", expiryTimestamp);
         const { seconds, minutes, hours, days, totalSeconds } = useTimer({
             expiryTimestamp,
             onExpire: () => {
@@ -47,7 +50,7 @@ const Home = observer((props) => {
                 }
                 if (drop.data.curr.status === "ready") {
                     drop.dataChange("status", "processing");
-                    console.warn("opening");
+                    console.warn("processing");
                 }
             },
         });
@@ -67,7 +70,6 @@ const Home = observer((props) => {
 
     async function dropData() {
         try {
-            // You can await here
             await drop.getData();
         } catch (e) {
             console.error;
@@ -82,13 +84,9 @@ const Home = observer((props) => {
         dropData().then(() => {
             if (drop.data.curr.status === "ready") openTime = new Date(drop.data.curr.startAt);
             if (drop.data.curr.status === "processing") openTime = new Date(drop.data.curr.endAt);
-            if (drop.data.curr.status === "closed") openTime = new Date(drop.data.next.startAt);
-            console.log(openTime);
+            if (drop.data.curr.status === "closed") openTime = new Date(drop.data.next.endAt);
             diff = (openTime.getTime() - currTime.getTime()) / 1000;
             setTime(time.setSeconds(time.getSeconds() + diff));
-            // Timer.restart(time);
-            console.log(time, time.setSeconds(time.getSeconds() + diff));
-            // setChange(true);
         });
     }, [drop.data.curr.status]);
 
@@ -100,7 +98,7 @@ const Home = observer((props) => {
                 className="dds button none gallery badge"
                 icon={<DDS.icons.myGalleryBlackOn />}
                 onClick={() => {
-                    router.push("/userGallery");
+                    router.push("/userGallery?memberSeq=" + auth.loginResult.seq);
                 }}
             />
         ),
@@ -133,21 +131,39 @@ const Home = observer((props) => {
         ),
     ];
 
+    const messageData = {
+        className: "orgMessage",
+        content: "2023년 5월 24일에 마케팅 및 알림 받는데 동의했습니다.",
+    };
+
     const modalData = {
         open: open,
         setOpen: setOpen,
+        img: "../../static/img/bell.png",
         title: lang.t("main.modal.title"),
         context: lang.t("main.modal.context"),
         confirm: {
             label: lang.t("main.modal.confirm"),
             action: () => {
+                common.messageApi.open(messageData);
                 // Router.push("/gallery");
             },
         },
         cancel: {
             label: lang.t("main.modal.close"),
-            action: () => {},
+            action: () => {
+                setNotice(true);
+            },
         },
+    };
+
+    const checkHandle = (checked) => {
+        if (checked) {
+            common.messageApi.open(messageData);
+            setTimeout(() => {
+                setNotice(false);
+            }, 3000);
+        }
     };
 
     return (
@@ -165,7 +181,14 @@ const Home = observer((props) => {
                             </div>
                         )}
                     </div>
-                    <MisteryBox {...props} />
+                    {drop.data.curr.status && <MisteryBox {...props} />}
+
+                    {notice && (
+                        <div className="notice">
+                            <span>드롭키친 관련 알림 받기 동의</span>
+                            <DDS.switch.default onChange={checkHandle} />
+                        </div>
+                    )}
                     <DDS.modal.bottom {...modalData} />
                     <AlarmTemplate.default store={props.store} />
                 </DDS.layout.content>

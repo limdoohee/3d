@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
+import Router, { useRouter } from "next/router";
 
 import DDS from "../../component/dds";
 import * as THREE from "three";
@@ -8,8 +9,9 @@ import { MapControls } from "three/addons/controls/MapControls.js";
 import gsap from "gsap";
 
 const MisteryBox = observer((props) => {
+    const router = useRouter();
     const [open, setOpen] = useState(false);
-    const { drop, lang } = props.store;
+    const { drop, lang, common, auth } = props.store;
 
     let renderer1, renderer2;
     let camera;
@@ -20,6 +22,14 @@ const MisteryBox = observer((props) => {
     const loader = new FBXLoader();
     const [curr, setCurr] = useState(); //현재드롭
     const [next, setNext] = useState(); //다음드롭
+    let dropSeq;
+    let dropOwn;
+
+    const messageData = {
+        icon: <DDS.icons.circleExclamation />,
+        className: "arMessage",
+        content: "드롭을 준비중이에요, 잠시만 기다려주세요!",
+    };
 
     function setSpace() {
         const canvas = document.getElementById("space");
@@ -28,11 +38,9 @@ const MisteryBox = observer((props) => {
         renderer1.setSize(window.innerWidth, window.innerHeight);
         renderer1.shadowMap.enabled = true;
         renderer1.shadowMap.type = THREE.PCFSoftShadowMap;
-        // document.body.appendChild(renderer.domElement);
 
         camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
         camera.position.set(0, 4, 10);
-        // camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0.1, 100);
 
         const controls = new MapControls(camera, renderer1.domElement);
         // controls.enablePan = false;
@@ -103,6 +111,7 @@ const MisteryBox = observer((props) => {
 
             scene.add(object);
         });
+
         // event
         window.addEventListener("click", onTouchBox);
         // window.addEventListener("resize", onWindowResize);
@@ -123,12 +132,10 @@ const MisteryBox = observer((props) => {
         raycaster.setFromCamera(pointer, camera);
 
         const intersects = raycaster.intersectObjects(scene.children);
-        if (intersects.length > 0 && drop.data.curr.status === "processing") {
+        if (intersects.length > 0 && drop.data.curr.status !== "ready") {
             // parentName = intersects[0].object.parent.name;
             const shadow = scene.getObjectByName("shadow");
             const space = scene.getObjectByName("space");
-
-            // 데이터에 myDrop true 로 변경될 수 있도록 drop ID랑 mydrop:true 값 보내주기
 
             if (intersects[0].object.name === "Cover") {
                 gsap.to(intersects[0].object.position, {
@@ -136,13 +143,14 @@ const MisteryBox = observer((props) => {
                     ease: "power3.inOut",
                     duration: 1.2,
                 });
-                console.log(intersects[0].object.parent);
+
                 gsap.to(intersects[0].object.parent, { visible: false, duration: 0.5 });
                 gsap.to(intersects[0].object.parent.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
                 gsap.to(shadow.material, { opacity: 0, duration: 1 });
                 gsap.to(space, { receiveShadow: true, duration: 1, delay: 0.5 });
 
-                loader.load(`../../static/3d/${drop.data.curr.dropRound}/Popup.fbx`, (object) => {
+                dropSeq = drop.data.curr.status === "closed" ? drop.data.next.dropSeq : drop.data.curr.dropSeq;
+                loader.load(`../../static/3d/${dropSeq}/Popup.fbx`, (object) => {
                     setCurr(object);
                     object.scale.multiplyScalar(0.12);
                     object.position.y = 2;
@@ -163,11 +171,15 @@ const MisteryBox = observer((props) => {
 
                     scene.add(object);
                     setTimeout(() => {
-                        setOpen(true);
+                        drop.dropArt({ dropSeq }, (e) => {
+                            setOpen(true);
+                        });
                     }, 1000);
                     clock = new THREE.Clock();
                 });
             }
+        } else {
+            common.messageApi.open(messageData);
         }
     }
 
@@ -222,21 +234,6 @@ const MisteryBox = observer((props) => {
 
         // event
         window.addEventListener("click", onTouchBox);
-        // window.addEventListener("resize", onWindowResize);
-
-        // loader.load("../../static/3d/CuteBox.fbx", (object) => {
-        //     object.scale.set(0.006, 0.006, 0.006);
-        //     object.position.y = 0;
-        //     object.rotation.set(0.4, 0.5, 0);
-        //     object.traverse((child) => {
-        //         if (child instanceof THREE.Mesh) {
-        //             child.material.transparent = true;
-        //             child.castShadow = true;
-        //         }
-        //     });
-
-        //     scene2.add(object);
-        // });
     }
 
     function dropRender() {
@@ -252,90 +249,90 @@ const MisteryBox = observer((props) => {
     }, []);
 
     useEffect(() => {
-        console.log(drop.data.status);
-        // 다음 드롭
-        loader.load("../../static/3d/CuteBox.fbx", (object) => {
-            setNext(object);
-            object.scale.set(0.006, 0.006, 0.006);
-            object.position.y = 10;
-            object.rotation.set(0.4, 0.5, 0);
-            object.traverse((child) => {
-                if (child instanceof THREE.Mesh) {
-                    child.material.transparent = true;
-                    child.castShadow = true;
-                }
+        if (drop.data.curr.status) {
+            dropSeq = drop.data.curr.dropSeq;
+            // 다음 드롭
+            loader.load("../../static/3d/CuteBox.fbx", (object) => {
+                setNext(object);
+                object.scale.set(0.006, 0.006, 0.006);
+                object.position.y = 10;
+                object.rotation.set(0.4, 0.5, 0);
+                object.traverse((child) => {
+                    if (child instanceof THREE.Mesh) {
+                        child.material.transparent = true;
+                        child.castShadow = true;
+                    }
+                });
+
+                scene.add(object);
             });
+            if (drop.data.curr.status === "closed") {
+                // 현재 드롭 밑으로 떨어짐
+                gsap.to(curr.position, {
+                    y: -5,
+                    ease: "power3.inOut",
+                    duration: 3,
+                });
 
-            scene.add(object);
-        });
-        if (drop.data.status === "closed") {
-            // 현재 드롭 밑으로 떨어짐
-            gsap.to(curr.position, {
-                y: -5,
-                ease: "power3.inOut",
-                duration: 3,
-            });
-
-            // 다음 드롭 위에서 떨어짐
-            gsap.to(next.position, {
-                y: 3,
-                ease: "power3.inOut",
-                duration: 3,
-                delay: 1,
-            });
-
-            drop.dataChange("status", "next");
-        } else {
-            if (drop.data.myDrop) {
-                // 받은 드롭 파일
-                loader.load(drop.data.url, (object) => {
-                    setCurr(object);
-                    object.scale.set(0.15, 0.15, 0.15);
-                    object.position.y = 2;
-                    mixer = new THREE.AnimationMixer(object);
-                    const action = mixer.clipAction(object.animations[0]);
-                    action.clampWhenFinished = true;
-                    action.loop = THREE.LoopOnce;
-                    action.play();
-
-                    object.traverse((child) => {
-                        if (child instanceof THREE.Mesh) {
-                            child.castShadow = true;
-                        }
-                    });
-
-                    scene.add(object);
+                // 다음 드롭 위에서 떨어짐
+                gsap.to(next.position, {
+                    y: 3,
+                    ease: "power3.inOut",
+                    duration: 3,
+                    delay: 1,
                 });
             } else {
-                console.log("ddd");
-                // 미스터리 박스 파일
-                loader.load("../../static/3d/CuteBox.fbx", (object) => {
-                    setCurr(object);
-                    object.scale.set(0.006, 0.006, 0.006);
-                    object.position.y = 3;
-                    object.rotation.set(0.4, 0.5, 0);
-                    object.traverse((child) => {
-                        if (child instanceof THREE.Mesh) {
-                            child.material.transparent = true;
-                            child.castShadow = true;
-                        }
-                    });
+                if (drop.data.curr.dropOwnFlag) {
+                    // 받은 드롭 파일
+                    loader.load(`../../static/3d/${dropSeq}/Popup.fbx`, (object) => {
+                        setCurr(object);
+                        object.scale.multiplyScalar(0.12);
+                        object.position.y = 2;
+                        mixer = new THREE.AnimationMixer(object);
+                        const action = mixer.clipAction(object.animations[0]);
+                        action.clampWhenFinished = true;
+                        action.loop = THREE.LoopOnce;
+                        action.play();
 
-                    scene.add(object);
-                });
+                        object.traverse((child) => {
+                            if (child instanceof THREE.Mesh) {
+                                child.castShadow = true;
+                            }
+                        });
+
+                        scene.add(object);
+                    });
+                } else {
+                    // 미스터리 박스 파일
+                    loader.load("../../static/3d/CuteBox.fbx", (object) => {
+                        setCurr(object);
+                        object.scale.set(0.006, 0.006, 0.006);
+                        object.position.y = 3;
+                        object.rotation.set(0.4, 0.5, 0);
+                        object.traverse((child) => {
+                            if (child instanceof THREE.Mesh) {
+                                child.material.transparent = true;
+                                child.castShadow = true;
+                            }
+                        });
+
+                        scene.add(object);
+                    });
+                }
             }
         }
-    }, [drop.data.status]);
+    }, [drop.data.curr.status]);
 
     const modalData = {
         open: open,
         setOpen: setOpen,
+        img: "../../static/img/party-horn.png",
         title: lang.t("misteryBox.modal.title"),
         context: lang.t("misteryBox.modal.context"),
         confirm: {
             label: lang.t("misteryBox.modal.confirm"),
             action: () => {
-                // Router.push("/gallery");
+                router.push("/userGallery?memberSeq=" + auth.loginResult.seq);
             },
         },
         cancel: {
