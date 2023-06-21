@@ -167,7 +167,7 @@ const Home = observer((props) => {
                                 </DDS.button.default>
                             </div>
                         )}
-                        <Link href="dds">
+                        <Link href="/drop">
                             <div className="collection">
                                 <ul className="wrapper">
                                     <li className="title">
