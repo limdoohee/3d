@@ -18,7 +18,7 @@ const Home = (props) => {
     if (router.query.token) {
         auth.checkLoginJwt(router.query.token, async (e) => {
             common.debug(e);
-            localStorage.setItem("recentLogin", e.currentLoginSocial);
+            e.currentLoginSocial && localStorage.setItem("recentLogin", e.currentLoginSocial);
             if (e.result) {
                 await cookie.remove("loginToken", { path: "/" });
                 await cookie.save("loginToken", router.query.token, { path: "/" });

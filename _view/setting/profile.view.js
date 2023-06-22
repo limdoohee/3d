@@ -10,6 +10,7 @@ import { animateScroll as scroll, Events, scrollSpy, scroller, Element } from "r
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
 import DK_template_GNB from "../../_lib/template/gnb";
+import DK_template_profile from "../../_lib/template/profile";
 //------------------------------------------------------------------------------- Component
 //------------------------------------------------------------------------------- Module
 import Date_Module from "../../_lib/module/date";

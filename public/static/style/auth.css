@@ -3,7 +3,7 @@
     padding: 20px;
 }
 .auth.ui input {
-    height: 48px;
+    /* height: 48px; */
 }
 .auth.ui button:disabled {
     background-color: #f5f5f5 !important;
@@ -22,6 +22,9 @@
 }
 .auth.terms .agree-list .adm-checkbox.all {
     margin-bottom: 34px;
+}
+.auth.terms .agree-list h4 {
+    margin-bottom: 30px;
 }
 .auth.terms .agree-list .adm-checkbox.all .adm-checkbox-custom-icon {
     width: 24px;
@@ -69,6 +72,17 @@
     width: 16px;
     height: 16px;
     display: flex;
+}
+
+.auth.terms .agree-list .policy {
+    padding: 0 0 0 17px;
+    display: flex;
+    flex-direction: column;
+    gap: 26px;
+}
+.auth.terms .agree-list .policy li {
+    display: flex;
+    justify-content: space-between;
 }
 .auth.ui.nickname .agree-check {
     width: 100%;
@@ -182,6 +196,9 @@
 }
 /* -------------------------------------------------------------------------- auth nickname */
 /* -------------------------------------------------------------------------- auth mobile */
+.auth.ui.mobile > h2 {
+    margin: 0 0 30px 0;
+}
 .auth.ui.mobile .mobile-list {
     display: flex;
     flex-direction: column;

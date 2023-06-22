@@ -2,151 +2,60 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect, useRef } from "react";
 import { observer } from "mobx-react-lite";
-import "../../_lib/module/i18n";
-import { useTranslation } from "react-i18next";
-//------------------------------------------------------------------------------- Antd
-import { Input } from "antd";
-//------------------------------------------------------------------------------- Antd
 //------------------------------------------------------------------------------- Component
 import Component from "../../_lib/component/button";
 import DDS_Icons from "../../_lib/component/icons";
+import DDS from "../../_lib/component/dds";
+import DK_template_profile from "../../_lib/template/profile";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
-    const { common, auth } = props.store;
+    const { store } = props;
     const router = useRouter();
-    const { t, i18n } = useTranslation();
+    const { common, auth, lang } = props.store;
 
     //------------------------------------------------- Init Load
-    const initLoad = ({ callback }) => {
-        var params = { nickname: value };
-        auth.checkNickname(params, (e) => {
-            common.debug(e);
-            callback && callback(e);
-        });
-    };
+    const initLoad = ({ callback }) => {};
     //------------------------------------------------- Init Load
 
     //------------------------------------------------- Router isReady
     useEffect(() => {
         if (router.isReady && router.pathname == "/signup/nickname") {
+            setloginEmail(sessionStorage.getItem("loginEmail") ? sessionStorage.getItem("loginEmail") : null);
             initLoad({
-                callback: (e) => {
-                    const translateSet = sessionStorage.getItem("LangValue");
-                    if (translateSet) {
-                        i18n.changeLanguage(translateSet);
-                    }
-                },
+                callback: (e) => {},
             });
         }
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
 
-    const [byteCount, setByteCount] = useState(0);
-    const [value, setValue] = useState("");
-    const nicknameRef = useRef(null);
-    const [isNicknameAvailable, setIsNicknameAvailable] = useState(null);
-    const loginEmail = typeof window !== "undefined" ? sessionStorage.getItem("loginEmail") : null;
+    const [loginEmail, setloginEmail] = useState();
+    const [inputNickname, setinputNickname] = useState({ value: "", result: false });
 
-    const calculateByteCount = (text) => {
-        let byteCount = 0;
-        for (let i = 0; i < text.length; i++) {
-            byteCount += 1;
-        }
-        return byteCount;
-    };
-
-    useEffect(() => {
-        const count = calculateByteCount(value);
-        setByteCount(count);
-
-        sessionStorage.setItem("IsNicknameValue", value.toString());
-    }, [value]);
-
-    const handleNickName = (e) => {
-        var param = { nickname: value };
-
-        auth.checkNickname(param, (data) => {
-            common.debug(data);
-            if (data.result == "ok") {
-                console.log(value);
-                console.log(isNicknameAvailable);
-                setIsNicknameAvailable(true);
-            } else {
-                setIsNicknameAvailable(false);
-            }
-        });
-    };
-
-    // 특수문자 처리
-    // const inputNickname = (e) => {
-    //     const inputValue = e.target.value;
-    //     const alphanumericRegex = /^[a-zA-Z0-9]*$/;
-    //     if (alphanumericRegex.test(inputValue)) {
-    //         setValue(inputValue);
-    //     }
-    // };
-
-    const handleClear = () => {
-        setValue("");
-        nicknameRef.current.focus();
+    const nextStep = async () => {
+        await sessionStorage.setItem("signupNickname", inputNickname.value);
+        await router.push("/signup/mobile");
     };
 
     return (
         <>
-            <div className="auth ui nickname">
-                <h2>{t(`signup.nickname.title`)}</h2>
-                <ul className="nickname-list">
-                    <li>
-                        <label>{t(`signup.nickname.label1`)}</label>
-                        <Input type="text" disabled value={loginEmail} />
-                    </li>
-                    <li>
-                        <div>
-                            <label className={value !== "" && !isNicknameAvailable && "warning"}>{t(`signup.nickname.label2`)}</label>
-                            <span className="count">
-                                {value ? byteCount : 0} / <span>20</span>
-                            </span>
-                        </div>
-                        <div className="input-area">
-                            <Input
-                                ref={nicknameRef}
-                                type="text"
-                                placeholder={t(`signup.nickname.placeholder`)}
-                                onChange={(e) => {
-                                    setValue(e.target.value);
-                                }}
-                                onKeyUp={(e) => {
-                                    handleNickName(e);
-                                }}
-                                value={value}
-                                maxLength={20}
-                                minLength={3}
-                            />
-                            {value && <DDS_Icons.xmark_02 className="xmark-02" onClick={handleClear} />}
-                        </div>
-
-                        {value !== "" ? (
-                            value.length < 3 || !/^[a-zA-Z0-9]+$/.test(value) ? (
-                                <p className="help warning">{t(`signup.nickname.help-warning`)}</p>
-                            ) : (
-                                <p className={`help ${isNicknameAvailable ? "success" : "warning"}`}>{isNicknameAvailable ? t(`signup.nickname.help-success`) : t(`signup.nickname.help-already`)}</p>
-                            )
-                        ) : (
-                            ""
-                        )}
-                    </li>
-                </ul>
-                <Component.default
-                    className="agree-check"
-                    disabled={byteCount === 0 || byteCount <= 2 || !isNicknameAvailable}
-                    onClick={() => {
-                        router.push("/signup/mobile");
-                    }}
-                >
-                    {t(`common.check`)}
-                </Component.default>
-            </div>
+            <DDS.layout.back className={"fluid"} store={store}>
+                <div className="auth ui nickname">
+                    <h2>{lang.t(`signup.nickname.title`)}</h2>
+                    <ul className="nickname-list">
+                        <li>
+                            <label>{lang.t(`signup.nickname.label1`)}</label>
+                            <DDS.input.default disabled value={loginEmail} />
+                        </li>
+                        <li>
+                            <DK_template_profile.NickNameInput value={inputNickname} setvalue={setinputNickname} store={store} />
+                        </li>
+                    </ul>
+                    <DDS.button.default className="agree-check" disabled={inputNickname.result ? false : true} onClick={nextStep}>
+                        {lang.t(`common.check`)}
+                    </DDS.button.default>
+                </div>
+            </DDS.layout.back>
         </>
     );
 });

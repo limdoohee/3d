@@ -1,0 +1,56 @@
+.dk.profile.nickname-input {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+.dk.profile.nickname-input h4 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dk.profile.nickname-input h4 strong {
+    font-weight: 400;
+    font-size: 16px;
+    color: #1f1f1f;
+}
+.dk.profile.nickname-input h4 .kakao {
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    background: #feeb00;
+}
+.dk.profile.nickname-input h4 .kakao .icons {
+    width: 12px;
+    height: 12px;
+}
+.dk.profile.nickname-input h5 {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #969696;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.dk.profile.nickname-input h5 strong {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #969696;
+}
+.dk.profile.nickname-input h5 span {
+    color: var(--color-red);
+}
+.dk.profile.nickname-input:has(input:focus) h5 strong {
+    color: #404040;
+}
+
+.dk.profile.nickname-input p {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 100%;
+    letter-spacing: -0.02em;
+    color: #e02431;
+}

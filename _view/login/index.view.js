@@ -14,7 +14,7 @@ import SignupDrawer from "../signup/terms.view";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
-    const { auth } = props.store;
+    const { auth, lang } = props.store;
     const router = useRouter();
     const { t, i18n } = useTranslation();
     const [openLang, setOpenLang] = useState(false);
@@ -49,14 +49,16 @@ const Home = observer((props) => {
     };
 
     const handleToggle = (l, idx) => {
+        console.log(l.translate);
         setShowTranslate(l.show);
         setOpenLang(false);
         const newArr = Array(lang_selected.length).fill(false);
         newArr[idx] = true;
         setIsCategorySelect(newArr);
-        i18n.changeLanguage(l.translate);
+        lang.changeLanguage(l.translate);
         setHandleTranslate(l.translate);
     };
+
     useEffect(() => {
         sessionStorage.setItem("LangValue", handleTranslate);
     }, [showTranslate]);
@@ -178,33 +180,34 @@ const Home = observer((props) => {
                             <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230601112943266_dk.webp" />
                         </span>
                     </h3>
-                    <Drawer
-                        height={"auto"}
-                        className="login drawer"
-                        title={t(`login.main.language-select`)}
-                        placement="bottom"
-                        onClose={() => {
-                            setOpenLang(false);
-                        }}
-                        open={openLang}
-                        closeIcon={false}
-                    >
-                        {lang_selected.map((l, idx) => {
-                            return (
-                                <div
-                                    key={idx}
-                                    onClick={() => {
-                                        handleToggle(l, idx);
-                                    }}
-                                >
-                                    {l.lang}
-                                    {isCategorySelect[idx] && <DDS.icons.check className="checked login" />}
-                                </div>
-                            );
-                        })}
-                    </Drawer>
                 </div>
             </div>
+
+            <Drawer
+                height={"auto"}
+                className="login drawer"
+                title={t(`login.main.language-select`)}
+                placement="bottom"
+                onClose={() => {
+                    setOpenLang(false);
+                }}
+                open={openLang}
+                closeIcon={false}
+            >
+                {lang_selected.map((l, idx) => {
+                    return (
+                        <div
+                            key={idx}
+                            onClick={() => {
+                                handleToggle(l, idx);
+                            }}
+                        >
+                            {l.lang}
+                            {isCategorySelect[idx] && <DDS.icons.check className="checked login" />}
+                        </div>
+                    );
+                })}
+            </Drawer>
         </>
     );
 });

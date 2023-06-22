@@ -30,6 +30,17 @@ class Store {
 
     messageApi = null;
 
+    firebaseConfig = {
+        apiKey: "AIzaSyCwZtLeU5e0_Fs-Rv435wGJVYNUSJsaKvg",
+        authDomain: "dropkitchen-bedde.firebaseapp.com",
+        databaseURL: "https://dropkitchen-bedde-default-rtdb.firebaseio.com",
+        projectId: "dropkitchen-bedde",
+        storageBucket: "dropkitchen-bedde.appspot.com",
+        messagingSenderId: "998669151634",
+        appId: "1:998669151634:web:0d49a1e3107633eeb9a54b",
+        measurementId: "G-6065J3XYB0",
+    };
+
     constructor(store) {
         this.store = store;
         makeAutoObservable(this);

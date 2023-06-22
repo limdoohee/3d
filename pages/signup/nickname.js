@@ -6,21 +6,30 @@ import { observer } from "mobx-react-lite";
 import Store from "../../_store/store";
 const store = new Store();
 //------------------------------------------------------------------------------- Store
-//------------------------------------------------------------------------------- Component
-import Layout from "../../_lib/component/layout";
-//------------------------------------------------------------------------------- Component
+//------------------------------------------------------------------------------- Module
+import checkLogin from "../../_lib/module/checkLogin";
+//------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- View
 import View from "../../_view/signup/nickname.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {
-    return (
-        <>
-            <Layout.back store={store}>
-                <View props={props} store={store} />
-            </Layout.back>
-        </>
-    );
+    const { store } = props;
+    const { common, auth } = store;
+    // 로그인 정보 스토어에 담는 함수
+    auth.setCheckLogin(props);
+    // 로그인 처리 분기 / 로그인 토큰이 있는 경우에만 접근 가능 : "loginOnly"
+    // 로그인 토큰이 있을경우 보내는 페이지가 있는 경우 : okUrl 사용
+    checkLogin.loginResultCheck({ store: store, rule: "", result: props, okUrl: "/main" });
+    // 화면 출력
+    return <>{common.pageInit && <View props={props} store={store} />}</>;
 });
+
+//------------------------------------------------------------------------------- getServerSideProps
+export async function getServerSideProps(context) {
+    let datas = await checkLogin.default.ssr(context);
+    return { props: datas };
+}
+//------------------------------------------------------------------------------- getServerSideProps
 
 export default Home;

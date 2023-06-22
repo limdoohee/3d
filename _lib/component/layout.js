@@ -33,13 +33,18 @@ const Component = {
     // /////////////////////////////////////////////////////////////////////////////////////// Back
     back: (props) => {
         const router = useRouter();
+        const { children, store } = props;
+        const { common } = store;
+        const [messageApi, contextHolder] = message.useMessage();
+        common.messageApiLoad(messageApi);
 
         return (
             <div className="ui back">
                 <h2 onClick={() => (router.path === "signup/terms/" ? router.push("/") : router.back())}>
                     <DDS_Icons.angleLeft className="dds icons" />
                 </h2>
-                {props.children}
+                {contextHolder}
+                {children}
             </div>
         );
     },

@@ -28,7 +28,7 @@ const Home = observer((props) => {
                             <Link href="/dds/input">Input</Link>
                         </li>
                         <li>
-                            <Link href="/dds/input">Input</Link>
+                            <Link href="/dds/checkbox">checkbox</Link>
                         </li>
                         <li>
                             <Link href="/dds/tabs">Tabs</Link>
