@@ -48,7 +48,7 @@ const Home = observer((props) => {
         // ),
     ];
 
-    const [inputNickname, setinputNickname] = useState({ value: auth.loginResult.name, result: false });
+    const [inputNickname, setinputNickname] = useState({ value: auth.loginResult.nickname, result: false });
     const [introduction, setintroduction] = useState({ value: auth.loginResult.introduction, result: false });
     const [imageSeq, setimageSeq] = useState();
     const [submitCheck, setsubmitCheck] = useState(false);
@@ -62,7 +62,7 @@ const Home = observer((props) => {
         });
 
         var params = {};
-        inputNickname.value !== auth.loginResult.name && (params.nickname = inputNickname.value);
+        inputNickname.value !== auth.loginResult.nickname && (params.nickname = inputNickname.value);
         introduction.value !== auth.loginResult.introduction && (params.introduction = introduction.value);
         imageSeq && (params.profileImageSeq = imageSeq.imageSeq);
         console.log(params);
@@ -88,7 +88,7 @@ const Home = observer((props) => {
     };
 
     useEffect(() => {
-        if (imageSeq || inputNickname.value !== auth.loginResult.name || introduction.value !== auth.loginResult.introduction) {
+        if (imageSeq || inputNickname.value !== auth.loginResult.nickname || introduction.value !== auth.loginResult.introduction) {
             setsubmitCheck(true);
         } else {
             setsubmitCheck(false);

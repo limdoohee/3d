@@ -4,6 +4,7 @@ import { makeAutoObservable, toJS, configure } from "mobx";
 import Api from "../_lib/module/api";
 import i18n from "../_lib/module/i18n";
 import { useTranslation } from "react-i18next";
+import Cookies from "react-cookies";
 //------------------------------------------------------------------------------- Module
 configure({
     enforceActions: "never",
@@ -21,6 +22,7 @@ class Store {
     changeLanguage(lng) {
         this.i18n.changeLanguage(lng);
         localStorage.setItem("lang", lng);
+        Cookies.save("lang", lng);
     }
 
     check() {

@@ -53,7 +53,7 @@ const Component = {
                     </div>
                     <div className="personal">
                         <DDS_Profile.default badge={<DDS_Icons.badgeCrown className="cert" />} src="https://picsum.photos/id/237/200/300" />
-                        <strong>{auth.loginResult && auth.loginResult.name}</strong>
+                        <strong>{auth.loginResult && auth.loginResult.nickname}</strong>
                     </div>
                     <div className="point">
                         <span>내 포인트</span>
