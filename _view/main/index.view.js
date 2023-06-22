@@ -127,18 +127,7 @@ const Home = observer((props) => {
                 className="dds button none"
                 icon={<DDS.icons.shareNode />}
                 onClick={() => {
-                    // window.location.href = "native://share?contents=" + encodeURI(gallery.data.galleryLink);
-                    window.addEventListener("flutterInAppWebViewPlatformReady", function (event) {
-                        if (window.flutter_inappwebview.callHandler) {
-                            window.flutter_inappwebview.callHandler("myHandlerName", "native://share?contents=" + encodeURI(gallery.data.galleryLink)).then(function (result) {
-                                console.log(JSON.stringify(result));
-                            });
-                        } else {
-                            window.flutter_inappwebview._callHandler("myHandlerName", "native://share?contents=" + encodeURI(gallery.data.galleryLink)).then(function (result) {
-                                console.log(JSON.stringify(result));
-                            });
-                        }
-                    });
+                    window.location.href = "native://share?contents=" + encodeURI(gallery.data.galleryLink);
                 }}
             />
         ),
