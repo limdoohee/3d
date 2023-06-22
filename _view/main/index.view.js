@@ -97,7 +97,7 @@ const Home = observer((props) => {
 
     useEffect(() => {
         setOpen(true);
-        console.log(gallery.data.galleryLink);
+        // console.log(gallery.data.galleryLink);
     }, []);
 
     useEffect(() => {
@@ -130,11 +130,11 @@ const Home = observer((props) => {
                     // window.location.href = "native://share?contents=" + encodeURI(gallery.data.galleryLink);
                     window.addEventListener("flutterInAppWebViewPlatformReady", function (event) {
                         if (window.flutter_inappwebview.callHandler) {
-                            window.flutter_inappwebview.callHandler("myHandlerName").then(function (result) {
+                            window.flutter_inappwebview.callHandler("myHandlerName", "native://share?contents=" + encodeURI(gallery.data.galleryLink)).then(function (result) {
                                 console.log(JSON.stringify(result));
                             });
                         } else {
-                            window.flutter_inappwebview._callHandler("myHandlerName").then(function (result) {
+                            window.flutter_inappwebview._callHandler("myHandlerName", "native://share?contents=" + encodeURI(gallery.data.galleryLink)).then(function (result) {
                                 console.log(JSON.stringify(result));
                             });
                         }
