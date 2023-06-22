@@ -14,7 +14,11 @@ const Gallery = observer((props) => {
     const { gallery } = props.store;
 
     let dropData = gallery.data.collection;
-    dropData = gallery.data.myDropCnt === 0 ? [] : assets.filter((e) => dropData.map((e) => e.dropRound).includes(e.id));
+    const map = new Map();
+    assets.forEach((e) => map.set(e.id, e));
+    dropData.forEach((e) => map.set(e.dropRound, { ...map.get(e.dropRound), ...e }));
+    dropData = gallery.data.myDropCnt === 0 ? [] : Array.from(map.values()).filter((e) => e.dropSeq);
+    console.log(dropData);
     const { back, setBack } = props;
 
     const scene = new THREE.Scene();
@@ -59,12 +63,23 @@ const Gallery = observer((props) => {
         light.position.set(10, 7, 0);
         scene.add(new THREE.AmbientLight(0xffffff, 0.2));
 
-        const pointLight = new THREE.PointLight(0xffffff, 0.4, 100);
-        pointLight.position.set(7, 3, -5);
-        scene.add(pointLight);
-        const sphereSize = 1;
-        const pointLightHelper = new THREE.PointLightHelper(pointLight, sphereSize, "red");
-        scene.add(pointLightHelper);
+        const pointLight1 = new THREE.PointLight(0xffffff, 0.4, 100);
+        pointLight1.position.set(1, 3, -5);
+        scene.add(pointLight1);
+        // const pointLightHelper1 = new THREE.PointLightHelper(pointLight1, 1, "red");
+        // scene.add(pointLightHelper1);
+
+        const pointLight2 = new THREE.PointLight(0xffffff, 0.4, 100);
+        pointLight2.position.set(45, 3, -5);
+        scene.add(pointLight2);
+        // const pointLightHelper2 = new THREE.PointLightHelper(pointLight2, 1, "red");
+        // scene.add(pointLightHelper2);
+
+        const pointLight3 = new THREE.PointLight(0xffffff, 0.4, 100);
+        pointLight3.position.set(100, 3, -5);
+        scene.add(pointLight3);
+        // const pointLightHelper3 = new THREE.PointLightHelper(pointLight3, 1, "red");
+        // scene.add(pointLightHelper3);
 
         const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x333333, 0.6);
         scene.add(hemisphereLight);
@@ -82,22 +97,22 @@ const Gallery = observer((props) => {
 
         window.addEventListener("click", clickDrop);
 
-        controls.addEventListener("change", () => {
-            const x = controls.target.x;
-            if (x < minX || x > maxX) {
-                controls.target.setX(x < minX ? minX : maxX);
-                camera.position.setX(positionX);
-            }
+        // controls.addEventListener("change", () => {
+        //     const x = controls.target.x;
+        //     if (x < minX || x > maxX) {
+        //         controls.target.setX(x < minX ? minX : maxX);
+        //         camera.position.setX(positionX);
+        //     }
 
-            const z = controls.target.z;
-            if (z < minZ || z > maxZ) {
-                controls.target.setZ(z < minZ ? minZ : maxZ);
-                camera.position.setZ(positionZ);
-            }
+        //     const z = controls.target.z;
+        //     if (z < minZ || z > maxZ) {
+        //         controls.target.setZ(z < minZ ? minZ : maxZ);
+        //         camera.position.setZ(positionZ);
+        //     }
 
-            if (!isNaN(camera.position.x)) positionX = camera.position.x;
-            if (!isNaN(camera.position.z)) positionZ = camera.position.z;
-        });
+        //     if (!isNaN(camera.position.x)) positionX = camera.position.x;
+        //     if (!isNaN(camera.position.z)) positionZ = camera.position.z;
+        // });
 
         // 첫 로딩시, 화면 줌인
         setTimeout(() => {
@@ -127,15 +142,15 @@ const Gallery = observer((props) => {
         if (intersects.length > 0) {
             parent = intersects[0].object.parent;
 
-            // if (parent.name.includes("drop")) {
-            //     router.push("/detail/" + dropData[parent.name.replace(/[^0-9]/g, "")].id);
-            // }
+            if (parent.name.includes("drop")) {
+                window.location.href = "native://drop_detail?dropSeq=" + dropData.filter((e) => e.id === String(parseInt(parent.name.replace(/[^0-9]/g, "")) + 1))[0].dropSeq;
+            }
         }
     }
 
     function setSpace() {
-        const space = Math.ceil(dropData.length / 7) + 1;
-        for (let i = 1; i <= space; i++) {
+        // const space = Math.ceil(dropData.length / 7) + 1;
+        for (let i = 1; i <= 5; i++) {
             fbx.load("../../static/3d/gallery/gallery" + i + ".fbx", (obj) => {
                 obj.scale.multiplyScalar(0.3);
                 obj.position.z = 10;

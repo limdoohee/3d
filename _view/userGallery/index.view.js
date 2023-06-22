@@ -58,7 +58,7 @@ const Home = observer((props) => {
                 className="dds button none"
                 icon={<DDS.icons.shareNode />}
                 onClick={() => {
-                    common.uiChange("gnbOpen", true);
+                    window.location.href = "native://share?contents=" + encodeURI(gallery.data.galleryLink);
                 }}
             />
         ),
@@ -152,7 +152,7 @@ const Home = observer((props) => {
                                     className="dds button primary"
                                     icon={<DDS.icons.paperPlane />}
                                     onClick={() => {
-                                        setOpen(true);
+                                        window.location.href = "native://share?contents=" + encodeURI(auth.loginResult.inviteLink);
                                     }}
                                 >
                                     invite
