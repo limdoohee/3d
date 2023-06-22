@@ -61,9 +61,9 @@ const Home = observer((props) => {
                             }}
                         >
                             <div className="profile">
-                                <DDS.profile.default />
+                                <DDS.profile.default src={auth.loginResult.profileImage} />
                                 <div className="name">
-                                    <h4>{auth.loginResult.name}</h4>
+                                    <h4>{auth.loginResult.nickname}</h4>
                                     <p>내 정보 수정하기</p>
                                 </div>
                             </div>

@@ -63,10 +63,12 @@ class Store {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 체크로그인
     async checkLoginCSR({}, callback) {
-        await Api.post(`/dks-api/v2/check_login`, {}, this.store.auth.loginResult.loginToken)
+        const token = this.loginResult.loginToken;
+        await Api.post(`/dks-api/v2/check_login`, {}, this.loginResult.loginToken)
             .then((response) => response.json())
             .then((data) => {
                 this.loginResult = data.data;
+                this.loginResult.loginToken = token;
                 callback && callback(data.data);
             });
     }
