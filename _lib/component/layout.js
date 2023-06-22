@@ -1,4 +1,4 @@
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { motion } from "framer-motion";
 import { message } from "antd";
@@ -33,14 +33,22 @@ const Component = {
     // /////////////////////////////////////////////////////////////////////////////////////// Back
     back: (props) => {
         const router = useRouter();
-        const { children, store } = props;
+        const { children, store, back } = props;
         const { common } = store;
         const [messageApi, contextHolder] = message.useMessage();
         common.messageApiLoad(messageApi);
 
         return (
             <div className="ui back">
-                <h2 onClick={() => (router.path === "signup/terms/" ? router.push("/") : router.back())}>
+                <h2
+                    onClick={() => {
+                        if (back) {
+                            back();
+                        } else {
+                            Router.back();
+                        }
+                    }}
+                >
                     <DDS_Icons.angleLeft className="dds icons" />
                 </h2>
                 {contextHolder}

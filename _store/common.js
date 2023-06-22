@@ -3,6 +3,7 @@ import Router, { useRouter } from "next/router";
 import { makeAutoObservable, toJS, configure } from "mobx";
 import copy from "copy-to-clipboard";
 import { BrowserView, MobileView, isBrowser, isMobile, isAndroid } from "react-device-detect";
+import Cookies from "react-cookies";
 //------------------------------------------------------------------------------- Module//------------------------------------------------------------------------------- Module
 import Api from "../_lib/module/api";
 import i18n from "../_lib/module/i18n";
@@ -110,6 +111,7 @@ class Store {
     init() {
         // localStorage 기본 언어 설정
         localStorage.getItem("lang") && this.store.lang.changeLanguage(localStorage.getItem("lang"));
+        Cookies.save("lang", localStorage.getItem("lang"));
         this.pageInit = true;
         this.debug("페이지 Init 완료");
         this.debug(this.pageInit);

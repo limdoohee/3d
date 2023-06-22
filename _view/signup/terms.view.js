@@ -1,5 +1,5 @@
 ("use client");
-import { useRouter } from "next/router";
+import Router, { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Antd
@@ -60,7 +60,13 @@ const Home = observer((props) => {
 
     return (
         <>
-            <DDS.layout.back className={"fluid"} store={store}>
+            <DDS.layout.back
+                className={"fluid"}
+                store={store}
+                back={() => {
+                    Router.push("/login");
+                }}
+            >
                 <div className="auth ui terms">
                     <h2>{lang.t(`signup.terms.title`)}</h2>
                     <div className="agree-list ">
