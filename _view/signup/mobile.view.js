@@ -85,6 +85,7 @@ const Home = observer((props) => {
         auth.phoneVerify(params, (e) => {
             if (e.result == "ok") {
                 cookie.save("loginToken", e.loginToken, { path: "/" });
+                sessionStorage.setItem("signupComplete", true);
                 console.log("parmas", params);
                 router.push("/signup/success");
             } else {
