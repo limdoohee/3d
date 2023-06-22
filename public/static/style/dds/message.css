@@ -18,3 +18,16 @@
 .orgMessage {
     margin-bottom: 0;
 }
+
+.orgMessage .ant-message-custom-content {
+    display: flex;
+    align-items: center;
+}
+
+.orgMessage .ant-message-custom-content .dds.icons {
+    margin-right: 8px;
+}
+
+.orgMessage .ant-message-custom-content .dds.icons path {
+    fill: #fd6e24;
+}

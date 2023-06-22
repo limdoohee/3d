@@ -78,6 +78,18 @@ const Home = observer((props) => {
 
     useEffect(() => {
         setOpen(true);
+
+        window.addEventListener("flutterInAppWebViewPlatformReady", function (event) {
+            if (window.flutter_inappwebview.callHandler) {
+                window.flutter_inappwebview.callHandler("myHandlerName").then(function (result) {
+                    console.log(JSON.stringify(result));
+                });
+            } else {
+                window.flutter_inappwebview._callHandler("myHandlerName").then(function (result) {
+                    console.log(JSON.stringify(result));
+                });
+            }
+        });
     }, []);
 
     useEffect(() => {
@@ -95,7 +107,7 @@ const Home = observer((props) => {
     const headerRight = [
         () => (
             <DDS.button.default
-                className="dds button none gallery badge"
+                className={`dds button none gallery badge`}
                 icon={<DDS.icons.myGalleryBlackOn />}
                 onClick={() => {
                     router.push("/userGallery?memberSeq=" + auth.loginResult.seq);
@@ -107,7 +119,7 @@ const Home = observer((props) => {
                 className="dds button none"
                 icon={<DDS.icons.shareNode />}
                 onClick={() => {
-                    common.uiChange("gnbOpen", true);
+                    window.location.href = "native://share?contents=" + encodeURI(auth.loginResult.inviteLink);
                 }}
             />
         ),
@@ -177,7 +189,7 @@ const Home = observer((props) => {
                         <Timer expiryTimestamp={changeTime} />
                         {drop.data.curr.status === "processing" && (
                             <div className="owner">
-                                Owner <strong>{drop.data.curr.ownerCnt}</strong>
+                                Owner <strong>{common.numberFormat(drop.data.curr.ownerCnt)}</strong>
                             </div>
                         )}
                     </div>

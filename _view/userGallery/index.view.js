@@ -45,7 +45,7 @@ const Home = observer((props) => {
         () =>
             !gallery.data.ownFlag && (
                 <DDS.button.default
-                    className="dds button none gallery badge"
+                    className={`dds button none gallery ${gallery.data.unconfirmedLuckyBox ? "badge" : ""}`}
                     icon={<DDS.icons.myGalleryBlackOn />}
                     onClick={() => {
                         router.push("/userGallery?memberSeq=" + auth.loginResult.seq);
@@ -85,6 +85,7 @@ const Home = observer((props) => {
     const modalData = {
         open: open,
         setOpen: setOpen,
+        img: "../../static/img/invite.png",
         title: lang.t("gallery.modal.title"),
         context: lang.t("gallery.modal.context"),
         confirm: {

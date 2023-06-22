@@ -6,23 +6,36 @@ import { observer } from "mobx-react-lite";
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
 //------------------------------------------------------------------------------- Component
-import { message } from "antd";
-const Home = observer((props) => {
-    const [messageApi, contextHolder] = message.useMessage();
 
+const Home = observer((props) => {
+    const router = useRouter();
     const { store } = props;
-    const { common, lang, auth } = store;
-    const randomBox = 2;
+    const { common, lang, auth, gallery } = store;
     const [open, setOpen] = useState(false);
     const [amount, setAmount] = useState(1);
+    const [buyingAmount, setBuyingAmount] = useState(0);
     const [descDisabled, setDescDisabled] = useState(false);
     const [incrDisabled, setIncrDisabled] = useState(false);
     const [helper, setHelper] = useState(false);
-    const ref = useRef(null);
 
-    const addComma = (val) => {
-        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    //------------------------------------------------- Init Load
+    const initLoad = ({ initCheck, callback }) => {
+        gallery.getLuckyBox("", (e) => {
+            setBuyingAmount(gallery.luckyBox.length);
+            callback && callback(e);
+        });
     };
+    //------------------------------------------------- Init Load
+
+    //------------------------------------------------- Router isReady
+    useEffect(() => {
+        if (router.isReady && router.pathname == "/random") {
+            initLoad({
+                callback: (e) => {},
+            });
+        }
+    }, [router.isReady, router.asPath]);
+    //------------------------------------------------- Router isReady
 
     function decrementCount() {
         if (amount != 1) {
@@ -37,11 +50,11 @@ const Home = observer((props) => {
         }
     }
     function incrementCount() {
-        if ((amount + 1) * 1500 <= 6000) {
+        if ((amount + 1) * 1500 <= auth.loginResult.pointAmount) {
             setAmount(amount + 1);
             setDescDisabled(false);
             setIncrDisabled(false);
-            if (6000 <= (amount + 2) * 1500) {
+            if (auth.loginResult.pointAmount <= (amount + 2) * 1500) {
                 setIncrDisabled(true);
             }
         } else {
@@ -50,11 +63,8 @@ const Home = observer((props) => {
     }
 
     useEffect(() => {
-        decrementCount();
-        incrementCount();
         common.getBuildId();
-
-        common.debug(auth.loginResult);
+        console.log(auth.loginResult);
     }, []);
 
     const buyingModal = () => {
@@ -79,11 +89,11 @@ const Home = observer((props) => {
                 </li>
                 <li className="point">
                     <h5>{lang.t("random.modal.point")}</h5>
-                    <h6>{addComma(900)}P</h6>
+                    <h6>{common.numberFormat(auth.loginResult.pointAmount)}P</h6>
                 </li>
                 <li className="payment">
                     <h5>{lang.t("random.modal.payment")}</h5>
-                    <h6>{addComma(amount * 1500)}P</h6>
+                    <h6>{common.numberFormat(amount * 1500)}P</h6>
                 </li>
                 <li className={`helper ${helper ? "on" : ""}`}>
                     <DDS.icons.circleExclamation />
@@ -100,20 +110,23 @@ const Home = observer((props) => {
         context: buyingModal(),
         confirm: {
             label: lang.t("random.modal.confirm"),
+            close:
+                auth.loginResult.pointAmount < 1500 &&
+                (() => {
+                    setHelper(true);
+                }),
             action: () => {
-                // Router.push("/gallery");
-                buyingCallback();
+                auth.loginResult.pointAmount >= 1500 &&
+                    gallery.buyLuckyBox({ amount }, (e) => {
+                        setBuyingAmount(gallery.luckyBox.length + amount);
+                        e.id === "ok" && common.messageApi.open(messageData);
+                    });
             },
-            close: descDisabled && incrDisabled && (() => {}),
         },
         cancel: {
             label: lang.t("random.modal.close"),
             action: () => {},
         },
-    };
-
-    const buyingCallback = () => {
-        common.messageApi.open(messageData);
     };
 
     const messageData = {
@@ -123,34 +136,31 @@ const Home = observer((props) => {
 
     return (
         <DDS.layout.container store={store}>
-            {/* {contextHolder} */}
             <DK_template_header.default store={store} title={lang.t("random.title")} />
-            {/* Content */}
             <DDS.layout.content>
                 <div className="random">
                     <div className="voucher">
                         <img src={`../../static/img/randomBox.png`} alt="randomBox" />
-                        <span>{randomBox}</span>
-                        <div className="chips">N</div>
+                        <span>{buyingAmount}</span>
+                        {gallery.data.unconfirmedLuckyBox && <div className="chips">N</div>}
                     </div>
                     <div className="bottom">
                         <h2>{lang.t("random.desc")}</h2>
                         <div className="ddsBtnWrapper">
                             <DDS.button.default
-                                className={`dds button ${randomBox > 0 ? "secondary" : "primary"}`}
+                                className={`dds button ${gallery.luckyBox.length > 0 ? "secondary" : "primary"}`}
                                 onClick={() => {
                                     setOpen(true);
                                 }}
                             >
                                 구매하기
                             </DDS.button.default>
-                            {randomBox > 0 && <DDS.button.default className="dds button primary">랜덤박스 열기</DDS.button.default>}
+                            {gallery.luckyBox.length > 0 && <DDS.button.default className="dds button primary">랜덤박스 열기</DDS.button.default>}
                         </div>
                     </div>
                 </div>
             </DDS.layout.content>
             <DDS.modal.bottom {...modalData} />
-            {/* Content */}
         </DDS.layout.container>
     );
 });

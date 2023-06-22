@@ -24,6 +24,8 @@ class Store {
         // totalDropCnt: 2, //전체 드랍수
     };
 
+    luckyBox = {};
+
     constructor(store) {
         this.store = store;
         makeAutoObservable(this);
@@ -34,6 +36,23 @@ class Store {
             .then((response) => response.json())
             .then((data) => {
                 this.data = data.data;
+                callback && callback(data.data ? data.data : data);
+            });
+    }
+
+    async getLuckyBox(params, callback) {
+        await Api.get(`/dks-api/v2/lucky_box_list`, params, this.store.auth.loginResult.loginToken)
+            .then((response) => response.json())
+            .then((data) => {
+                this.luckyBox = data.data.luckybox;
+                callback && callback(data.data ? data.data : data);
+            });
+    }
+
+    async buyLuckyBox(params, callback) {
+        await Api.post(`/dks-api/v2/buy_lucky_box`, params, this.store.auth.loginResult.loginToken)
+            .then((response) => response.json())
+            .then((data) => {
                 callback && callback(data.data ? data.data : data);
             });
     }

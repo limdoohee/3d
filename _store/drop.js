@@ -14,8 +14,8 @@ class Store {
         curr: {
             // dropSeq: 3,
             // status: "processing",
-            // startAt: "2023-06-21 11:23:31",
-            // endAt: "2023-06-21 13:44:59",
+            // startAt: "2023-06-22 11:23:31",
+            // endAt: "2023-06-22 13:44:59",
             // artSeq: 3,
             // artName: "작품2",
             // artistName: "dev_test",
@@ -28,8 +28,8 @@ class Store {
         next: {
             // dropSeq: 1,
             // status: "ready",
-            // startAt: "2023-06-21 13:45:00",
-            // endAt: "2023-06-23 11:25:56",
+            // startAt: "2023-06-22 13:45:00",
+            // endAt: "2023-06-22 11:25:56",
             // artSeq: 2,
             // artName: "작품3",
             // artistName: "dev_test",

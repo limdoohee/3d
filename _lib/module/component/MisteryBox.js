@@ -26,7 +26,7 @@ const MisteryBox = observer((props) => {
 
     const messageData = {
         icon: <DDS.icons.circleExclamation />,
-        className: "arMessage",
+        className: "orgMessage",
         content: "드롭을 준비중이에요, 잠시만 기다려주세요!",
     };
 
@@ -136,6 +136,7 @@ const MisteryBox = observer((props) => {
             const shadow = scene.getObjectByName("shadow");
             const space = scene.getObjectByName("space");
 
+            console.log(intersects);
             if (intersects[0].object.name === "Cover") {
                 gsap.to(intersects[0].object.position, {
                     x: -3,
@@ -195,59 +196,6 @@ const MisteryBox = observer((props) => {
         renderer1.render(scene, camera);
     }
 
-    function setDrop() {
-        const canvas = document.getElementById("drop1");
-        renderer2 = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-        renderer2.setPixelRatio(window.devicePixelRatio);
-        renderer2.setSize(window.innerWidth, window.innerHeight);
-        renderer2.shadowMap.enabled = true;
-        renderer2.shadowMap.type = THREE.PCFSoftShadowMap;
-
-        camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
-        camera.position.set(0, 4, 10);
-
-        const controls = new MapControls(camera, renderer2.domElement);
-        // controls.enablePan = false;
-        // controls.enableZoom = false;
-        controls.target.set(0, 4, 0);
-        controls.update();
-
-        // light
-        let light = new THREE.DirectionalLight(0xffffff, 0.4);
-        light.position.set(0, 5, 1);
-        light.castShadow = true;
-        // light.shadow.mapSize.width = 1042;
-        // light.shadow.mapSize.height = 1042;
-        scene2.add(light);
-        // scene.add(new THREE.DirectionalLightHelper(light, 0.5, "red"));
-        // scene.add(new THREE.AmbientLight(0xffffff, 0.6));
-
-        const pointLight = new THREE.PointLight(0xffffff, 0.3, 100);
-        pointLight.position.set(0, 4, 3);
-        // pointLight.castShadow = true;
-        // scene.add(pointLight);
-        const sphereSize = 1;
-        // scene.add(new THREE.PointLightHelper(pointLight, sphereSize, "blue"));
-
-        const shadow = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), new THREE.ShadowMaterial({ opacity: 0.1 }));
-        shadow.position.y = 0.01;
-        shadow.material.transparent = true;
-        shadow.receiveShadow = true;
-        shadow.rotateX(-Math.PI / 2);
-        shadow.name = "shadow";
-        scene2.add(shadow);
-
-        // event
-        window.addEventListener("click", onTouchBox);
-    }
-
-    function dropRender() {
-        requestAnimationFrame(dropRender);
-        const delta = clock.getDelta();
-        if (mixer) mixer.update(delta);
-        renderer2.render(scene2, camera);
-    }
-
     useEffect(() => {
         setSpace();
         spaceRender();
@@ -259,18 +207,22 @@ const MisteryBox = observer((props) => {
             dropRound = drop.data.curr.dropRound;
 
             // 다음 드롭
-            loader.load("../../static/3d/CuteBox.fbx", (object) => {
+            loader.load("../../static/3d/dropBox/DROPBOX_LockedStatic.fbx", (object) => {
                 setNext(object);
-                object.scale.set(0.006, 0.006, 0.006);
-                object.position.y = 10;
-                object.rotation.set(0.4, 0.5, 0);
+                object.scale.multiplyScalar(0.25);
+                object.position.y = 12;
+                object.rotation.set(0.3, -0.5, 0);
                 object.traverse((child) => {
                     if (child instanceof THREE.Mesh) {
                         child.material.transparent = true;
                         child.castShadow = true;
+                        child.material = new THREE.MeshPhongMaterial({
+                            map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.next.dropRound + ".jpg"),
+                            transparent: true,
+                        });
                     }
                 });
-
+                object.name = "box";
                 scene.add(object);
             });
             if (drop.data.curr.status === "closed") {
@@ -311,18 +263,26 @@ const MisteryBox = observer((props) => {
                     });
                 } else {
                     // 미스터리 박스 파일
-                    loader.load("../../static/3d/CuteBox.fbx", (object) => {
+                    loader.load("../../static/3d/dropBox/DROPBOX_LockedStatic.fbx", (object) => {
                         setCurr(object);
-                        object.scale.set(0.006, 0.006, 0.006);
+                        object.scale.multiplyScalar(0.25);
                         object.position.y = 3;
-                        object.rotation.set(0.4, 0.5, 0);
+                        object.rotation.set(0.2, -0.5, 0);
                         object.traverse((child) => {
                             if (child instanceof THREE.Mesh) {
-                                child.material.transparent = true;
                                 child.castShadow = true;
+                                child.material = new THREE.MeshPhongMaterial({
+                                    map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropRound + ".jpg"),
+                                    transparent: true,
+                                });
+                                // child.rotation.set(0.3, 0.5, 0);
                             }
                         });
 
+                        // mixer = new THREE.AnimationMixer(object);
+                        // mixer.clipAction(object.animations[0]).play();
+
+                        object.name = "box";
                         scene.add(object);
                     });
                 }

@@ -25,10 +25,6 @@ const Home = observer((props) => {
     const nameInput = useRef();
     const ref = useRef(null);
 
-    const addComma = (val) => {
-        return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-    };
-
     const moreClick = () => {
         setMore(!more);
         more ? setHeight(0) : window.innerHeight - 260 < nameInput.current.scrollHeight ? setHeight(window.innerHeight - 260) : setHeight(nameInput.current.scrollHeight);
@@ -257,7 +253,7 @@ const Home = observer((props) => {
                                 <li className="ownerWrapper">
                                     {/* owner 수 */}
                                     <DDS.icons.userGroup />
-                                    {addComma(`${drop.data.detail.ownerCnt}`)}
+                                    {common.numberFormat(`${drop.data.detail.ownerCnt}`)}
                                 </li>
                                 <li>
                                     {/* 채팅 */}
