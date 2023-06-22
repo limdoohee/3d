@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useEffect } from "react";
+import Router, { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Store
 import Store from "../../_store/store";
@@ -12,9 +13,17 @@ import View from "../../_view/userGallery/index.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {
-    const { auth } = store;
+    const { auth, common } = store;
 
     auth.setCheckLogin(props);
+
+    useEffect(() => {
+        if (props.result == "ok") {
+            common.init();
+        } else {
+            Router.push("/login");
+        }
+    }, []);
 
     return (
         <>

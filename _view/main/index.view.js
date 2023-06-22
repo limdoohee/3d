@@ -13,7 +13,7 @@ import AlarmTemplate from "../../_lib/template/alarm";
 const Home = observer((props) => {
     const router = useRouter();
     const { store } = props;
-    const { drop, lang, common, auth } = store;
+    const { drop, lang, common, auth, gallery } = store;
     const [changeTime, setTime] = useState();
     const [open, setOpen] = useState(false);
     const [notice, setNotice] = useState(false);
@@ -23,6 +23,25 @@ const Home = observer((props) => {
     let time = new Date();
     const currTime = new Date();
     let diff;
+
+    //------------------------------------------------- Init Load
+    const initLoad = ({ initCheck, callback }) => {
+        gallery.getData({ sendbirdId: "dropkitchen_member_" + auth.loginResult.seq }, (e) => {
+            // common.debug(e);
+            callback && callback(e);
+        });
+    };
+    //------------------------------------------------- Init Load
+
+    //------------------------------------------------- Router isReady
+    useEffect(() => {
+        if (router.isReady && router.pathname == "/main") {
+            initLoad({
+                callback: (e) => {},
+            });
+        }
+    }, [router.isReady, router.asPath]);
+    //------------------------------------------------- Router isReady
 
     const Digit = ({ value, title }) => {
         const leftDigit = value >= 10 ? value.toString()[0] : "0";
@@ -78,18 +97,7 @@ const Home = observer((props) => {
 
     useEffect(() => {
         setOpen(true);
-
-        window.addEventListener("flutterInAppWebViewPlatformReady", function (event) {
-            if (window.flutter_inappwebview.callHandler) {
-                window.flutter_inappwebview.callHandler("myHandlerName").then(function (result) {
-                    console.log(JSON.stringify(result));
-                });
-            } else {
-                window.flutter_inappwebview._callHandler("myHandlerName").then(function (result) {
-                    console.log(JSON.stringify(result));
-                });
-            }
-        });
+        console.log(gallery.data.galleryLink);
     }, []);
 
     useEffect(() => {
@@ -119,7 +127,18 @@ const Home = observer((props) => {
                 className="dds button none"
                 icon={<DDS.icons.shareNode />}
                 onClick={() => {
-                    window.location.href = "native://share?contents=" + encodeURI(auth.loginResult.inviteLink);
+                    // window.location.href = "native://share?contents=" + encodeURI(gallery.data.galleryLink);
+                    window.addEventListener("flutterInAppWebViewPlatformReady", function (event) {
+                        if (window.flutter_inappwebview.callHandler) {
+                            window.flutter_inappwebview.callHandler("myHandlerName").then(function (result) {
+                                console.log(JSON.stringify(result));
+                            });
+                        } else {
+                            window.flutter_inappwebview._callHandler("myHandlerName").then(function (result) {
+                                console.log(JSON.stringify(result));
+                            });
+                        }
+                    });
                 }}
             />
         ),

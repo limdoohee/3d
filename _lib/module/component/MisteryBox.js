@@ -136,7 +136,7 @@ const MisteryBox = observer((props) => {
             const shadow = scene.getObjectByName("shadow");
             const space = scene.getObjectByName("space");
 
-            console.log(intersects);
+            // console.log(intersects);
             if (intersects[0].object.name === "Cover") {
                 gsap.to(intersects[0].object.position, {
                     x: -3,
