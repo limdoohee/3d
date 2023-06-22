@@ -7,12 +7,11 @@ import { getAuth, onAuthStateChanged, signInWithPhoneNumber, RecaptchaVerifier }
 import { observer } from "mobx-react-lite";
 import firebase from "firebase/app";
 import "firebase/auth";
-import cookie from "react-cookies";
 import { useTimer, useStopwatch } from "react-timer-hook";
 import moment from "moment";
 
-import countryCodeDataEN from "../../_lib/locales/en/countryCode.en.json";
-import countryCodeDataKo from "../../_lib/locales/ko/countryCode.ko.json";
+import countryCodeDataEN from "../locales/en/countryCode.en.json";
+import countryCodeDataKo from "../locales/ko/countryCode.ko.json";
 //------------------------------------------------------------------------------- Antd
 import { Drawer } from "antd";
 //------------------------------------------------------------------------------- Antd
@@ -138,6 +137,11 @@ const Home = observer((props) => {
         maxLength: 6,
     };
 
+    const [countryCodeData, setcountryCodeData] = useState({ arr: [], select: null });
+    useEffect(() => {
+        setcountryCodeData((prev) => ({ ...prev, arr: lang.i18n.language === "ko" ? countryCodeDataKo : countryCodeDataEN }));
+    }, []);
+
     return (
         <>
             <div className="dk authentication-phone">
@@ -179,20 +183,20 @@ const Home = observer((props) => {
                 open={open}
                 closeIcon={false}
             >
-                {/* {i18n.language === "ko"
-                                ? countryCodeDataKo
-                                : countryCodeDataEN.map((item, idx) => (
-                                      <div
-                                          className={isCategorySelect[idx] ? "selected" : ""}
-                                          key={idx}
-                                          onClick={() => {
-                                              handleToggle(item, idx);
-                                          }}
-                                      >
-                                          <span>{item.name}</span>
-                                          <span>+{item.dial_code}</span>
-                                      </div>
-                                  ))} */}
+                {countryCodeData.arr.map((item, idx) => (
+                    <div
+                        className={idx == countryCodeData.select ? "selected" : ""}
+                        key={idx}
+                        onClick={() => {
+                            data.set((prev) => ({ ...prev, countryCode: item.dial_code }));
+                            setcountryCodeData((prev) => ({ ...prev, select: idx }));
+                            setOpen(false);
+                        }}
+                    >
+                        <span>{item.name}</span>
+                        <span>+{item.dial_code}</span>
+                    </div>
+                ))}
             </Drawer>
         </>
     );

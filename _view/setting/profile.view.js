@@ -71,6 +71,16 @@ const Home = observer((props) => {
             if (res.result == "ok") {
                 auth.checkLoginCSR({}, (re) => {
                     console.log("checkLoginCSR", re);
+                    setsubmitCheck(false);
+                    common.messageApi.open({
+                        type: "success",
+                        content: "프로필 변경이 완료되었습니다.",
+                    });
+                });
+            } else {
+                common.messageApi.open({
+                    type: "warning",
+                    content: `${res.message}`,
                 });
             }
         });
@@ -112,11 +122,11 @@ const Home = observer((props) => {
                                         <input type="file" onChange={imageUpload} />
                                     </div>
                                 </div>
-                                <DDS.button.default className="dds button none">현재 사진 삭제</DDS.button.default>
+                                {/* <DDS.button.default className="dds button none">현재 사진 삭제</DDS.button.default> */}
                             </div>
                             <ul className="form">
                                 <li>
-                                    <NickNameInput value={inputNickname} setvalue={setinputNickname} store={store} />
+                                    <DK_template_profile.NickNameInput value={inputNickname} setvalue={setinputNickname} store={store} />
                                 </li>
                                 <li>
                                     <IntroductionInput value={introduction} setvalue={setintroduction} store={store} />
@@ -137,48 +147,6 @@ const Home = observer((props) => {
 });
 
 export default Home;
-
-//////////////////////////////////////////////////////////////////////// NickNameInput
-const NickNameInput = (props) => {
-    const { value, setvalue, store } = props;
-    const { common, auth } = store;
-
-    const onChange = (e) => {
-        var v = e.target.value;
-        setvalue((prevstate) => ({ ...prevstate, value: v }));
-        var params = { nickname: v };
-        auth.checkNickname(params, (e) => {
-            common.debug(e);
-            sethelpText(e.id ? e.message : "");
-            setvalue((prevstate) => ({ ...prevstate, result: e.id ? false : true }));
-            if (e.id) {
-            }
-        });
-    };
-
-    const inputSetting = {
-        className: "dds input primary",
-        placeholder: "닉네임을 입력해주세요",
-        onKeyUp: onChange,
-        // onKeyDown: onChange,
-        maxLength: 20,
-        defaultValue: value.value,
-    };
-
-    const [helpText, sethelpText] = useState("");
-
-    return (
-        <>
-            <h5>
-                <strong>닉네임</strong>
-                <span>{value.value ? value.value.length : 0}/20</span>
-            </h5>
-            <DDS.input.default {...inputSetting} />
-            <p>{helpText}</p>
-        </>
-    );
-};
-//////////////////////////////////////////////////////////////////////// NickNameInput
 
 //////////////////////////////////////////////////////////////////////// IntroductionInput
 const IntroductionInput = (props) => {

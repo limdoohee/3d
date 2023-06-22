@@ -70,21 +70,21 @@ const Home = observer((props) => {
         { id: "4", login_title: t(`login.main.kakao`), signup_title: t(`login.main.signup.kakao`), className: "kakao", img: <DDS.icons.kakao /> },
     ];
 
-    useEffect(() => {
-        const loginTitle = document.getElementById("login-desc");
-        loginTitle.addEventListener("click", (event) => {
-            const clickedText = event.target.innerHTML;
-            setOpen(true);
-            if (clickedText.includes("Privacy Policy.") || clickedText.includes("개인정보처리방침")) {
-                setShowTerms("privacy");
-            } else if (clickedText.includes("User Agreement") || clickedText.includes("이용약관")) {
-                setShowTerms("agreement");
-            }
-        });
+    // useEffect(() => {
+    //     const loginTitle = document.getElementById("login-desc");
+    //     loginTitle.addEventListener("click", (event) => {
+    //         const clickedText = event.target.innerHTML;
+    //         setOpen(true);
+    //         if (clickedText.includes("Privacy Policy.") || clickedText.includes("개인정보처리방침")) {
+    //             setShowTerms("privacy");
+    //         } else if (clickedText.includes("User Agreement") || clickedText.includes("이용약관")) {
+    //             setShowTerms("agreement");
+    //         }
+    //     });
 
-        const recentLoginValue = localStorage.getItem("recentLogin");
-        setRecentLogin(recentLoginValue);
-    }, []);
+    //     const recentLoginValue = localStorage.getItem("recentLogin");
+    //     setRecentLogin(recentLoginValue);
+    // }, []);
 
     const onClose = () => {
         setOpen(false);

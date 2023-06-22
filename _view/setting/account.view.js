@@ -22,6 +22,7 @@ import { Drawer, message } from "antd";
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
 import DK_template_GNB from "../../_lib/template/gnb";
+import DK_template_AuthenticationPhone from "../../_lib/template/authenticationPhone";
 //------------------------------------------------------------------------------- Component
 //------------------------------------------------------------------------------- Module
 import Date_Module from "../../_lib/module/date";
