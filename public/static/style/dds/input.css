@@ -12,6 +12,9 @@
 .dds.input.rounded {
     border-radius: 38px;
 }
+.dds.input.block {
+    width: 100%;
+}
 .dds.input.primary {
     border: 1px solid #dadada;
 }

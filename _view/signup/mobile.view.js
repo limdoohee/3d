@@ -11,19 +11,24 @@ import "firebase/auth";
 import countryCodeDataEN from "../../_lib/locales/en/countryCode.en.json";
 import countryCodeDataKo from "../../_lib/locales/ko/countryCode.ko.json";
 import cookie from "react-cookies";
-
+import { useTimer, useStopwatch } from "react-timer-hook";
+import moment from "moment";
 //------------------------------------------------------------------------------- Antd
-import { Drawer, message } from "antd";
+import { Drawer } from "antd";
 //------------------------------------------------------------------------------- Antd
 //------------------------------------------------------------------------------- Component
 import DDS_Icons from "../../_lib/component/icons";
-
+import DDS from "../../_lib/component/dds";
 //------------------------------------------------------------------------------- Component
 
 const Home = observer((props) => {
-    const { auth } = props.store;
+    const { store } = props;
     const router = useRouter();
+    const { common, auth } = props.store;
     const { t, i18n } = useTranslation();
+
+    const app = initializeApp(common.firebaseConfig);
+    getAuth(app).languageCode = "ko";
 
     //------------------------------------------------- Init Load
     const initLoad = ({ callback }) => {
@@ -35,13 +40,17 @@ const Home = observer((props) => {
     useEffect(() => {
         if (router.isReady && router.pathname == "/signup/mobile") {
             initLoad({
-                callback: () => {
-                    const translateSet = sessionStorage.getItem("LangValue");
-                    if (translateSet) {
-                        i18n.changeLanguage(translateSet);
-                    }
-                },
+                callback: () => {},
             });
+
+            window.recaptchaVerifier = new RecaptchaVerifier(
+                "recaptcha-container",
+                {
+                    size: "invisible",
+                    timeout: 180000,
+                },
+                getAuth(app),
+            );
         }
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
@@ -53,7 +62,6 @@ const Home = observer((props) => {
     const phoneNumberRef = useRef(null);
     const confirmCodeRef = useRef(null);
     const [confirmationResult, setConfirmationResult] = useState(null);
-    const [messageApi, contextHolder] = message.useMessage();
     const [phoneNumber, setPhoneNumber] = useState("");
     const [isCodeEntered, setIsCodeEntered] = useState(false);
     const [timer, setTimer] = useState(180 * 1000);
@@ -71,37 +79,13 @@ const Home = observer((props) => {
     const [isCategorySelect, setIsCategorySelect] = useState([true, ...Array(countryCodeDataEN.length - 1).fill(false)]);
 
     const info = ({ content, className }) => {
-        messageApi.info({
+        common.messageApi.info({
             content: content,
             duration: 2,
             className: `message-info ${className}`,
             icon: <DDS_Icons.snackbarCircle />,
         });
     };
-
-    const firebaseConfig = {
-        apiKey: "AIzaSyCwZtLeU5e0_Fs-Rv435wGJVYNUSJsaKvg",
-        authDomain: "dropkitchen-bedde.firebaseapp.com",
-        databaseURL: "https://dropkitchen-bedde-default-rtdb.firebaseio.com",
-        projectId: "dropkitchen-bedde",
-        storageBucket: "dropkitchen-bedde.appspot.com",
-        messagingSenderId: "998669151634",
-        appId: "1:998669151634:web:0d49a1e3107633eeb9a54b",
-        measurementId: "G-6065J3XYB0",
-    };
-    const app = initializeApp(firebaseConfig);
-    getAuth(app).languageCode = "ko";
-
-    useEffect(() => {
-        window.recaptchaVerifier = new RecaptchaVerifier(
-            "recaptcha-container",
-            {
-                size: "invisible",
-                timeout: 180000,
-            },
-            getAuth(app),
-        );
-    }, []);
 
     const handleSendCode = () => {
         const appVerifier = window.recaptchaVerifier;
@@ -158,9 +142,10 @@ const Home = observer((props) => {
         var params = {
             clientId: sessionStorage.getItem("loginClientId"),
             email: sessionStorage.getItem("loginEmail"),
-            uid: null,
+            countryCode: authenticationValue.countryCode,
+            uid: authenticationValue.uid,
             lang: sessionStorage.getItem("LangValue"),
-            cellNo: phoneNumber,
+            cellNo: authenticationValue.cellNo,
             nickname: sessionStorage.getItem("IsNicknameValue"),
             adsAgree: sessionStorage.getItem("IsTermsValue"),
             terms1Agree: "Y",
@@ -203,102 +188,188 @@ const Home = observer((props) => {
         }
     };
 
+    const [authenticationValue, setauthenticationValue] = useState({
+        countryCode: "82",
+        cellNo: "",
+        authCode: "",
+        uid: null,
+        confirmationResult: null,
+    });
+
     return (
         <>
-            <div className="auth ui mobile">
-                <h2>{t(`signup.mobile.title`)}</h2>
-                <div className="mobile-list">
+            <DDS.layout.back className={"fluid"} store={store}>
+                <div className="auth ui mobile">
+                    <h2>{t(`signup.mobile.title`)}</h2>
+                    <AuthenticationPhone data={{ value: authenticationValue, set: setauthenticationValue }} store={store} />
+                    <div id="recaptcha-container"></div>
+                </div>
+            </DDS.layout.back>
+        </>
+    );
+});
+
+export default Home;
+
+const AuthenticationPhone = observer((props) => {
+    const { data, store } = props;
+    const { common, lang } = store;
+    const { countryCode, cellNo, authCode, uid, confirmationResult } = data.value;
+
+    const [open, setOpen] = useState(false);
+    const [count, setcount] = useState(0);
+
+    // ----------------------------------------------------------- Firebase 설정
+    const app = initializeApp(common.firebaseConfig);
+    getAuth(app).languageCode = "ko";
+    useEffect(() => {
+        window.recaptchaVerifier = new RecaptchaVerifier(
+            "recaptcha-container",
+            {
+                size: "invisible",
+                timeout: 180000,
+            },
+            getAuth(app),
+        );
+    }, []);
+    // ----------------------------------------------------------- Firebase 설정
+
+    // ----------------------------------------------------------- useTimer 설정
+    const authTime = new Date();
+    authTime.setSeconds(authTime.getSeconds());
+    var expiryTimestamp = authTime;
+    const { seconds, minutes, hours, days, isRunning, start, pause, resume, restart } = useTimer({
+        expiryTimestamp,
+        onExpire: () => {},
+    });
+    // ----------------------------------------------------------- useTimer 설정
+
+    // ----------------------------------------------------------- 인증코드 발송
+    const handleSendCode = () => {
+        if (cellNo.length > 6) {
+            const appVerifier = window.recaptchaVerifier;
+            signInWithPhoneNumber(getAuth(), "+" + countryCode + cellNo, appVerifier)
+                .then((result) => {
+                    data.set((prev) => ({ ...prev, confirmationResult: result, authCode: "" }));
+                    initTime();
+                    setcount(count + 1);
+                })
+                .catch((error) => {
+                    common.debug(error);
+                    common.messageApi.info({
+                        content: "error",
+                    });
+                });
+        } else {
+            common.messageApi.info({
+                content: "유효한 전화번호를 입력해 주세요.",
+            });
+        }
+    };
+
+    const initTime = () => {
+        const endTime = new Date();
+        endTime.setSeconds(endTime.getSeconds() + 180);
+        restart(endTime);
+    };
+    // ----------------------------------------------------------- 인증코드 발송
+    // ----------------------------------------------------------- 인증코드 체크
+    useEffect(() => {
+        if (authCode.length == 6) {
+            confirmationResult
+                .confirm(authCode)
+                .then((result) => {
+                    console.log(result);
+                    onAuthStateChanged(getAuth(), (user) => {
+                        if (user) {
+                            data.set((prev) => ({ ...prev, uid: user.uid }));
+                        }
+                    });
+                })
+                .catch((error) => {
+                    common.messageApi.info({
+                        content: "error",
+                    });
+                });
+        }
+    }, [authCode]);
+    // ----------------------------------------------------------- 인증코드 체크
+
+    const phoneInputSetting = {
+        placeholder: "휴대폰 번호 입력",
+        prefix: (
+            <>
+                <span
+                    onClick={() => {
+                        setOpen(true);
+                    }}
+                >
+                    <strong>+{countryCode}</strong>
+                    <DDS_Icons.caretDown className="dds icons" />
+                </span>
+            </>
+        ),
+        value: cellNo,
+        onChange: (e) => {
+            var v = e.target.value;
+            const reg = /[^0-9]/g;
+            v = v.replace(reg, "");
+            data.set((prev) => ({ ...prev, cellNo: v }));
+        },
+    };
+
+    const authcodeInputSetting = {
+        placeholder: "인증번호 6자리 입력",
+        value: authCode,
+        onChange: (e) => {
+            var v = e.target.value;
+            const reg = /[^0-9]/g;
+            v = v.replace(reg, "");
+            data.set((prev) => ({ ...prev, authCode: v }));
+        },
+        maxLength: 6,
+    };
+
+    return (
+        <>
+            <div className="dk authentication-phone">
+                <h5>
+                    <strong>휴대폰 번호</strong>
+                </h5>
+                <div className="inputs">
+                    <DDS.input.default {...phoneInputSetting} />
+                    <DDS.button.default
+                        className="dds button primary large"
+                        onClick={() => {
+                            handleSendCode();
+                        }}
+                    >
+                        {count > 0 ? "재전송" : "인증하기"}
+                    </DDS.button.default>
+                </div>
+                {confirmationResult && (
                     <>
-                        <div className="input-area">
-                            <div className="form">
-                                <label>{t(`signup.mobile.label`)}</label>
-                                <div className="inner">
-                                    <div>
-                                        <strong
-                                            onClick={() => {
-                                                setOpen(true);
-                                            }}
-                                        >
-                                            +{value}
-                                            <DDS_Icons.caretDown />
-                                        </strong>
-                                        <input
-                                            type="text"
-                                            placeholder={t(`signup.mobile.placeholder`)}
-                                            ref={phoneNumberRef}
-                                            value={phoneNumber}
-                                            inputMode="numeric"
-                                            onChange={(e) => {
-                                                setPhoneNumber(e.target.value);
-                                            }}
-                                        />
-                                    </div>
-                                    <button
-                                        className="btn send"
-                                        id="phoneNumberButton"
-                                        type="button"
-                                        onClick={() => {
-                                            handleSendCode();
-                                        }}
-                                        disabled={!phoneNumber}
-                                    >
-                                        {certificate ? t(`signup.mobile.certificate.reBtn`) : t(`signup.mobile.certificate.btn`)}
-                                    </button>
-                                </div>
-                            </div>
-                            {certificate && (
-                                <form className="form" onSubmit={handleConfirmCodeSubmit}>
-                                    <div className="time">
-                                        <label>{t(`signup.mobile.certificate.label`)}</label>
-                                        {isTimerRunning ? <div>{formatTime(Math.floor(timer / 1000))}</div> : <div>시간만료</div>}
-                                    </div>
-                                    <input
-                                        ref={confirmCodeRef}
-                                        type="text"
-                                        placeholder={t(`signup.mobile.certificate.placeholder`)}
-                                        onChange={(e) => {
-                                            setCode(e.target.value);
-                                        }}
-                                        onFocus={() => {
-                                            setIsCodeEntered(true);
-                                        }}
-                                        onBlur={() => {
-                                            setIsCodeEntered(false);
-                                        }}
-                                        value={code}
-                                        maxLength={6}
-                                        inputMode="numeric"
-                                        autoComplete="“one-time-code”"
-                                    />
-                                    {isCodeEntered || code ? (
-                                        <button className="btn certificate" id="phoneNumberButton" type="submit">
-                                            {t(`common.check`)}
-                                        </button>
-                                    ) : null}
-                                    {code && (
-                                        <DDS_Icons.xmark_02
-                                            className="xmark-02"
-                                            onClick={() => {
-                                                setCode("");
-                                                confirmCodeRef.current.focus();
-                                            }}
-                                        />
-                                    )}
-                                </form>
-                            )}
-                        </div>
-                        <Drawer
-                            height={"auto"}
-                            className="login drawer lang"
-                            title={t(`signup.mobile.sel-region`)}
-                            placement="bottom"
-                            onClose={() => {
-                                setOpen(false);
-                            }}
-                            open={open}
-                            closeIcon={false}
-                        >
-                            {i18n.language === "ko"
+                        <h5>
+                            <strong>인증번호</strong>
+                            <span>
+                                {minutes < 10 ? `0${minutes}` : `${minutes}`}:{seconds < 10 ? `0${seconds}` : `${seconds}`}
+                            </span>
+                        </h5>
+                        <DDS.input.default {...authcodeInputSetting} className="dds input primary large block" />
+                    </>
+                )}
+                <Drawer
+                    height={"auto"}
+                    className="login drawer lang"
+                    title={lang.t(`signup.mobile.sel-region`)}
+                    placement="bottom"
+                    onClose={() => {
+                        setOpen(false);
+                    }}
+                    open={open}
+                    closeIcon={false}
+                >
+                    {/* {i18n.language === "ko"
                                 ? countryCodeDataKo
                                 : countryCodeDataEN.map((item, idx) => (
                                       <div
@@ -311,15 +382,9 @@ const Home = observer((props) => {
                                           <span>{item.name}</span>
                                           <span>+{item.dial_code}</span>
                                       </div>
-                                  ))}
-                        </Drawer>
-                        {contextHolder}
-                        <div id="recaptcha-container"></div>
-                    </>
-                </div>
+                                  ))} */}
+                </Drawer>
             </div>
         </>
     );
 });
-
-export default Home;

@@ -7,6 +7,7 @@ import button from "../../_lib/component/button";
 import chat from "../../_lib/component/chat";
 import icons from "../../_lib/component/icons";
 import input from "../../_lib/component/input";
+import checkbox from "../../_lib/component/checkbox";
 import layout from "../../_lib/component/layout";
 import logos from "../../_lib/component/logos";
 import profile from "../../_lib/component/profile";
@@ -34,6 +35,7 @@ const Home = {
     actionsheet: actionsheet,
     switch: switchC,
     message: message,
+    checkbox: checkbox,
 };
 
 export default Home;
