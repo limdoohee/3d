@@ -10,7 +10,7 @@ const store = new Store();
 import checkLogin from "../../_lib/module/checkLogin";
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- View
-import View from "../../_view/drop/index.view";
+import View from "../../_view/drops/index.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {

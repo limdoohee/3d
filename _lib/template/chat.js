@@ -40,7 +40,7 @@ const Home = {
         };
 
         const [loading, setloading] = useState(false);
-   
+
         useEffect(() => {
             if (chat.state.currentlyJoinedChannel && chat.sb && !chat.state.loading) {
                 setTimeout(() => {
@@ -90,6 +90,95 @@ const Home = {
                         )}
                     </div>
                 </Drawer>
+            </>
+        );
+    }),
+    page: observer((props) => {
+        const router = useRouter();
+        const { common, lang, chat, auth } = props.store;
+
+        //------------------------------------------------- Init Load
+        const initLoad = ({ initCheck, callback }) => {
+            chat.joinChat({ name: auth.loginResult.nickname, id: `dropkitchen_member_${auth.loginResult.seq}`, url: Router.query.url });
+        };
+        //------------------------------------------------- Init Load
+
+        //------------------------------------------------- Router isReady
+        useEffect(() => {
+            if (router.isReady && router.pathname == "/chat") {
+                common.getBuildId();
+                if (Router.query.url) {
+                    initLoad({
+                        callback: (e) => {},
+                    });
+                } else {
+                    Router.back();
+                }
+            }
+            return () => {
+                chat.disconnect();
+            };
+        }, [router.isReady, router.asPath]);
+        //------------------------------------------------- Router isReady
+
+        const onClose = () => {
+            common.uiChange("chatOpen", false);
+            setloading(false);
+        };
+
+        const [loading, setloading] = useState(false);
+
+        useEffect(() => {
+            if (chat.state.currentlyJoinedChannel && chat.sb && !chat.state.loading) {
+                setTimeout(() => {
+                    setloading(true);
+                }, 500);
+            }
+        }, [chat.state.currentlyJoinedChannel]);
+
+        return (
+            <>
+                <div className="dk chat">
+                    {loading ? (
+                        <>
+                            <div className="title">
+                                <div className="owner">
+                                    <DDS_Button.default className="dds button none" icon={<DDS_Icons.angleLeft />} onClick={onClose} />
+                                    <DDS_Profile.default
+                                        src={chat.state.currentlyJoinedChannel.coverUrl}
+                                        // dot={"dot"}
+                                    />
+                                    <span className="name">
+                                        <strong>
+                                            {chat.state.currentlyJoinedChannel.name}
+                                            {/* <DDS_Icons.badgeCheck /> */}
+                                        </strong>
+                                        {/* <small>현재 활동 중</small> */}
+                                    </span>
+                                </div>
+                                <div className="operators">
+                                    <DDS_Icons.user className="dds icons small" />
+                                    {chat.state.currentlyJoinedChannelOperators.length}
+                                </div>
+                            </div>
+                            {/* <h1>{chat.state.currentlyJoinedChannel.name}</h1> */}
+                            <ChatComponent.MessagePrint store={props.store} messages={chat.state.messages} myId={chat.state.userIdInputValue} loadMessagesPrev={chat.loadMessagesPrev.open} />
+                            <ChatComponent.MessageInput chat={chat} value={chat.state.messageInputValue} sendMessage={chat.sendMessage.open} fileSelected={chat.state.file} />
+                            {chat.state.uploadLoading == true && (
+                                <div className="upload-loading">
+                                    <Spin />
+                                </div>
+                            )}
+                        </>
+                    ) : (
+                        <>
+                            <div className="loading">
+                                <Spin />
+                                <div>Chat Loading....</div>
+                            </div>
+                        </>
+                    )}
+                </div>
             </>
         );
     }),
