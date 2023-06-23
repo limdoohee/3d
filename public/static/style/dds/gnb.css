@@ -77,3 +77,7 @@
     letter-spacing: -0.02em;
     color: #1f1f1f;
 }
+
+.dds.gnb nav svg path {
+    fill: #1f1f1f;
+}

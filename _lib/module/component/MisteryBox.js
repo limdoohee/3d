@@ -7,21 +7,22 @@ import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
 import gsap from "gsap";
+import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
 const MisteryBox = observer((props) => {
     const router = useRouter();
     const [open, setOpen] = useState(false);
     const { drop, lang, common, auth } = props.store;
 
-    let renderer1, renderer2;
+    let renderer, renderer2;
     let camera;
     const scene = new THREE.Scene();
     const scene2 = new THREE.Scene();
     let mixer = new THREE.AnimationMixer();
     let clock = new THREE.Clock();
     const loader = new FBXLoader();
-    const [curr, setCurr] = useState(); //현재드롭
-    const [next, setNext] = useState(); //다음드롭
+    // const [curr, setCurr] = useState(); //현재드롭
+    // const [next, setNext] = useState(); //다음드롭
     let dropSeq, dropRound;
 
     const messageData = {
@@ -30,19 +31,38 @@ const MisteryBox = observer((props) => {
         content: "드롭을 준비중이에요, 잠시만 기다려주세요!",
     };
 
+    let modelReady = false;
+    const animationActions = [];
+    let activeAction;
+    let lastAction;
+    const fbxLoader = new FBXLoader();
+
+    const setAction = (toAction) => {
+        if (toAction != activeAction) {
+            lastAction = activeAction;
+            activeAction = toAction;
+            //lastAction.stop()
+            lastAction.fadeOut(1);
+            activeAction.reset();
+            activeAction.fadeIn(1);
+            activeAction.play();
+        }
+    };
+
     function setSpace() {
         const canvas = document.getElementById("space");
-        renderer1 = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
-        renderer1.setPixelRatio(window.devicePixelRatio);
-        renderer1.setSize(window.innerWidth, window.innerHeight);
-        renderer1.shadowMap.enabled = true;
-        renderer1.shadowMap.type = THREE.PCFSoftShadowMap;
+        renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+        renderer.setPixelRatio(window.devicePixelRatio);
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-        camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 1000);
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
         camera.position.set(0, 4, 10);
 
-        const controls = new MapControls(camera, renderer1.domElement);
+        const controls = new MapControls(camera, renderer.domElement);
         // controls.enablePan = false;
+        // controls.enableRotate = false;
         // controls.enableZoom = false;
         controls.target.set(0, 4, 0);
         controls.update();
@@ -96,29 +116,136 @@ const MisteryBox = observer((props) => {
         shadow.name = "shadow";
         scene.add(shadow);
 
-        loader.load("../../static/3d/MainPage.fbx", (object) => {
-            object.scale.set(0.7, 0.7, 0.7);
-            object.position.y = 3;
-            // object.position.z = 20;
-            // object.rotation.set(0.4, 0.5, 0);
-            // object.traverse((child) => {
-            //     if (child instanceof THREE.Mesh) {
-            //         child.material.transparent = true;
-            //         child.castShadow = true;
-            //     }
-            // });
+        // loader.load("../../static/3d/MainPage.fbx", (object) => {
+        //     object.scale.set(0.7, 0.7, 0.7);
+        //     object.position.y = 3;
+        //     // object.position.z = 20;
+        //     // object.rotation.set(0.4, 0.5, 0);
+        //     // object.traverse((child) => {
+        //     //     if (child instanceof THREE.Mesh) {
+        //     //         child.material.transparent = true;
+        //     //         child.castShadow = true;
+        //     //     }
+        //     // });
 
-            scene.add(object);
-        });
+        //     scene.add(object);
+        // });
+
+        // console.log(canvas.clientWidth, canvas.clientHeight, window.innerWidth / window.innerHeight);
+        const geometry = new THREE.PlaneGeometry(9, 16);
+        const material = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, map: new THREE.TextureLoader().load("../../static/3d/MainPage.jpg") });
+        const plane = new THREE.Mesh(geometry, material);
+        plane.position.y = 4;
+        // plane.position.z = -2;
+        scene.add(plane);
+
+        // fbxLoader.load(
+        //     "../../static/3d/models/vanguard_t_choonyung.fbx",
+        //     (object) => {
+        //         object.scale.multiplyScalar(0.02);
+        //         mixer = new THREE.AnimationMixer(object);
+
+        //         const animationAction = mixer.clipAction(object.animations[0]);
+        //         animationActions.push(animationAction);
+        //         animationsFolder.add(animations, "default");
+        //         activeAction = animationActions[0];
+
+        //         scene.add(object);
+
+        //         //add an animation from another file
+        //         fbxLoader.load(
+        //             "../../static/3d/models/vanguard@samba.fbx",
+        //             (object) => {
+        //                 console.log("loaded samba");
+
+        //                 const animationAction = mixer.clipAction(object.animations[0]);
+        //                 animationActions.push(animationAction);
+        //                 animationsFolder.add(animations, "samba");
+
+        //                 //add an animation from another file
+        //                 fbxLoader.load(
+        //                     "../../static/3d/models/vanguard@bellydance.fbx",
+        //                     (object) => {
+        //                         console.log("loaded bellydance");
+        //                         const animationAction = mixer.clipAction(object.animations[0]);
+        //                         animationActions.push(animationAction);
+        //                         animationsFolder.add(animations, "bellydance");
+
+        //                         //add an animation from another file
+        //                         fbxLoader.load(
+        //                             "../../static/3d/models/vanguard@goofyrunning.fbx",
+        //                             (object) => {
+        //                                 console.log("loaded goofyrunning");
+        //                                 object.animations[0].tracks.shift(); //delete the specific track that moves the object forward while running
+        //                                 //console.dir(object.animations[0])
+        //                                 const animationAction = mixer.clipAction(object.animations[0]);
+        //                                 animationActions.push(animationAction);
+        //                                 animationsFolder.add(animations, "goofyrunning");
+
+        //                                 modelReady = true;
+        //                             },
+        //                             (xhr) => {
+        //                                 console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+        //                             },
+        //                             (error) => {
+        //                                 console.log(error);
+        //                             },
+        //                         );
+        //                     },
+        //                     (xhr) => {
+        //                         console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+        //                     },
+        //                     (error) => {
+        //                         console.log(error);
+        //                     },
+        //                 );
+        //             },
+        //             (xhr) => {
+        //                 console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+        //             },
+        //             (error) => {
+        //                 console.log(error);
+        //             },
+        //         );
+        //     },
+        //     (xhr) => {
+        //         console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+        //     },
+        //     (error) => {
+        //         console.log(error);
+        //     },
+        // );
+
+        // const animations = {
+        //     Loop: function () {  // started drop
+        //         setAction(animationActions[0]);
+        //     },
+        //     Unlocking: function () {
+        //         setAction(animationActions[1]);
+        //     },
+        //     LockedShaking: function () { // upcoming
+        //         setAction(animationActions[2]);
+        //     },
+        //     Disappear: function () {
+        //         setAction(animationActions[3]);
+        //     },
+        // };
+
+        // const gui = new GUI();
+        // const animationsFolder = gui.addFolder("Animations");
+        // animationsFolder.open();
 
         // event
         window.addEventListener("click", onTouchBox);
-        // window.addEventListener("resize", onWindowResize);
+        window.addEventListener("resize", onWindowResize);
     }
 
-    // function onWindowResize() {
-    //     renderer.setSize(window.innerWidth, window.innerHeight);
-    // }
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+    }
 
     function onTouchBox(event) {
         let parentName;
@@ -149,15 +276,11 @@ const MisteryBox = observer((props) => {
                 gsap.to(shadow.material, { opacity: 0, duration: 1 });
                 gsap.to(space, { receiveShadow: true, duration: 1, delay: 0.5 });
 
-                if (drop.data.curr.status === "closed") {
-                    dropSeq = drop.data.next.dropSeq;
-                    dropRound = drop.data.next.dropRound;
-                } else {
-                    dropSeq = drop.data.curr.dropSeq;
-                    dropRound = drop.data.curr.dropRound;
-                }
+                dropSeq = drop.data.curr.dropSeq;
+                dropRound = drop.data.curr.dropRound;
+
                 loader.load(`../../static/3d/${dropRound}/Popup.fbx`, (object) => {
-                    setCurr(object);
+                    // setCurr(object);
                     object.scale.multiplyScalar(0.12);
                     object.position.y = 2;
                     mixer = new THREE.AnimationMixer(object);
@@ -193,7 +316,9 @@ const MisteryBox = observer((props) => {
         requestAnimationFrame(spaceRender);
         const delta = clock.getDelta();
         if (mixer) mixer.update(delta);
-        renderer1.render(scene, camera);
+        renderer.render(scene, camera);
+
+        setAction(animationActions[0]);
     }
 
     useEffect(() => {
@@ -207,44 +332,32 @@ const MisteryBox = observer((props) => {
             dropRound = drop.data.curr.dropRound;
 
             // 다음 드롭
-            loader.load("../../static/3d/dropBox/DROPBOX_LockedStatic.fbx", (object) => {
-                setNext(object);
-                object.scale.multiplyScalar(0.25);
-                object.position.y = 12;
-                object.rotation.set(0.3, -0.5, 0);
-                object.traverse((child) => {
-                    if (child instanceof THREE.Mesh) {
-                        child.material.transparent = true;
-                        child.castShadow = true;
-                        child.material = new THREE.MeshPhongMaterial({
-                            map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.next.dropRound + ".jpg"),
-                            transparent: true,
-                        });
-                    }
-                });
-                object.name = "box";
-                scene.add(object);
-            });
+            // loader.load("../../static/3d/dropBox/DropBox_FullAnimation.fbx", (object) => {
+            //     setNext(object);
+            //     object.scale.multiplyScalar(0.25);
+            //     object.position.y = 12;
+            //     object.rotation.set(0.3, -0.5, 0);
+            //     object.traverse((child) => {
+            //         if (child instanceof THREE.Mesh) {
+            //             child.material.transparent = true;
+            //             child.castShadow = true;
+            //             child.material = new THREE.MeshPhongMaterial({
+            //                 map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.next.dropRound + ".jpg"),
+            //                 transparent: true,
+            //             });
+            //         }
+            //     });
+            //     object.name = "box";
+            //     scene.add(object);
+            // });
             if (drop.data.curr.status === "closed") {
-                // 현재 드롭 밑으로 떨어짐
-                gsap.to(curr.position, {
-                    y: -5,
-                    ease: "power3.inOut",
-                    duration: 3,
-                });
-
-                // 다음 드롭 위에서 떨어짐
-                gsap.to(next.position, {
-                    y: 3,
-                    ease: "power3.inOut",
-                    duration: 3,
-                    delay: 1,
-                });
+                // 페이지 리로딩
+                router.push("/main");
             } else {
                 if (drop.data.curr.dropOwnFlag) {
                     // 받은 드롭 파일
                     loader.load(`../../static/3d/${dropRound}/Popup.fbx`, (object) => {
-                        setCurr(object);
+                        // setCurr(object);
                         object.scale.multiplyScalar(0.12);
                         object.position.y = 2;
                         mixer = new THREE.AnimationMixer(object);
@@ -263,27 +376,70 @@ const MisteryBox = observer((props) => {
                     });
                 } else {
                     // 미스터리 박스 파일
-                    loader.load("../../static/3d/dropBox/DROPBOX_LockedStatic.fbx", (object) => {
-                        setCurr(object);
+                    // loader.load("../../static/3d/dropBox/DROPBOX_Locked2Unlocking.fbx", (object) => {
+                    //     setCurr(object);
+                    //     object.scale.multiplyScalar(0.25);
+                    //     object.position.y = 3;
+                    //     object.rotation.set(0.2, -0.5, 0);
+                    //     object.traverse((child) => {
+                    //         if (child instanceof THREE.Mesh) {
+                    //             child.castShadow = true;
+                    //             child.material = new THREE.MeshPhongMaterial({
+                    //                 map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropRound + ".jpg"),
+                    //                 transparent: true,
+                    //             });
+                    //             // child.rotation.set(0.3, 0.5, 0);
+                    //         }
+                    //     });
+
+                    //     mixer = new THREE.AnimationMixer(object);
+                    //     mixer.clipAction(object.animations[0]).play();
+
+                    //     object.name = "box";
+                    //     scene.add(object);
+                    // });
+
+                    fbxLoader.load("../../static/3d/dropBox/DROPBOX_UnlockedLoop.fbx", (object) => {
                         object.scale.multiplyScalar(0.25);
                         object.position.y = 3;
+                        object.position.z = 3;
                         object.rotation.set(0.2, -0.5, 0);
-                        object.traverse((child) => {
-                            if (child instanceof THREE.Mesh) {
-                                child.castShadow = true;
-                                child.material = new THREE.MeshPhongMaterial({
-                                    map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropRound + ".jpg"),
-                                    transparent: true,
-                                });
-                                // child.rotation.set(0.3, 0.5, 0);
-                            }
-                        });
+                        mixer = new THREE.AnimationMixer(object);
 
-                        // mixer = new THREE.AnimationMixer(object);
-                        // mixer.clipAction(object.animations[0]).play();
+                        const animationAction = mixer.clipAction(object.animations[0]);
+                        console.log("Loop", object.animations);
+                        animationActions.push(animationAction);
+                        activeAction = animationActions[0];
 
-                        object.name = "box";
                         scene.add(object);
+                        object.name = "box";
+
+                        //add an animation from another file
+                        fbxLoader.load("../../static/3d/dropBox/DROPBOX_Locked2Unlocking.fbx", (object) => {
+                            object.rotation.set(0.2, -0.5, 0);
+
+                            const animationAction = mixer.clipAction(object.animations[0]);
+                            console.log("Unlocking", object.animations);
+                            animationActions.push(animationAction);
+
+                            //add an animation from another file
+                            fbxLoader.load("../../static/3d/dropBox/DROPBOX_LockedShaking.fbx", (object) => {
+                                object.rotation.set(0.2, -0.5, 0);
+                                console.log("LockedShaking", object.animations);
+                                const animationAction = mixer.clipAction(object.animations[0]);
+                                animationActions.push(animationAction);
+
+                                //add an animation from another file
+                                fbxLoader.load("../../static/3d/dropBox/DROPBOX_Open2Disappear.fbx", (object) => {
+                                    object.rotation.set(0.2, -0.5, 0);
+                                    console.log("Disappear", object.animations);
+                                    const animationAction = mixer.clipAction(object.animations[0]);
+                                    animationActions.push(animationAction);
+
+                                    modelReady = true;
+                                });
+                            });
+                        });
                     });
                 }
             }

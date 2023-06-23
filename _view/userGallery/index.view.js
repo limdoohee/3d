@@ -111,18 +111,10 @@ const Home = observer((props) => {
                             <div>
                                 {gallery.data.ownFlag ? (
                                     <Badge count={<DDS_Icons.pen />} className="profileMod">
-                                        <Avatar
-                                            size={64}
-                                            src={<img src={"https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fshopping.phinf%2Fmain_4037083%2F40370838619.20230607071158.jpg%22&type=nf216_312&service=navermain"} alt="avatar" />}
-                                            // src={<img src={gallery.data.profileImage} alt="avatar" />}
-                                        />{" "}
+                                        <DDS.profile.default size={64} badge={<DDS_Icons.badgeCrown className="cert" />} src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "../../static/img/profile.png"} />
                                     </Badge>
                                 ) : (
-                                    <Avatar
-                                        size={64}
-                                        src={<img src={"https://s.pstatic.net/dthumb.phinf/?src=%22https%3A%2F%2Fs.pstatic.net%2Fshopping.phinf%2Fmain_4037083%2F40370838619.20230607071158.jpg%22&type=nf216_312&service=navermain"} alt="avatar" />}
-                                        // src={<img src={gallery.data.profileImage} alt="avatar" />}
-                                    />
+                                    <DDS.profile.default size={64} badge={<DDS_Icons.badgeCrown className="cert" />} src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "../../static/img/profile.png"} />
                                 )}
                             </div>
                             <div ref={ref}>

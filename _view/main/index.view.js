@@ -17,6 +17,7 @@ const Home = observer((props) => {
     const [changeTime, setTime] = useState();
     const [open, setOpen] = useState(false);
     const [notice, setNotice] = useState(false);
+    const [coachMark, setCoachMark] = useState("hidden");
 
     /** 타이머 관련 변수 */
     let openTime;
@@ -27,7 +28,6 @@ const Home = observer((props) => {
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {
         gallery.getData({ sendbirdId: "dropkitchen_member_" + auth.loginResult.seq }, (e) => {
-            // common.debug(e);
             callback && callback(e);
         });
     };
@@ -59,7 +59,6 @@ const Home = observer((props) => {
 
     let timerContainer;
     const Timer = ({ expiryTimestamp }) => {
-        // console.log("expiryTimestamp", expiryTimestamp);
         const { seconds, minutes, hours, days, totalSeconds } = useTimer({
             expiryTimestamp,
             onExpire: () => {
@@ -96,8 +95,11 @@ const Home = observer((props) => {
     }
 
     useEffect(() => {
-        setOpen(true);
-        // console.log(gallery.data.galleryLink);
+        // setOpen(true);
+        if (sessionStorage.getItem("signupComplete")) {
+            setCoachMark("");
+            sessionStorage.removeItem("signupComplete");
+        }
     }, []);
 
     useEffect(() => {
@@ -115,7 +117,7 @@ const Home = observer((props) => {
     const headerRight = [
         () => (
             <DDS.button.default
-                className={`dds button none gallery badge`}
+                className={`dds button none gallery ${gallery.data.unconfirmedLuckyBox ? "badge" : ""}`}
                 icon={<DDS.icons.myGalleryBlackOn />}
                 onClick={() => {
                     router.push("/userGallery?memberSeq=" + auth.loginResult.seq);
@@ -127,7 +129,7 @@ const Home = observer((props) => {
                 className="dds button none"
                 icon={<DDS.icons.shareNode />}
                 onClick={() => {
-                    window.location.href = "native://share?contents=" + encodeURI(gallery.data.galleryLink);
+                    window.location.href = "native://share?contents=" + encodeURI(drop.data.mainLink);
                 }}
             />
         ),
@@ -166,7 +168,6 @@ const Home = observer((props) => {
             label: lang.t("main.modal.confirm"),
             action: () => {
                 common.messageApi.open(messageData);
-                // Router.push("/gallery");
             },
         },
         cancel: {
@@ -192,6 +193,49 @@ const Home = observer((props) => {
                 <DK_template_header.default store={store} className="top" left={headerLeft} right={headerRight} />
                 <DK_template_GNB.default store={store} />
                 <DDS.layout.content>
+                    <div className={`coachMark ${coachMark}`}>
+                        <div className="left">
+                            <img src="../../static/img/coachMark_left.png" alt="my gallery" />
+                            <div>
+                                <h4>마이갤러리</h4>
+                                <p>
+                                    나의 갤러리로
+                                    <br />
+                                    이동할 수 있어요
+                                </p>
+                            </div>
+                        </div>
+                        <div className="right">
+                            <img src="../../static/img/coachMark_right.png" alt="share" />
+                            <div>
+                                <h4>공유하기</h4>
+                                <p>
+                                    친구에게
+                                    <br />
+                                    공유해보세요
+                                </p>
+                            </div>
+                        </div>
+                        <div className="center">
+                            <img src="../../static/img/coachMark_center.png" alt="drop box" />
+                            <div>
+                                <h4>드롭 박스</h4>
+                                <p>
+                                    진행중인 드롭을 탭해
+                                    <br />
+                                    디지털 아트를 받아보세요
+                                </p>
+                            </div>
+                        </div>
+                        <DDS.button.default
+                            className="dds button primary"
+                            onClick={() => {
+                                setCoachMark("hidden");
+                            }}
+                        >
+                            시작하기
+                        </DDS.button.default>
+                    </div>
                     <div className="drop">
                         <h2>{drop.data.curr.status === "processing" ? "Started Drop" : "Upcoming"}</h2>
                         <Timer expiryTimestamp={changeTime} />
@@ -209,7 +253,7 @@ const Home = observer((props) => {
                             <DDS.switch.default onChange={checkHandle} />
                         </div>
                     )}
-                    <DDS.modal.bottom {...modalData} />
+                    {coachMark === "hidden" && <DDS.modal.bottom {...modalData} />}
                     <AlarmTemplate.default store={props.store} />
                 </DDS.layout.content>
             </DDS.layout.container>
