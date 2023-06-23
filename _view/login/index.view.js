@@ -61,10 +61,10 @@ const Home = observer((props) => {
                         <span
                             onClick={() => {
                                 setpolicyOpen(true);
-                                setpolicyType("private");
+                                setpolicyType("privacy");
                             }}
                         >
-                            {lang.t("policy.private.title")}
+                            {lang.t("policy.privacy.title")}
                         </span>
                         {lang.t("policy.text3")}
                     </p>

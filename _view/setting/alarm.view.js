@@ -62,21 +62,23 @@ const Home = observer((props) => {
             {/* Content */}
             <DDS.layout.content>
                 <div className="page-setting main">
-                    <dl>
-                        <dd className="none">
-                            <div className="alarm-info">
-                                <h4>광고성 정보 수신 동의</h4>
-                                <p>
-                                    드롭, 이벤트 및 다양한 혜택과 정보 알림을
-                                    <br />
-                                    받기 위해서 기기 알림을 켜주세요!
-                                </p>
-                            </div>
-                            <span>
-                                <DDS.button.default className="dds button primary small">알림 켜기</DDS.button.default>
-                            </span>
-                        </dd>
-                    </dl>
+                    {Router.query.device_alarm == "N" && (
+                        <dl>
+                            <dd className="none">
+                                <div className="alarm-info">
+                                    <h4>광고성 정보 수신 동의</h4>
+                                    <p>
+                                        드롭, 이벤트 및 다양한 혜택과 정보 알림을
+                                        <br />
+                                        받기 위해서 기기 알림을 켜주세요!
+                                    </p>
+                                </div>
+                                <span>
+                                    <DDS.button.default className="dds button primary small">알림 켜기</DDS.button.default>
+                                </span>
+                            </dd>
+                        </dl>
+                    )}
                     <dl>
                         <dd className="none">
                             <h4>광고성 정보 수신 동의</h4>

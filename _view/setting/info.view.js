@@ -10,6 +10,7 @@ import { animateScroll as scroll, Events, scrollSpy, scroller, Element } from "r
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
 import DK_template_GNB from "../../_lib/template/gnb";
+import DK_Template_Policy from "../../_lib/template/policy";
 //------------------------------------------------------------------------------- Component
 //------------------------------------------------------------------------------- Module
 import Date_Module from "../../_lib/module/date";
@@ -47,6 +48,9 @@ const Home = observer((props) => {
         ),
     ];
 
+    const [policyOpen, setpolicyOpen] = useState(false);
+    const [policyType, setpolicyType] = useState("terms");
+
     return (
         <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
             <DK_template_header.default store={store} title={lang.t("setting.title")} right={headerRight} />
@@ -55,13 +59,25 @@ const Home = observer((props) => {
             <DDS.layout.content>
                 <div className="page-setting main">
                     <dl>
-                        <dd className="none">
+                        <dd
+                            className="none"
+                            onClick={() => {
+                                setpolicyOpen(true);
+                                setpolicyType("terms");
+                            }}
+                        >
                             <h4>이용약관</h4>
                             <span>
                                 <DDS.button.default className="dds button none" icon={<DDS.icons.angleRight />} />
                             </span>
                         </dd>
-                        <dd className="none">
+                        <dd
+                            className="none"
+                            onClick={() => {
+                                setpolicyOpen(true);
+                                setpolicyType("privacy");
+                            }}
+                        >
                             <h4>개인정보처리방침</h4>
                             <span>
                                 <DDS.button.default className="dds button none" icon={<DDS.icons.angleRight />} />
@@ -71,14 +87,17 @@ const Home = observer((props) => {
                     <dl>
                         <dd className="none">
                             <div className="alarm-info">
-                                <h4>앱 버전 V1.0.0</h4>
+                                <h4>앱 버전 V{auth.loginResult.appVersion}</h4>
                             </div>
-                            <span>
-                                <DDS.button.default className="dds button primary">업데이트</DDS.button.default>
-                            </span>
+                            {auth.loginResult.appVersion !== auth.loginResult.latestAppVersion && (
+                                <span>
+                                    <DDS.button.default className="dds button primary">업데이트</DDS.button.default>
+                                </span>
+                            )}
                         </dd>
                     </dl>
                 </div>
+                <DK_Template_Policy open={policyOpen} setopen={setpolicyOpen} type={policyType} store={store} />
             </DDS.layout.content>
             {/* Content */}
         </DDS.layout.container>
