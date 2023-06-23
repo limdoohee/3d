@@ -169,17 +169,11 @@ const MisteryBox = observer((props) => {
 
             // console.log(intersects[0].object.name, intersects[0].object.parent.name);
             if (intersects[0].object.parent.name === "box" || intersects[0].object.parent.name === "BoxBpdy" || intersects[0].object.parent.name === "BoxLid") {
-                setAction(animationActions[1]);
                 // gsap.to(intersects[0].object.position, {
                 //     x: -3,
                 //     ease: "power3.inOut",
                 //     duration: 1.2,
                 // });
-
-                gsap.to(intersects[0].object.parent, { visible: false, duration: 0.5 });
-                gsap.to(intersects[0].object.parent.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                gsap.to(shadow.material, { opacity: 0, duration: 1 });
-                gsap.to(space, { receiveShadow: true, duration: 1, delay: 0.5 });
 
                 dropSeq = drop.data.curr.dropSeq;
                 dropRound = drop.data.curr.dropRound;
@@ -187,7 +181,13 @@ const MisteryBox = observer((props) => {
                 a = assets.filter((e) => e.id === dropRound);
 
                 drop.dropArt({ dropSeq }, (e) => {
-                    if (e === "ok") {
+                    if (e.id === "ok") {
+                        setAction(animationActions[1]);
+                        gsap.to(intersects[0].object.parent, { visible: false, duration: 0.5 });
+                        gsap.to(intersects[0].object.parent.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
+                        gsap.to(shadow.material, { opacity: 0, duration: 1 });
+                        gsap.to(space, { receiveShadow: true, duration: 1, delay: 0.5 });
+
                         setTimeout(() => {
                             loader.load(a[0].popupUrl, (object) => {
                                 // setCurr(object);
@@ -234,7 +234,7 @@ const MisteryBox = observer((props) => {
                                 }, 1000);
                                 clock = new THREE.Clock();
                             });
-                        }, 1000);
+                        }, 700);
                     }
                 });
             }
