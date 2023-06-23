@@ -8,26 +8,45 @@ import DDS_Icons from "../../_lib/component/icons";
 
 const Component = {
     container: (props) => {
-        const { className, children, store } = props;
+        const { className, children, store, pageMotion } = props;
         const { common } = store;
         const [messageApi, contextHolder] = message.useMessage();
         common.messageApiLoad(messageApi);
 
         return (
-            <div
-                // initial={{ x: 50, opacity: 0, duration: 300 }}
-                // animate={{ x: 0, opacity: 1, duration: 300 }}
-                // exit={{ x: 50, opacity: 0, duration: 300 }}
-                // transition={{
-                //     type: "spring",
-                //     stiffness: 260,
-                //     damping: 20,
-                // }}
-                className={`dds container ${className}`}
-            >
-                {contextHolder}
-                {children}
-            </div>
+            <>
+                {pageMotion ? (
+                    <motion.div
+                        initial={{ x: 50, opacity: 0, duration: 300 }}
+                        animate={{ x: 0, opacity: 1, duration: 300 }}
+                        exit={{ x: 50, opacity: 0, duration: 300 }}
+                        transition={{
+                            type: "spring",
+                            stiffness: 260,
+                            damping: 20,
+                        }}
+                        className={`dds container ${className}`}
+                    >
+                        {contextHolder}
+                        {children}
+                    </motion.div>
+                ) : (
+                    <div
+                        // initial={{ x: 50, opacity: 0, duration: 300 }}
+                        // animate={{ x: 0, opacity: 1, duration: 300 }}
+                        // exit={{ x: 50, opacity: 0, duration: 300 }}
+                        // transition={{
+                        //     type: "spring",
+                        //     stiffness: 260,
+                        //     damping: 20,
+                        // }}
+                        className={`dds container ${className}`}
+                    >
+                        {contextHolder}
+                        {children}
+                    </div>
+                )}
+            </>
         );
     },
     // /////////////////////////////////////////////////////////////////////////////////////// Back

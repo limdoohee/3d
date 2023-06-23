@@ -16,3 +16,7 @@
 .ant-switch-checked .ant-switch-handle {
     inset-inline-start: calc(100% - 28px) !important;
 }
+
+:where(.css-dev-only-do-not-override-1s1q2x5).ant-switch.ant-switch-checked .ant-switch-inner {
+    background: var(--color-black);
+}

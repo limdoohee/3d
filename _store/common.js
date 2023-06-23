@@ -42,6 +42,8 @@ class Store {
         measurementId: "G-6065J3XYB0",
     };
 
+    policyContent = null;
+
     constructor(store) {
         this.store = store;
         makeAutoObservable(this);
@@ -117,7 +119,7 @@ class Store {
         this.debug(this.pageInit);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 데이터 수집
     async analysisSubmit(params, callback) {
         await this.getBuildId();
         params.memberSeq = this.store.auth.loginResult.seq;
@@ -132,7 +134,20 @@ class Store {
                 callback && callback(data.data ? data.data : data);
             });
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 데이터 수집
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 수신 변경
+    async policy(params, callback) {
+        await Api.get(`/dks-api/v2/policy`, params, this.store.auth.loginResult.loginToken)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.result == "ok") {
+                    this.policyContent = data.data.content;
+                }
+                callback && callback(data.data ? data.data : data);
+            });
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 수신 변경
 
     messageApiLoad(el) {
         this.messageApi = el;

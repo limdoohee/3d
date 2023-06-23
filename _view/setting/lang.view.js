@@ -48,32 +48,53 @@ const Home = observer((props) => {
     ];
 
     return (
-        <DDS.layout.container className={"fluid"} store={store}>
+        <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
             <DK_template_header.default store={store} title={lang.t("setting.title")} right={headerRight} />
             <DK_template_GNB.default store={store} />
             {/* Content */}
             <DDS.layout.content>
                 <div className="page-setting sub">
                     <dl className="none">
-                        <dd className="none">
+                        <dd
+                            className="none"
+                            onClick={() => {
+                                lang.changeLanguage("ko");
+                            }}
+                        >
                             <h4>
                                 <span>한국어</span>
                             </h4>
-                            <span>
-                                <DDS.icons.check className={"dds icons checked"} />
-                            </span>
+                            {lang.i18n.language == "ko" && (
+                                <span>
+                                    <DDS.icons.check className={"dds icons checked"} />
+                                </span>
+                            )}
                         </dd>
-                        <dd className="none">
+                        <dd
+                            className="none"
+                            onClick={() => {
+                                lang.changeLanguage("en");
+                            }}
+                        >
                             <h4>
                                 <span>English</span>
                             </h4>
-                            <span>
-                                <DDS.icons.check className={"dds icons checked"} />
-                            </span>
+                            {lang.i18n.language == "en" && (
+                                <span>
+                                    <DDS.icons.check className={"dds icons checked"} />
+                                </span>
+                            )}
                         </dd>
                     </dl>
                     <div className="save">
-                        <DDS.button.default className="dds button primary block large">확인</DDS.button.default>
+                        <DDS.button.default
+                            className="dds button primary block large"
+                            onClick={() => {
+                                Router.back();
+                            }}
+                        >
+                            {lang.t(`common.check`)}
+                        </DDS.button.default>
                     </div>
                 </div>
             </DDS.layout.content>

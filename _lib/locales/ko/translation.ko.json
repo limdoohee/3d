@@ -28,6 +28,17 @@
             "recent": "최근 로그인"
         }
     },
+    "policy": {
+        "text1": "회원가입 진행시, ",
+        "text2": " 및 ",
+        "text3": "을 읽고 동의한 것으로 간주됩니다.",
+        "terms": {
+            "title": "이용약관"
+        },
+        "private": {
+            "title": "개인정보처리방침"
+        }
+    },
     "signup": {
         "terms": {
             "title": "드롭키친 서비스 이용약관에 동의해주세요",
@@ -96,7 +107,15 @@
     },
     "setting": {
         "title": "설정",
-        "profile": { "title": "내 정보 수정" }
+        "profile": { "title": "내 정보 수정" },
+        "alarm": { "title": "알림", "setting": { "title": "알림 설정" } },
+        "account": {
+            "title": "계정",
+            "info": { "title": "계정 정보" },
+            "language": { "title": "언어" }
+        },
+        "info": { "title": "정보", "info": { "title": "정보" } },
+        "logout": { "title": "로그아웃" }
     },
     "dropList": {
         "title": "드롭 리스트"

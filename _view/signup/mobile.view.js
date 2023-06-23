@@ -67,7 +67,7 @@ const Home = observer((props) => {
 
     const [isCategorySelect, setIsCategorySelect] = useState([true, ...Array(countryCodeDataEN.length - 1).fill(false)]);
 
-    const nextStep = (e) => {
+    const nextStep = async (e) => {
         e.preventDefault();
         var params = {
             clientId: sessionStorage.getItem("loginClientId"),
@@ -82,12 +82,12 @@ const Home = observer((props) => {
             terms2Agree: "Y",
         };
         console.log(params);
-        auth.phoneVerify(params, (e) => {
+        await auth.phoneVerify(params, async (e) => {
             if (e.result == "ok") {
-                cookie.save("loginToken", e.loginToken, { path: "/" });
-                sessionStorage.setItem("signupComplete", true);
-                console.log("parmas", params);
-                router.push("/signup/success");
+                await cookie.save("loginToken", e.loginToken, { path: "/" });
+                await sessionStorage.setItem("signupComplete", true);
+                common.debug(e.loginToken);
+                location.href = "/signup/success";
             } else {
                 common.messageApi.info({
                     content: "유효한 전화번호를 입력해 주세요.",

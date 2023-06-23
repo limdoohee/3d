@@ -23,14 +23,6 @@ const Home = {
         const [tabKey, settabKey] = useState(0);
 
         useEffect(() => {
-            if (common.ui.pointOpen === true) {
-                //
-            } else {
-                //
-            }
-        }, [common.ui.chatOpen]);
-
-        useEffect(() => {
             return () => {
                 onClose();
             };

@@ -28,6 +28,17 @@
             "recent": "recent login"
         }
     },
+    "policy": {
+        "text1": "By continuing, you agree are setting up a dropkitchen accout and agree to our ",
+        "text2": " and ",
+        "text3": "",
+        "terms": {
+            "title": "User Agreement"
+        },
+        "private": {
+            "title": "Privacy Policy."
+        }
+    },
     "signup": {
         "terms": {
             "title": "Drop Kitchen service terms and conditions please agree",
@@ -115,7 +126,15 @@
     },
     "setting": {
         "title": "setting",
-        "profile": { "title": "내 정보 수정" }
+        "profile": { "title": "Edit My Information" },
+        "alarm": { "title": "Notification", "setting": { "title": "Notification settings" } },
+        "account": {
+            "title": "Account",
+            "info": { "title": "Account information" },
+            "language": { "title": "Language" }
+        },
+        "info": { "title": "Information", "info": { "title": "Information" } },
+        "logout": { "title": "Log out" }
     },
     "main": {
         "modal": {
