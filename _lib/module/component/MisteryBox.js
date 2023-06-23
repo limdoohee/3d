@@ -37,7 +37,6 @@ const MisteryBox = observer((props) => {
     const fbxLoader = new FBXLoader();
 
     const setAction = (toAction) => {
-        // console.log(toAction);
         if (toAction != activeAction) {
             lastAction = activeAction;
             activeAction = toAction;
@@ -142,6 +141,14 @@ const MisteryBox = observer((props) => {
 
         // event
         window.addEventListener("click", onTouchBox);
+        window.addEventListener("resize", onWindowResize);
+    }
+
+    function onWindowResize() {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
     function onTouchBox(event) {
@@ -169,7 +176,7 @@ const MisteryBox = observer((props) => {
                 //     duration: 1.2,
                 // });
 
-                gsap.to(intersects[0].object.parent, { visible: false, duration: 0.5, delay: 0.5 });
+                gsap.to(intersects[0].object.parent, { visible: false, duration: 0.5 });
                 gsap.to(intersects[0].object.parent.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
                 gsap.to(shadow.material, { opacity: 0, duration: 1 });
                 gsap.to(space, { receiveShadow: true, duration: 1, delay: 0.5 });
@@ -221,7 +228,9 @@ const MisteryBox = observer((props) => {
 
                                 scene.add(object);
                                 setTimeout(() => {
-                                    setOpen(true);
+                                    drop.dropArt({ dropSeq }, (e) => {
+                                        setOpen(true);
+                                    });
                                 }, 1000);
                                 clock = new THREE.Clock();
                             });
