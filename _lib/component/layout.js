@@ -61,7 +61,9 @@ const Component = {
             <div className="ui back">
                 <h2
                     onClick={() => {
-                        if (back) {
+                        if (router.query.from) {
+                            location.href = router.query.from;
+                        } else if (back) {
                             back();
                         } else {
                             Router.back();

@@ -31,7 +31,13 @@ const Home = {
                                 className="dds button none"
                                 icon={<DDS.icons.angleLeft />}
                                 onClick={() => {
-                                    back ? back() : Router.back();
+                                    if (router.query.from) {
+                                        location.href = router.query.from;
+                                    } else if (back) {
+                                        back();
+                                    } else {
+                                        Router.back();
+                                    }
                                 }}
                             />
                         )}
