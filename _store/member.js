@@ -41,7 +41,7 @@ class Store {
         await Api.post(`/dks-api/v2/change_push_agree`, params, this.store.auth.loginResult.loginToken)
             .then((response) => response.json())
             .then((data) => {
-                callback && callback(data.data);
+                callback && callback(data);
             });
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 수신 변경

@@ -162,9 +162,10 @@ const Home = observer((props) => {
         ),
     ];
 
-    const changePushAgree = (type, status) => {
-        var params = { type: type, status: status };
-        member.changePushAgree(params, (e) => {});
+    const changePushAgree = async () => {
+        await member.changePushAgree({ type: "ads", status: "Y" }, (e) => {
+            if (e.id === "ok") member.changePushAgree({ type: "drop", status: "Y" });
+        });
     };
 
     const messageData = {
@@ -192,8 +193,7 @@ const Home = observer((props) => {
 
     const checkHandle = (checked) => {
         if (checked) {
-            changePushAgree("ads", "Y");
-            changePushAgree("drop", "Y");
+            changePushAgree();
 
             common.messageApi.open(messageData);
             setTimeout(() => {
