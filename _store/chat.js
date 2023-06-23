@@ -57,7 +57,7 @@ class Store {
             this.sb.disconnect();
         }
         this.state = {
-            currentlyJoinedChannel: null,
+            currentlyJoinedChannel: { name: null },
             currentlyUpdatingChannel: null,
             currentlyJoinedChannelOperators: [],
             messages: [],
@@ -176,9 +176,9 @@ class Store {
             };
 
             channelHandler.onMessageReceived = (channel, message) => {
-                const check = this.state.messages.findIndex((item) => item._iid == message._iid);
+                const check = this.state.messages.findIndex((item) => item.messageId == message.messageId);
                 console.log("onMessageReceived", check);
-                if (check < 1) {
+                if (check == -1) {
                     const updatedMessages = [...this.state.messages, message];
                     this.state = { ...this.state, messages: updatedMessages };
 
