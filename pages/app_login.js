@@ -15,7 +15,6 @@ import View from "../_view/index.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {
-    common.debug(props);
     useEffect(async () => {
         await cookie.remove("loginToken", { path: "/" });
         await cookie.save("loginToken", props.query.loginToken, { path: "/" });
