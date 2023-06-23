@@ -105,7 +105,10 @@ const Home = observer((props) => {
         }
         console.log(auth.loginResult.dropsAgree, auth.loginResult.adsAgree, device_alarm);
 
-        if (auth.loginResult.dropsAgree === "N" || auth.loginResult.adsAgree == "N") setOpen(true);
+        if (cookies.get("device_alarm") === "N") setOpen(true);
+        if (cookies.get("device_alarm") === "Y") {
+            if (auth.loginResult.dropsAgree === "N" || auth.loginResult.adsAgree === "N") setNotice(true);
+        }
     }, []);
 
     useEffect(() => {
@@ -166,7 +169,7 @@ const Home = observer((props) => {
 
     const messageData = {
         className: "orgMessage",
-        content: "2023년 5월 24일에 마케팅 및 알림 받는데 동의했습니다.",
+        content: `${time.getFullYear()}년 ${time.getMonth()}월 ${time.getDate()}일에 알림 받는데 동의하셨어요.잊지 않고 소식 전할게요!`,
     };
 
     const modalData = {
@@ -178,26 +181,18 @@ const Home = observer((props) => {
         confirm: {
             label: lang.t("main.modal.confirm"),
             action: () => {
-                if (device_alarm === "Y") {
-                    changePushAgree("marketing", "Y");
-                    changePushAgree("drop", "Y");
-                } else {
-                    window.location.href = " native://device_alarm_settings";
-                }
-                common.messageApi.open(messageData);
+                window.location.href = " native://device_alarm_settings";
             },
         },
         cancel: {
             label: lang.t("main.modal.close"),
-            action: () => {
-                setNotice(true);
-            },
+            action: () => {},
         },
     };
 
     const checkHandle = (checked) => {
         if (checked) {
-            changePushAgree("marketing", "Y");
+            changePushAgree("ads", "Y");
             changePushAgree("drop", "Y");
 
             common.messageApi.open(messageData);
@@ -205,6 +200,15 @@ const Home = observer((props) => {
                 setNotice(false);
             }, 3000);
         }
+    };
+
+    const Alarm = () => {
+        return (
+            <div className="notice">
+                <span>{lang.t("main.alarm")}</span>
+                <DDS.switch.default onChange={checkHandle} />
+            </div>
+        );
     };
 
     return (
@@ -217,34 +221,22 @@ const Home = observer((props) => {
                         <div className="left">
                             <img src="../../static/img/coachMark_left.png" alt="my gallery" />
                             <div>
-                                <h4>마이갤러리</h4>
-                                <p>
-                                    나의 갤러리로
-                                    <br />
-                                    이동할 수 있어요
-                                </p>
+                                <h4>{lang.t("main.coachMark.gallery.title")}</h4>
+                                <p>{lang.t("main.coachMark.gallery.desc")}</p>
                             </div>
                         </div>
                         <div className="right">
                             <img src="../../static/img/coachMark_right.png" alt="share" />
                             <div>
-                                <h4>공유하기</h4>
-                                <p>
-                                    친구에게
-                                    <br />
-                                    공유해보세요
-                                </p>
+                                <h4>{lang.t("main.coachMark.share.title")}</h4>
+                                <p>{lang.t("main.coachMark.share.desc")}</p>
                             </div>
                         </div>
                         <div className="center">
                             <img src="../../static/img/coachMark_center.png" alt="drop box" />
                             <div>
-                                <h4>드롭 박스</h4>
-                                <p>
-                                    진행중인 드롭을 탭해
-                                    <br />
-                                    디지털 아트를 받아보세요
-                                </p>
+                                <h4>{lang.t("main.coachMark.box.title")}</h4>
+                                <p>{lang.t("main.coachMark.box.desc")}</p>
                             </div>
                         </div>
                         <DDS.button.default
@@ -253,11 +245,11 @@ const Home = observer((props) => {
                                 setCoachMark("hidden");
                             }}
                         >
-                            시작하기
+                            {lang.t("main.coachMark.confirm")}
                         </DDS.button.default>
                     </div>
                     <div className="drop">
-                        <h2>{drop.data.curr.status === "processing" ? "Started Drop" : "Upcoming"}</h2>
+                        <h2>{drop.data.curr.status === "processing" ? "Ongoing Drop" : "Upcoming"}</h2>
                         <Timer expiryTimestamp={changeTime} />
                         {drop.data.curr.status === "processing" && (
                             <div className="owner">
@@ -267,12 +259,7 @@ const Home = observer((props) => {
                     </div>
                     {drop.data.curr.status && <MisteryBox {...props} />}
 
-                    {notice && (
-                        <div className="notice">
-                            <span>드롭키친 관련 알림 받기 동의</span>
-                            <DDS.switch.default onChange={checkHandle} />
-                        </div>
-                    )}
+                    {notice && <Alarm />}
                     {coachMark === "hidden" && <DDS.modal.bottom {...modalData} />}
                     <AlarmTemplate.default store={props.store} />
                 </DDS.layout.content>

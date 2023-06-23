@@ -21,21 +21,21 @@ const Home = observer((props) => {
     const { common, lang, auth, magazine } = store;
     const router = useRouter();
 
-    const headerRight = [
-        () => (
-            <DDS.button.default
-                className="dds button none"
-                icon={<DDS.icons.bars />}
-                onClick={() => {
-                    common.uiChange("gnbOpen", true);
-                }}
-            />
-        ),
-    ];
+    // const headerRight = [
+    //     () => (
+    //         <DDS.button.default
+    //             className="dds button none"
+    //             icon={<DDS.icons.bars />}
+    //             onClick={() => {
+    //                 common.uiChange("gnbOpen", true);
+    //             }}
+    //         />
+    //     ),
+    // ];
 
     return (
         <DDS.layout.container className={"fluid"} store={store}>
-            <DK_template_header.default store={store} title={lang.t("dropList.title")} right={headerRight} />
+            <DK_template_header.default store={store} title={lang.t("dropList.title")} />
             <DK_template_GNB.default store={store} />
             {/* Content */}
             <DDS.layout.content>

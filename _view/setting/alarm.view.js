@@ -88,7 +88,7 @@ const Home = observer((props) => {
                                     checked={checked.marketing}
                                     onChange={(e) => {
                                         setchecked((prev) => ({ ...prev, marketing: e }));
-                                        changePushAgree("marketing", e ? "Y" : "N");
+                                        changePushAgree("ads", e ? "Y" : "N");
                                     }}
                                 />
                             </span>
