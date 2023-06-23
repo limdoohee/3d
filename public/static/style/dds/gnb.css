@@ -77,6 +77,14 @@
     letter-spacing: -0.02em;
     color: #1f1f1f;
 }
+.dds.gnb .ant-drawer-body nav ul li a .dds.icons svg path {
+    fill: #1f1f1f;
+}
+.dds.gnb .ant-drawer-body nav ul li:last-child {
+    border-top: 1px solid #e6e6e6;
+    padding-top: 8px;
+    margin-top: 8px;
+}
 
 .dds.gnb nav svg path {
     fill: #1f1f1f;

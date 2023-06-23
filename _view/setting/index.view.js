@@ -48,7 +48,7 @@ const Home = observer((props) => {
     ];
 
     return (
-        <DDS.layout.container className={"fluid"} store={store}>
+        <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
             <DK_template_header.default store={store} title={lang.t("setting.title")} right={headerRight} />
             <DK_template_GNB.default store={store} />
             {/* Content */}
@@ -61,10 +61,10 @@ const Home = observer((props) => {
                             }}
                         >
                             <div className="profile">
-                                <DDS.profile.default />
+                                <DDS.profile.default src={auth.loginResult.profileImage} />
                                 <div className="name">
-                                    <h4>{auth.loginResult.name}</h4>
-                                    <p>내 정보 수정하기</p>
+                                    <h4>{auth.loginResult.nickname}</h4>
+                                    <p>{lang.t("setting.profile.title")}</p>
                                 </div>
                             </div>
                             <span>
@@ -73,26 +73,26 @@ const Home = observer((props) => {
                         </dd>
                     </dl>
                     <dl>
-                        <dt>알림</dt>
+                        <dt>{lang.t("setting.alarm.title")}</dt>
                         <dd
                             onClick={() => {
                                 Router.push(`/setting/alarm`);
                             }}
                         >
-                            <h4>알림 설정</h4>
+                            <h4>{lang.t("setting.alarm.setting.title")}</h4>
                             <span>
                                 <DDS.icons.angleRight />
                             </span>
                         </dd>
                     </dl>
                     <dl>
-                        <dt>계정</dt>
+                        <dt>{lang.t("setting.account.title")}</dt>
                         <dd
                             onClick={() => {
                                 Router.push(`/setting/account`);
                             }}
                         >
-                            <h4>계정 정보</h4>
+                            <h4>{lang.t("setting.account.info.title")}</h4>
                             <span>
                                 <DDS.icons.angleRight />
                             </span>
@@ -102,21 +102,21 @@ const Home = observer((props) => {
                                 Router.push(`/setting/lang`);
                             }}
                         >
-                            <h4>언어</h4>
+                            <h4>{lang.t("setting.account.language.title")}</h4>
                             <span>
-                                <strong>한국어</strong>
+                                <strong>{lang.i18n.language == "ko" ? "한국어" : "English"}</strong>
                                 <DDS.icons.angleRight />
                             </span>
                         </dd>
                     </dl>
                     <dl>
-                        <dt>정보</dt>
+                        <dt>{lang.t("setting.info.title")}</dt>
                         <dd
                             onClick={() => {
                                 Router.push(`/setting/info`);
                             }}
                         >
-                            <h4>정보</h4>
+                            <h4>{lang.t("setting.info.info.title")}</h4>
                             <span>
                                 <DDS.icons.angleRight />
                             </span>
@@ -128,7 +128,7 @@ const Home = observer((props) => {
                                 Router.push(`/setting/logout`);
                             }}
                         >
-                            <h4>로그아웃</h4>
+                            <h4>{lang.t("setting.logout.title")}</h4>
                             <span>
                                 <DDS.icons.angleRight />
                             </span>

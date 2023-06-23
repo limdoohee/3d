@@ -3,6 +3,7 @@ import Router, { useRouter } from "next/router";
 import { makeAutoObservable, toJS, configure } from "mobx";
 import copy from "copy-to-clipboard";
 import { BrowserView, MobileView, isBrowser, isMobile, isAndroid } from "react-device-detect";
+import Cookies from "react-cookies";
 //------------------------------------------------------------------------------- Module//------------------------------------------------------------------------------- Module
 import Api from "../_lib/module/api";
 import i18n from "../_lib/module/i18n";
@@ -40,6 +41,8 @@ class Store {
         appId: "1:998669151634:web:0d49a1e3107633eeb9a54b",
         measurementId: "G-6065J3XYB0",
     };
+
+    policyContent = null;
 
     constructor(store) {
         this.store = store;
@@ -110,12 +113,13 @@ class Store {
     init() {
         // localStorage 기본 언어 설정
         localStorage.getItem("lang") && this.store.lang.changeLanguage(localStorage.getItem("lang"));
+        Cookies.save("lang", localStorage.getItem("lang"));
         this.pageInit = true;
         this.debug("페이지 Init 완료");
         this.debug(this.pageInit);
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 데이터 수집
     async analysisSubmit(params, callback) {
         await this.getBuildId();
         params.memberSeq = this.store.auth.loginResult.seq;
@@ -130,7 +134,20 @@ class Store {
                 callback && callback(data.data ? data.data : data);
             });
     }
-    ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 데이터 수집
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 수신 변경
+    async policy(params, callback) {
+        await Api.get(`/dks-api/v2/policy`, params, this.store.auth.loginResult.loginToken)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.result == "ok") {
+                    this.policyContent = data.data.content;
+                }
+                callback && callback(data.data ? data.data : data);
+            });
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 수신 변경
 
     messageApiLoad(el) {
         this.messageApi = el;

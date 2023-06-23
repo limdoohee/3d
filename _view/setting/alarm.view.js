@@ -17,8 +17,11 @@ import Date_Module from "../../_lib/module/date";
 
 const Home = observer((props) => {
     const { store } = props;
-    const { common, lang, auth, magazine } = store;
+    const { common, lang, auth, member } = store;
     const router = useRouter();
+
+    const checkSet = { drop: auth.loginResult.dropsAgree == "Y" ? true : false, marketing: auth.loginResult.adsAgree == "Y" ? true : false };
+    const [checked, setchecked] = useState(checkSet);
 
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {};
@@ -26,7 +29,7 @@ const Home = observer((props) => {
 
     //------------------------------------------------- Router isReady
     useEffect(() => {
-        if (router.isReady && router.pathname == "/setting") {
+        if (router.isReady && router.pathname == "/setting/alarm") {
             common.getBuildId();
             initLoad({
                 callback: (e) => {},
@@ -47,39 +50,60 @@ const Home = observer((props) => {
         ),
     ];
 
+    const changePushAgree = (type, status) => {
+        var params = { type: type, status: status };
+        member.changePushAgree(params, (e) => {});
+    };
+
     return (
-        <DDS.layout.container className={"fluid"} store={store}>
+        <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
             <DK_template_header.default store={store} title={lang.t("setting.title")} right={headerRight} />
             <DK_template_GNB.default store={store} />
             {/* Content */}
             <DDS.layout.content>
                 <div className="page-setting main">
-                    <dl>
-                        <dd className="none">
-                            <div className="alarm-info">
-                                <h4>광고성 정보 수신 동의</h4>
-                                <p>
-                                    드롭, 이벤트 및 다양한 혜택과 정보 알림을
-                                    <br />
-                                    받기 위해서 기기 알림을 켜주세요!
-                                </p>
-                            </div>
-                            <span>
-                                <DDS.button.default className="dds button primary small">알림 켜기</DDS.button.default>
-                            </span>
-                        </dd>
-                    </dl>
+                    {Router.query.device_alarm == "N" && (
+                        <dl>
+                            <dd className="none">
+                                <div className="alarm-info">
+                                    <h4>광고성 정보 수신 동의</h4>
+                                    <p>
+                                        드롭, 이벤트 및 다양한 혜택과 정보 알림을
+                                        <br />
+                                        받기 위해서 기기 알림을 켜주세요!
+                                    </p>
+                                </div>
+                                <span>
+                                    <DDS.button.default className="dds button primary small">알림 켜기</DDS.button.default>
+                                </span>
+                            </dd>
+                        </dl>
+                    )}
                     <dl>
                         <dd className="none">
                             <h4>광고성 정보 수신 동의</h4>
                             <span>
-                                <DDS.switch.default />
+                                <DDS.switch.default
+                                    className="primary small"
+                                    checked={checked.marketing}
+                                    onChange={(e) => {
+                                        setchecked((prev) => ({ ...prev, marketing: e }));
+                                        changePushAgree("marketing", e ? "Y" : "N");
+                                    }}
+                                />
                             </span>
                         </dd>
                         <dd className="none">
                             <h4>서비스 알림 동의</h4>
                             <span>
-                                <DDS.switch.default />
+                                <DDS.switch.default
+                                    className="primary small"
+                                    checked={checked.drop}
+                                    onChange={(e) => {
+                                        setchecked((prev) => ({ ...prev, drop: e }));
+                                        changePushAgree("drop", e ? "Y" : "N");
+                                    }}
+                                />
                             </span>
                         </dd>
                     </dl>

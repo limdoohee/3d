@@ -4,11 +4,23 @@ import { Switch } from "antd";
 const Component = {
     default: (props) => {
         const { className } = props;
-        delete props.className;
+
+        var setting = {};
+        for (const key in props) {
+            if (key !== "className") {
+                setting[key] = props[key];
+            }
+        }
+
+        const [checked, setchecked] = useState(props.checked);
+
+        useEffect(() => {
+            setchecked(setting.checked);
+        }, [setting.checked]);
 
         return (
             <>
-                <Switch {...props} className={`dds switch ${className}`} onChange={props.onChange} />
+                <Switch {...setting} className={`dds switch ${className}`} onChange={props.onChange} />
             </>
         );
     },
