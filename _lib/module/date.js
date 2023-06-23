@@ -8,7 +8,7 @@ import { useTimer, useStopwatch } from "react-timer-hook";
 import moment from "moment";
 const pageFunc = {
     timeRemain: {
-        default: observer(({ time, onExpire }) => {
+        default: ({ time, onExpire }) => {
             var now = moment().unix();
             var timestamp = moment(time).unix();
             var currentTime = now - timestamp;
@@ -30,8 +30,8 @@ const pageFunc = {
             }
 
             return <>{timePrint}</>;
-        }),
-        daysOnly: observer(({ time, onExpire }) => {
+        },
+        daysOnly: ({ time, onExpire }) => {
             const authTime = new Date();
             authTime.setSeconds(authTime.getSeconds());
             var expiryTimestamp = authTime;
@@ -57,7 +57,7 @@ const pageFunc = {
             }, [time]);
 
             return <>{`${days}일 ${hours}시간 ${minutes}분 ${seconds}초`}</>;
-        }),
+        },
     },
 };
 
