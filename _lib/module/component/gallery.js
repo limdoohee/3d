@@ -18,7 +18,7 @@ const Gallery = observer((props) => {
     assets.forEach((e) => map.set(e.id, e));
     dropData.forEach((e) => map.set(e.dropRound, { ...map.get(e.dropRound), ...e }));
     dropData = gallery.data.myDropCnt === 0 ? [] : Array.from(map.values()).filter((e) => e.dropSeq);
-    console.log(dropData);
+
     const { back, setBack } = props;
 
     const scene = new THREE.Scene();
@@ -87,9 +87,6 @@ const Gallery = observer((props) => {
         // controls
         controls = new MapControls(camera, renderer.domElement);
         dropData.length === 0 ? controls.target.set(0, 0, 0) : controls.target.set((dropData.length - 1) * 2.5, 0, 0);
-        controls.touches = {
-            ONE: THREE.TOUCH.PAN,
-        };
         controls.minDistance = 5;
         controls.maxDistance = 15;
         controls.enableRotate = false;
@@ -97,22 +94,22 @@ const Gallery = observer((props) => {
 
         window.addEventListener("click", clickDrop);
 
-        // controls.addEventListener("change", () => {
-        //     const x = controls.target.x;
-        //     if (x < minX || x > maxX) {
-        //         controls.target.setX(x < minX ? minX : maxX);
-        //         camera.position.setX(positionX);
-        //     }
+        controls.addEventListener("change", () => {
+            const x = controls.target.x;
+            if (x < minX || x > maxX) {
+                controls.target.setX(x < minX ? minX : maxX);
+                camera.position.setX(positionX);
+            }
 
-        //     const z = controls.target.z;
-        //     if (z < minZ || z > maxZ) {
-        //         controls.target.setZ(z < minZ ? minZ : maxZ);
-        //         camera.position.setZ(positionZ);
-        //     }
+            const z = controls.target.z;
+            if (z < minZ || z > maxZ) {
+                controls.target.setZ(z < minZ ? minZ : maxZ);
+                camera.position.setZ(positionZ);
+            }
 
-        //     if (!isNaN(camera.position.x)) positionX = camera.position.x;
-        //     if (!isNaN(camera.position.z)) positionZ = camera.position.z;
-        // });
+            if (!isNaN(camera.position.x)) positionX = camera.position.x;
+            if (!isNaN(camera.position.z)) positionZ = camera.position.z;
+        });
 
         // 첫 로딩시, 화면 줌인
         setTimeout(() => {
@@ -149,8 +146,8 @@ const Gallery = observer((props) => {
     }
 
     function setSpace() {
-        // const space = Math.ceil(dropData.length / 7) + 1;
-        for (let i = 1; i <= 5; i++) {
+        const space = Math.ceil(dropData.length / 7) + 1;
+        for (let i = 1; i <= space; i++) {
             fbx.load("../../static/3d/gallery/gallery" + i + ".fbx", (obj) => {
                 obj.scale.multiplyScalar(0.3);
                 obj.position.z = 10;

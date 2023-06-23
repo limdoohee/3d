@@ -11,17 +11,22 @@ const Home = observer((props) => {
     const router = useRouter();
     const { store } = props;
     const { common, lang, auth, gallery } = store;
-    const [open, setOpen] = useState(false);
+    const [modalOpen, setModalOpen] = useState(false);
     const [amount, setAmount] = useState(1);
     const [buyingAmount, setBuyingAmount] = useState(0);
     const [descDisabled, setDescDisabled] = useState(false);
     const [incrDisabled, setIncrDisabled] = useState(false);
     const [helper, setHelper] = useState(false);
+    const [boxOpen, setBoxOpen] = useState(false);
 
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {
         gallery.getLuckyBox("", (e) => {
             setBuyingAmount(gallery.luckyBox.length);
+            callback && callback(e);
+        });
+        gallery.getData({ sendbirdId: "dropkitchen_member_" + auth.loginResult.seq }, (e) => {
+            // common.debug(e);
             callback && callback(e);
         });
     };
@@ -62,11 +67,6 @@ const Home = observer((props) => {
         }
     }
 
-    useEffect(() => {
-        common.getBuildId();
-        console.log(auth.loginResult);
-    }, []);
-
     const buyingModal = () => {
         return (
             <ul className="buyRandomBox">
@@ -104,8 +104,8 @@ const Home = observer((props) => {
     };
 
     const modalData = {
-        open: open,
-        setOpen: setOpen,
+        open: modalOpen,
+        setOpen: setModalOpen,
         title: lang.t("random.modal.title"),
         context: buyingModal(),
         confirm: {
@@ -119,7 +119,11 @@ const Home = observer((props) => {
                 auth.loginResult.pointAmount >= 1500 &&
                     gallery.buyLuckyBox({ amount }, (e) => {
                         setBuyingAmount(gallery.luckyBox.length + amount);
-                        e.id === "ok" && common.messageApi.open(messageData);
+                        e.id === "ok" &&
+                            common.messageApi.open({
+                                className: "buyingMessage",
+                                content: "랜덤박스 구매가 완료되었습니다.",
+                            });
                     });
             },
         },
@@ -129,9 +133,15 @@ const Home = observer((props) => {
         },
     };
 
-    const messageData = {
-        className: "buyingMessage",
-        content: "랜덤박스 구매가 완료되었습니다.",
+    const Text = () => {
+        return boxOpen ? (
+            <>
+                <h2>{lang.t("random.drop.title")}</h2>
+                <h3>{lang.t("random.drop.desc")}</h3>
+            </>
+        ) : (
+            <h2>{lang.t("random.desc")}</h2>
+        );
     };
 
     return (
@@ -145,17 +155,33 @@ const Home = observer((props) => {
                         {gallery.data.unconfirmedLuckyBox && <div className="chips">N</div>}
                     </div>
                     <div className="bottom">
-                        <h2>{lang.t("random.desc")}</h2>
+                        <Text />
                         <div className="ddsBtnWrapper">
                             <DDS.button.default
                                 className={`dds button ${gallery.luckyBox.length > 0 ? "secondary" : "primary"}`}
                                 onClick={() => {
-                                    setOpen(true);
+                                    boxOpen ? router.push("userGallery?memberSeq=" + auth.loginResult.seq) : setModalOpen(true);
                                 }}
                             >
-                                구매하기
+                                {boxOpen ? "받은 드롭 보기" : "구매하기"}
                             </DDS.button.default>
-                            {gallery.luckyBox.length > 0 && <DDS.button.default className="dds button primary">랜덤박스 열기</DDS.button.default>}
+                            {/* {gallery.luckyBox.length > 0 && ( */}
+                            <DDS.button.default
+                                className="dds button primary"
+                                onClick={() => {
+                                    boxOpen
+                                        ? setBoxOpen(false)
+                                        : gallery.data.totalDropCnt === gallery.data.myDropCnt
+                                        ? common.messageApi.open({
+                                              icon: <DDS.icons.circleExclamation />,
+                                              className: "arMessage",
+                                              content: "이미 모든 드롭을 보유하고 있습니다.",
+                                          })
+                                        : setBoxOpen(true);
+                                }}
+                            >
+                                {boxOpen ? "확인" : "랜덤박스 열기"}
+                            </DDS.button.default>
                         </div>
                     </div>
                 </div>

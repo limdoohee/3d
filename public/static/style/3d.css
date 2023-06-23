@@ -5,6 +5,90 @@
     z-index: -1;
 }
 
+.coachMark {
+    position: absolute;
+    background: rgba(41, 41, 41, 0.5);
+    width: 100vw;
+    height: 100vh;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    transition: all 0.2s ease-out;
+}
+
+.coachMark.hidden {
+    opacity: 0;
+    display: none;
+}
+
+.coachMark > div {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.coachMark > div > div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    color: #fff;
+}
+
+.coachMark > div > div > h4 {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 100%;
+}
+
+.coachMark > div > div > p {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 130%;
+    margin-top: 6px;
+}
+
+.coachMark > div.left {
+    right: 110px;
+    top: -6px;
+    align-items: end;
+}
+
+.coachMark > div.left > div {
+    position: relative;
+    right: 13px;
+}
+
+.coachMark > div.right > div {
+    position: relative;
+    left: 13px;
+}
+
+.coachMark > div.right {
+    right: 49px;
+    top: -6px;
+    align-items: start;
+}
+
+.coachMark > div.center {
+    bottom: 20vh;
+    left: calc(50% - 80px);
+}
+
+.coachMark > div.center h4 {
+    margin-top: 16px;
+}
+
+.coachMark .dds.button.primary {
+    position: absolute;
+    left: 20px;
+    bottom: 34px;
+    width: calc(100vw - 40px);
+    height: 48px;
+    justify-content: center;
+}
+
 .drop {
     position: relative;
     z-index: 1;
@@ -44,12 +128,12 @@
     border: 1px solid #fff;
 }
 
-.userInfo .profileMod .dds.icons svg {
+.userInfo .dds.profile + .dds.icons svg {
     width: 10px;
     height: 10px;
 }
 
-.userInfo .profile {
+.userInfo > .profile {
     display: flex;
     gap: 16px;
     margin-bottom: 12px;

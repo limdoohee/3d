@@ -85,3 +85,7 @@
     padding-top: 8px;
     margin-top: 8px;
 }
+
+.dds.gnb nav svg path {
+    fill: #1f1f1f;
+}
