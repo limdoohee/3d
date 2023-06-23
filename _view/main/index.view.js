@@ -2,22 +2,26 @@ import React, { useEffect, useState } from "react";
 import Router, { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 import { useTimer } from "react-timer-hook";
-import MisteryBox from "../../_lib/module/component/MisteryBox";
+import { Cookies } from "react-cookie";
 
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
 import DK_template_GNB from "../../_lib/template/gnb";
 
 import AlarmTemplate from "../../_lib/template/alarm";
+import MisteryBox from "../../_lib/module/component/MisteryBox";
+
+const cookies = new Cookies();
 
 const Home = observer((props) => {
     const router = useRouter();
     const { store } = props;
-    const { drop, lang, common, auth, gallery } = store;
+    const { drop, lang, common, auth, gallery, member } = store;
     const [changeTime, setTime] = useState();
     const [open, setOpen] = useState(false);
     const [notice, setNotice] = useState(false);
     const [coachMark, setCoachMark] = useState("hidden");
+    const device_alarm = cookies.get("device_alarm");
 
     /** 타이머 관련 변수 */
     let openTime;
@@ -95,11 +99,13 @@ const Home = observer((props) => {
     }
 
     useEffect(() => {
-        // setOpen(true);
         if (sessionStorage.getItem("signupComplete")) {
             setCoachMark("");
             sessionStorage.removeItem("signupComplete");
         }
+        console.log(auth.loginResult.dropsAgree, auth.loginResult.adsAgree, device_alarm);
+
+        if (auth.loginResult.dropsAgree === "N" || auth.loginResult.adsAgree == "N") setOpen(true);
     }, []);
 
     useEffect(() => {
@@ -153,6 +159,11 @@ const Home = observer((props) => {
         ),
     ];
 
+    const changePushAgree = (type, status) => {
+        var params = { type: type, status: status };
+        member.changePushAgree(params, (e) => {});
+    };
+
     const messageData = {
         className: "orgMessage",
         content: "2023년 5월 24일에 마케팅 및 알림 받는데 동의했습니다.",
@@ -167,6 +178,12 @@ const Home = observer((props) => {
         confirm: {
             label: lang.t("main.modal.confirm"),
             action: () => {
+                if (device_alarm === "Y") {
+                    changePushAgree("marketing", "Y");
+                    changePushAgree("drop", "Y");
+                } else {
+                    window.location.href = " native://device_alarm_settings";
+                }
                 common.messageApi.open(messageData);
             },
         },
@@ -180,6 +197,9 @@ const Home = observer((props) => {
 
     const checkHandle = (checked) => {
         if (checked) {
+            changePushAgree("marketing", "Y");
+            changePushAgree("drop", "Y");
+
             common.messageApi.open(messageData);
             setTimeout(() => {
                 setNotice(false);

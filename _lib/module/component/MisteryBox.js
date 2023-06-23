@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { observer } from "mobx-react-lite";
 import Router, { useRouter } from "next/router";
+import assets from "./assets.json";
 
 import DDS from "../../component/dds";
 import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
 import gsap from "gsap";
-import { GUI } from "three/addons/libs/lil-gui.module.min.js";
 
 const MisteryBox = observer((props) => {
     const router = useRouter();
@@ -21,9 +21,8 @@ const MisteryBox = observer((props) => {
     let mixer = new THREE.AnimationMixer();
     let clock = new THREE.Clock();
     const loader = new FBXLoader();
-    // const [curr, setCurr] = useState(); //현재드롭
-    // const [next, setNext] = useState(); //다음드롭
     let dropSeq, dropRound;
+    let a;
 
     const messageData = {
         icon: <DDS.icons.circleExclamation />,
@@ -45,6 +44,7 @@ const MisteryBox = observer((props) => {
             lastAction.fadeOut(1);
             activeAction.reset();
             activeAction.fadeIn(1);
+            activeAction.setLoop(THREE.LoopOnce);
             activeAction.play();
         }
     };
@@ -139,102 +139,6 @@ const MisteryBox = observer((props) => {
         // plane.position.z = -2;
         scene.add(plane);
 
-        // fbxLoader.load(
-        //     "../../static/3d/models/vanguard_t_choonyung.fbx",
-        //     (object) => {
-        //         object.scale.multiplyScalar(0.02);
-        //         mixer = new THREE.AnimationMixer(object);
-
-        //         const animationAction = mixer.clipAction(object.animations[0]);
-        //         animationActions.push(animationAction);
-        //         animationsFolder.add(animations, "default");
-        //         activeAction = animationActions[0];
-
-        //         scene.add(object);
-
-        //         //add an animation from another file
-        //         fbxLoader.load(
-        //             "../../static/3d/models/vanguard@samba.fbx",
-        //             (object) => {
-        //                 console.log("loaded samba");
-
-        //                 const animationAction = mixer.clipAction(object.animations[0]);
-        //                 animationActions.push(animationAction);
-        //                 animationsFolder.add(animations, "samba");
-
-        //                 //add an animation from another file
-        //                 fbxLoader.load(
-        //                     "../../static/3d/models/vanguard@bellydance.fbx",
-        //                     (object) => {
-        //                         console.log("loaded bellydance");
-        //                         const animationAction = mixer.clipAction(object.animations[0]);
-        //                         animationActions.push(animationAction);
-        //                         animationsFolder.add(animations, "bellydance");
-
-        //                         //add an animation from another file
-        //                         fbxLoader.load(
-        //                             "../../static/3d/models/vanguard@goofyrunning.fbx",
-        //                             (object) => {
-        //                                 console.log("loaded goofyrunning");
-        //                                 object.animations[0].tracks.shift(); //delete the specific track that moves the object forward while running
-        //                                 //console.dir(object.animations[0])
-        //                                 const animationAction = mixer.clipAction(object.animations[0]);
-        //                                 animationActions.push(animationAction);
-        //                                 animationsFolder.add(animations, "goofyrunning");
-
-        //                                 modelReady = true;
-        //                             },
-        //                             (xhr) => {
-        //                                 console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-        //                             },
-        //                             (error) => {
-        //                                 console.log(error);
-        //                             },
-        //                         );
-        //                     },
-        //                     (xhr) => {
-        //                         console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-        //                     },
-        //                     (error) => {
-        //                         console.log(error);
-        //                     },
-        //                 );
-        //             },
-        //             (xhr) => {
-        //                 console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-        //             },
-        //             (error) => {
-        //                 console.log(error);
-        //             },
-        //         );
-        //     },
-        //     (xhr) => {
-        //         console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
-        //     },
-        //     (error) => {
-        //         console.log(error);
-        //     },
-        // );
-
-        // const animations = {
-        //     Loop: function () {  // started drop
-        //         setAction(animationActions[0]);
-        //     },
-        //     Unlocking: function () {
-        //         setAction(animationActions[1]);
-        //     },
-        //     LockedShaking: function () { // upcoming
-        //         setAction(animationActions[2]);
-        //     },
-        //     Disappear: function () {
-        //         setAction(animationActions[3]);
-        //     },
-        // };
-
-        // const gui = new GUI();
-        // const animationsFolder = gui.addFolder("Animations");
-        // animationsFolder.open();
-
         // event
         window.addEventListener("click", onTouchBox);
         window.addEventListener("resize", onWindowResize);
@@ -258,18 +162,19 @@ const MisteryBox = observer((props) => {
         raycaster.setFromCamera(pointer, camera);
 
         const intersects = raycaster.intersectObjects(scene.children);
-        if (intersects.length > 0 && drop.data.curr.status !== "ready") {
+        if (intersects.length > 0 && drop.data.curr.status === "processing") {
             // parentName = intersects[0].object.parent.name;
             const shadow = scene.getObjectByName("shadow");
             const space = scene.getObjectByName("space");
 
-            // console.log(intersects);
-            if (intersects[0].object.name === "Cover") {
-                gsap.to(intersects[0].object.position, {
-                    x: -3,
-                    ease: "power3.inOut",
-                    duration: 1.2,
-                });
+            // console.log(intersects[0].object.name, intersects[0].object.parent.name);
+            if (intersects[0].object.parent.name === "box" || intersects[0].object.parent.name === "BoxBpdy" || intersects[0].object.parent.name === "BoxLid") {
+                setAction(animationActions[1]);
+                // gsap.to(intersects[0].object.position, {
+                //     x: -3,
+                //     ease: "power3.inOut",
+                //     duration: 1.2,
+                // });
 
                 gsap.to(intersects[0].object.parent, { visible: false, duration: 0.5 });
                 gsap.to(intersects[0].object.parent.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
@@ -279,32 +184,58 @@ const MisteryBox = observer((props) => {
                 dropSeq = drop.data.curr.dropSeq;
                 dropRound = drop.data.curr.dropRound;
 
-                loader.load(`../../static/3d/${dropRound}/Popup.fbx`, (object) => {
-                    // setCurr(object);
-                    object.scale.multiplyScalar(0.12);
-                    object.position.y = 2;
-                    mixer = new THREE.AnimationMixer(object);
-                    const action = mixer.clipAction(object.animations[0]);
-                    // action.clampWhenFinished = true;
-                    action.loop = THREE.LoopOnce;
-                    action.play();
-                    mixer.addEventListener("finished", function (e) {
-                        console.log("finished");
-                    });
+                a = assets.filter((e) => e.id === dropRound);
 
-                    object.traverse((child) => {
-                        if (child instanceof THREE.Mesh) {
-                            child.castShadow = true;
-                        }
-                    });
+                drop.dropArt({ dropSeq }, (e) => {
+                    if (e === "ok") {
+                        setTimeout(() => {
+                            loader.load(a[0].popupUrl, (object) => {
+                                // setCurr(object);
+                                object.scale.multiplyScalar(0.12);
+                                object.position.y = 2;
+                                object.position.z = 3;
+                                mixer = new THREE.AnimationMixer(object);
+                                const action = mixer.clipAction(object.animations[0]);
+                                action.clampWhenFinished = true;
+                                action.loop = THREE.LoopOnce;
+                                action.play();
 
-                    scene.add(object);
-                    setTimeout(() => {
-                        drop.dropArt({ dropSeq }, (e) => {
-                            setOpen(true);
-                        });
-                    }, 1000);
-                    clock = new THREE.Clock();
+                                object.traverse(function (child) {
+                                    if (child.isMesh) {
+                                        let colorMap,
+                                            bumpMap,
+                                            specularMap,
+                                            normalMap = null;
+                                        if (a[0].colorMap) colorMap = new THREE.TextureLoader().load(a[0].colorMap);
+                                        if (a[0].bumpMap) bumpMap = new THREE.TextureLoader().load(a[0].bumpMap);
+                                        if (a[0].specularMap) specularMap = new THREE.TextureLoader().load(a[0].specularMap);
+                                        if (a[0].normalMap) normalMap = new THREE.TextureLoader().load(a[0].normalMap);
+
+                                        const material = new THREE.MeshPhongMaterial({
+                                            map: colorMap,
+                                            bumpMap,
+                                            specularMap,
+                                            normalMap,
+                                            transparent: true,
+                                        });
+
+                                        child.material = material;
+                                        child.castShadow = true;
+                                        child.receiveShadow = true;
+                                    }
+                                });
+                                object.name = "drop";
+
+                                scene.add(object);
+                                setTimeout(() => {
+                                    drop.dropArt({ dropSeq }, (e) => {
+                                        setOpen(true);
+                                    });
+                                }, 1000);
+                                clock = new THREE.Clock();
+                            });
+                        }, 1000);
+                    }
                 });
             }
         } else {
@@ -317,8 +248,6 @@ const MisteryBox = observer((props) => {
         const delta = clock.getDelta();
         if (mixer) mixer.update(delta);
         renderer.render(scene, camera);
-
-        setAction(animationActions[0]);
     }
 
     useEffect(() => {
@@ -327,70 +256,73 @@ const MisteryBox = observer((props) => {
     }, []);
 
     useEffect(() => {
+        dropSeq = drop.data.curr.dropSeq;
+        dropRound = drop.data.curr.dropRound;
+        a = assets.filter((e) => e.id === dropRound);
         if (drop.data.curr.status) {
-            dropSeq = drop.data.curr.dropSeq;
-            dropRound = drop.data.curr.dropRound;
-
-            // 다음 드롭
-            // loader.load("../../static/3d/dropBox/DropBox_FullAnimation.fbx", (object) => {
-            //     setNext(object);
-            //     object.scale.multiplyScalar(0.25);
-            //     object.position.y = 12;
-            //     object.rotation.set(0.3, -0.5, 0);
-            //     object.traverse((child) => {
-            //         if (child instanceof THREE.Mesh) {
-            //             child.material.transparent = true;
-            //             child.castShadow = true;
-            //             child.material = new THREE.MeshPhongMaterial({
-            //                 map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.next.dropRound + ".jpg"),
-            //                 transparent: true,
-            //             });
-            //         }
-            //     });
-            //     object.name = "box";
-            //     scene.add(object);
-            // });
             if (drop.data.curr.status === "closed") {
                 // 페이지 리로딩
-                router.push("/main");
+                window.location.replace("/main");
             } else {
                 if (drop.data.curr.dropOwnFlag) {
                     // 받은 드롭 파일
-                    loader.load(`../../static/3d/${dropRound}/Popup.fbx`, (object) => {
+                    loader.load(a[0].url, (object) => {
                         // setCurr(object);
                         object.scale.multiplyScalar(0.12);
                         object.position.y = 2;
-                        mixer = new THREE.AnimationMixer(object);
-                        const action = mixer.clipAction(object.animations[0]);
-                        action.clampWhenFinished = true;
-                        action.loop = THREE.LoopOnce;
-                        action.play();
+                        object.position.z = 3;
 
-                        object.traverse((child) => {
-                            if (child instanceof THREE.Mesh) {
+                        object.traverse(function (child) {
+                            if (child.isMesh) {
+                                let colorMap,
+                                    bumpMap,
+                                    specularMap,
+                                    normalMap = null;
+                                if (a[0].colorMap) colorMap = new THREE.TextureLoader().load(a[0].colorMap);
+                                if (a[0].bumpMap) bumpMap = new THREE.TextureLoader().load(a[0].bumpMap);
+                                if (a[0].specularMap) specularMap = new THREE.TextureLoader().load(a[0].specularMap);
+                                if (a[0].normalMap) normalMap = new THREE.TextureLoader().load(a[0].normalMap);
+
+                                const material = new THREE.MeshPhongMaterial({
+                                    map: colorMap,
+                                    bumpMap,
+                                    specularMap,
+                                    normalMap,
+                                    transparent: true,
+                                });
+
+                                child.material = material;
                                 child.castShadow = true;
+                                child.receiveShadow = true;
                             }
                         });
+                        object.name = "drop";
+
+                        mixer = new THREE.AnimationMixer(object);
+                        const action = mixer.clipAction(object.animations[0]);
+                        // action.clampWhenFinished = true;
+                        // action.loop = THREE.LoopOnce;
+                        action.play();
 
                         scene.add(object);
                     });
                 } else {
                     // 미스터리 박스 파일
-                    // loader.load("../../static/3d/dropBox/DROPBOX_Locked2Unlocking.fbx", (object) => {
-                    //     setCurr(object);
+                    // loader.load("../../static/3d/dropBox/DROPBOX_UnlockedLoop.fbx", (object) => {
                     //     object.scale.multiplyScalar(0.25);
                     //     object.position.y = 3;
+                    //     object.position.z = 3;
                     //     object.rotation.set(0.2, -0.5, 0);
-                    //     object.traverse((child) => {
-                    //         if (child instanceof THREE.Mesh) {
-                    //             child.castShadow = true;
-                    //             child.material = new THREE.MeshPhongMaterial({
-                    //                 map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropRound + ".jpg"),
-                    //                 transparent: true,
-                    //             });
-                    //             // child.rotation.set(0.3, 0.5, 0);
-                    //         }
-                    //     });
+                    //     // object.traverse((child) => {
+                    //     // if (child instanceof THREE.Mesh) {
+                    //     //     child.castShadow = true;
+                    //     //     child.material = new THREE.MeshPhongMaterial({
+                    //     //         map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropRound + ".jpg"),
+                    //     //         transparent: true,
+                    //     //     });
+                    //     //     // child.rotation.set(0.3, 0.5, 0);
+                    //     // }
+                    //     // });
 
                     //     mixer = new THREE.AnimationMixer(object);
                     //     mixer.clipAction(object.animations[0]).play();
@@ -399,48 +331,118 @@ const MisteryBox = observer((props) => {
                     //     scene.add(object);
                     // });
 
-                    fbxLoader.load("../../static/3d/dropBox/DROPBOX_UnlockedLoop.fbx", (object) => {
-                        object.scale.multiplyScalar(0.25);
-                        object.position.y = 3;
-                        object.position.z = 3;
-                        object.rotation.set(0.2, -0.5, 0);
-                        mixer = new THREE.AnimationMixer(object);
+                    let dropBox;
+                    if (drop.data.curr.status === "ready") {
+                        fbxLoader.load("../../static/3d/dropBox/DROPBOX_LockedStatic.fbx", (object) => {
+                            object.scale.multiplyScalar(0.25);
+                            object.position.y = 3;
+                            object.position.z = 3;
+                            // object.rotation.set(0.2, -0.5, 0);
 
-                        const animationAction = mixer.clipAction(object.animations[0]);
-                        console.log("Loop", object.animations);
-                        animationActions.push(animationAction);
-                        activeAction = animationActions[0];
+                            object.traverse((child) => {
+                                if (child instanceof THREE.Mesh) {
+                                    child.castShadow = true;
+                                    child.material = new THREE.MeshPhongMaterial({
+                                        map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropRound + ".jpg"),
+                                        transparent: true,
+                                    });
+                                    // child.rotation.set(0.3, 0.5, 0);
+                                }
+                            });
 
-                        scene.add(object);
-                        object.name = "box";
+                            scene.add(object);
+                            object.name = "box";
 
-                        //add an animation from another file
-                        fbxLoader.load("../../static/3d/dropBox/DROPBOX_Locked2Unlocking.fbx", (object) => {
-                            object.rotation.set(0.2, -0.5, 0);
+                            fbxLoader.load("../../static/3d/dropBox/DROPBOX_UnlockedLoop.fbx", (object) => {
+                                object.scale.multiplyScalar(0.25);
+                                object.position.y = 3;
+                                object.position.z = 3;
+                                // object.rotation.set(0.2, -0.5, 0);
+                                mixer = new THREE.AnimationMixer(object);
 
-                            const animationAction = mixer.clipAction(object.animations[0]);
-                            console.log("Unlocking", object.animations);
-                            animationActions.push(animationAction);
+                                const animationAction = mixer.clipAction(object.animations[0]);
+                                animationActions.push(animationAction);
+                                activeAction = animationActions[0];
+
+                                //add an animation from another file
+                                fbxLoader.load("../../static/3d/dropBox/DROPBOX_Locked2Unlocking.fbx", (object) => {
+                                    object.rotation.set(0.2, -0.5, 0);
+
+                                    const animationAction = mixer.clipAction(object.animations[0]);
+                                    animationActions.push(animationAction);
+
+                                    //add an animation from another file
+                                    fbxLoader.load("../../static/3d/dropBox/DROPBOX_LockedShaking.fbx", (object) => {
+                                        object.rotation.set(0.2, -0.5, 0);
+                                        const animationAction = mixer.clipAction(object.animations[0]);
+                                        animationActions.push(animationAction);
+
+                                        //add an animation from another file
+                                        fbxLoader.load("../../static/3d/dropBox/DROPBOX_Open2Disappear.fbx", (object) => {
+                                            object.rotation.set(0.2, -0.5, 0);
+                                            const animationAction = mixer.clipAction(object.animations[0]);
+                                            animationActions.push(animationAction);
+
+                                            modelReady = true;
+                                        });
+                                    });
+                                });
+                            });
+                        });
+                    }
+                    if (drop.data.curr.status === "processing") {
+                        fbxLoader.load("../../static/3d/dropBox/DROPBOX_UnlockedLoop.fbx", (object) => {
+                            object.scale.multiplyScalar(0.25);
+                            object.position.y = 3;
+                            object.position.z = 3;
+                            // object.rotation.set(0.2, -0.5, 0);
+
+                            object.traverse((child) => {
+                                if (child instanceof THREE.Mesh) {
+                                    child.castShadow = true;
+                                    child.material = new THREE.MeshPhongMaterial({
+                                        map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropRound + ".jpg"),
+                                        transparent: true,
+                                    });
+                                    // child.rotation.set(0.3, 0.5, 0);
+                                }
+                            });
+
+                            mixer = new THREE.AnimationMixer(object);
+                            animationActions.push(mixer.clipAction(object.animations[0]));
+                            mixer.clipAction(object.animations[0]).play();
+                            activeAction = animationActions[0];
+
+                            scene.add(object);
+                            object.name = "box";
 
                             //add an animation from another file
-                            fbxLoader.load("../../static/3d/dropBox/DROPBOX_LockedShaking.fbx", (object) => {
+                            fbxLoader.load("../../static/3d/dropBox/DROPBOX_Locked2Unlocking.fbx", (object) => {
                                 object.rotation.set(0.2, -0.5, 0);
-                                console.log("LockedShaking", object.animations);
+                                object.name = "box";
                                 const animationAction = mixer.clipAction(object.animations[0]);
                                 animationActions.push(animationAction);
 
                                 //add an animation from another file
-                                fbxLoader.load("../../static/3d/dropBox/DROPBOX_Open2Disappear.fbx", (object) => {
+                                fbxLoader.load("../../static/3d/dropBox/DROPBOX_LockedShaking.fbx", (object) => {
                                     object.rotation.set(0.2, -0.5, 0);
-                                    console.log("Disappear", object.animations);
+                                    object.name = "box";
                                     const animationAction = mixer.clipAction(object.animations[0]);
                                     animationActions.push(animationAction);
 
-                                    modelReady = true;
+                                    //add an animation from another file
+                                    fbxLoader.load("../../static/3d/dropBox/DROPBOX_Open2Disappear.fbx", (object) => {
+                                        object.rotation.set(0.2, -0.5, 0);
+                                        object.name = "box";
+                                        const animationAction = mixer.clipAction(object.animations[0]);
+                                        animationActions.push(animationAction);
+
+                                        modelReady = true;
+                                    });
                                 });
                             });
                         });
-                    });
+                    }
                 }
             }
         }
