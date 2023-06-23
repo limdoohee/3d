@@ -61,9 +61,9 @@ const MisteryBox = observer((props) => {
         camera.position.set(0, 4, 10);
 
         const controls = new MapControls(camera, renderer.domElement);
-        // controls.enablePan = false;
-        // controls.enableRotate = false;
-        // controls.enableZoom = false;
+        controls.enablePan = false;
+        controls.enableRotate = false;
+        controls.enableZoom = false;
         controls.target.set(0, 4, 0);
         controls.update();
 
