@@ -30,7 +30,7 @@ const Home = observer((props) => {
 
     // ----------------------------------------------------------- Firebase 설정
     const app = initializeApp(common.firebaseConfig);
-    getAuth(app).languageCode = "ko";
+    getAuth(app).languageCode = lang.i18n.language == "en" ? "en" : "ko";
     useEffect(() => {
         window.recaptchaVerifier = new RecaptchaVerifier(
             "recaptcha-container",
