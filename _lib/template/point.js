@@ -29,14 +29,15 @@ const Home = {
             });
         };
         //------------------------------------------------- Init Load
-
         //------------------------------------------------- Router isReady
         useEffect(() => {
-            common.getBuildId();
-            initLoad({
-                callback: (e) => {},
-            });
-        }, [tabKey]);
+            if (router.isReady && router.pathname == "/point") {
+                common.getBuildId();
+                initLoad({
+                    callback: (e) => {},
+                });
+            }
+        }, [router.isReady, router.asPath]);
         //------------------------------------------------- Router isReady
 
         const [tabKey, settabKey] = useState(0);
