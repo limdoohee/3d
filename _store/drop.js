@@ -12,32 +12,19 @@ configure({
 class Store {
     data = {
         curr: {
-            // dropSeq: 3,
-            // status: "processing",
-            // startAt: "2023-06-22 11:23:31",
-            // endAt: "2023-06-22 13:44:59",
-            // artSeq: 3,
-            // artName: "작품2",
-            // artistName: "dev_test",
-            // amount: 2000,
-            // contentUrl: "https://asset.dropkitchen.xyz/contents/202303_prod/YeonYeoIn_Daily_Attendance_Check_00.mp4",
-            // thumbnailUrl: "https://asset.dropkitchen.xyz/contents/202304_dev/20230405151809635_dk.webp",
-            // ownerCnt: 1,
-            // dropOwnFlag: false,
-        },
-        next: {
-            // dropSeq: 1,
-            // status: "ready",
-            // startAt: "2023-06-22 13:45:00",
-            // endAt: "2023-06-22 11:25:56",
-            // artSeq: 2,
-            // artName: "작품3",
-            // artistName: "dev_test",
-            // amount: 2000,
-            // contentUrl: "https://asset.dropkitchen.xyz/contents/202303_prod/YeonYeoIn_Daily_Attendance_Check_00.mp4",
-            // thumbnailUrl: "https://asset.dropkitchen.xyz/contents/202304_dev/20230405151809635_dk.webp",
-            // ownerCnt: 0,
-            // dropOwnFlag: null,
+            dropSeq: 376,
+            status: "processing",
+            startAt: "2023-06-27 11:23:31",
+            endAt: "2023-06-27 13:44:59",
+            artSeq: 3,
+            artName: "작품2",
+            artistName: "dev_test",
+            amount: 2000,
+            contentUrl: "https://asset.dropkitchen.xyz/contents/202306_dev/20230626101705835_dk.glb",
+            thumbnailUrl: "https://asset.dropkitchen.xyz/contents/202304_dev/20230405151809635_dk.webp",
+            ownerCnt: 1,
+            dropOwnFlag: true,
+            dropRound: 3,
         },
         detail: {},
         dropList: { dropList: [], totalDropCnt: 0, myDropCnt: 0 },
@@ -53,7 +40,6 @@ class Store {
             .then((response) => response.json())
             .then((data) => {
                 this.data.curr = data.data.drop[0];
-                this.data.next = data.data.drop[1];
                 callback && callback(data.data ? data.data : data);
             });
     }
