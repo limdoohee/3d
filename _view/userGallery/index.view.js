@@ -10,9 +10,6 @@ import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
 import DK_template_GNB from "../../_lib/template/gnb";
 import Gallery from "../../_lib/module/component/gallery";
-import ChatTemplate from "../../_lib/template/chat";
-import PointTemplate from "../../_lib/template/point";
-import AlarmTemplate from "../../_lib/template/alarm";
 
 const Home = observer((props) => {
     const router = useRouter();
@@ -179,9 +176,6 @@ const Home = observer((props) => {
                     </div>
                     {gallery.data.galleryLink && <Gallery store={props.store} />}
                     <DDS.modal.bottom {...modalData} />
-                    <ChatTemplate.open store={props.store} />
-                    <PointTemplate.default store={props.store} />
-                    <AlarmTemplate.default store={props.store} />
                 </DDS.layout.content>
             </DDS.layout.container>
         </>
