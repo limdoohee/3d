@@ -307,10 +307,10 @@ const MisteryBox = observer((props) => {
                                 case 3:
                                     model.scale.multiplyScalar(1.5);
                                     break;
-                                case 4:
+                                case 21:
                                     model.scale.multiplyScalar(15);
                                     break;
-                                case 5:
+                                case 22:
                                     model.scale.multiplyScalar(15);
                                     break;
                                 default:
