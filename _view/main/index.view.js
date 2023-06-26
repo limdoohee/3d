@@ -103,7 +103,6 @@ const Home = observer((props) => {
             setCoachMark("");
             sessionStorage.removeItem("signupComplete");
         }
-        console.log(auth.loginResult.dropsAgree, auth.loginResult.adsAgree, device_alarm);
 
         if (cookies.get("device_alarm") === "N") setOpen(true);
         if (cookies.get("device_alarm") === "Y") {
@@ -112,13 +111,12 @@ const Home = observer((props) => {
     }, []);
 
     useEffect(() => {
-        dropData().then(() => {
-            if (drop.data.curr.status === "ready") openTime = new Date(drop.data.curr.startAt);
-            if (drop.data.curr.status === "processing") openTime = new Date(drop.data.curr.endAt);
-            if (drop.data.curr.status === "closed") openTime = new Date(drop.data.next.endAt);
-            diff = (openTime.getTime() - currTime.getTime()) / 1000;
-            setTime(time.setSeconds(time.getSeconds() + diff));
-        });
+        // dropData().then(() => {
+        if (drop.data.curr.status === "ready") openTime = new Date(drop.data.curr.startAt);
+        if (drop.data.curr.status === "processing") openTime = new Date(drop.data.curr.endAt);
+        diff = (openTime.getTime() - currTime.getTime()) / 1000;
+        setTime(time.setSeconds(time.getSeconds() + diff));
+        // });
     }, [drop.data.curr.status]);
 
     const headerLeft = <span></span>;
