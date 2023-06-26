@@ -75,7 +75,7 @@ const home = {
                 </div>
                 <DDS_Input.default
                     className="dds input secondary rounded"
-                    suffix={<DDS_Icons.circleArrowUp className={`dds icons large ${chat.state.messageInputValue ? "" : "disabled"}`} />}
+                    suffix={<DDS_Icons.circleArrowUp className={`dds icons large ${chat.state.messageInputValue ? "" : "disabled"}`} onClick={onSend} />}
                     placeholder="Send message"
                     value={value}
                     onChange={onMessageInputChange}
