@@ -92,7 +92,7 @@ const Home = observer((props) => {
                 location.href = "/signup/success";
             } else {
                 common.messageApi.info({
-                    content: "유효한 전화번호를 입력해 주세요.",
+                    content: e.message,
                 });
             }
         });
