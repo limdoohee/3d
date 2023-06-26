@@ -18,7 +18,26 @@ const Home = {
     default: observer((props) => {
         const router = useRouter();
         const { store } = props;
-        const { common, lang, auth } = props.store;
+        const { common, lang, auth, point } = props.store;
+
+        //------------------------------------------------- Init Load
+        const initLoad = ({ callback }) => {
+            const params = {};
+            point.pointHistory(params, (e) => {
+                common.debug(e);
+                callback && callback(e);
+            });
+        };
+        //------------------------------------------------- Init Load
+
+        //------------------------------------------------- Router isReady
+        useEffect(() => {
+            common.getBuildId();
+            initLoad({
+                callback: (e) => {},
+            });
+        }, [tabKey]);
+        //------------------------------------------------- Router isReady
 
         const [tabKey, settabKey] = useState(0);
 
@@ -36,7 +55,7 @@ const Home = {
             {
                 key: 0,
                 label: lang.t("point.tabs.information"),
-                children: <PointInformation />,
+                children: <PointInformation store={store} />,
             },
             {
                 key: 1,
@@ -46,8 +65,18 @@ const Home = {
         ];
 
         const onChange = (e) => {
-            console.log(e);
+            // console.log(e);
             settabKey(e);
+        };
+
+        const migratePoint = () => {
+            const params = {};
+            point.migratePoint(params, (e) => {
+                common.debug(e);
+                initLoad({
+                    callback: (e) => {},
+                });
+            });
         };
 
         return (
@@ -70,6 +99,14 @@ const Home = {
                             </small>
                             <strong>{common.numberFormat(auth.loginResult.pointAmount)}</strong>
                         </h3>
+                        {point.data.pointHistory.migrateFlag && (
+                            <div className="connect">
+                                <DDS.button.default className="dds button primary" onClick={migratePoint}>
+                                    이전 포인트 연동
+                                </DDS.button.default>
+                                <p>보유하신 포인트는 1:1로 연동됩니다.</p>
+                            </div>
+                        )}
                     </div>
                     <DDS.tabs.default defaultActiveKey={tabKey === 0 ? "0" : tabKey} items={items} onChange={onChange} />
                 </div>
@@ -81,6 +118,7 @@ const Home = {
 export default Home;
 
 const PointInformation = observer((props) => {
+    const { common, lang, auth } = props.store;
     return (
         <>
             <div className="point-information">
@@ -107,7 +145,22 @@ const PointInformation = observer((props) => {
                         </span>
                         <strong>
                             2,000P
-                            <DDS.button.default className="dds button primary">초대하기</DDS.button.default>
+                            <DDS.button.default
+                                className="dds button primary"
+                                onClick={() => {
+                                    common.onShare({
+                                        url: auth.loginResult.inviteLink,
+                                        callback: () => {
+                                            common.messageApi.open({
+                                                type: "success",
+                                                content: "초대링크를 복사 하였습니다.",
+                                            });
+                                        },
+                                    });
+                                }}
+                            >
+                                초대하기
+                            </DDS.button.default>
                         </strong>
                     </li>
                     <li>
@@ -152,28 +205,6 @@ const PointList = observer((props) => {
     const router = useRouter();
     const { tabKey } = props;
     const { common, lang, point } = props.store;
-
-    //------------------------------------------------- Init Load
-    const initLoad = ({ callback }) => {
-        const params = {};
-        point.pointHistory(params, (e) => {
-            common.debug(e);
-            callback && callback(e);
-        });
-    };
-    //------------------------------------------------- Init Load
-
-    //------------------------------------------------- Router isReady
-    useEffect(() => {
-        if (tabKey == 1) {
-            common.getBuildId();
-            initLoad({
-                callback: (e) => {},
-            });
-        }
-    }, [tabKey]);
-    //------------------------------------------------- Router isReady
-
     return (
         <>
             <ul className="point-list">

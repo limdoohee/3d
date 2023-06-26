@@ -17,6 +17,9 @@
     min-width: 38px;
     box-shadow: none;
 }
+.dk.header > *:last-child {
+    min-width: 38px !important;
+}
 
 .dk.header > *:last-child .dds.button.none {
     padding: 0;
