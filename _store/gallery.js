@@ -25,6 +25,7 @@ class Store {
     };
 
     luckyBox = {};
+    opendBox = {};
 
     constructor(store) {
         this.store = store;
@@ -53,7 +54,18 @@ class Store {
         await Api.post(`/dks-api/v2/buy_lucky_box`, params, this.store.auth.loginResult.loginToken)
             .then((response) => response.json())
             .then((data) => {
+                this.data.pointBalance = data.data.remainPointBalance;
                 callback && callback(data.data ? data.data : data);
+            });
+    }
+
+    async openLuckyBox(params, callback) {
+        await Api.post(`/dks-api/v2/open_lucky_box`, params, this.store.auth.loginResult.loginToken)
+            .then((response) => response.json())
+            .then((data) => {
+                this.opendBox = data.data;
+                callback && callback(data.data ? data.data : data);
+                // return this.opendBox;
             });
     }
 }
