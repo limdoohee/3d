@@ -78,7 +78,12 @@ const Home = {
                     <ul className="list">
                         {drop.data.dropList.dropList.map((item, key) => {
                             return (
-                                <li key={key}>
+                                <li
+                                    key={key}
+                                    onClick={() => {
+                                        window.location.href = "native://drop_detail?dropSeq=" + item.dropSeq;
+                                    }}
+                                >
                                     <div className="left">
                                         <div className="image">
                                             <img src={item.thumbnailUrl} />
@@ -105,38 +110,6 @@ const Home = {
                                 </li>
                             );
                         })}
-                        {/* <li>
-                            <div className="left">
-                                <div className="image">
-                                    <img src="" />
-                                    <span className="label now">NOW</span>
-                                </div>
-                                <div className="name">
-                                    <h4>Drop #4</h4>
-                                    <p>???</p>
-                                </div>
-                            </div>
-                            <div className="right">
-                                <DDS.chips.default className={"primary"}>보유</DDS.chips.default>
-                                <DDS.icons.envelopeOpenHeart />
-                            </div>
-                        </li>
-                        <li>
-                            <div className="left">
-                                <div className="image">
-                                    <img src="" />
-                                    <span className="label now">NOW</span>
-                                </div>
-                                <div className="name">
-                                    <h4>Drop #4</h4>
-                                    <p>???</p>
-                                </div>
-                            </div>
-                            <div className="right">
-                                <DDS.chips.default className={"secondary"}>미보유</DDS.chips.default>
-                                <DDS.icons.cubePlus />
-                            </div>
-                        </li> */}
                     </ul>
                     <div className="bottom">
                         <DDS.button.default
