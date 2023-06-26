@@ -9,7 +9,6 @@ import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
 import gsap from "gsap";
-import { ConfigResolverMap } from "@use-gesture/react";
 
 const MisteryBox = observer((props) => {
     const router = useRouter();
@@ -42,6 +41,10 @@ const MisteryBox = observer((props) => {
         // }
         if (!toAction) {
             console.log("ddd");
+            lastAction = activeAction;
+            activeAction.reset();
+            // activeAction.fadeIn(1);
+            activeAction.setLoop(THREE.LoopOnce);
             activeAction.play();
         } else {
             lastAction = activeAction;
@@ -210,11 +213,29 @@ const MisteryBox = observer((props) => {
                                 function (gltf) {
                                     model = gltf.scene;
                                     model.position.z = 3;
+                                    model.position.y = 1;
 
-                                    if (drop.data.curr.dropSeq === 376) {
-                                        model.position.y = 1;
-                                        model.scale.multiplyScalar(10);
+                                    switch (drop.data.curr.dropSeq) {
+                                        case 1:
+                                            model.scale.multiplyScalar(10);
+                                            break;
+                                        case 2:
+                                            model.scale.multiplyScalar(20);
+                                            break;
+                                        case 3:
+                                            model.scale.multiplyScalar(1.5);
+                                            break;
+                                        case 21:
+                                            model.scale.multiplyScalar(15);
+                                            break;
+                                        case 22:
+                                            model.scale.multiplyScalar(15);
+                                            break;
+                                        default:
+                                            model.scale.multiplyScalar(10);
+                                            break;
                                     }
+
                                     scene.add(model);
                                     model.traverse(function (object) {
                                         if (object.isMesh) object.castShadow = true;
@@ -234,10 +255,14 @@ const MisteryBox = observer((props) => {
                         }, 1000);
                     }
                 });
+            } else if (intersects[0].object.parent.name !== "") {
+                window.location.href = "native://drop_detail?dropSeq=" + drop.data.curr.dropSeq;
             }
         } else {
-            common.messageApi.open(messageData);
-            setAction(animationActions[1]);
+            if (boxName.includes(intersects[0].object.parent.name)) {
+                common.messageApi.open(messageData);
+                // setAction(animationActions[1]);
+            }
         }
     }
 
@@ -269,14 +294,28 @@ const MisteryBox = observer((props) => {
                         function (gltf) {
                             model = gltf.scene;
                             model.position.z = 3;
+                            model.position.y = 1;
+                            // model.scale.multiplyScalar(10);
 
-                            // model.scale.set(15, 15, 15);
-                            // model.position.y = 2;
-                            // model.rotation.set(0.2, 0, 0);
-
-                            if (drop.data.curr.dropSeq === 376) {
-                                model.position.y = 1;
-                                model.scale.multiplyScalar(10);
+                            switch (drop.data.curr.dropSeq) {
+                                case 1:
+                                    model.scale.multiplyScalar(10);
+                                    break;
+                                case 2:
+                                    model.scale.multiplyScalar(20);
+                                    break;
+                                case 3:
+                                    model.scale.multiplyScalar(1.5);
+                                    break;
+                                case 21:
+                                    model.scale.multiplyScalar(15);
+                                    break;
+                                case 22:
+                                    model.scale.multiplyScalar(15);
+                                    break;
+                                default:
+                                    model.scale.multiplyScalar(10);
+                                    break;
                             }
 
                             scene.add(model);
@@ -314,7 +353,7 @@ const MisteryBox = observer((props) => {
                                     if (object.isMesh) {
                                         object.castShadow = true;
                                         object.material = new THREE.MeshPhongMaterial({
-                                            map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropRound + ".jpg"),
+                                            map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropSeq + ".jpg"),
                                             transparent: true,
                                         });
                                     }
@@ -324,33 +363,36 @@ const MisteryBox = observer((props) => {
 
                                 model.name = "box";
 
-                                loader.load("../../static/3d/dropBox/dropbox__locked2_unlocking.glb", (gltf) => {
-                                    model = gltf.scene;
-                                    model.position.y = 2;
-                                    model.position.z = 3;
+                                // loader.load("../../static/3d/dropBox/dropbox__unlocked_loop.glb", (gltf) => {
+                                //     model = gltf.scene;
+                                //     model.position.y = 2;
+                                //     model.position.z = 3;
 
-                                    const animationAction = mixer.clipAction(gltf.animations[0]);
-                                    animationActions.push(animationAction);
-                                    activeAction = animationActions[0];
+                                //     const animationAction = mixer.clipAction(gltf.animations[0]);
+                                //     animationActions.push(animationAction);
+                                //     // mixer.clipAction(gltf.animations[0]).play();
+                                //     activeAction = animationActions[0];
 
-                                    //add an animation from another file
-                                    // fbxLoader.load("../../static/3d/dropBox/DROPBOX_LockedShaking.fbx", (object) => {
-                                    //     object.rotation.set(0.2, -0.5, 0);
-                                    //     object.name = "box";
-                                    //     const animationAction = mixer.clipAction(object.animations[0]);
-                                    //     animationActions.push(animationAction);
+                                //     // add an animation from another file
+                                //     loader.load("../../static/3d/dropBox/dropbox__locked_shaking.glb", (object) => {
+                                //         model = gltf.scene;
+                                //         model.position.y = 2;
+                                //         model.position.z = 3;
 
-                                    //     //add an animation from another file
-                                    //     fbxLoader.load("../../static/3d/dropBox/DROPBOX_Open2Disappear.fbx", (object) => {
-                                    //         object.rotation.set(0.2, -0.5, 0);
-                                    //         object.name = "box";
-                                    //         const animationAction = mixer.clipAction(object.animations[0]);
-                                    //         animationActions.push(animationAction);
+                                //         const animationAction = mixer.clipAction(gltf.animations[0]);
+                                //         animationActions.push(animationAction);
 
-                                    //         modelReady = true;
-                                    //     });
-                                    // });
-                                });
+                                //         //     //add an animation from another file
+                                //         //     fbxLoader.load("../../static/3d/dropBox/DROPBOX_Open2Disappear.fbx", (object) => {
+                                //         //         object.rotation.set(0.2, -0.5, 0);
+                                //         //         object.name = "box";
+                                //         //         const animationAction = mixer.clipAction(object.animations[0]);
+                                //         //         animationActions.push(animationAction);
+
+                                //         // modelReady = true;
+                                //         //     });
+                                //     });
+                                // });
                             },
                             undefined,
                             // called when loading has errors
@@ -376,7 +418,7 @@ const MisteryBox = observer((props) => {
                                     if (object.isMesh) {
                                         object.castShadow = true;
                                         object.material = new THREE.MeshPhongMaterial({
-                                            map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropRound + ".jpg"),
+                                            map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropSeq + ".jpg"),
                                             transparent: true,
                                         });
                                     }

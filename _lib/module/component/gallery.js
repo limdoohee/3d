@@ -5,6 +5,7 @@ import assets from "./assets.json";
 
 import * as THREE from "three";
 import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
+import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import gsap from "gsap";
@@ -14,23 +15,19 @@ const Gallery = observer((props) => {
     const { gallery } = props.store;
 
     let dropData = gallery.data.collection;
-    const map = new Map();
-    assets.forEach((e) => map.set(e.id, e));
-    dropData.forEach((e) => map.set(e.dropRound, { ...map.get(e.dropRound), ...e }));
-    dropData = gallery.data.myDropCnt === 0 ? [] : Array.from(map.values()).filter((e) => e.dropSeq);
-
     const { back, setBack } = props;
 
     const scene = new THREE.Scene();
     let camera, renderer, controls;
 
     const fbx = new FBXLoader();
+    const loader = new GLTFLoader();
     const mixers = [];
     let mixer = new THREE.AnimationMixer();
     let clock = new THREE.Clock();
 
     let beforePosition = -1;
-    let column, parent, space, hiddenIndex;
+    let column, parent, space, hiddenIndex, model;
     let dropLength;
 
     // Limits;
@@ -138,9 +135,11 @@ const Gallery = observer((props) => {
 
         if (intersects.length > 0) {
             parent = intersects[0].object.parent;
+            // console.log(intersects[0].object);
 
-            if (parent.name.includes("drop")) {
-                window.location.href = "native://drop_detail?dropSeq=" + dropData.filter((e) => e.id === String(parseInt(parent.name.replace(/[^0-9]/g, "")) + 1))[0].dropSeq;
+            if (intersects[0].object.name.includes("drop")) {
+                // console.log(dropData[parseInt(intersects[0].object.name.replace(/[^0-9]/g, ""))].dropSeq);
+                window.location.href = "native://drop_detail?dropSeq=" + dropData[parseInt(intersects[0].object.name.replace(/[^0-9]/g, ""))].dropSeq;
             }
         }
     }
@@ -165,6 +164,7 @@ const Gallery = observer((props) => {
             });
         }
     }
+    var mesh = [];
 
     const setDrop = () => {
         if (dropData.length === 0) {
@@ -183,7 +183,7 @@ const Gallery = observer((props) => {
         } else {
             for (let i = 0; i < dropData.length; i++) {
                 dropLength = i;
-                if (dropData[i].url) {
+                if (dropData[i].contentUrl) {
                     // 포디움
                     fbx.load("../../static/3d/podium/Podium.fbx", (obj) => {
                         obj.scale.multiplyScalar(0.3);
@@ -191,7 +191,7 @@ const Gallery = observer((props) => {
                         obj.traverse(function (child) {
                             if (child.isMesh) {
                                 child.material = new THREE.MeshPhongMaterial({
-                                    bumpMap: new THREE.TextureLoader().load("../../static/3d/podium/D_PDM" + dropData[i].id + ".jpg"),
+                                    bumpMap: new THREE.TextureLoader().load("../../static/3d/podium/D_PDM" + dropData[i].dropSeq + ".jpg"),
                                     bumpScale: 0.1,
                                     transparent: true,
                                 });
@@ -203,42 +203,57 @@ const Gallery = observer((props) => {
                         scene.add(obj);
                     });
 
+                    // 가상 영역
+                    const geometry = new THREE.PlaneGeometry(1.5, 2);
+                    const material = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, transparent: true, opacity: 0 });
+                    const plane = new THREE.Mesh(geometry, material);
+                    plane.position.set(i * 2.5, 0, 1);
+                    plane.transparent = true;
+                    plane.opacity = 0;
+                    plane.name = "drop" + i;
+                    scene.add(plane);
+
                     // 드롭
-                    fbx.load(dropData[i].url, (obj) => {
-                        obj.scale.multiplyScalar(0.05);
-                        obj.position.set(i * 2.5, -0.8, 0);
-                        obj.traverse(function (child) {
-                            if (child.isMesh) {
-                                let colorMap,
-                                    bumpMap,
-                                    specularMap,
-                                    normalMap = null;
-                                if (dropData[i].colorMap) colorMap = new THREE.TextureLoader().load(dropData[i].colorMap);
-                                if (dropData[i].bumpMap) bumpMap = new THREE.TextureLoader().load(dropData[i].bumpMap);
-                                if (dropData[i].specularMap) specularMap = new THREE.TextureLoader().load(dropData[i].specularMap);
-                                if (dropData[i].normalMap) normalMap = new THREE.TextureLoader().load(dropData[i].normalMap);
+                    loader.load(
+                        dropData[i].contentUrl,
+                        function (gltf) {
+                            model = gltf.scene;
+                            model.position.set(i * 2.5, -1, 0);
 
-                                const material = new THREE.MeshPhongMaterial({
-                                    map: colorMap,
-                                    bumpMap,
-                                    specularMap,
-                                    normalMap,
-                                    transparent: true,
-                                });
-
-                                child.material = material;
-                                child.castShadow = true;
-                                child.receiveShadow = true;
+                            switch (dropData[i].dropSeq) {
+                                case 1:
+                                    model.scale.multiplyScalar(7);
+                                    break;
+                                case 2:
+                                    model.scale.multiplyScalar(10);
+                                    break;
+                                case 3:
+                                    model.scale.multiplyScalar(0.8);
+                                    break;
+                                case 21:
+                                    model.scale.multiplyScalar(6);
+                                    break;
+                                case 22:
+                                    model.position.y = -0.8;
+                                    model.scale.multiplyScalar(6);
+                                    break;
+                                default:
+                                    model.scale.multiplyScalar(10);
+                                    break;
                             }
-                        });
-                        obj.name = "drop" + i;
+                            scene.add(model);
 
-                        // mixer = new THREE.AnimationMixer(obj);
-                        // mixer.clipAction(obj.animations[0]).play();
-                        // mixers.push(mixer);
-
-                        scene.add(obj);
-                    });
+                            model.name = "model" + i;
+                            // model.traverse(function (object) {
+                            //     console.log(object);
+                            //     object.name = "drop" + i;
+                            // });
+                        },
+                        undefined,
+                        function (error) {
+                            console.log("An error happened");
+                        },
+                    );
                 }
             }
         }
@@ -252,7 +267,7 @@ const Gallery = observer((props) => {
     function render() {
         // scene.getObjectByName(dropLength);
         for (let i = 0; i <= dropLength; i++) {
-            if (scene.getObjectByName("drop" + i)) scene.getObjectByName("drop" + i).rotation.y += 0.01;
+            if (scene.getObjectByName("model" + i)) scene.getObjectByName("model" + i).rotation.y += 0.01;
         }
 
         // animate();

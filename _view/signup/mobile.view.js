@@ -80,6 +80,8 @@ const Home = observer((props) => {
             adsAgree: sessionStorage.getItem("signupMarketing"),
             terms1Agree: "Y",
             terms2Agree: "Y",
+            type: sessionStorage.getItem("type") && sessionStorage.getItem("type"),
+            code: sessionStorage.getItem("code") && sessionStorage.getItem("code"),
         };
         console.log(params);
         await auth.phoneVerify(params, async (e) => {

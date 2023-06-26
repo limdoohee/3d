@@ -71,8 +71,9 @@ const Home = observer((props) => {
                     console.warn("closed");
                 }
                 if (drop.data.curr.status === "ready") {
-                    drop.dataChange("status", "processing");
+                    // drop.dataChange("status", "processing");
                     console.warn("processing");
+                    window.location.replace("/main");
                 }
             },
         });
@@ -111,12 +112,12 @@ const Home = observer((props) => {
     }, []);
 
     useEffect(() => {
-        // dropData().then(() => {
-        if (drop.data.curr.status === "ready") openTime = new Date(drop.data.curr.startAt);
-        if (drop.data.curr.status === "processing") openTime = new Date(drop.data.curr.endAt);
-        diff = (openTime.getTime() - currTime.getTime()) / 1000;
-        setTime(time.setSeconds(time.getSeconds() + diff));
-        // });
+        dropData().then(() => {
+            if (drop.data.curr.status === "ready") openTime = new Date(drop.data.curr.startAt);
+            if (drop.data.curr.status === "processing") openTime = new Date(drop.data.curr.endAt);
+            diff = (openTime.getTime() - currTime.getTime()) / 1000;
+            setTime(time.setSeconds(time.getSeconds() + diff));
+        });
     }, [drop.data.curr.status]);
 
     const headerLeft = <span></span>;
@@ -180,7 +181,7 @@ const Home = observer((props) => {
         confirm: {
             label: lang.t("main.modal.confirm"),
             action: () => {
-                window.location.href = " native://device_alarm_settings";
+                window.location.href = "native://device_alarm_settings";
             },
         },
         cancel: {

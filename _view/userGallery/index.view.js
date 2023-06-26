@@ -2,7 +2,6 @@ import React, { useEffect, useState, useRef } from "react";
 import Router, { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
-import DDS_Icons from "../../_lib/component/icons";
 import { Progress, Avatar, Badge } from "antd";
 import Link from "next/link";
 
@@ -64,7 +63,7 @@ const Home = observer((props) => {
                 className="dds button none"
                 icon={<DDS.icons.bell />}
                 onClick={() => {
-                    common.uiChange("alarmOpen", true);
+                    router.push("/alarm");
                 }}
             />
         ),
@@ -105,13 +104,19 @@ const Home = observer((props) => {
                 <DDS.layout.content>
                     <div className="userInfo">
                         <div className={`profile ${ref.current?.offsetHeight < 69 ? "center" : ""}`}>
-                            <div>
+                            <div
+                                onClick={() => {
+                                    {
+                                        gallery.data.ownFlag && router.push("/setting/profile/");
+                                    }
+                                }}
+                            >
                                 {gallery.data.ownFlag ? (
-                                    <Badge count={<DDS_Icons.pen />} className="profileMod">
-                                        <DDS.profile.default size={64} badge={<DDS_Icons.badgeCrown className="cert" />} src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "../../static/img/profile.png"} />
+                                    <Badge count={<DDS.icons.pen />} className="profileMod">
+                                        <DDS.profile.default size={64} badge={<DDS.icons.badgeCrown className="cert" />} src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "../../static/img/profile.png"} />
                                     </Badge>
                                 ) : (
-                                    <DDS.profile.default size={64} badge={<DDS_Icons.badgeCrown className="cert" />} src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "../../static/img/profile.png"} />
+                                    <DDS.profile.default size={64} badge={<DDS.icons.badgeCrown className="cert" />} src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "../../static/img/profile.png"} />
                                 )}
                             </div>
                             <div ref={ref}>
@@ -123,13 +128,13 @@ const Home = observer((props) => {
 
                                 {gallery.data.ownFlag && (
                                     <div className="point">
-                                        <DDS_Icons.point
+                                        <DDS.icons.point
                                             onClick={() => {
                                                 common.uiChange("pointOpen", true);
                                             }}
                                         />
                                         {gallery.data.pointBalance}
-                                        <DDS_Icons.userPlus className="inviteCount" />
+                                        <DDS.icons.userPlus className="inviteCount" />
                                         {gallery.data.inviteCnt}
                                     </div>
                                 )}
@@ -161,7 +166,7 @@ const Home = observer((props) => {
                             <div className="collection">
                                 <ul className="wrapper">
                                     <li className="title">
-                                        <DDS_Icons.drop />
+                                        <DDS.icons.drop />
                                         Colletion
                                     </li>
                                     <li className="count">
