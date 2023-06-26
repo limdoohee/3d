@@ -7,7 +7,6 @@ import { observer } from "mobx-react-lite";
 import DDS_Button from "../component/button";
 import DDS_Icons from "../component/icons";
 import DDS_Profile from "../component/profile";
-import menuData from "../menu";
 
 const Component = {
     default: observer((props) => {
@@ -24,6 +23,17 @@ const Component = {
                 onClose();
             };
         }, [router.asPath]);
+
+        const menuData = {
+            gnb: [
+                // { icon: () => <DDS_Icons.crown />, link: "", name: "Rank" },
+                { icon: () => <DDS_Icons.myGalleryBlackOn />, link: `/userGallery/?memberSeq=${auth.loginResult.seq}`, name: "My Gallery" },
+                { icon: () => <DDS_Icons.drop />, link: "/drops", name: "Drop list" },
+                { icon: () => <DDS_Icons.bookFilled />, link: "/magazine", name: "Magazine" },
+                { icon: () => <DDS_Icons.gear />, link: "/setting", name: "Setting" },
+                // { icon: () => <DDS_Icons.envelopeOpenTest />, link: "", name: "Feedback" },
+            ],
+        };
 
         return (
             <>
@@ -55,7 +65,12 @@ const Component = {
                         <DDS_Profile.default badge={<DDS_Icons.badgeCrown className="cert" />} src="https://picsum.photos/id/237/200/300" />
                         <strong>{auth.loginResult && auth.loginResult.nickname}</strong>
                     </div>
-                    <div className="point">
+                    <div
+                        className="point"
+                        onClick={() => {
+                            Router.push("/point");
+                        }}
+                    >
                         <span>내 포인트</span>
                         <strong>
                             {auth.loginResult && common.numberFormat(auth.loginResult.pointAmount)}

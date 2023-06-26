@@ -76,7 +76,7 @@ class Store {
     }
 
     onShare(props) {
-        const { title, description, url, text } = props;
+        const { title, description, url, text, callback } = props;
         var broswerInfo = navigator.userAgent;
         var webViewCheck = broswerInfo.indexOf(";;;aos;") !== -1 ? true : false;
         if (isMobile) {
@@ -108,6 +108,7 @@ class Store {
             //     </div>,
             // );
         }
+        callback && callback();
     }
 
     init() {

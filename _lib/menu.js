@@ -6,7 +6,7 @@ import DDS_Icons from "./component/icons";
 const Data = {
     gnb: [
         // { icon: () => <DDS_Icons.crown />, link: "", name: "Rank" },
-        { icon: () => <DDS_Icons.myGalleryBlackOn />, link: "/", name: "My Gallery" },
+        { icon: () => <DDS_Icons.myGalleryBlackOn />, link: "/userGallery/?memberSeq=", name: "My Gallery" },
         { icon: () => <DDS_Icons.drop />, link: "/drops", name: "Drop list" },
         { icon: () => <DDS_Icons.bookFilled />, link: "/magazine", name: "Magazine" },
         { icon: () => <DDS_Icons.gear />, link: "/setting", name: "Setting" },
