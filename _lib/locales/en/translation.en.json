@@ -97,9 +97,8 @@
         "information": "guidance",
         "myPoints": "My Points",
         "tabs": {
-            "all": "all",
-            "accumulate": "accumulate",
-            "use": "use"
+            "information": "Information",
+            "history": "History"
         }
     },
     "alarm": {

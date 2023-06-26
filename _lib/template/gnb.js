@@ -55,7 +55,12 @@ const Component = {
                         <DDS_Profile.default badge={<DDS_Icons.badgeCrown className="cert" />} src="https://picsum.photos/id/237/200/300" />
                         <strong>{auth.loginResult && auth.loginResult.nickname}</strong>
                     </div>
-                    <div className="point">
+                    <div
+                        className="point"
+                        onClick={() => {
+                            Router.push("/point");
+                        }}
+                    >
                         <span>내 포인트</span>
                         <strong>
                             {auth.loginResult && common.numberFormat(auth.loginResult.pointAmount)}

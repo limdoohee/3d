@@ -122,8 +122,11 @@ const Home = {
         //------------------------------------------------- Router isReady
 
         const onClose = () => {
-            common.uiChange("chatOpen", false);
-            setloading(false);
+            if (router.query.from) {
+                location.href = router.query.from;
+            } else {
+                Router.back();
+            }
         };
 
         const [loading, setloading] = useState(false);

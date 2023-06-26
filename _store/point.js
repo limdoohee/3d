@@ -10,10 +10,24 @@ configure({
 
 //////////////////////////// makeAutoObservable
 class Store {
+    data = { pointHistory: { point: [], page: {} } };
+
     constructor(store) {
         this.store = store;
         makeAutoObservable(this);
     }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 내역 조회
+    async pointHistory(params, callback) {
+        await Api.get(`/dks-api/v2/point_history`, params, this.store.auth.loginResult.loginToken)
+            .then((response) => response.json())
+            .then((data) => {
+                if (data.data) {
+                    this.data.pointHistory = data.data;
+                }
+                callback && callback(data.data ? data.data : data);
+            });
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 내역 조회
 }
 //////////////////////////// makeAutoObservable
 
