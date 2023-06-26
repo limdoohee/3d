@@ -18,6 +18,10 @@ const Home = observer((props) => {
     useEffect(async () => {
         await cookie.remove("loginToken", { path: "/" });
         await cookie.save("loginToken", props.query.loginToken, { path: "/" });
+
+        Router.query.type && sessionStorage.setItem("type");
+        Router.query.code && sessionStorage.setItem("code");
+
         location.href = "/";
     }, []);
     return <></>;
