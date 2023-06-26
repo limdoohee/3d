@@ -1,11 +1,12 @@
 import React from "react";
+import Router, { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Store
 import Store from "../../_store/store";
 const store = new Store();
 //------------------------------------------------------------------------------- Store
 //------------------------------------------------------------------------------- Module
-import checkLogin from "../../../_lib/module/checkLogin";
+import checkLogin from "../../_lib/module/checkLogin";
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- View
 import View from "../../_view/detail/index.view";
