@@ -57,7 +57,7 @@ const Home = observer((props) => {
 
     return (
         <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
-            <DK_template_header.default store={store} title={lang.t("setting.title")} right={headerRight} />
+            <DK_template_header.default store={store} title={lang.t("setting.alarm.title")} right={headerRight} />
             <DK_template_GNB.default store={store} />
             {/* Content */}
             <DDS.layout.content>
@@ -66,22 +66,18 @@ const Home = observer((props) => {
                         <dl>
                             <dd className="none">
                                 <div className="alarm-info">
-                                    <h4>광고성 정보 수신 동의</h4>
-                                    <p>
-                                        드롭, 이벤트 및 다양한 혜택과 정보 알림을
-                                        <br />
-                                        받기 위해서 기기 알림을 켜주세요!
-                                    </p>
+                                    <h4>{lang.t("setting.alarm.deviceOn.title")}</h4>
+                                    <p>{lang.t("setting.alarm.deviceOn.desc")}</p>
                                 </div>
                                 <span>
-                                    <DDS.button.default className="dds button primary small">알림 켜기</DDS.button.default>
+                                    <DDS.button.default className="dds button primary small">{lang.t("setting.alarm.preferences")}</DDS.button.default>
                                 </span>
                             </dd>
                         </dl>
                     )}
                     <dl>
                         <dd className="none">
-                            <h4>광고성 정보 수신 동의</h4>
+                            <h4>{lang.t("setting.alarm.check1")}</h4>
                             <span>
                                 <DDS.switch.default
                                     className="primary small"
@@ -94,7 +90,7 @@ const Home = observer((props) => {
                             </span>
                         </dd>
                         <dd className="none">
-                            <h4>서비스 알림 동의</h4>
+                            <h4>{lang.t("setting.alarm.check2")}</h4>
                             <span>
                                 <DDS.switch.default
                                     className="primary small"

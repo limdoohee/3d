@@ -9,11 +9,13 @@ const api = {
         let url = apiUrl + path;
         if (params) {
             url += "?" + new URLSearchParams(params);
-            if (localStorage.getItem("lang")) {
+            if (localStorage.getItem("lang") !== null || localStorage.getItem("lang") !== undefined) {
                 url += `&lang=${localStorage.getItem("lang")}`;
             }
         } else {
-            url += `?lang=${localStorage.getItem("lang")}`;
+            if (localStorage.getItem("lang") !== null || localStorage.getItem("lang") !== undefined) {
+                url += `?lang=${localStorage.getItem("lang")}`;
+            }
         }
         let options = {
             method: "GET",
@@ -36,7 +38,7 @@ const api = {
     post(path, params, token, ssr) {
         let url = apiUrl + path;
         if (!ssr) {
-            if (localStorage.getItem("lang")) {
+            if (localStorage.getItem("lang") !== null || localStorage.getItem("lang") !== undefined) {
                 url += `?lang=${localStorage.getItem("lang")}`;
             }
         }
