@@ -3,11 +3,11 @@ import Router, { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Antd
-import { Checkbox, Space } from "antd-mobile";
 import { Drawer } from "antd";
 //------------------------------------------------------------------------------- Antd
 //------------------------------------------------------------------------------- Component
 import DDS from "../../_lib/component/dds";
+import DK_Template_Policy from "../../_lib/template/policy";
 //------------------------------------------------------------------------------- Component
 const Home = observer((props) => {
     const { store } = props;
@@ -28,35 +28,34 @@ const Home = observer((props) => {
         }
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
-    const [open, setOpen] = useState(false);
-    const [policySelect, setpolicySelect] = useState(0);
-
-    const handleListClick = (idx) => {
-        setpolicySelect(idx);
-        setOpen(true);
-    };
 
     // Checked Function
     const [checkAll, setcheckAll] = useState(false);
-    const [checkedValue, setcheckedValue] = useState({ policy: false, private: false, marketing: false });
+    const [checkedValue, setcheckedValue] = useState({ terms: false, privacy: false, marketing: false });
+
     useEffect(() => {
         var c = true;
         for (const key in checkedValue) {
             checkedValue[key] == false && (c = false);
         }
         setcheckAll(c);
-    }, [checkedValue.policy, checkedValue.private, checkedValue.marketing]);
+    }, [checkedValue.terms, checkedValue.privacy, checkedValue.marketing]);
+
     const onCheckedAll = (e) => {
         setcheckAll(e);
-        setcheckedValue({ policy: e, private: e, marketing: e });
+        setcheckedValue({ terms: e, privacy: e, marketing: e });
     };
     // Checked Function
-    const checkKeyArray = ["policy", "private", "marketing"];
+
+    const checkKeyArray = ["terms", "privacy", "marketing"];
 
     const nextStep = async () => {
         await sessionStorage.setItem("signupMarketing", checkedValue.marketing ? "Y" : "N");
         await router.push("/signup/nickname");
     };
+
+    const [policyOpen, setpolicyOpen] = useState(false);
+    const [policyType, setpolicyType] = useState("terms");
 
     return (
         <>
@@ -90,18 +89,19 @@ const Home = observer((props) => {
                                     </DDS.checkbox.default>
                                     <DDS.icons.angleRight
                                         onClick={() => {
-                                            handleListClick(key);
+                                            setpolicyOpen(true);
+                                            setpolicyType(item);
                                         }}
                                     />
                                 </li>
                             ))}
                         </ul>
-                        <SignupDrawer open={open} setOpen={setOpen} policySelect={policySelect} lang={lang} />
                     </div>
-                    <DDS.button.default className="agree-check" disabled={checkedValue.policy && checkedValue.private ? false : true} onClick={nextStep}>
+                    <DDS.button.default className="agree-check" disabled={checkedValue.terms && checkedValue.privacy ? false : true} onClick={nextStep}>
                         {lang.t(`signup.terms.check`)}
                     </DDS.button.default>
                 </div>
+                <DK_Template_Policy open={policyOpen} setopen={setpolicyOpen} type={policyType} store={store} />
             </DDS.layout.back>
         </>
     );

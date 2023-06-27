@@ -49,6 +49,9 @@ class Store {
         if (!sessionStorage.getItem("loginPath")) {
             sessionStorage.setItem("loginPath", path);
         }
+        // if (process.env.STAGE == "LOCAL") {
+        //     url += "?local=Y";
+        // }
         location.href = `${process.env.API_URL}${url}`;
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 체크로그인

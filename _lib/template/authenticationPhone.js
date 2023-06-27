@@ -28,6 +28,21 @@ const Home = observer((props) => {
     const [open, setOpen] = useState(false);
     const [count, setcount] = useState(0);
 
+    let languageSet = {
+        certificate: {
+            btn: lang.t("signup.mobile.certificate.btn"),
+            reBtn: lang.t("signup.mobile.certificate.reBtn"),
+            label: lang.t("signup.mobile.certificate.label"),
+            placeholder: lang.t("signup.mobile.certificate.placeholder"),
+            over: lang.t("signup.mobile.certificate.over"),
+        },
+        message: {
+            success: lang.t("signup.mobile.message.success"),
+            fail: lang.t("signup.mobile.message.fail"),
+            over: lang.t("signup.mobile.message.over"),
+        },
+    };
+
     // ----------------------------------------------------------- Firebase 설정
     const app = initializeApp(common.firebaseConfig);
     getAuth(app).languageCode = lang.i18n.language == "en" ? "en" : "ko";
@@ -73,7 +88,7 @@ const Home = observer((props) => {
                 });
         } else {
             common.messageApi.info({
-                content: "유효한 전화번호를 입력해 주세요.",
+                content: languageSet.message.fail,
             });
         }
     };
@@ -95,7 +110,7 @@ const Home = observer((props) => {
                 })
                 .catch((error) => {
                     common.messageApi.info({
-                        content: "error",
+                        content: languageSet.message.fail,
                     });
                 });
         }
@@ -103,7 +118,7 @@ const Home = observer((props) => {
     // ----------------------------------------------------------- 인증코드 체크
 
     const phoneInputSetting = {
-        placeholder: "휴대폰 번호 입력",
+        placeholder: lang.t("signup.mobile.placeholder"),
         prefix: (
             <>
                 <span
@@ -126,7 +141,7 @@ const Home = observer((props) => {
     };
 
     const authcodeInputSetting = {
-        placeholder: "인증번호 6자리 입력",
+        placeholder: lang.t("signup.mobile.placeholder"),
         value: authCode,
         onChange: (e) => {
             var v = e.target.value;
@@ -146,7 +161,7 @@ const Home = observer((props) => {
         <>
             <div className="dk authentication-phone">
                 <h5>
-                    <strong>휴대폰 번호</strong>
+                    <strong>{lang.t("signup.mobile.label")}</strong>
                 </h5>
                 <div className="inputs">
                     <DDS.input.default {...phoneInputSetting} />
@@ -156,13 +171,13 @@ const Home = observer((props) => {
                             handleSendCode();
                         }}
                     >
-                        {count > 0 ? "재전송" : "인증하기"}
+                        {count > 0 ? lang.t("signup.mobile.certificate.reBtn") : lang.t("signup.mobile.certificate.btn")}
                     </DDS.button.default>
                 </div>
                 {confirmationResult && (
                     <>
                         <h5>
-                            <strong>인증번호</strong>
+                            <strong>{languageSet.certificate.label}</strong>
                             <span>
                                 {minutes < 10 ? `0${minutes}` : `${minutes}`}:{seconds < 10 ? `0${seconds}` : `${seconds}`}
                             </span>

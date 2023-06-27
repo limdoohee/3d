@@ -14,7 +14,7 @@
             "naver": "Naver로 시작하기",
             "apple": "Apple로 시작하기",
             "kakao": "Kakao로 시작하기",
-            "help": "계정이 없나요?",
+            "help": "아직 계정이 없나요?",
             "signUp": "가입하기",
             "tooltip": "5,000P 즉시 지급",
             "language-select": "언어 선택",
@@ -29,19 +29,22 @@
         }
     },
     "policy": {
-        "text1": "회원가입 진행시, ",
+        "text1": "본 서비스 이용 시, ",
         "text2": " 및 ",
-        "text3": "을 읽고 동의한 것으로 간주됩니다.",
+        "text3": "에 동의하는 것으로 간주됩니다.",
         "terms": {
-            "title": "이용약관"
+            "title": "이용 약관"
         },
         "privacy": {
-            "title": "개인정보처리방침"
+            "title": "개인 정보 보호 정책"
+        },
+        "marketing": {
+            "title": "혜택 및 마케팅 정보 수신 동의"
         }
     },
     "signup": {
         "terms": {
-            "title": "드롭키친 서비스 이용약관에 동의해주세요",
+            "title": "드롭키친 서비스 이용 약관에 동의해 주세요",
             "all": "전체 동의하기",
             "list1": "[필수] 서비스 이용약관",
             "list2": "[필수] 개인정보 수집 및 이용",
@@ -61,20 +64,19 @@
             "desc": "test"
         },
         "nickname": {
-            "title": "닉네임을 입력해주세요",
+            "title": "드롭키친에서 사용할 닉네임을 입력해 주세요",
             "label1": "이메일",
-            "label2": "닉네임 (20byte 이내)",
+            "label2": "닉네임(영문, 숫자 20자 이내)",
             "placeholder": "닉네임을 입력해주세요.",
             "help-success": "사용 가능한 닉네임입니다.",
             "help-warning": "최소 3글자 이상 영문, 숫자만 사용 가능합니다.",
             "help-already": "이미 존재하는 닉네임입니다."
         },
-
         "mobile": {
             "title": "휴대폰 번호를 입력해주세요",
             "label": "휴대폰 번호",
             "placeholder": "휴대폰 번호 입력",
-            "sel-region": "국가 또는 지역 선택",
+            "sel-region": "국가 또는 지역을 선택해 주세요",
             "certificate": {
                 "btn": "인증하기",
                 "reBtn": "재전송",
