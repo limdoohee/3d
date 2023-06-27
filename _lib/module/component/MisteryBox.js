@@ -198,6 +198,7 @@ const MisteryBox = observer((props) => {
                                                 model.scale.multiplyScalar(14);
                                                 break;
                                             case 2:
+                                                plane.position.y = 3.5;
                                                 model.scale.multiplyScalar(20);
                                                 break;
                                             case 3:
@@ -205,9 +206,11 @@ const MisteryBox = observer((props) => {
                                                 model.scale.multiplyScalar(1.5);
                                                 break;
                                             case 21:
+                                                plane.position.y = 3;
                                                 model.scale.multiplyScalar(15);
                                                 break;
                                             case 22:
+                                                plane.position.y = 2.5;
                                                 model.scale.multiplyScalar(15);
                                                 break;
                                             default:
@@ -295,6 +298,7 @@ const MisteryBox = observer((props) => {
                                     model.scale.multiplyScalar(14);
                                     break;
                                 case 2:
+                                    plane.position.y = 3.5;
                                     model.scale.multiplyScalar(20);
                                     break;
                                 case 3:
@@ -302,9 +306,11 @@ const MisteryBox = observer((props) => {
                                     model.scale.multiplyScalar(1.5);
                                     break;
                                 case 21:
+                                    plane.position.y = 3;
                                     model.scale.multiplyScalar(15);
                                     break;
                                 case 22:
+                                    plane.position.y = 2.5;
                                     model.scale.multiplyScalar(15);
                                     break;
                                 default:
