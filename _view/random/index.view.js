@@ -24,6 +24,7 @@ const Home = observer((props) => {
     const [incrDisabled, setIncrDisabled] = useState(false);
     const [helper, setHelper] = useState(false);
     const [boxOpen, setBoxOpen] = useState(false);
+    const [btnClick, setBtnClick] = useState(false);
 
     let renderer, renderer2;
     let camera;
@@ -249,10 +250,13 @@ const Home = observer((props) => {
 
     function onTouchBox(event) {
         if (event.target.tagName === "SPAN" || event.target.tagName === "BUTTON") {
-            if (event.target.className.includes("luckyBox") || event.target.parentNode.className.includes("luckyBox")) {
+            if ((event.target.className.includes("luckyBox") || event.target.parentNode.className.includes("luckyBox")) && !btnClick) {
                 const box = scene.getObjectByName("box");
+
                 gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
+                    setBtnClick(true);
                     if (e.id === "invalid_request") {
+                        setBtnClick(false);
                         common.messageApi.open({
                             key: "luckyBox",
                             icon: <DDS.icons.circleExclamation />,
@@ -303,6 +307,8 @@ const Home = observer((props) => {
                                     console.log("An error happened");
                                 },
                             );
+
+                            setBtnClick(false);
                         }, 1000);
                     }
                 });

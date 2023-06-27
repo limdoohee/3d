@@ -233,9 +233,9 @@ const MisteryBox = observer((props) => {
 
     function spaceRender() {
         requestAnimationFrame(spaceRender);
-        const delta = clock.getDelta();
-        if (mixer) mixer.update(delta);
-        if (scene.getObjectByName("drop")) scene.getObjectByName("drop").rotation.y += 0.005;
+        // const delta = clock.getDelta();
+        // if (mixer) mixer.update(delta);
+        // if (scene.getObjectByName("drop")) scene.getObjectByName("drop").rotation.y += 0.005;
         renderer.render(scene, camera);
     }
 
