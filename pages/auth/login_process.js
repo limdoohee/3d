@@ -1,8 +1,6 @@
-import Head from "next/head";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import { useRouter } from "next/router";
+import React from "react";
 import cookie from "react-cookies";
-
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- Store
@@ -11,7 +9,7 @@ const store = new Store();
 const { common, auth } = store;
 //------------------------------------------------------------------------------- Store
 
-const Home = (props) => {
+const Home = () => {
     const router = useRouter();
     console.log(router.query);
 

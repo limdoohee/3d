@@ -1,7 +1,6 @@
 //------------------------------------------------------------------------------- Module
 import React from "react";
 import Head from "next/head";
-import Script from "next/script";
 import PropTypes from "prop-types";
 import "@babel/polyfill";
 import { appWithTranslation } from "next-i18next";
