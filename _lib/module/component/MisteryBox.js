@@ -222,8 +222,8 @@ const MisteryBox = observer((props) => {
                                         model.traverse(function (object) {
                                             if (object.isMesh) object.castShadow = true;
                                         });
-                                        mixer = new THREE.AnimationMixer(model);
-                                        mixer.clipAction(gltf.animations[0]).play();
+                                        // mixer = new THREE.AnimationMixer(model);
+                                        // mixer.clipAction(gltf.animations[0]).play();
                                         model.name = "drop";
                                         setTimeout(() => {
                                             setOpen(true);
@@ -253,6 +253,7 @@ const MisteryBox = observer((props) => {
         requestAnimationFrame(spaceRender);
         const delta = clock.getDelta();
         if (mixer) mixer.update(delta);
+        if (scene.getObjectByName("drop")) scene.getObjectByName("drop").rotation.y += 0.005;
         renderer.render(scene, camera);
     }
 
@@ -270,7 +271,7 @@ const MisteryBox = observer((props) => {
                 // 페이지 리로딩
                 window.location.replace("/main");
             } else {
-                if (drop.data.curr.dropOwnFlag) {
+                if (drop.data.curr.ownFlag) {
                     const geometry = new THREE.BoxGeometry(3, 3, 0.5);
                     const material = new THREE.MeshBasicMaterial({
                         color: 0xffff00,
@@ -324,8 +325,8 @@ const MisteryBox = observer((props) => {
                                 if (object.isMesh) object.castShadow = true;
                             });
 
-                            mixer = new THREE.AnimationMixer(model);
-                            mixer.clipAction(gltf.animations[0]).play();
+                            // mixer = new THREE.AnimationMixer(model);
+                            // mixer.clipAction(gltf.animations[0]).play();
 
                             model.name = "drop";
                         },
