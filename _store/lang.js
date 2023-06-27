@@ -41,11 +41,13 @@ class Store {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 수신 변경
     async changeLangApi(params, callback) {
-        await Api.post(`/dks-api/v2/change_lang`, params, this.store.auth.loginResult.loginToken)
-            .then((response) => response.json())
-            .then((data) => {
-                callback && callback(data.data ? data.data : data);
-            });
+        if (this.store.auth.loginResult.loginToken) {
+            await Api.post(`/dks-api/v2/change_lang`, params, this.store.auth.loginResult.loginToken)
+                .then((response) => response.json())
+                .then((data) => {
+                    callback && callback(data.data ? data.data : data);
+                });
+        }
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 수신 변경
 }
