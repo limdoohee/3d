@@ -189,7 +189,7 @@ const MisteryBox = observer((props) => {
 
                                         switch (drop.data.curr.dropSeq) {
                                             case 1:
-                                                model.scale.multiplyScalar(12);
+                                                model.scale.multiplyScalar(14);
                                                 break;
                                             case 2:
                                                 model.scale.multiplyScalar(20);
@@ -272,7 +272,7 @@ const MisteryBox = observer((props) => {
 
                             switch (drop.data.curr.dropSeq) {
                                 case 1:
-                                    model.scale.multiplyScalar(12);
+                                    model.scale.multiplyScalar(14);
                                     break;
                                 case 2:
                                     model.scale.multiplyScalar(20);

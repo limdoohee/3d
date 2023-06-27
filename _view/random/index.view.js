@@ -19,7 +19,7 @@ const Home = observer((props) => {
     const { common, lang, auth, gallery } = store;
     const [modalOpen, setModalOpen] = useState(false);
     const [amount, setAmount] = useState(1);
-    const [buyingAmount, setBuyingAmount] = useState(0);
+    const [boxCnt, setBoxCnt] = useState(0);
     const [descDisabled, setDescDisabled] = useState(false);
     const [incrDisabled, setIncrDisabled] = useState(false);
     const [helper, setHelper] = useState(false);
@@ -51,7 +51,7 @@ const Home = observer((props) => {
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {
         gallery.getLuckyBox("", (e) => {
-            setBuyingAmount(gallery.luckyBox.length);
+            setBoxCnt(gallery.luckyBox.length);
             callback && callback(e);
         });
         gallery.getData({ sendbirdId: "dropkitchen_member_" + auth.loginResult.seq }, (e) => {
@@ -147,7 +147,7 @@ const Home = observer((props) => {
             action: () => {
                 gallery.data.pointBalance >= 1500 &&
                     gallery.buyLuckyBox({ amount }, (e) => {
-                        setBuyingAmount(gallery.luckyBox.length + amount);
+                        setBoxCnt((prev) => prev + amount);
 
                         common.messageApi.open({
                             className: "buyingMessage",
@@ -257,12 +257,13 @@ const Home = observer((props) => {
                         content: "이미 모든 드롭을 보유하고 있습니다.",
                     });
                 } else {
-                    if (gallery.luckyBox.length > 0) {
+                    if (boxCnt > 0) {
+                        console.log(boxCnt);
                         const box = scene.getObjectByName("box");
 
                         gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
                             setBoxOpen(true);
-                            setBuyingAmount((prev) => prev - 1);
+                            setBoxCnt((prev) => prev - 1);
                             setAction(animationActions[1]);
                             gsap.to(box, { visible: false, duration: 1 });
                             setTimeout(() => {
@@ -276,7 +277,7 @@ const Home = observer((props) => {
 
                                         switch (gallery.opendBox.dropSeq) {
                                             case 1:
-                                                model.scale.multiplyScalar(12);
+                                                model.scale.multiplyScalar(14);
                                                 break;
                                             case 2:
                                                 model.scale.multiplyScalar(20);
@@ -329,7 +330,7 @@ const Home = observer((props) => {
                 <div className="random">
                     <div className="voucher">
                         <img src={`../../static/img/randomBox.png`} alt="randomBox" />
-                        <span>{gallery.luckyBox.length}</span>
+                        <span>{boxCnt}</span>
                         {gallery.data.unconfirmedLuckyBox && <div className="chips">N</div>}
                     </div>
                     <div className={`bottom ${boxOpen ? "open" : ""}`}>
