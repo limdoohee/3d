@@ -12,7 +12,7 @@ import gsap from "gsap";
 
 const Gallery = observer((props) => {
     const router = useRouter();
-    const { gallery } = props.store;
+    const { gallery, common } = props.store;
 
     let dropData = gallery.data.collection;
     const { back, setBack } = props;
@@ -133,7 +133,7 @@ const Gallery = observer((props) => {
 
         const intersects = raycaster.intersectObjects(scene.children);
 
-        if (intersects.length > 0) {
+        if (intersects.length > 0 && !common.ui.gnbOpen) {
             parent = intersects[0].object.parent;
             // console.log(intersects[0].object);
 
