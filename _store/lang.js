@@ -23,6 +23,7 @@ class Store {
         this.i18n.changeLanguage(lng);
         localStorage.setItem("lang", lng);
         Cookies.save("lang", lng);
+        this.changeLangApi({ lang: lng });
     }
 
     check() {
@@ -37,6 +38,16 @@ class Store {
         const { t } = useTranslation();
         return t(key);
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 수신 변경
+    async changeLangApi(params, callback) {
+        await Api.post(`/dks-api/v2/change_lang`, params, this.store.auth.loginResult.loginToken)
+            .then((response) => response.json())
+            .then((data) => {
+                callback && callback(data.data ? data.data : data);
+            });
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 수신 변경
 }
 //////////////////////////// makeAutoObservable
 
