@@ -119,8 +119,8 @@ const Home = observer((props) => {
                                     <DDS.profile.default src={auth.loginResult.profileImage ? auth.loginResult.profileImage : null} />
                                     <div className="camera">
                                         <DDS.icons.camera />
-                                        <input type="file" onChange={imageUpload} />
                                     </div>
+                                    <input type="file" onChange={imageUpload} />
                                 </div>
                                 {/* <DDS.button.default className="dds button none">현재 사진 삭제</DDS.button.default> */}
                             </div>
