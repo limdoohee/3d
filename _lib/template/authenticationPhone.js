@@ -109,10 +109,13 @@ const Home = observer((props) => {
                     data.set((prev) => ({ ...prev, uid: result.user.uid, result: true }));
                 })
                 .catch((error) => {
+                    data.set((prev) => ({ ...prev, result: false }));
                     common.messageApi.info({
                         content: languageSet.message.fail,
                     });
                 });
+        } else {
+            data.set((prev) => ({ ...prev, result: false }));
         }
     }, [authCode]);
     // ----------------------------------------------------------- 인증코드 체크
