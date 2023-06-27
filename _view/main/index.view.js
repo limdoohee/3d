@@ -256,7 +256,7 @@ const Home = observer((props) => {
                             </div>
                         )}
                     </div>
-                    <MisteryBox {...props} />
+                    {drop.data.curr.status && <MisteryBox {...props} />}
 
                     {notice && <Alarm />}
                     {coachMark === "hidden" && <DDS.modal.bottom {...modalData} />}
