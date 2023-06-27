@@ -12,7 +12,7 @@ configure({
 class Store {
     data = {
         curr: {
-            // dropSeq: 22,
+            // dropSeq: 1,
             // status: "processing",
             // startAt: "2023-06-28 12:36:00",
             // endAt: "2023-06-28 13:44:59",
@@ -20,10 +20,10 @@ class Store {
             // artName: "작품2",
             // artistName: "dev_test",
             // amount: 2000,
-            // contentUrl: "https://asset.dropkitchen.xyz/contents/drops/Drop05_275C/scene.gltf",
+            // contentUrl: "https://asset.dropkitchen.xyz/contents/drops/Drop01_GraceGod/scene.gltf",
             // thumbnailUrl: "https://asset.dropkitchen.xyz/contents/202304_dev/20230405151809635_dk.webp",
             // ownerCnt: 1,
-            // dropOwnFlag: true,
+            // ownFlag: false,
             // dropRound: 3,
         },
         detail: {},
