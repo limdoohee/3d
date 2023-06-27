@@ -68,6 +68,11 @@ class Store {
                 // return this.opendBox;
             });
     }
+
+    dataChange(key, value, callback) {
+        this.data[key] = value;
+        callback && callback();
+    }
 }
 //////////////////////////// makeAutoObservable
 

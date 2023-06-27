@@ -148,9 +148,10 @@ const Home = observer((props) => {
                 gallery.data.pointBalance >= 1500 &&
                     gallery.buyLuckyBox({ amount }, (e) => {
                         setBuyingAmount(gallery.luckyBox.length + amount);
+
                         common.messageApi.open({
                             className: "buyingMessage",
-                            content: "랜덤박스 구매가 완료되었습니다.",
+                            content: "Lucky Box 구매가 완료되었습니다.",
                         });
                     });
             },
@@ -171,6 +172,11 @@ const Home = observer((props) => {
             <h2>{lang.t("random.desc")}</h2>
         );
     };
+
+    const RightButton = () => {
+        return gallery.luckyBox.length > 0 && <DDS.button.default className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}>{boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.open")}</DDS.button.default>;
+    };
+
     function setSpace() {
         const canvas = document.getElementById("space");
         renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
@@ -242,71 +248,72 @@ const Home = observer((props) => {
     }
 
     function onTouchBox(event) {
-        if (event.target.innerText === "랜덤박스 열기") {
-            if (gallery.data.totalDropCnt === gallery.data.myDropCnt) {
-                common.messageApi.open({
-                    icon: <DDS.icons.circleExclamation />,
-                    className: "arMessage",
-                    content: "이미 모든 드롭을 보유하고 있습니다.",
-                });
-            } else {
-                if (gallery.luckyBox.length > 0) {
-                    const box = scene.getObjectByName("box");
-
-                    gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
-                        setAction(animationActions[1]);
-                        gsap.to(box, { visible: false, duration: 1 });
-
-                        setTimeout(() => {
-                            loader.load(
-                                gallery.opendBox.contentUrl,
-                                function (gltf) {
-                                    model = gltf.scene;
-                                    model.position.z = 3;
-                                    model.position.y = 1;
-
-                                    switch (gallery.opendBox.dropSeq) {
-                                        case 1:
-                                            model.scale.multiplyScalar(10);
-                                            break;
-                                        case 2:
-                                            model.scale.multiplyScalar(20);
-                                            break;
-                                        case 3:
-                                            model.scale.multiplyScalar(1.5);
-                                            break;
-                                        case 21:
-                                            model.scale.multiplyScalar(15);
-                                            break;
-                                        case 22:
-                                            model.scale.multiplyScalar(15);
-                                            break;
-                                        default:
-                                            model.scale.multiplyScalar(1);
-                                            break;
-                                    }
-                                    scene.add(model);
-
-                                    mixer = new THREE.AnimationMixer(model);
-                                    mixer.clipAction(gltf.animations[0]).play();
-                                    model.name = "drop";
-                                },
-                                undefined,
-                                function (error) {
-                                    console.log("An error happened");
-                                },
-                            );
-
-                            setBuyingAmount((prev) => prev - 1);
-                            setBoxOpen(true);
-                        }, 1000);
+        if (event.target.tagName === "SPAN" || event.target.tagName === "BUTTON") {
+            if (event.target.className.includes("luckyBox") || event.target.parentNode.className.includes("luckyBox")) {
+                if (gallery.data.totalDropCnt === gallery.data.myDropCnt) {
+                    common.messageApi.open({
+                        icon: <DDS.icons.circleExclamation />,
+                        className: "arMessage",
+                        content: "이미 모든 드롭을 보유하고 있습니다.",
                     });
+                } else {
+                    if (gallery.luckyBox.length > 0) {
+                        const box = scene.getObjectByName("box");
+
+                        gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
+                            setBoxOpen(true);
+                            setBuyingAmount((prev) => prev - 1);
+                            setAction(animationActions[1]);
+                            gsap.to(box, { visible: false, duration: 1 });
+                            setTimeout(() => {
+                                loader.load(
+                                    gallery.opendBox.contentUrl,
+                                    // "https://asset.dropkitchen.xyz/contents/202306_dev/20230626101705835_dk.glb",
+                                    function (gltf) {
+                                        model = gltf.scene;
+                                        model.position.z = 3;
+                                        model.position.y = 1;
+
+                                        switch (gallery.opendBox.dropSeq) {
+                                            case 1:
+                                                model.scale.multiplyScalar(12);
+                                                break;
+                                            case 2:
+                                                model.scale.multiplyScalar(20);
+                                                break;
+                                            case 3:
+                                                model.scale.multiplyScalar(1.5);
+                                                break;
+                                            case 21:
+                                                model.scale.multiplyScalar(15);
+                                                break;
+                                            case 22:
+                                                model.scale.multiplyScalar(15);
+                                                break;
+                                            default:
+                                                model.scale.multiplyScalar(1);
+                                                break;
+                                        }
+                                        scene.add(model);
+
+                                        mixer = new THREE.AnimationMixer(model);
+                                        mixer.clipAction(gltf.animations[0]).play();
+                                        model.name = "drop";
+                                    },
+                                    undefined,
+                                    function (error) {
+                                        console.log("An error happened");
+                                    },
+                                );
+                            }, 1000);
+                        });
+                    }
                 }
             }
-        }
-        if (event.target.innerText === "확인") {
-            // 페이지 리로딩
-            window.location.replace("/random");
+            if (event.target.className.includes("confirm") || event.target.parentNode.className.includes("confirm")) {
+                // 페이지 리로딩
+                window.location.replace("/random");
+            }
         }
     }
 
@@ -322,7 +329,7 @@ const Home = observer((props) => {
                 <div className="random">
                     <div className="voucher">
                         <img src={`../../static/img/randomBox.png`} alt="randomBox" />
-                        <span>{buyingAmount}</span>
+                        <span>{gallery.luckyBox.length}</span>
                         {gallery.data.unconfirmedLuckyBox && <div className="chips">N</div>}
                     </div>
                     <div className={`bottom ${boxOpen ? "open" : ""}`}>
@@ -334,9 +341,9 @@ const Home = observer((props) => {
                                     boxOpen ? router.push("userGallery?memberSeq=" + auth.loginResult.seq) : setModalOpen(true);
                                 }}
                             >
-                                {boxOpen ? "받은 드롭 보기" : "구매하기"}
+                                {boxOpen ? lang.t("random.button.goGallery") : lang.t("random.button.buy")}
                             </DDS.button.default>
-                            {gallery.luckyBox.length > 0 && <DDS.button.default className="dds button primary">{boxOpen ? "확인" : "랜덤박스 열기"}</DDS.button.default>}
+                            <RightButton />
                         </div>
                     </div>
                 </div>
