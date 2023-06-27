@@ -62,7 +62,7 @@ const Component = {
                         </DDS_Button.default>
                     </div>
                     <div className="personal">
-                        <DDS_Profile.default badge={<DDS_Icons.badgeCrown className="cert" />} src="https://picsum.photos/id/237/200/300" />
+                        <DDS_Profile.default badge={<DDS_Icons.badgeCrown className="cert" />} src={auth.loginResult.profileImage ? auth.loginResult.profileImage : ""} />
                         <strong>{auth.loginResult && auth.loginResult.nickname}</strong>
                     </div>
                     <div
