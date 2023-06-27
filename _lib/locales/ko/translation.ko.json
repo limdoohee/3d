@@ -113,15 +113,27 @@
     },
     "setting": {
         "title": "설정",
-        "profile": { "title": "내 정보 수정" },
-        "alarm": { "title": "알림", "setting": { "title": "알림 설정" } },
+        "profile": { "title": "내 정보 수정", "bio": "소개" },
+        "alarm": {
+            "title": "알림",
+            "setting": { "title": "알림 설정" },
+            "preferences": "알림설정",
+            "deviceOn": {
+                "title": "알림이 꺼져있어요",
+                "desc": "알림을 켜고, 새로운 아트 소식을 받아보세요"
+            },
+            "check1": "광고성 정보 수신 동의",
+            "check2": "서비스 알림 동의"
+        },
         "account": {
             "title": "계정",
             "info": { "title": "계정 정보" },
             "language": { "title": "언어" }
         },
         "info": { "title": "정보", "info": { "title": "정보" } },
-        "logout": { "title": "로그아웃" }
+        "logout": { "title": "로그아웃" },
+        "save": "저장",
+        "confirm": "확인"
     },
     "dropList": {
         "title": "드롭 리스트"

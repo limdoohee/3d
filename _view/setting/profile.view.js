@@ -135,7 +135,7 @@ const Home = observer((props) => {
                         </div>
                         <div className="save">
                             <DDS.button.default className="dds button primary block large" onClick={complete} disabled={submitCheck ? false : true}>
-                                수정 완료
+                                {lang.t("setting.save")}
                             </DDS.button.default>
                         </div>
                     </div>
@@ -151,7 +151,7 @@ export default Home;
 //////////////////////////////////////////////////////////////////////// IntroductionInput
 const IntroductionInput = (props) => {
     const { value, setvalue, store } = props;
-    const { common, auth } = store;
+    const { common, auth, lang } = store;
 
     const onChange = (e) => {
         var v = e.target.value;
@@ -173,7 +173,7 @@ const IntroductionInput = (props) => {
     return (
         <>
             <h5>
-                <strong>소개</strong>
+                <strong>{lang.t("setting.profile.bio")}</strong>
                 <span>{value.value ? value.value.length : 0}/50</span>
             </h5>
             <DDS.input.textarea {...inputSetting} />

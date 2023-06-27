@@ -51,7 +51,7 @@ const Home = observer((props) => {
 
     return (
         <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
-            <DK_template_header.default store={store} title={lang.t("setting.account.title")} right={headerRight} />
+            <DK_template_header.default store={store} title={lang.t("setting.account.info.title")} right={headerRight} />
             <DK_template_GNB.default store={store} />
             {/* Content */}
             <DDS.layout.content>
@@ -61,18 +61,21 @@ const Home = observer((props) => {
                             <ul className="form">
                                 <li>
                                     <h5>
-                                        <strong>이메일</strong>
+                                        <strong>{lang.t("setting.account.info.email")}</strong>
                                     </h5>
                                     <h4>
                                         <strong>{auth.loginResult.email}</strong>
                                         <span>
-                                            <DDS.button.default className="dds button secondary rounded kakao" icon={<DDS.icons.kakao />} />
+                                            {auth.loginResult.currentLoginSocial == "KAKAO" && <DDS.button.default className="dds button secondary rounded kakao" icon={<DDS.icons.kakao />} />}
+                                            {auth.loginResult.currentLoginSocial == "GOOGLE" && <DDS.button.default className="dds button secondary rounded google" icon={<DDS.icons.google />} />}
+                                            {auth.loginResult.currentLoginSocial == "NAVER" && <DDS.button.default className="dds button secondary rounded naver" icon={<DDS.icons.naver />} />}
+                                            {auth.loginResult.currentLoginSocial == "APPLE" && <DDS.button.default className="dds button secondary rounded apple" icon={<DDS.icons.apple />} />}
                                         </span>
                                     </h4>
                                 </li>
                                 <li>
                                     <h5>
-                                        <strong>휴대폰 번호</strong>
+                                        <strong>{lang.t("setting.account.info.phone")}</strong>
                                     </h5>
                                     <h4>
                                         <strong>{auth.loginResult.cellNo}</strong>
@@ -83,7 +86,7 @@ const Home = observer((props) => {
                                                     setStep(2);
                                                 }}
                                             >
-                                                변경
+                                                {lang.t("setting.account.info.phone")}
                                             </DDS.button.default>
                                         </span>
                                     </h4>

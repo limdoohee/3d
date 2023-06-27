@@ -102,7 +102,8 @@ const Home = observer((props) => {
                         <span>
                             <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230601112943364_dk.webp" />
                         </span>
-                        {lang.i18n.language}
+                        {lang.i18n.language == "en" && "EN"}
+                        {lang.i18n.language == "ko" && "KR"}
                         <span>
                             <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230601112943266_dk.webp" />
                         </span>
