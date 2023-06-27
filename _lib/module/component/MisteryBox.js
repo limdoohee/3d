@@ -25,6 +25,7 @@ const MisteryBox = observer((props) => {
     const boxName = ["box", "BoxBpdy", "BoxLid", "BoxBodyTp", "BoxLidLock"];
 
     const messageData = {
+        key: "upcoming",
         icon: <DDS.icons.circleExclamation />,
         className: "orgMessage",
         content: "드롭을 준비중이에요, 잠시만 기다려주세요!",
@@ -118,46 +119,16 @@ const MisteryBox = observer((props) => {
 
         const shadow = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), new THREE.ShadowMaterial({ opacity: 0.1 }));
         // const shadow = new THREE.Mesh(new THREE.PlaneGeometry(20, 20), new THREE.MeshBasicMaterial({ color: "red" }));
-        shadow.position.y = 0.11;
+        shadow.position.y = -1;
+        shadow.position.z = 2;
         shadow.material.transparent = true;
         shadow.receiveShadow = true;
         shadow.rotateX(-Math.PI / 2);
         shadow.name = "shadow";
         scene.add(shadow);
 
-        // loader.load("../../static/3d/MainPage.fbx", (object) => {
-        //     object.scale.set(0.7, 0.7, 0.7);
-        //     object.position.y = 3;
-        //     // object.position.z = 20;
-        //     // object.rotation.set(0.4, 0.5, 0);
-        //     // object.traverse((child) => {
-        //     //     if (child instanceof THREE.Mesh) {
-        //     //         child.material.transparent = true;
-        //     //         child.castShadow = true;
-        //     //     }
-        //     // });
-
-        //     scene.add(object);
-        // });
-
-        // console.log(canvas.clientWidth, canvas.clientHeight, window.innerWidth / window.innerHeight);
-        const geometry = new THREE.PlaneGeometry(9, 16);
-        const material = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, map: new THREE.TextureLoader().load("../../static/3d/MainPage.jpg") });
-        const plane = new THREE.Mesh(geometry, material);
-        plane.position.y = 4;
-        // plane.position.z = -2;
-        scene.add(plane);
-
         // event
         window.addEventListener("click", onTouchBox);
-        window.addEventListener("resize", onWindowResize);
-    }
-
-    function onWindowResize() {
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-
-        renderer.setSize(window.innerWidth, window.innerHeight);
     }
 
     function onTouchBox(event) {
@@ -171,97 +142,99 @@ const MisteryBox = observer((props) => {
         raycaster.setFromCamera(pointer, camera);
 
         const intersects = raycaster.intersectObjects(scene.children);
-        if (intersects.length > 0 && drop.data.curr.status === "processing") {
-            // parentName = intersects[0].object.parent.name;
-            const shadow = scene.getObjectByName("shadow");
-            const space = scene.getObjectByName("space");
+        if (intersects.length > 0 && !common.ui.gnbOpen) {
+            if (drop.data.curr.status === "processing") {
+                // parentName = intersects[0].object.parent.name;
+                const shadow = scene.getObjectByName("shadow");
+                const space = scene.getObjectByName("space");
 
-            if (boxName.includes(intersects[0].object.parent.name)) {
-                // gsap.to(intersects[0].object.position, {
-                //     x: -3,
-                //     ease: "power3.inOut",
-                //     duration: 1.2,
-                // });
+                if (boxName.includes(intersects[0].object.parent.name)) {
+                    // gsap.to(intersects[0].object.position, {
+                    //     x: -3,
+                    //     ease: "power3.inOut",
+                    //     duration: 1.2,
+                    // });
 
-                dropSeq = drop.data.curr.dropSeq;
-                dropRound = drop.data.curr.dropRound;
+                    dropSeq = drop.data.curr.dropSeq;
+                    dropRound = drop.data.curr.dropRound;
 
-                const BoxLid_sample_0 = scene.getObjectByName("BoxLid_sample_0");
-                const BoxBpdy_sample_0 = scene.getObjectByName("BoxBpdy_sample_0");
-                const BoxLidLock_sample_0 = scene.getObjectByName("BoxLidLock_sample_0");
-                const BoxLidLock1_sample_0 = scene.getObjectByName("BoxLidLock1_sample_0");
-                const BoxBodyTp_sample_0 = scene.getObjectByName("BoxBodyTp_sample_0");
-                const BoxLidBttm_sample_0 = scene.getObjectByName("BoxLidBttm_sample_0");
+                    const BoxLid_sample_0 = scene.getObjectByName("BoxLid_sample_0");
+                    const BoxBpdy_sample_0 = scene.getObjectByName("BoxBpdy_sample_0");
+                    const BoxLidLock_sample_0 = scene.getObjectByName("BoxLidLock_sample_0");
+                    const BoxLidLock1_sample_0 = scene.getObjectByName("BoxLidLock1_sample_0");
+                    const BoxBodyTp_sample_0 = scene.getObjectByName("BoxBodyTp_sample_0");
+                    const BoxLidBttm_sample_0 = scene.getObjectByName("BoxLidBttm_sample_0");
 
-                drop.dropArt({ dropSeq }, (e) => {
-                    if (e.id === "ok") {
-                        setAction(animationActions[1]);
-                        gsap.to(intersects[0].object.parent, { visible: false, duration: 1 });
-                        // gsap.to(intersects[0].object.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                        // gsap.to(BoxLid_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                        // gsap.to(BoxBpdy_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                        // gsap.to(BoxLidLock_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                        // gsap.to(BoxBodyTp_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                        // gsap.to(BoxLidBttm_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                        // gsap.to(BoxLidLock1_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                        gsap.to(shadow.material, { opacity: 0, duration: 1 });
-                        gsap.to(space, { receiveShadow: true, duration: 1, delay: 0.5 });
+                    drop.dropArt({ dropSeq }, (e) => {
+                        if (e.id === "ok") {
+                            setAction(animationActions[1]);
+                            gsap.to(intersects[0].object.parent, { visible: false, duration: 1 });
+                            // gsap.to(intersects[0].object.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
+                            // gsap.to(BoxLid_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
+                            // gsap.to(BoxBpdy_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
+                            // gsap.to(BoxLidLock_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
+                            // gsap.to(BoxBodyTp_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
+                            // gsap.to(BoxLidBttm_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
+                            // gsap.to(BoxLidLock1_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
+                            gsap.to(shadow.material, { opacity: 0, duration: 1 });
+                            gsap.to(space, { receiveShadow: true, duration: 1, delay: 0.5 });
 
-                        setTimeout(() => {
-                            loader.load(
-                                drop.data.curr.contentUrl,
-                                function (gltf) {
-                                    model = gltf.scene;
-                                    model.position.z = 3;
-                                    model.position.y = 1;
+                            setTimeout(() => {
+                                loader.load(
+                                    drop.data.curr.contentUrl,
+                                    function (gltf) {
+                                        model = gltf.scene;
+                                        model.position.z = 3;
+                                        model.position.y = 1;
 
-                                    switch (drop.data.curr.dropSeq) {
-                                        case 1:
-                                            model.scale.multiplyScalar(10);
-                                            break;
-                                        case 2:
-                                            model.scale.multiplyScalar(20);
-                                            break;
-                                        case 3:
-                                            model.scale.multiplyScalar(1.5);
-                                            break;
-                                        case 21:
-                                            model.scale.multiplyScalar(15);
-                                            break;
-                                        case 22:
-                                            model.scale.multiplyScalar(15);
-                                            break;
-                                        default:
-                                            model.scale.multiplyScalar(10);
-                                            break;
-                                    }
+                                        switch (drop.data.curr.dropSeq) {
+                                            case 1:
+                                                model.scale.multiplyScalar(12);
+                                                break;
+                                            case 2:
+                                                model.scale.multiplyScalar(20);
+                                                break;
+                                            case 3:
+                                                model.scale.multiplyScalar(1.5);
+                                                break;
+                                            case 21:
+                                                model.scale.multiplyScalar(15);
+                                                break;
+                                            case 22:
+                                                model.scale.multiplyScalar(15);
+                                                break;
+                                            default:
+                                                model.scale.multiplyScalar(10);
+                                                break;
+                                        }
 
-                                    scene.add(model);
-                                    model.traverse(function (object) {
-                                        if (object.isMesh) object.castShadow = true;
-                                    });
-                                    mixer = new THREE.AnimationMixer(model);
-                                    mixer.clipAction(gltf.animations[0]).play();
-                                    model.name = "drop";
-                                    setTimeout(() => {
-                                        setOpen(true);
-                                    }, 1000);
-                                },
-                                undefined,
-                                function (error) {
-                                    console.log("An error happened");
-                                },
-                            );
-                        }, 1000);
-                    }
-                });
-            } else if (intersects[0].object.parent.name !== "") {
-                window.location.href = "native://drop_detail?dropSeq=" + drop.data.curr.dropSeq;
-            }
-        } else {
-            if (boxName.includes(intersects[0].object.parent.name)) {
-                common.messageApi.open(messageData);
-                // setAction(animationActions[1]);
+                                        scene.add(model);
+                                        model.traverse(function (object) {
+                                            if (object.isMesh) object.castShadow = true;
+                                        });
+                                        mixer = new THREE.AnimationMixer(model);
+                                        mixer.clipAction(gltf.animations[0]).play();
+                                        model.name = "drop";
+                                        setTimeout(() => {
+                                            setOpen(true);
+                                        }, 1000);
+                                    },
+                                    undefined,
+                                    function (error) {
+                                        console.log("An error happened");
+                                    },
+                                );
+                            }, 1000);
+                        }
+                    });
+                } else if (intersects[0].object.parent.name !== "") {
+                    window.location.href = "native://drop_detail?dropSeq=" + drop.data.curr.dropSeq;
+                }
+            } else {
+                if (boxName.includes(intersects[0].object.parent.name)) {
+                    common.messageApi.open(messageData);
+                    // setAction(animationActions[1]);
+                }
             }
         }
     }
@@ -299,7 +272,7 @@ const MisteryBox = observer((props) => {
 
                             switch (drop.data.curr.dropSeq) {
                                 case 1:
-                                    model.scale.multiplyScalar(10);
+                                    model.scale.multiplyScalar(12);
                                     break;
                                 case 2:
                                     model.scale.multiplyScalar(20);
@@ -472,7 +445,7 @@ const MisteryBox = observer((props) => {
 
     return (
         <>
-            <canvas id="space"></canvas>
+            <canvas id="space" className="dropSpace"></canvas>
             <DDS.modal.bottom {...modalData} />
         </>
     );

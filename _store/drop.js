@@ -12,7 +12,7 @@ configure({
 class Store {
     data = {
         curr: {
-            // dropSeq: 6,
+            // dropSeq: 1,
             // status: "processing",
             // startAt: "2023-06-27 12:36:00",
             // endAt: "2023-06-27 13:44:59",
@@ -23,11 +23,12 @@ class Store {
             // contentUrl: "https://asset.dropkitchen.xyz/contents/202306_dev/20230626101705835_dk.glb",
             // thumbnailUrl: "https://asset.dropkitchen.xyz/contents/202304_dev/20230405151809635_dk.webp",
             // ownerCnt: 1,
-            // dropOwnFlag: false,
+            // dropOwnFlag: true,
             // dropRound: 3,
         },
         detail: {},
         dropList: { dropList: [], totalDropCnt: 0, myDropCnt: 0 },
+        mainLink: "",
     };
 
     constructor(store) {
@@ -40,6 +41,7 @@ class Store {
             .then((response) => response.json())
             .then((data) => {
                 this.data.curr = data.data.drop[0];
+                this.data.mainLink = data.data.mainLink;
                 callback && callback(data.data ? data.data : data);
             });
     }

@@ -15,6 +15,7 @@ const Component = forwardRef(function Component(props, ref) {
             return {
                 open() {
                     messageApi.open({
+                        key: props.key,
                         icon: props.icon,
                         content: props.content,
                         // duration: 100,

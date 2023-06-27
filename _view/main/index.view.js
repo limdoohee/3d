@@ -248,7 +248,7 @@ const Home = observer((props) => {
                         </DDS.button.default>
                     </div>
                     <div className="drop">
-                        <h2>{drop.data.curr.status === "processing" ? "Ongoing Drop" : "Upcoming"}</h2>
+                        <h2>{drop.data.curr.status === "processing" ? "Ongoing Art Drop" : "Upcoming"}</h2>
                         <Timer expiryTimestamp={changeTime} />
                         {drop.data.curr.status === "processing" && (
                             <div className="owner">

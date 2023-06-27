@@ -49,6 +49,7 @@
 .random .bottom h2 {
     text-align: center;
     margin-bottom: 80px;
+    white-space: pre-line;
 }
 
 .random .bottom.open h2 {

@@ -110,19 +110,6 @@
     "dropList": {
         "title": "drop list"
     },
-    "random": {
-        "title": "random box",
-        "desc": "Open the random box and\nget the drop you've been wanting!!",
-        "modal": {
-            "title": "Buy a Random Box",
-            "boxName": "Random Box",
-            "point": "Retention points",
-            "payment": "Total payment points",
-            "helper": "out of points",
-            "confirm": "Buy now",
-            "close": "close"
-        }
-    },
     "setting": {
         "title": "setting",
         "profile": { "title": "Edit My Information" },
@@ -135,27 +122,67 @@
         "info": { "title": "Information", "info": { "title": "Information" } },
         "logout": { "title": "Log out" }
     },
-    "main": {
+    "random": {
+        "title": "Lucky Box",
+        "desc": "Drumroll...\nLet's see what's inside your Lucky Box!",
+        "drop": {
+            "title": "Ta-da!",
+            "desc": "You got the digital art!\nWant to view it in My Gallery?"
+        },
+        "button": {
+            "open": "Open Your Lucky Box",
+            "buy": "Buy Lucky Box",
+            "confirm": "Confirm",
+            "goGallery": "Go to My Gallery"
+        },
         "modal": {
-            "title": "Receive notifications from dropkitchen",
-            "context": "Get notifications for drops, events, and other services.",
-            "confirm": "Get notifications",
-            "close": "Later"
+            "title": "Buy a Lucky Box",
+            "boxName": "Lucky Box",
+            "point": "Total",
+            "payment": "Spend",
+            "helper": "포인트가 부족합니다.",
+            "confirm": "Buy Now",
+            "close": "Close"
         }
+    },
+    "main": {
+        "coachMark": {
+            "gallery": {
+                "title": "My Gallery",
+                "desc": "Visit your personal\ndigital gallery"
+            },
+            "share": {
+                "title": "Share",
+                "desc": " Share\nwith a friend"
+            },
+            "box": {
+                "title": "Art Drop Box",
+                "desc": "Tap on ongoing art drops\nand collect digital art."
+            },
+            "confirm": "Start"
+        },
+        "modal": {
+            "title": "Stay up to date on all things art.",
+            "context": "You'll be notified about the latest art drops, events, and more.",
+            "confirm": "알림 받기",
+            "close": "Later"
+        },
+        "alarm": "Get Art Drop Alerts",
+        "alarmAgree": "You've agreed to receive notifications on MONTH, DAY, YEAR."
     },
     "misteryBox": {
         "modal": {
-            "title": "드롭 획득을 축하해요!",
-            "context": "1,000포인트가 지급되었어요.\n이제 갤러리로 이동해볼까요?",
-            "confirm": "갤러리로 이동",
-            "close": "나중에"
+            "title": "Congrats! You acquired a new artwork!",
+            "context": "You received 1,000 points.\nReady to check out the artwork in My Gallery?",
+            "confirm": "Go to My Gallery",
+            "close": "Later"
         }
     },
     "gallery": {
         "modal": {
-            "title": "Your friends and you both win!\nInvite your friends and get a gift from Dropkitchen.",
-            "context": "When a friend who isn't already a DropKit member signs up, you'll receive a random piece of DropKit digital art.\nEvery time a friend signs up, you'll receive 300 P.",
-            "confirm": "Invite and receive gifts",
+            "title": "Invite a friend and you both get a gift. It's a win-win!",
+            "context": "Your friend receives free digital art, and you will receive extra points after they sign up!",
+            "confirm": "nvite your friends, get points.",
             "close": "Later"
         }
     },

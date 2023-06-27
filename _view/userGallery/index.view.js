@@ -87,7 +87,7 @@ const Home = observer((props) => {
         confirm: {
             label: lang.t("gallery.modal.confirm"),
             action: () => {
-                // Router.push("/gallery");
+                window.location.href = "native://share?contents=" + encodeURI(auth.loginResult.inviteLink);
             },
         },
         cancel: {
@@ -146,7 +146,7 @@ const Home = observer((props) => {
                                     className="dds button primary"
                                     icon={<DDS.icons.paperPlane />}
                                     onClick={() => {
-                                        window.location.href = "native://share?contents=" + encodeURI(auth.loginResult.inviteLink);
+                                        setOpen(true);
                                     }}
                                 >
                                     invite

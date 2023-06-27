@@ -5,6 +5,11 @@
     z-index: -1;
 }
 
+.dropSpace {
+    background: url(../../static/3d/bg.png) no-repeat center;
+    background-size: cover;
+}
+
 .coachMark {
     position: absolute;
     background: rgba(41, 41, 41, 0.5);
