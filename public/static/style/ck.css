@@ -87,11 +87,12 @@
 }
 /* @ckeditor/ckeditor5-image/theme/imagecaption.css */
 .ck-content .image > figcaption {
-    display: table-caption;
+    display: block;
+    text-align: center;
     caption-side: bottom;
     word-break: break-word;
     color: var(--ck-color-image-caption-text);
-    background-color: var(--ck-color-image-caption-background);
+    /* background-color: var(--ck-color-image-caption-background); */
     padding: 0.6em;
     font-size: 0.75em;
     outline-offset: -1px;
