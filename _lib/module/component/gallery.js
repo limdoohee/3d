@@ -204,12 +204,16 @@ const Gallery = observer((props) => {
                     });
 
                     // 가상 영역
-                    const geometry = new THREE.PlaneGeometry(1.5, 2);
-                    const material = new THREE.MeshBasicMaterial({ side: THREE.DoubleSide, transparent: true, opacity: 0 });
+                    const geometry = new THREE.BoxGeometry(1, 2, 0.1);
+                    const material = new THREE.MeshPhongMaterial({
+                        // color: 0xffff00,
+                        side: THREE.DoubleSide,
+                        transparent: true,
+                        opacity: 0,
+                        depthWrite: false,
+                    });
                     const plane = new THREE.Mesh(geometry, material);
                     plane.position.set(i * 2.5, 0, 1);
-                    plane.transparent = true;
-                    plane.opacity = 0;
                     plane.name = "drop" + i;
                     scene.add(plane);
 
