@@ -155,19 +155,6 @@ const MisteryBox = observer((props) => {
                             gsap.to(space, { receiveShadow: true, duration: 1, delay: 0.5 });
 
                             setTimeout(() => {
-                                const geometry = new THREE.BoxGeometry(3, 3, 0.5);
-                                const material = new THREE.MeshBasicMaterial({
-                                    color: 0xffff00,
-                                    side: THREE.DoubleSide,
-                                    transparent: true,
-                                    opacity: 0,
-                                });
-                                const plane = new THREE.Mesh(geometry, material);
-                                plane.position.z = 5;
-                                plane.position.y = 4;
-                                plane.name = "dropDetail" + drop.data.curr.dropSeq;
-                                scene.add(plane);
-
                                 loader.load(
                                     drop.data.curr.contentUrl,
                                     function (gltf) {
@@ -180,19 +167,15 @@ const MisteryBox = observer((props) => {
                                                 model.scale.multiplyScalar(14);
                                                 break;
                                             case 2:
-                                                plane.position.y = 3.5;
                                                 model.scale.multiplyScalar(20);
                                                 break;
                                             case 3:
-                                                plane.position.y = 3;
                                                 model.scale.multiplyScalar(1.5);
                                                 break;
-                                            case 21:
-                                                plane.position.y = 3;
+                                            case 4:
                                                 model.scale.multiplyScalar(15);
                                                 break;
-                                            case 22:
-                                                plane.position.y = 2.5;
+                                            case 5:
                                                 model.scale.multiplyScalar(15);
                                                 break;
                                             default:
@@ -217,6 +200,40 @@ const MisteryBox = observer((props) => {
                                     },
                                 );
                             }, 1000);
+
+                            setTimeout(() => {
+                                const geometry = new THREE.BoxGeometry(3, 3, 0.5);
+                                const material = new THREE.MeshBasicMaterial({
+                                    color: 0xffff00,
+                                    side: THREE.DoubleSide,
+                                    transparent: true,
+                                    opacity: 0,
+                                });
+                                const plane = new THREE.Mesh(geometry, material);
+                                plane.position.z = 5;
+                                plane.position.y = 4;
+                                plane.name = "dropDetail" + drop.data.curr.dropSeq;
+                                scene.add(plane);
+
+                                switch (drop.data.curr.dropSeq) {
+                                    case 1:
+                                        break;
+                                    case 2:
+                                        plane.position.y = 3.5;
+                                        break;
+                                    case 3:
+                                        plane.position.y = 3;
+                                        break;
+                                    case 4:
+                                        plane.position.y = 3;
+                                        break;
+                                    case 5:
+                                        plane.position.y = 2.5;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                            }, 2000);
                         }
                     });
                 } else if (intersects[0].object.name.includes("dropDetail")) {
@@ -288,11 +305,11 @@ const MisteryBox = observer((props) => {
                                     plane.position.y = 3;
                                     model.scale.multiplyScalar(1.5);
                                     break;
-                                case 21:
+                                case 4:
                                     plane.position.y = 3;
                                     model.scale.multiplyScalar(15);
                                     break;
-                                case 22:
+                                case 5:
                                     plane.position.y = 2.5;
                                     model.scale.multiplyScalar(15);
                                     break;
