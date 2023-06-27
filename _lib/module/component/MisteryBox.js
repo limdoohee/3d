@@ -141,34 +141,16 @@ const MisteryBox = observer((props) => {
         raycaster.setFromCamera(pointer, camera);
 
         const intersects = raycaster.intersectObjects(scene.children);
-        if (intersects.length > 0 && !common.ui.gnbOpen) {
+        if (intersects.length > 0 && !common.ui.gnbOpen && drop.data.curr.coachMark === "hidden") {
             if (drop.data.curr.status === "processing") {
-                // parentName = intersects[0].object.parent.name;
                 const shadow = scene.getObjectByName("shadow");
                 const space = scene.getObjectByName("space");
 
                 if (boxName.includes(intersects[0].object.parent.name)) {
-                    dropSeq = drop.data.curr.dropSeq;
-                    dropRound = drop.data.curr.dropRound;
-
-                    const BoxLid_sample_0 = scene.getObjectByName("BoxLid_sample_0");
-                    const BoxBpdy_sample_0 = scene.getObjectByName("BoxBpdy_sample_0");
-                    const BoxLidLock_sample_0 = scene.getObjectByName("BoxLidLock_sample_0");
-                    const BoxLidLock1_sample_0 = scene.getObjectByName("BoxLidLock1_sample_0");
-                    const BoxBodyTp_sample_0 = scene.getObjectByName("BoxBodyTp_sample_0");
-                    const BoxLidBttm_sample_0 = scene.getObjectByName("BoxLidBttm_sample_0");
-
-                    drop.dropArt({ dropSeq }, (e) => {
+                    drop.dropArt({ dropSeq: drop.data.curr.dropSeq }, (e) => {
                         if (e.id === "ok") {
                             setAction(animationActions[1]);
                             gsap.to(intersects[0].object.parent, { visible: false, duration: 1 });
-                            // gsap.to(intersects[0].object.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                            // gsap.to(BoxLid_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                            // gsap.to(BoxBpdy_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                            // gsap.to(BoxLidLock_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                            // gsap.to(BoxBodyTp_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                            // gsap.to(BoxLidBttm_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
-                            // gsap.to(BoxLidLock1_sample_0.material, { opacity: 0, duration: 1, ease: "power3.inOut" });
                             gsap.to(shadow.material, { opacity: 0, duration: 1 });
                             gsap.to(space, { receiveShadow: true, duration: 1, delay: 0.5 });
 
@@ -271,7 +253,7 @@ const MisteryBox = observer((props) => {
                 // 페이지 리로딩
                 window.location.replace("/main");
             } else {
-                if (drop.data.curr.ownFlag) {
+                if (drop.data.curr.dropOwnFlag) {
                     const geometry = new THREE.BoxGeometry(3, 3, 0.5);
                     const material = new THREE.MeshBasicMaterial({
                         color: 0xffff00,
