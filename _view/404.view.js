@@ -1,6 +1,5 @@
-import Head from "next/head";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import { useRouter } from "next/router";
+import React from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Component
 import DDS from "../_lib/component/dds";

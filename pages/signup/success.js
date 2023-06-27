@@ -1,6 +1,4 @@
-import Head from "next/head";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import React from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Store
 import Store from "../../_store/store";
@@ -14,7 +12,6 @@ import View from "../../_view/signup/success.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {
-    const { store } = props;
     const { common, auth } = store;
     // 로그인 정보 스토어에 담는 함수
     auth.setCheckLogin(props);

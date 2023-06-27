@@ -1,6 +1,4 @@
-import Head from "next/head";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import React from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Store
 import Store from "../../_store/store";
@@ -14,19 +12,16 @@ import View from "../../_view/dds/analysis.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {
-    const { auth, common } = store;
+    const { common, auth } = store;
 
+    // 로그인 정보 스토어에 담는 함수
     auth.setCheckLogin(props);
-    console.log(props);
-    useEffect(() => {
-        common.init();
-    }, []);
-
-    return (
-        <>
-            <View props={props} store={store} />
-        </>
-    );
+    // 로그인 처리 분기
+    // 로그인 토큰이 있는 경우에만 접근 가능: "loginOnly"
+    // 로그인 토큰이 있을경우 보내는 페이지가 있는 경우 : okUrl 사용
+    checkLogin.loginResultCheck({ store: store, rule: "", result: props });
+    // 화면 출력
+    return <>{common.pageInit && <View props={props} store={store} />}</>;
 });
 
 //------------------------------------------------------------------------------- getServerSideProps

@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import Router, { useRouter } from "next/router";
+import React from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Store
 import Store from "../../_store/store";
@@ -14,7 +13,6 @@ import View from "../../_view/main/index.view";
 
 const Home = observer((props) => {
     const { common, auth } = store;
-    const router = useRouter();
 
     // 로그인 정보 스토어에 담는 함수
     auth.setCheckLogin(props);
