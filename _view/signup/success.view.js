@@ -30,17 +30,17 @@ const Home = observer((props) => {
     const [nickName, setNickName] = useState("");
 
     useEffect(() => {
-        setNickName(sessionStorage.getItem("IsNicknameValue"));
+        setNickName(sessionStorage.getItem("signupNickname"));
 
-        // setTimeout(() => {
-        //     router.push("/");
-        // }, 3000);
+        setTimeout(() => {
+            router.push("/");
+        }, 3000);
     }, []);
 
     return (
         <>
             <div className="auth ui success">
-                <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230614102427819_dk.webp" />
+                <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230627145407967_dk.webp" />
                 <h3>
                     <span>{nickName}</span>
                     <strong dangerouslySetInnerHTML={{ __html: lang.t(`signup.success.desc1`) }} />
