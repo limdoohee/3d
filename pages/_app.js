@@ -35,8 +35,7 @@ const MyApp = (props) => {
                 {/* # 페이지 로드시마다 페이지를 캐싱하지 않습니다. (HTTP 1.0) */}
                 <meta httpEquiv="Cache-Control" content="no-cache" />
                 {/* 페이지 로드시마다 페이지를 캐싱하지 않습니다. (HTTP 1.1) */}
-                {/* <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" /> */}
-                <meta name="viewport" content="initial-scale=1, viewport-fit=cover"></meta>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
                 <meta httpEquiv="Content-Security-Policy" content="upgrade-insecure-requests" />
                 <meta name="description" content="아트 드롭 컬쳐 미디어 & 스토어. 아티스트, 큐레이터, 컬렉터들의 이야기와 아트에 대한 다양한 콘텐츠를 제공합니다. 아티스트 및 브랜드와 협업한 기발한 작품도 만나 보세요." />
             </Head>
