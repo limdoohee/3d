@@ -14,7 +14,7 @@
             "naver": "Log in with Naver",
             "apple": "Log in with Apple",
             "kakao": "Log in with Kakao",
-            "help": "Don’t have an account?",
+            "help": "Don't have an account?",
             "signUp": "Sign Up",
             "tooltip": "5,000P payout",
             "language-select": "Select a language",
@@ -25,27 +25,30 @@
                 "apple": "Sign up with Apple",
                 "kakao": "Sign up with Kakao"
             },
-            "recent": "recent login"
+            "recent": "Most recent login"
         }
     },
     "policy": {
-        "text1": "By continuing, you agree are setting up a dropkitchen accout and agree to our ",
+        "text1": "By using this app, you agree to dropkitchen's ",
         "text2": " and ",
         "text3": "",
         "terms": {
-            "title": "User Agreement"
+            "title": "Terms of Use"
         },
         "privacy": {
-            "title": "Privacy Policy."
+            "title": "Collection and Use of Personal Information"
+        },
+        "marketing": {
+            "title": "Marketing information"
         }
     },
     "signup": {
         "terms": {
-            "title": "Drop Kitchen service terms and conditions please agree",
+            "title": "Please agree to our Terms & Conditions.",
             "all": "Agree all",
-            "list1": "[Required] Terms of Service",
-            "list2": "[Required] Collection and use of personal information",
-            "list3": "[Optional] Consent to receive benefits and marketing information",
+            "list1": "[Required] Terms of Use",
+            "list2": "[Required] Collection and Use of Personal Information",
+            "list3": "[Optional] I agree to receive marketing information from dropkitchen™.",
             "check": "agree and sign up"
         },
         "list1": {
@@ -61,30 +64,30 @@
             "desc": "test"
         },
         "nickname": {
-            "title": "Please enter your nickname",
-            "label1": "email",
-            "label2": "Nickname",
-            "placeholder": "",
-            "help-success": "Available nickname.",
-            "help-warning": "At least 3 letters or more, only English and numbers are allowed.",
-            "help-already": "This nickname already exists."
+            "title": "Choose your dropkitchen™ username.",
+            "label1": "Email",
+            "label2": "Username",
+            "placeholder": "Choose your dropkitchen™ username.",
+            "help-success": "This username is available.",
+            "help-warning": "Must be at least 3 letters and contain only letters and numbers.",
+            "help-already": "This username is already in use."
         },
         "mobile": {
-            "title": "Please enter your phone number",
-            "label": "phone number",
-            "placeholder": "",
-            "sel-region": "Select country or region",
+            "title": "Enter your mobile number.",
+            "label": "Phone number",
+            "placeholder": "Enter here.",
+            "sel-region": "Select your country or region.",
             "certificate": {
-                "btn": "Authenticate",
-                "reBtn": "re-send",
-                "label": "Certification Number",
-                "placeholder": "Enter 6 digit authentication number",
+                "btn": "Verify",
+                "reBtn": "Resend code",
+                "label": "Verification code",
+                "placeholder": "6-digit code",
                 "over": "end time"
             },
             "message": {
-                "success": "Verification code has been sent.",
-                "fail": "Authentication failed. Please check that the information you entered is correct.",
-                "over": "Input timed out. Please request the verification code again."
+                "success": "Your verification code has been sent.",
+                "fail": "Verification failed. Please check whether the code entered is correct.",
+                "over": "Oops, you've timed out. Please request a new verification code."
             }
         },
         "success": {

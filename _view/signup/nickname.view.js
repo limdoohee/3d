@@ -45,7 +45,7 @@ const Home = observer((props) => {
                     <ul className="nickname-list">
                         <li>
                             <label>{lang.t(`signup.nickname.label1`)}</label>
-                            <DDS.input.default disabled value={loginEmail} />
+                            <DDS.input.default disabled value={loginEmail} className="dds input primary large" />
                         </li>
                         <li>
                             <DK_template_profile.NickNameInput value={inputNickname} setvalue={setinputNickname} store={store} />
