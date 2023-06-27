@@ -84,6 +84,9 @@
     display: flex;
     justify-content: space-between;
 }
+.auth.terms .agree-list .policy li .dds.checkbox {
+    width: calc(100% - 24px);
+}
 .auth.ui.nickname .agree-check {
     width: 100%;
     left: 0;

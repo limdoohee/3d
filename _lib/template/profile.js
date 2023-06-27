@@ -28,6 +28,16 @@ const Home = {
         const { value, setvalue, store } = props;
         const { common, auth, lang } = store;
 
+        let languageSet = {
+            title: lang.t(`signup.nickname.title`),
+            label1: lang.t(`signup.nickname.label1`),
+            label2: lang.t(`signup.nickname.label2`),
+            placeholder: lang.t(`signup.nickname.placeholder`),
+            "help-success": lang.t(`signup.nickname.help-success`),
+            "help-warning": lang.t(`signup.nickname.help-warning`),
+            "help-already": lang.t(`signup.nickname.help-already`),
+        };
+
         const onChange = (e) => {
             var v = e.target.value;
             const reg = /[^a-zA-Z0-9ㄱ-힣]/g;
@@ -50,12 +60,12 @@ const Home = {
                             sethelpText(e.message);
                             setvalue((prevstate) => ({ ...prevstate, result: false }));
                         } else {
-                            sethelpText("사용 가능한 닉네임 입니다.");
+                            sethelpText(languageSet["help-success"]);
                             setvalue((prevstate) => ({ ...prevstate, result: true }));
                         }
                     });
                 } else {
-                    sethelpText("최소 3글자 이상 영문, 숫자 만 사용 가능합니다.");
+                    sethelpText(languageSet["help-warning"]);
                     setvalue((prevstate) => ({ ...prevstate, result: false }));
                 }
             } else {
@@ -100,7 +110,7 @@ const Home = {
 
         const inputSetting = {
             className: "dds input primary",
-            placeholder: "닉네임을 입력해주세요",
+            placeholder: lang.t(`signup.nickname.placeholder`),
             onChange: onChange,
             // onKeyDown: onChange,
             defaultValue: value.value,
@@ -108,17 +118,17 @@ const Home = {
             value: value.value,
         };
 
-        const [helpText, sethelpText] = useState("최소 3글자 이상 영문, 숫자 만 사용 가능합니다.");
+        const [helpText, sethelpText] = useState(lang.t(`signup.nickname.help-warning`));
         const [totalByte, settotalByte] = useState(0);
 
         return (
             <>
                 <div className="dk profile nickname-input">
                     <h5>
-                        <strong>닉네임 (20byte 이내)</strong>
+                        <strong>{lang.t(`signup.nickname.label2`)}</strong>
                         <span>{totalByte}/20</span>
                     </h5>
-                    <DDS.input.default {...inputSetting} />
+                    <DDS.input.default {...inputSetting} className="dds input primary large" />
                     <p>{helpText}</p>
                 </div>
             </>

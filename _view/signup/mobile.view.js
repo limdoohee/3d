@@ -89,7 +89,13 @@ const Home = observer((props) => {
                 await cookie.save("loginToken", e.loginToken, { path: "/" });
                 await sessionStorage.setItem("signupComplete", true);
                 common.debug(e.loginToken);
-                location.href = "/signup/success";
+                if (e.message) {
+                    if (confirm(e.message)) {
+                        location.href = "/";
+                    }
+                } else {
+                    location.href = "/signup/success";
+                }
             } else {
                 common.messageApi.info({
                     content: e.message,

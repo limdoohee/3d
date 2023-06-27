@@ -129,7 +129,7 @@ const Home = observer((props) => {
                     }}
                 >
                     English
-                    <DDS.icons.check className="checked login" />
+                    {lang.i18n.language == "en" && <DDS.icons.check className="checked login" />}
                 </div>
                 <div
                     onClick={() => {
@@ -138,7 +138,7 @@ const Home = observer((props) => {
                     }}
                 >
                     한국어
-                    <DDS.icons.check className="checked login" />
+                    {lang.i18n.language == "ko" && <DDS.icons.check className="checked login" />}
                 </div>
             </Drawer>
             {/* ///////////////////////////////////////////////////// 언어선택 */}
