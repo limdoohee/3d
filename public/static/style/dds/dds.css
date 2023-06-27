@@ -10,7 +10,7 @@
 
 /* =========================== container */
 .dds.container {
-    padding: 0 20px;
+    padding: env(safe-area-inset-top, 0) 20px env(safe-area-inset-bottom, 0) 20px;
 }
 
 @media (min-width: 640px) {
