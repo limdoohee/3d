@@ -286,10 +286,10 @@ const Home = observer((props) => {
                                         case 3:
                                             model.scale.multiplyScalar(1.5);
                                             break;
-                                        case 21:
+                                        case 4:
                                             model.scale.multiplyScalar(15);
                                             break;
-                                        case 22:
+                                        case 5:
                                             model.scale.multiplyScalar(15);
                                             break;
                                         default:
