@@ -1,6 +1,6 @@
 .dk.header {
     position: fixed;
-    top: 0;
+    top: var(--sat);
     left: 0;
     display: flex;
     justify-content: space-between;
