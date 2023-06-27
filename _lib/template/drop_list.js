@@ -107,12 +107,6 @@ const Home = {
                                                     onClick={() => {
                                                         common.onShare({
                                                             url: auth.loginResult.inviteLink,
-                                                            callback: () => {
-                                                                common.messageApi.open({
-                                                                    type: "success",
-                                                                    content: "초대링크를 복사 하였습니다.",
-                                                                });
-                                                            },
                                                         });
                                                     }}
                                                 />
