@@ -115,15 +115,27 @@
     },
     "setting": {
         "title": "setting",
-        "profile": { "title": "Edit My Information" },
-        "alarm": { "title": "Notification", "setting": { "title": "Notification settings" } },
+        "profile": { "title": "Edit Profile", "bio": "Bio" },
+        "alarm": {
+            "title": "Notifications",
+            "setting": { "title": "Preferences" },
+            "preferences": "Preferences",
+            "deviceOn": {
+                "title": "Push notifications are off.",
+                "desc": "Turn on notifications to get updates on new artwork."
+            },
+            "check1": "Marketing notifications",
+            "check2": "Push notifications"
+        },
         "account": {
-            "title": "Account",
-            "info": { "title": "Account information" },
+            "title": "Your Account",
+            "info": { "title": "Account information", "email": "Email", "phone": "Phone number" },
             "language": { "title": "Language" }
         },
-        "info": { "title": "Information", "info": { "title": "Information" } },
-        "logout": { "title": "Log out" }
+        "info": { "title": "More info", "info": { "title": "About" } },
+        "logout": { "title": "Log out" },
+        "save": "Save",
+        "confirm": "Confirm"
     },
     "random": {
         "title": "Lucky Box",
