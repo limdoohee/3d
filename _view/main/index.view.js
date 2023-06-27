@@ -21,6 +21,7 @@ const Home = observer((props) => {
     const [open, setOpen] = useState(false);
     const [notice, setNotice] = useState(false);
     const device_alarm = cookies.get("device_alarm");
+    const [coachMark, setCoachMark] = useState("hidden");
 
     /** 타이머 관련 변수 */
     let openTime;
@@ -99,9 +100,8 @@ const Home = observer((props) => {
     }
 
     useEffect(() => {
-        drop.dataChange("coachMark", "hidden");
         if (sessionStorage.getItem("signupComplete")) {
-            // setCoachMark("");
+            setCoachMark("");
             drop.dataChange("coachMark", "");
             sessionStorage.removeItem("signupComplete");
         }
@@ -118,6 +118,7 @@ const Home = observer((props) => {
             if (drop.data.curr.status === "processing") openTime = new Date(drop.data.curr.endAt);
             diff = (openTime.getTime() - currTime.getTime()) / 1000;
             setTime(time.setSeconds(time.getSeconds() + diff));
+            drop.dataChange("coachMark", "hidden");
         });
     }, [drop.data.curr.status]);
 
@@ -147,7 +148,7 @@ const Home = observer((props) => {
                 className="dds button none"
                 icon={<DDS.icons.bell />}
                 onClick={() => {
-                    common.uiChange("alarmOpen", true);
+                    router.push("/alarm");
                 }}
             />
         ),
@@ -217,7 +218,7 @@ const Home = observer((props) => {
                 <DK_template_header.default store={store} className="top" left={headerLeft} right={headerRight} />
                 <DK_template_GNB.default store={store} />
                 <DDS.layout.content>
-                    <div className={`coachMark ${drop.data.curr.coachMark}`}>
+                    <div className={`coachMark ${coachMark}`}>
                         <div className="left">
                             <img src="../../static/img/coachMark_left.png" alt="my gallery" />
                             <div>
@@ -242,7 +243,7 @@ const Home = observer((props) => {
                         <DDS.button.default
                             className="dds button primary"
                             onClick={() => {
-                                // setCoachMark("hidden");
+                                setCoachMark("hidden");
                                 drop.dataChange("coachMark", "hidden");
                             }}
                         >
