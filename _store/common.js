@@ -113,7 +113,7 @@ class Store {
 
     init() {
         // localStorage 기본 언어 설정
-        const defaultLanguage = "en";
+        let defaultLanguage = "en";
         if (localStorage.getItem("lang")) {
             defaultLanguage = localStorage.getItem("lang");
         }

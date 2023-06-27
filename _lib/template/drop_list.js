@@ -78,18 +78,23 @@ const Home = {
                     <ul className="list">
                         {drop.data.dropList.dropList.map((item, key) => {
                             return (
-                                <li
-                                    key={key}
-                                    onClick={() => {
-                                        window.location.href = "native://drop_detail?dropSeq=" + item.dropSeq;
-                                    }}
-                                >
+                                <li key={key}>
                                     <div className="left">
-                                        <div className="image">
+                                        <div
+                                            className="image"
+                                            onClick={() => {
+                                                window.location.href = "native://drop_detail?dropSeq=" + item.dropSeq;
+                                            }}
+                                        >
                                             <img src={item.thumbnailUrl} />
                                             {item.status == "processing" && <span className="label now">NOW</span>}
                                         </div>
-                                        <div className="name">
+                                        <div
+                                            className="name"
+                                            onClick={() => {
+                                                window.location.href = "native://drop_detail?dropSeq=" + item.dropSeq;
+                                            }}
+                                        >
                                             <h4>{item.dropRound}</h4>
                                             <p>{item.artName}</p>
                                         </div>
@@ -98,12 +103,28 @@ const Home = {
                                         {item.dropOwnFlag ? (
                                             <>
                                                 <DDS.chips.default className={"primary"}>보유</DDS.chips.default>
-                                                <DDS.icons.envelopeOpenHeart />
+                                                <DDS.icons.envelopeOpenHeart
+                                                    onClick={() => {
+                                                        common.onShare({
+                                                            url: auth.loginResult.inviteLink,
+                                                            callback: () => {
+                                                                common.messageApi.open({
+                                                                    type: "success",
+                                                                    content: "초대링크를 복사 하였습니다.",
+                                                                });
+                                                            },
+                                                        });
+                                                    }}
+                                                />
                                             </>
                                         ) : (
                                             <>
                                                 <DDS.chips.default className={"secondary"}>미보유</DDS.chips.default>
-                                                <DDS.icons.cubePlus />
+                                                <DDS.icons.cubePlus
+                                                    onClick={() => {
+                                                        Router.push("/random");
+                                                    }}
+                                                />
                                             </>
                                         )}
                                     </div>
