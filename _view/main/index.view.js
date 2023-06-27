@@ -20,7 +20,6 @@ const Home = observer((props) => {
     const [changeTime, setTime] = useState();
     const [open, setOpen] = useState(false);
     const [notice, setNotice] = useState(false);
-    const [coachMark, setCoachMark] = useState("hidden");
     const device_alarm = cookies.get("device_alarm");
 
     /** 타이머 관련 변수 */
@@ -100,8 +99,10 @@ const Home = observer((props) => {
     }
 
     useEffect(() => {
+        drop.dataChange("coachMark", "hidden");
         if (sessionStorage.getItem("signupComplete")) {
-            setCoachMark("");
+            // setCoachMark("");
+            drop.dataChange("coachMark", "");
             sessionStorage.removeItem("signupComplete");
         }
 
@@ -216,7 +217,7 @@ const Home = observer((props) => {
                 <DK_template_header.default store={store} className="top" left={headerLeft} right={headerRight} />
                 <DK_template_GNB.default store={store} />
                 <DDS.layout.content>
-                    <div className={`coachMark ${coachMark}`}>
+                    <div className={`coachMark ${drop.data.curr.coachMark}`}>
                         <div className="left">
                             <img src="../../static/img/coachMark_left.png" alt="my gallery" />
                             <div>
@@ -241,7 +242,8 @@ const Home = observer((props) => {
                         <DDS.button.default
                             className="dds button primary"
                             onClick={() => {
-                                setCoachMark("hidden");
+                                // setCoachMark("hidden");
+                                drop.dataChange("coachMark", "hidden");
                             }}
                         >
                             {lang.t("main.coachMark.confirm")}
@@ -259,7 +261,7 @@ const Home = observer((props) => {
                     {drop.data.curr.status && <MisteryBox {...props} />}
 
                     {notice && <Alarm />}
-                    {coachMark === "hidden" && <DDS.modal.bottom {...modalData} />}
+                    {drop.data.curr.coachMark === "hidden" && <DDS.modal.bottom {...modalData} />}
                     <AlarmTemplate.default store={props.store} />
                 </DDS.layout.content>
             </DDS.layout.container>

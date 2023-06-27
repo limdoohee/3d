@@ -167,7 +167,7 @@ const Home = observer((props) => {
                                 <ul className="wrapper">
                                     <li className="title">
                                         <DDS.icons.drop />
-                                        Colletion
+                                        Collection
                                     </li>
                                     <li className="count">
                                         <strong>{gallery.data.myDropCnt}</strong>
