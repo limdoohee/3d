@@ -77,37 +77,39 @@ class Store {
 
     onShare(props) {
         const { title, description, url, text, callback } = props;
-        var broswerInfo = navigator.userAgent;
-        var webViewCheck = broswerInfo.indexOf(";;;aos;") !== -1 ? true : false;
-        if (isMobile) {
-            if (isAndroid && webViewCheck) {
-                window.AndroidShareHandler.share("", "", url);
-            } else {
-                if (navigator.share) {
-                    navigator.share({
-                        title: title ? title : "", // 공유될 제목
-                        text: text ? text : "", // 공유될 설명
-                        url: url, // 공유될 URL
-                    });
-                } else {
-                    copy(`${url}`);
-                    // this.snackbarOpen(
-                    //     true,
-                    //     <div className="snackbar-contents info-green">
-                    //         <h4>{description ? description : "링크가 복사되었습니다.1"}</h4>
-                    //     </div>,
-                    // );
-                }
-            }
-        } else {
-            copy(`${url}`);
-            // this.snackbarOpen(
-            //     true,
-            //     <div className="snackbar-contents info-green">
-            //         <h4>{description ? description : "링크가 복사되었습니다.2"}</h4>
-            //     </div>,
-            // );
-        }
+        // var broswerInfo = navigator.userAgent;
+        // var webViewCheck = broswerInfo.indexOf(";;;aos;") !== -1 ? true : false;
+        // if (isMobile) {
+        //     if (isAndroid && webViewCheck) {
+        //         window.AndroidShareHandler.share("", "", url);
+        //     } else {
+        //         if (navigator.share) {
+        //             navigator.share({
+        //                 title: title ? title : "", // 공유될 제목
+        //                 text: text ? text : "", // 공유될 설명
+        //                 url: url, // 공유될 URL
+        //             });
+        //         } else {
+        //             copy(`${url}`);
+        //             // this.snackbarOpen(
+        //             //     true,
+        //             //     <div className="snackbar-contents info-green">
+        //             //         <h4>{description ? description : "링크가 복사되었습니다.1"}</h4>
+        //             //     </div>,
+        //             // );
+        //         }
+        //     }
+        // } else {
+        //     copy(`${url}`);
+        //     // this.snackbarOpen(
+        //     //     true,
+        //     //     <div className="snackbar-contents info-green">
+        //     //         <h4>{description ? description : "링크가 복사되었습니다.2"}</h4>
+        //     //     </div>,
+        //     // );
+        // }
+
+        window.location.href = "native://share?contents=" + encodeURI(url);
         callback && callback();
     }
 
