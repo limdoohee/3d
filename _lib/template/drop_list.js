@@ -16,7 +16,7 @@ import DDS from "../../_lib/component/dds";
 const Home = {
     default: observer((props) => {
         const router = useRouter();
-        const { common, lang, drop } = props.store;
+        const { common, lang, drop, auth } = props.store;
 
         //------------------------------------------------- Init Load
         const initLoad = ({ initCheck, callback }) => {
