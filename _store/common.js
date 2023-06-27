@@ -113,8 +113,13 @@ class Store {
 
     init() {
         // localStorage 기본 언어 설정
-        localStorage.getItem("lang") && this.store.lang.changeLanguage(localStorage.getItem("lang"));
-        Cookies.save("lang", localStorage.getItem("lang"));
+        let defaultLanguage = "en";
+        if (localStorage.getItem("lang")) {
+            defaultLanguage = localStorage.getItem("lang");
+        }
+        localStorage.setItem("lang", defaultLanguage);
+        this.store.lang.changeLanguage(defaultLanguage);
+        Cookies.save("lang", defaultLanguage);
         this.pageInit = true;
         this.debug("페이지 Init 완료");
         this.debug(this.pageInit);

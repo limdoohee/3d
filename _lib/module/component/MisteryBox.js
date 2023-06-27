@@ -41,7 +41,6 @@ const MisteryBox = observer((props) => {
 
         // }
         if (!toAction) {
-            console.log("ddd");
             lastAction = activeAction;
             activeAction.reset();
             // activeAction.fadeIn(1);
@@ -149,12 +148,6 @@ const MisteryBox = observer((props) => {
                 const space = scene.getObjectByName("space");
 
                 if (boxName.includes(intersects[0].object.parent.name)) {
-                    // gsap.to(intersects[0].object.position, {
-                    //     x: -3,
-                    //     ease: "power3.inOut",
-                    //     duration: 1.2,
-                    // });
-
                     dropSeq = drop.data.curr.dropSeq;
                     dropRound = drop.data.curr.dropRound;
 
@@ -180,6 +173,19 @@ const MisteryBox = observer((props) => {
                             gsap.to(space, { receiveShadow: true, duration: 1, delay: 0.5 });
 
                             setTimeout(() => {
+                                const geometry = new THREE.BoxGeometry(3, 3, 0.5);
+                                const material = new THREE.MeshBasicMaterial({
+                                    color: 0xffff00,
+                                    side: THREE.DoubleSide,
+                                    transparent: true,
+                                    opacity: 0,
+                                });
+                                const plane = new THREE.Mesh(geometry, material);
+                                plane.position.z = 5;
+                                plane.position.y = 4;
+                                plane.name = "dropDetail" + drop.data.curr.dropSeq;
+                                scene.add(plane);
+
                                 loader.load(
                                     drop.data.curr.contentUrl,
                                     function (gltf) {
@@ -192,15 +198,19 @@ const MisteryBox = observer((props) => {
                                                 model.scale.multiplyScalar(14);
                                                 break;
                                             case 2:
+                                                plane.position.y = 3.5;
                                                 model.scale.multiplyScalar(20);
                                                 break;
                                             case 3:
+                                                plane.position.y = 3;
                                                 model.scale.multiplyScalar(1.5);
                                                 break;
                                             case 21:
+                                                plane.position.y = 3;
                                                 model.scale.multiplyScalar(15);
                                                 break;
                                             case 22:
+                                                plane.position.y = 2.5;
                                                 model.scale.multiplyScalar(15);
                                                 break;
                                             default:
@@ -227,7 +237,7 @@ const MisteryBox = observer((props) => {
                             }, 1000);
                         }
                     });
-                } else if (intersects[0].object.parent.name !== "") {
+                } else if (intersects[0].object.name.includes("dropDetail")) {
                     window.location.href = "native://drop_detail?dropSeq=" + drop.data.curr.dropSeq;
                 }
             } else {
@@ -261,6 +271,19 @@ const MisteryBox = observer((props) => {
                 window.location.replace("/main");
             } else {
                 if (drop.data.curr.dropOwnFlag) {
+                    const geometry = new THREE.BoxGeometry(3, 3, 0.5);
+                    const material = new THREE.MeshBasicMaterial({
+                        color: 0xffff00,
+                        side: THREE.DoubleSide,
+                        transparent: true,
+                        opacity: 0,
+                    });
+                    const plane = new THREE.Mesh(geometry, material);
+                    plane.position.z = 5;
+                    plane.position.y = 4;
+                    plane.name = "dropDetail" + drop.data.curr.dropSeq;
+                    scene.add(plane);
+
                     loader.load(
                         // resource URL
                         drop.data.curr.contentUrl,
@@ -275,15 +298,19 @@ const MisteryBox = observer((props) => {
                                     model.scale.multiplyScalar(14);
                                     break;
                                 case 2:
+                                    plane.position.y = 3.5;
                                     model.scale.multiplyScalar(20);
                                     break;
                                 case 3:
+                                    plane.position.y = 3;
                                     model.scale.multiplyScalar(1.5);
                                     break;
                                 case 21:
+                                    plane.position.y = 3;
                                     model.scale.multiplyScalar(15);
                                     break;
                                 case 22:
+                                    plane.position.y = 2.5;
                                     model.scale.multiplyScalar(15);
                                     break;
                                 default:
@@ -333,7 +360,6 @@ const MisteryBox = observer((props) => {
                                 });
 
                                 mixer = new THREE.AnimationMixer(model);
-
                                 model.name = "box";
 
                                 // loader.load("../../static/3d/dropBox/dropbox__unlocked_loop.glb", (gltf) => {

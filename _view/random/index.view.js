@@ -250,66 +250,62 @@ const Home = observer((props) => {
     function onTouchBox(event) {
         if (event.target.tagName === "SPAN" || event.target.tagName === "BUTTON") {
             if (event.target.className.includes("luckyBox") || event.target.parentNode.className.includes("luckyBox")) {
-                if (gallery.data.totalDropCnt === gallery.data.myDropCnt) {
-                    common.messageApi.open({
-                        icon: <DDS.icons.circleExclamation />,
-                        className: "arMessage",
-                        content: "이미 모든 드롭을 보유하고 있습니다.",
-                    });
-                } else {
-                    if (boxCnt > 0) {
-                        console.log(boxCnt);
-                        const box = scene.getObjectByName("box");
-
-                        gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
-                            setBoxOpen(true);
-                            setBoxCnt((prev) => prev - 1);
-                            setAction(animationActions[1]);
-                            gsap.to(box, { visible: false, duration: 1 });
-                            setTimeout(() => {
-                                loader.load(
-                                    gallery.opendBox.contentUrl,
-                                    // "https://asset.dropkitchen.xyz/contents/202306_dev/20230626101705835_dk.glb",
-                                    function (gltf) {
-                                        model = gltf.scene;
-                                        model.position.z = 3;
-                                        model.position.y = 1;
-
-                                        switch (gallery.opendBox.dropSeq) {
-                                            case 1:
-                                                model.scale.multiplyScalar(14);
-                                                break;
-                                            case 2:
-                                                model.scale.multiplyScalar(20);
-                                                break;
-                                            case 3:
-                                                model.scale.multiplyScalar(1.5);
-                                                break;
-                                            case 21:
-                                                model.scale.multiplyScalar(15);
-                                                break;
-                                            case 22:
-                                                model.scale.multiplyScalar(15);
-                                                break;
-                                            default:
-                                                model.scale.multiplyScalar(1);
-                                                break;
-                                        }
-                                        scene.add(model);
-
-                                        mixer = new THREE.AnimationMixer(model);
-                                        mixer.clipAction(gltf.animations[0]).play();
-                                        model.name = "drop";
-                                    },
-                                    undefined,
-                                    function (error) {
-                                        console.log("An error happened");
-                                    },
-                                );
-                            }, 1000);
+                const box = scene.getObjectByName("box");
+                gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
+                    if (e.id === "invalid_request") {
+                        common.messageApi.open({
+                            key: "luckyBox",
+                            icon: <DDS.icons.circleExclamation />,
+                            className: "arMessage",
+                            content: "이미 모든 드롭을 보유하고 있습니다.",
                         });
+                    } else {
+                        setBoxOpen(true);
+                        setBoxCnt((prev) => prev - 1);
+                        setAction(animationActions[1]);
+                        gsap.to(box, { visible: false, duration: 1 });
+                        setTimeout(() => {
+                            loader.load(
+                                gallery.opendBox.contentUrl,
+                                function (gltf) {
+                                    model = gltf.scene;
+                                    model.position.z = 3;
+                                    model.position.y = 1;
+
+                                    switch (gallery.opendBox.dropSeq) {
+                                        case 1:
+                                            model.scale.multiplyScalar(14);
+                                            break;
+                                        case 2:
+                                            model.scale.multiplyScalar(20);
+                                            break;
+                                        case 3:
+                                            model.scale.multiplyScalar(1.5);
+                                            break;
+                                        case 21:
+                                            model.scale.multiplyScalar(15);
+                                            break;
+                                        case 22:
+                                            model.scale.multiplyScalar(15);
+                                            break;
+                                        default:
+                                            model.scale.multiplyScalar(1);
+                                            break;
+                                    }
+                                    scene.add(model);
+
+                                    mixer = new THREE.AnimationMixer(model);
+                                    mixer.clipAction(gltf.animations[0]).play();
+                                    model.name = "drop";
+                                },
+                                undefined,
+                                function (error) {
+                                    console.log("An error happened");
+                                },
+                            );
+                        }, 1000);
                     }
-                }
+                });
             }
             if (event.target.className.includes("confirm") || event.target.parentNode.className.includes("confirm")) {
                 // 페이지 리로딩
