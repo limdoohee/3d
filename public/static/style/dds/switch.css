@@ -1,22 +1,20 @@
-:where(.ant-switch).dds.switch:not(.ant-switch-disabled) {
-    background: #e6e6e6;
-    height: 30px;
-    min-width: 50px;
-}
-
-:where(.ant-switch).dds.switch .ant-switch-handle {
-    width: 26px;
-    height: 26px;
-}
-
-.dds.switch .ant-switch-handle::before {
-    border-radius: 15px !important;
-}
-
 .ant-switch-checked .ant-switch-handle {
     inset-inline-start: calc(100% - 28px) !important;
 }
 
-:where(.css-dev-only-do-not-override-1s1q2x5).ant-switch.ant-switch-checked .ant-switch-inner {
-    background: var(--color-black);
+.dds.switch.ant-switch {
+    background: #e6e6e6;
+    height: 30px;
+    min-width: 50px;
+}
+.dds.switch.ant-switch .ant-switch-handle {
+    width: 26px;
+    height: 26px;
+}
+.dds.switch .ant-switch-handle::before {
+    border-radius: 15px !important;
+}
+
+.dds.switch.ant-switch-checked {
+    background: #000;
 }
