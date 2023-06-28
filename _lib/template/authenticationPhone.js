@@ -79,6 +79,10 @@ const Home = observer((props) => {
                     data.set((prev) => ({ ...prev, confirmationResult: res, authCode: "" }));
                     initTime();
                     setcount(count + 1);
+                    count > 0 &&
+                        common.messageApi.info({
+                            content: "Resend code complete!",
+                        });
                 })
                 .catch((error) => {
                     common.debug(error);
@@ -130,10 +134,11 @@ const Home = observer((props) => {
             v = v.replace(reg, "");
             data.set((prev) => ({ ...prev, cellNo: v }));
         },
+        maxLength: 11,
     };
 
     const authcodeInputSetting = {
-        placeholder: lang.t("signup.mobile.placeholder"),
+        placeholder: lang.t("signup.mobile.certificate.placeholder"),
         value: authCode,
         onChange: (e) => {
             var v = e.target.value;
