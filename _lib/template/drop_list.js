@@ -58,7 +58,6 @@ const Home = {
         //     confirm: {
         //         label: "드롭 받으러 가기",
         //         action: () => {
-        //             router.push("/main");
         //         },
         //     },
         //     cancel: {
@@ -151,7 +150,7 @@ const Home = {
                                                     <DDS.button.default
                                                         className="dds button small go"
                                                         onClick={() => {
-                                                            Router.push("/main");
+                                                            window.location.href = "/main";
                                                         }}
                                                     >
                                                         {dropListLangSet.go}
@@ -161,7 +160,7 @@ const Home = {
                                                         <DDS.chips.default className={"secondary"}>{dropListLangSet.collect}</DDS.chips.default>
                                                         <DDS.icons.cubePlus
                                                             onClick={() => {
-                                                                Router.push("/random");
+                                                                window.location.href = "/random";
                                                             }}
                                                         />
                                                     </>

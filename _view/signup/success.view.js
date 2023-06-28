@@ -33,7 +33,7 @@ const Home = observer((props) => {
         setNickName(sessionStorage.getItem("signupNickname"));
 
         setTimeout(() => {
-            router.push("/");
+            location.href = "/";
         }, 3000);
     }, []);
 

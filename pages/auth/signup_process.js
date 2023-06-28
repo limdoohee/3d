@@ -17,13 +17,13 @@ const Home = () => {
 
             sessionStorage.setItem("loginEmail", router.query.email);
             sessionStorage.setItem("loginClientId", router.query.clientId);
-            router.push("/signup/terms");
+            location.href = "/signup/terms";
         });
     } else {
         if (router.query.errorCode) {
             auth.errorCode({ code: router.query.errorCode }, (e) => {
                 alert(e.error);
-                router.push("/login");
+                location.href = "/login";
             });
         }
     }

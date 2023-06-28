@@ -51,7 +51,7 @@ const Home = observer((props) => {
 
     const nextStep = async () => {
         await sessionStorage.setItem("signupMarketing", checkedValue.marketing ? "Y" : "N");
-        await router.push("/signup/nickname");
+        await (location.href = "/signup/nickname");
     };
 
     const [policyOpen, setpolicyOpen] = useState(false);
@@ -63,7 +63,7 @@ const Home = observer((props) => {
                 className={"fluid"}
                 store={store}
                 back={() => {
-                    Router.push("/login");
+                    location.href = "/login";
                 }}
             >
                 <div className="auth ui terms">

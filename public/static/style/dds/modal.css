@@ -53,3 +53,68 @@
     letter-spacing: -0.02em;
     margin-bottom: 15px;
 }
+
+.dds.modal.center {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: calc(100%);
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: var(--viewHeight);
+}
+.dds.modal.center .ant-modal-content {
+    border-radius: 16px;
+    padding: 32px 20px 20px;
+    width: calc(100% - 40px);
+}
+
+.dds.modal.center .imgWrapper {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dds.modal.center .title {
+    font-size: 20px;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: -0.03em;
+    color: #1f1f1f;
+    margin-bottom: 12px;
+    white-space: pre-line;
+}
+
+.dds.modal.center .context {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    color: #1f1f1f;
+    margin-bottom: 36px;
+    white-space: pre-line;
+}
+
+.dds.modal.center .dds.button {
+    width: 100%;
+    justify-content: center;
+    margin: 0;
+}
+
+.dds.modal.center .dds.button.large {
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 16px;
+    letter-spacing: -0.02em;
+}
+
+.dds.modal.center .ant-modal-footer {
+    display: flex;
+    align-items: center;
+    flex-direction: row-reverse;
+}

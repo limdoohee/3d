@@ -12,6 +12,7 @@ import DDS_Input from "../../_lib/component/input";
 import DDS_Icons from "../../_lib/component/icons";
 import DDS_Profile from "../../_lib/component/profile";
 import DDS_Button from "../../_lib/component/button";
+import DDS from "../../_lib/component/dds";
 import { Drawer, Spin } from "antd";
 //------------------------------------------------------------------------------- Component
 
@@ -122,11 +123,7 @@ const Home = {
         //------------------------------------------------- Router isReady
 
         const onClose = () => {
-            if (router.query.from) {
-                location.href = router.query.from;
-            } else {
-                Router.back();
-            }
+            setOpen(true);
         };
 
         const [loading, setloading] = useState(false);
@@ -138,6 +135,28 @@ const Home = {
                 }, 500);
             }
         }, [chat.state.currentlyJoinedChannel]);
+
+        const [open, setOpen] = useState(false);
+        const modalData = {
+            open: open,
+            setOpen: setOpen,
+            title: "채팅방을 나가시겠어요?",
+            context: "대화 내용은 저장되지 않아요",
+            confirm: {
+                label: "나가기",
+                action: () => {
+                    if (router.query.from) {
+                        location.href = router.query.from;
+                    } else {
+                        Router.back();
+                    }
+                },
+            },
+            cancel: {
+                label: "취소",
+                action: () => {},
+            },
+        };
 
         return (
             <>
@@ -181,6 +200,7 @@ const Home = {
                             </div>
                         </>
                     )}
+                    <DDS.modal.center {...modalData} />
                 </div>
             </>
         );

@@ -34,7 +34,7 @@ const Home = observer((props) => {
 
     const nextStep = async () => {
         await sessionStorage.setItem("signupNickname", inputNickname.value);
-        await router.push("/signup/mobile");
+        await (location.href = "/signup/mobile");
     };
 
     return (

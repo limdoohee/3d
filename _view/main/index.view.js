@@ -126,7 +126,7 @@ const Home = observer((props) => {
                 className={`dds button none gallery ${gallery.data.unconfirmedLuckyBox ? "badge" : ""}`}
                 icon={<DDS.icons.myGalleryBlackOn />}
                 onClick={() => {
-                    router.push("/userGallery?memberSeq=" + auth.loginResult.seq);
+                    location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
                 }}
             />
         ),
@@ -144,7 +144,7 @@ const Home = observer((props) => {
                 className="dds button none"
                 icon={<DDS.icons.bell />}
                 onClick={() => {
-                    router.push("/alarm");
+                    location.href = "/alarm";
                 }}
             />
         ),

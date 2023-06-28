@@ -330,7 +330,7 @@ const Home = observer((props) => {
             <DDS.button.default
                 className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}
                 onClick={() => {
-                    boxOpen && router.push("userGallery?memberSeq=" + auth.loginResult.seq);
+                    boxOpen && (location.href = "userGallery?memberSeq=" + auth.loginResult.seq);
                 }}
             >
                 {boxOpen ? lang.t("random.button.goGallery") : boxCnt > 0 && lang.t("random.button.open")}

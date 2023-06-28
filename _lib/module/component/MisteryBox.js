@@ -462,7 +462,7 @@ const MisteryBox = observer((props) => {
         confirm: {
             label: lang.t("misteryBox.modal.confirm"),
             action: () => {
-                router.push("/userGallery?memberSeq=" + auth.loginResult.seq);
+                location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
             },
         },
         cancel: {

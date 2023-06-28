@@ -18,7 +18,7 @@ const Home = observer((props) => {
                     <p>
                         <DDS.button.default
                             onClick={(e) => {
-                                router.push("/dds");
+                                location.href = "/dds";
                             }}
                         >
                             Back
