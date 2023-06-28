@@ -141,7 +141,7 @@ const MisteryBox = observer((props) => {
         raycaster.setFromCamera(pointer, camera);
 
         const intersects = raycaster.intersectObjects(scene.children);
-        console.log(common.ui.gnbOpen, drop.data.curr.coachMark, intersects[0].object.name);
+        console.log(common.ui.gnbOpen, drop.data.curr.coachMark);
         if (intersects.length > 0 && !common.ui.gnbOpen && drop.data.curr.coachMark === "hidden") {
             if (drop.data.curr.status === "processing") {
                 const shadow = scene.getObjectByName("shadow");
