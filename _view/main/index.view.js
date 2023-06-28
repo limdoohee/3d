@@ -99,13 +99,6 @@ const Home = observer((props) => {
     }
 
     useEffect(() => {
-        drop.dataChange("coachMark", "hidden");
-        if (sessionStorage.getItem("signupComplete")) {
-            setCoachMark("");
-            drop.dataChange("coachMark", "");
-            sessionStorage.removeItem("signupComplete");
-        }
-
         if (cookies.get("device_alarm") === "N") setOpen(true);
         if (cookies.get("device_alarm") === "Y") {
             if (auth.loginResult.dropsAgree === "N" || auth.loginResult.adsAgree === "N") setNotice(true);
@@ -113,12 +106,18 @@ const Home = observer((props) => {
     }, []);
 
     useEffect(() => {
-        dropData().then(() => {
-            if (drop.data.curr.status === "ready") openTime = new Date(drop.data.curr.startAt);
-            if (drop.data.curr.status === "processing") openTime = new Date(drop.data.curr.endAt);
-            diff = (openTime.getTime() - currTime.getTime()) / 1000;
-            setTime(time.setSeconds(time.getSeconds() + diff));
-        });
+        // dropData().then(() => {
+        drop.dataChange("coachMark", "hidden");
+        if (drop.data.curr.status === "ready") openTime = new Date(drop.data.curr.startAt);
+        if (drop.data.curr.status === "processing") openTime = new Date(drop.data.curr.endAt);
+        diff = (openTime.getTime() - currTime.getTime()) / 1000;
+        setTime(time.setSeconds(time.getSeconds() + diff));
+
+        if (sessionStorage.getItem("signupComplete")) {
+            setCoachMark("");
+            drop.dataChange("coachMark", "");
+        }
+        // });
     }, [drop.data.curr.status]);
 
     const headerLeft = <span></span>;
@@ -242,6 +241,7 @@ const Home = observer((props) => {
                         <DDS.button.default
                             className="dds button primary"
                             onClick={() => {
+                                sessionStorage.removeItem("signupComplete");
                                 setCoachMark("hidden");
                                 drop.dataChange("coachMark", "hidden");
                             }}
