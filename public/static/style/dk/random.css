@@ -54,6 +54,7 @@
 
 .random .bottom.open h2 {
     margin: 0;
+    margin-bottom: 8px;
 }
 
 .random .bottom h3 {
@@ -64,6 +65,7 @@
     letter-spacing: -0.02em;
     text-align: center;
     margin-bottom: 80px;
+    white-space: pre-line;
 }
 
 .random .bottom .dds.button {

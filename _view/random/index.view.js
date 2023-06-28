@@ -1,6 +1,5 @@
-import Head from "next/head";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Component
 import DDS from "../../_lib/component/dds";
@@ -8,7 +7,6 @@ import DK_template_header from "../../_lib/template/header";
 //------------------------------------------------------------------------------- Component
 
 import * as THREE from "three";
-import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader.js";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
 import gsap from "gsap";
@@ -24,15 +22,14 @@ const Home = observer((props) => {
     const [incrDisabled, setIncrDisabled] = useState(false);
     const [helper, setHelper] = useState(false);
     const [boxOpen, setBoxOpen] = useState(false);
-    const [btnClick, setBtnClick] = useState(false);
+    let btnClick = false;
 
-    let renderer, renderer2;
+    let renderer;
     let camera;
     const scene = new THREE.Scene();
     let mixer = new THREE.AnimationMixer();
     let clock = new THREE.Clock();
     const loader = new GLTFLoader();
-    let dropSeq, dropRound;
 
     let model;
     const animationActions = [];
@@ -175,7 +172,7 @@ const Home = observer((props) => {
     };
 
     const RightButton = () => {
-        return gallery.luckyBox.length > 0 && <DDS.button.default className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}>{boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.open")}</DDS.button.default>;
+        return boxCnt > 0 && <DDS.button.default className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}>{boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.open")}</DDS.button.default>;
     };
 
     function setSpace() {
@@ -250,33 +247,41 @@ const Home = observer((props) => {
 
     function onTouchBox(event) {
         if (event.target.tagName === "SPAN" || event.target.tagName === "BUTTON") {
+            console.log("btnClick", btnClick);
             if ((event.target.className.includes("luckyBox") || event.target.parentNode.className.includes("luckyBox")) && !btnClick) {
                 const box = scene.getObjectByName("box");
-
                 gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
-                    setBtnClick(true);
+                    btnClick = true;
+                    console.log("click");
+
                     if (e.id === "invalid_request") {
-                        setBtnClick(false);
                         common.messageApi.open({
                             key: "luckyBox",
                             icon: <DDS.icons.circleExclamation />,
                             className: "arMessage",
                             content: "이미 모든 드롭을 보유하고 있습니다.",
                         });
-                    } else {
+                        setTimeout(() => {
+                            btnClick = false;
+                        }, 3000);
+                    }
+                    if (e.data) {
+                        console.log("e.data", e.data);
+
                         setBoxOpen(true);
                         setBoxCnt((prev) => prev - 1);
                         setAction(animationActions[1]);
                         gsap.to(box, { visible: false, duration: 1 });
                         setTimeout(() => {
                             loader.load(
-                                gallery.opendBox.contentUrl,
+                                "https://asset.dropkitchen.xyz/contents/drops/Drop01_GraceGod/scene.gltf",
+                                // gallery.openedBox.contentUrl,
                                 function (gltf) {
                                     model = gltf.scene;
                                     model.position.z = 3;
                                     model.position.y = 1;
 
-                                    switch (gallery.opendBox.dropSeq) {
+                                    switch (gallery.openedBox.dropSeq) {
                                         case 1:
                                             model.scale.multiplyScalar(14);
                                             break;
@@ -308,7 +313,7 @@ const Home = observer((props) => {
                                 },
                             );
 
-                            setBtnClick(false);
+                            btnClick = false;
                         }, 1000);
                     }
                 });
