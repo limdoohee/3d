@@ -41,6 +41,9 @@ const Home = observer((props) => {
             case "STAGING":
                 s = "plum";
                 break;
+            case "PRODUCTION":
+                s = "www";
+                break;
             default:
                 break;
         }
