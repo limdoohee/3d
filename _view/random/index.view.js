@@ -296,14 +296,16 @@ const Home = observer((props) => {
                 {boxOpen ? lang.t("random.button.goGallery") : lang.t("random.button.open")}
             </DDS.button.default>
         ) : (
-            <DDS.button.default
-                className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}
-                onClick={() => {
-                    boxOpen && (location.href = "/userGallery?memberSeq=" + auth.loginResult.seq);
-                }}
-            >
-                {boxOpen && lang.t("random.button.goGallery")}
-            </DDS.button.default>
+            boxOpen && (
+                <DDS.button.default
+                    className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}
+                    onClick={() => {
+                        boxOpen && (location.href = "/userGallery?memberSeq=" + auth.loginResult.seq);
+                    }}
+                >
+                    lang.t("random.button.goGallery")
+                </DDS.button.default>
+            )
         );
     };
 
