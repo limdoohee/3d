@@ -43,7 +43,7 @@ const Home = {
         const readPush = (item) => {
             const params = { pushSeq: item.seq };
             alarm.readPush(params, (e) => {
-                location.href = item.targetUrl;
+                item.targetUrl && item.targetUrl !== null && item.targetUrl !== undefined ? (location.href = item.targetUrl) : "";
             });
         };
 
