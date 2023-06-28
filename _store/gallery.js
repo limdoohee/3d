@@ -25,7 +25,7 @@ class Store {
     };
 
     luckyBox = {};
-    opendBox = {};
+    openedBox = {};
 
     constructor(store) {
         this.store = store;
