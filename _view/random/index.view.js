@@ -337,16 +337,14 @@ const Home = observer((props) => {
                 {boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.buy")}
             </DDS.button.default>
         ) : (
-            !boxOpen && (
-                <DDS.button.default
-                    className={`dds button ${!boxOpen ? "primary" : "secondary"}`}
-                    onClick={() => {
-                        boxOpen ? (location.href = "/random") : setModalOpen(true);
-                    }}
-                >
-                    {boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.buy")}
-                </DDS.button.default>
-            )
+            <DDS.button.default
+                className={`dds button ${!boxOpen ? "primary" : "secondary"}`}
+                onClick={() => {
+                    boxOpen ? (location.href = "/random") : setModalOpen(true);
+                }}
+            >
+                {boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.buy")}
+            </DDS.button.default>
         );
     };
 
