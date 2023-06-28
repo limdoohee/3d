@@ -90,7 +90,7 @@ const Home = observer((props) => {
                         <DDS.button.default
                             className="dds button primary block large"
                             onClick={() => {
-                                Router.back();
+                                history.back();
                             }}
                         >
                             {lang.t(`common.check`)}
