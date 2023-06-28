@@ -22,7 +22,7 @@ const Home = {
         const initLoad = ({ callback }) => {
             const params = {};
             alarm.pushHistory(params, (e) => {
-                common.debug(e.push[0]);
+                common.debug(e);
                 callback && callback(e);
             });
         };

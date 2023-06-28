@@ -32,6 +32,21 @@ const Home = observer((props) => {
     const app = initializeApp(common.firebaseConfig);
     getAuth(app).languageCode = lang.i18n.language;
 
+    let languageSet = {
+        certificate: {
+            btn: lang.t("signup.mobile.certificate.btn"),
+            reBtn: lang.t("signup.mobile.certificate.reBtn"),
+            label: lang.t("signup.mobile.certificate.label"),
+            placeholder: lang.t("signup.mobile.certificate.placeholder"),
+            over: lang.t("signup.mobile.certificate.over"),
+        },
+        message: {
+            success: lang.t("signup.mobile.message.success"),
+            fail: lang.t("signup.mobile.message.fail"),
+            over: lang.t("signup.mobile.message.over"),
+        },
+    };
+
     //------------------------------------------------- Init Load
     const initLoad = ({ callback }) => {
         callback && callback();
@@ -67,14 +82,16 @@ const Home = observer((props) => {
 
     const [isCategorySelect, setIsCategorySelect] = useState([true, ...Array(countryCodeDataEN.length - 1).fill(false)]);
 
-    const nextStep = async (e) => {
-        e.preventDefault();
+    let actionCheck = false;
+    const [actionLoading, setactionLoading] = useState(false);
+
+    const phoneVerify = async (uid) => {
         var params = {
             clientId: sessionStorage.getItem("loginClientId"),
             email: sessionStorage.getItem("loginEmail"),
             countryCode: authenticationValue.countryCode,
-            uid: authenticationValue.uid,
-            lang: sessionStorage.getItem("LangValue"),
+            uid: uid,
+            lang: localStorage.getItem("lang"),
             cellNo: authenticationValue.cellNo,
             nickname: sessionStorage.getItem("signupNickname"),
             adsAgree: sessionStorage.getItem("signupMarketing"),
@@ -85,13 +102,14 @@ const Home = observer((props) => {
         };
         console.log(params);
         await auth.phoneVerify(params, async (e) => {
+            common.debug(e);
             if (e.result == "ok") {
                 await cookie.save("loginToken", e.loginToken, { path: "/" });
                 await sessionStorage.setItem("signupComplete", true);
                 common.debug(e.loginToken);
                 if (e.message) {
+                    location.href = "/";
                     if (confirm(e.message)) {
-                        location.href = "/";
                     }
                 } else {
                     location.href = "/signup/success";
@@ -101,7 +119,29 @@ const Home = observer((props) => {
                     content: e.message,
                 });
             }
+            actionCheck = false;
+            setactionLoading(false);
         });
+    };
+
+    const nextStep = async (e) => {
+        e.preventDefault();
+        if (actionCheck == false) {
+            actionCheck = true;
+            setactionLoading(true);
+            authenticationValue.confirmationResult
+                .confirm(authenticationValue.authCode)
+                .then((result) => {
+                    phoneVerify(result.user.uid);
+                })
+                .catch((error) => {
+                    actionCheck = false;
+                    setactionLoading(false);
+                    common.messageApi.info({
+                        content: languageSet.message.fail,
+                    });
+                });
+        }
     };
 
     const [authenticationValue, setauthenticationValue] = useState({
@@ -113,6 +153,12 @@ const Home = observer((props) => {
         result: false,
     });
 
+    useEffect(() => {
+        if (authenticationValue.result === false) {
+            setactionLoading(false);
+        }
+    }, [authenticationValue.result]);
+
     return (
         <>
             <DDS.layout.back className={"fluid"} store={store}>
@@ -120,7 +166,7 @@ const Home = observer((props) => {
                     <h2>{lang.t(`signup.mobile.title`)}</h2>
                     <AuthenticationPhone data={{ value: authenticationValue, set: setauthenticationValue }} store={store} />
                     <div id="recaptcha-container"></div>
-                    <DDS.button.default className="agree-check" disabled={authenticationValue.result ? false : true} onClick={nextStep}>
+                    <DDS.button.default className="agree-check" disabled={authenticationValue.result && actionLoading === false ? false : true} onClick={nextStep}>
                         {lang.t(`common.check`)}
                     </DDS.button.default>
                 </div>

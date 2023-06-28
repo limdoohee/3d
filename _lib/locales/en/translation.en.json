@@ -110,9 +110,6 @@
     "magazine": {
         "title": "magazine"
     },
-    "dropList": {
-        "title": "drop list"
-    },
     "setting": {
         "title": "setting",
         "profile": { "title": "Edit Profile", "bio": "Bio" },
@@ -207,5 +204,13 @@
             "description2": "please wait for a moment.",
             "historyBack": "back to previous page"
         }
+    },
+    "dropList": {
+        "title": "Art Drop List",
+        "myCollection": "My Collection",
+        "go": "GO!",
+        "collected": "Collected",
+        "collect": "Collect",
+        "invite": { "title": "Invite a friend and you both get a gift. It's a win-win!", "desc": "Your friend receives free digital art, and you receive extra points when they sign up.", "give": "Invite your friends, get points." }
     }
 }

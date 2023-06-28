@@ -55,47 +55,45 @@ const Home = observer((props) => {
             <DK_template_GNB.default store={store} />
             {/* Content */}
             <DDS.layout.content>
-                {step == 1 && (
-                    <div className="page-setting sub">
-                        <div className="account">
-                            <ul className="form">
-                                <li>
-                                    <h5>
-                                        <strong>{lang.t("setting.account.info.email")}</strong>
-                                    </h5>
-                                    <h4>
-                                        <strong>{auth.loginResult.email}</strong>
-                                        <span>
-                                            {auth.loginResult.currentLoginSocial == "KAKAO" && <DDS.button.default className="dds button secondary rounded kakao" icon={<DDS.icons.kakao />} />}
-                                            {auth.loginResult.currentLoginSocial == "GOOGLE" && <DDS.button.default className="dds button secondary rounded google" icon={<DDS.icons.google />} />}
-                                            {auth.loginResult.currentLoginSocial == "NAVER" && <DDS.button.default className="dds button secondary rounded naver" icon={<DDS.icons.naver />} />}
-                                            {auth.loginResult.currentLoginSocial == "APPLE" && <DDS.button.default className="dds button secondary rounded apple" icon={<DDS.icons.apple />} />}
-                                        </span>
-                                    </h4>
-                                </li>
-                                <li>
-                                    <h5>
-                                        <strong>{lang.t("setting.account.info.phone")}</strong>
-                                    </h5>
-                                    <h4>
-                                        <strong>{auth.loginResult.cellNo}</strong>
-                                        <span>
-                                            <DDS.button.default
-                                                className="dds button primary small"
-                                                onClick={() => {
-                                                    setStep(2);
-                                                }}
-                                            >
-                                                {lang.t("setting.account.info.phone")}
-                                            </DDS.button.default>
-                                        </span>
-                                    </h4>
-                                </li>
-                            </ul>
-                        </div>
+                <div className="page-setting sub">
+                    <div className="account">
+                        <ul className="form">
+                            <li>
+                                <h5>
+                                    <strong>{lang.t("setting.account.info.email")}</strong>
+                                </h5>
+                                <h4>
+                                    <strong>{auth.loginResult.email}</strong>
+                                    <span>
+                                        {auth.loginResult.currentLoginSocial == "KAKAO" && <DDS.button.default className="dds button secondary rounded kakao" icon={<DDS.icons.kakao />} />}
+                                        {auth.loginResult.currentLoginSocial == "GOOGLE" && <DDS.button.default className="dds button secondary rounded google" icon={<DDS.icons.google />} />}
+                                        {auth.loginResult.currentLoginSocial == "NAVER" && <DDS.button.default className="dds button secondary rounded naver" icon={<DDS.icons.naver />} />}
+                                        {auth.loginResult.currentLoginSocial == "APPLE" && <DDS.button.default className="dds button secondary rounded apple" icon={<DDS.icons.apple />} />}
+                                    </span>
+                                </h4>
+                            </li>
+                            <li>
+                                <h5>
+                                    <strong>{lang.t("setting.account.info.phone")}</strong>
+                                </h5>
+                                <h4>
+                                    <strong>{auth.loginResult.cellNo}</strong>
+                                    <span>
+                                        <DDS.button.default
+                                            className="dds button primary small"
+                                            onClick={() => {
+                                                // setStep(2);
+                                                Router.push("/setting/phone");
+                                            }}
+                                        >
+                                            {lang.t("setting.account.info.phone")}
+                                        </DDS.button.default>
+                                    </span>
+                                </h4>
+                            </li>
+                        </ul>
                     </div>
-                )}
-                {step == 2 && <PhoneChange store={store} setStep={setStep} />}
+                </div>
             </DDS.layout.content>
             {/* Content */}
         </DDS.layout.container>
@@ -103,62 +101,3 @@ const Home = observer((props) => {
 });
 
 export default Home;
-
-const PhoneChange = observer((props) => {
-    const { setStep } = props;
-    const { store } = props;
-    const { member, auth, lang } = props.store;
-
-    const handleConfirmCodeSubmit = (event) => {
-        event.preventDefault();
-        const params = {
-            countryCode: authenticationValue.countryCode,
-            cellNo: authenticationValue.cellNo,
-            authCode: authenticationValue.authCode,
-        };
-
-        member.changePhoneNo(params, (e) => {
-            console.log("params", params);
-            // router.push("/setting");
-            setStep(1);
-            console.log("e", e);
-        });
-    };
-
-    const [authenticationValue, setauthenticationValue] = useState({
-        countryCode: "82",
-        cellNo: "",
-        authCode: "",
-        uid: null,
-        confirmationResult: null,
-        result: false,
-    });
-
-    const headerRight = [
-        () => (
-            <DDS.button.default
-                className="dds button none"
-                icon={<DDS.icons.bars />}
-                onClick={() => {
-                    common.uiChange("gnbOpen", true);
-                }}
-            />
-        ),
-    ];
-
-    return (
-        <>
-            <div className="page-setting sub">
-                <div className="account">
-                    <h3>휴대폰 번호를 입력해주세요</h3>
-                    <DK_template_AuthenticationPhone data={{ value: authenticationValue, set: setauthenticationValue }} store={store} />
-                </div>
-                <div className="save">
-                    <DDS.button.default disabled={authenticationValue.result ? false : true} className="dds button primary block large" onClick={handleConfirmCodeSubmit}>
-                        {lang.t(`common.check`)}
-                    </DDS.button.default>
-                </div>
-            </div>
-        </>
-    );
-});

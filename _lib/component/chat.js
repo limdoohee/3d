@@ -168,9 +168,6 @@ const home = {
                         <br />
                         상대방을 존중하고 배려하는 대화방을 만들어주세요.
                     </h6>
-                    <h6>
-                        <u>채팅 서비스 이용 안내 보기</u>
-                    </h6>
                 </div>
                 <ul className="messages">
                     {messages.map((item, key) => {
