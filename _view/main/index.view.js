@@ -30,7 +30,21 @@ const Home = observer((props) => {
 
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {
-        gallery.getData({ sendbirdId: "dropkitchen_member_" + auth.loginResult.seq }, (e) => {
+        let s;
+        switch (process.env.STAGE) {
+            case "LOCAL":
+                s = "mango";
+                break;
+            case "DEVELOPMENT":
+                s = "mango";
+                break;
+            case "STAGING":
+                s = "plum";
+                break;
+            default:
+                break;
+        }
+        gallery.getData({ sendbirdId: `dropkitchen_${s}_member_` + auth.loginResult.seq }, (e) => {
             callback && callback(e);
         });
     };

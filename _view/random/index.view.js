@@ -50,11 +50,25 @@ const Home = observer((props) => {
 
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {
+        let s;
+        switch (process.env.STAGE) {
+            case "LOCAL":
+                s = "mango";
+                break;
+            case "DEVELOPMENT":
+                s = "mango";
+                break;
+            case "STAGING":
+                s = "plum";
+                break;
+            default:
+                break;
+        }
         gallery.getLuckyBox("", (e) => {
             setBoxCnt(gallery.luckyBox.length);
             callback && callback(e);
         });
-        gallery.getData({ sendbirdId: "dropkitchen_member_" + auth.loginResult.seq }, (e) => {
+        gallery.getData({ sendbirdId: `dropkitchen_${s}_member_` + auth.loginResult.seq }, (e) => {
             // common.debug(e);
             callback && callback(e);
         });
