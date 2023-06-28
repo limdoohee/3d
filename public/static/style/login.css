@@ -4,7 +4,6 @@
     flex-direction: column;
     justify-content: space-between;
     min-height: var(--viewHeight);
-    background-color: #fff;
 }
 .login.wrap .inner {
     padding: 50px 20px 32px 20px;
