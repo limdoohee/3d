@@ -6,7 +6,7 @@
     min-height: var(--viewHeight);
 }
 .login.wrap .inner {
-    padding: 50px 20px 32px 20px;
+    padding: 50px 0 32px 0;
 }
 .login.wrap .inner h1 {
     max-width: 200px;
