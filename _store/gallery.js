@@ -63,7 +63,7 @@ class Store {
         await Api.post(`/dks-api/v2/open_lucky_box`, params, this.store.auth.loginResult.loginToken)
             .then((response) => response.json())
             .then((data) => {
-                this.opendBox = data.data;
+                this.opendBox = data;
                 callback && callback(data.data ? data.data : data);
                 // return this.opendBox;
             });

@@ -1,0 +1,11 @@
+Model Information:
+* title:	Lucky Box_locked
+* source:	https://sketchfab.com/3d-models/lucky-box-locked-677a2ccb8e00467eaeab932a896bc3d6
+* author:	xxblue (https://sketchfab.com/xxblue)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Lucky Box_locked" (https://sketchfab.com/3d-models/lucky-box-locked-677a2ccb8e00467eaeab932a896bc3d6) by xxblue (https://sketchfab.com/xxblue) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
