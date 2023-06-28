@@ -75,6 +75,11 @@
     line-height: 100%;
     letter-spacing: -0.02em;
     color: #1f1f1f;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    word-break: break-all;
+    width: 240px;
 }
 .page-setting dl dd .profile .name p {
     font-weight: 400;

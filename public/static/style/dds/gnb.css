@@ -40,6 +40,9 @@
     line-height: 130%;
     letter-spacing: -0.02em;
     color: #1f1f1f;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
     word-break: break-all;
 }
 .dds.gnb .ant-drawer-body .point {
