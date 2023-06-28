@@ -334,11 +334,18 @@ const Home = observer((props) => {
             <DK_template_header.default store={store} title={lang.t("random.title")} />
             <DDS.layout.content>
                 <div className="random">
-                    <div className="voucher">
-                        <img src={`../../static/img/randomBox.png`} alt="randomBox" />
-                        <span>{boxCnt}</span>
-                        {gallery.data.unconfirmedLuckyBox && <div className="chips">N</div>}
-                    </div>
+                    {boxOpen ? (
+                        <div className="top">
+                            <h2>{gallery.openedBox.artName}</h2>
+                            <h3>{gallery.openedBox.artistName}</h3>
+                        </div>
+                    ) : (
+                        <div className="voucher">
+                            <img src={`../../static/img/randomBox.png`} alt="randomBox" />
+                            <span>{boxCnt}</span>
+                            {gallery.data.unconfirmedLuckyBox && <div className="chips">N</div>}
+                        </div>
+                    )}
                     <div className={`bottom ${boxOpen ? "open" : ""}`}>
                         <Text />
                         <div className="ddsBtnWrapper">

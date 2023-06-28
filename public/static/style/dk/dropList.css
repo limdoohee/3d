@@ -101,3 +101,7 @@
     gap: 12px;
     align-items: center;
 }
+.dk.drop-list .list li .right .go {
+    background: var(--orange-6, #fd6e24);
+    color: var(--base-white, #fff);
+}

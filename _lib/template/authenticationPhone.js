@@ -102,18 +102,7 @@ const Home = observer((props) => {
     // ----------------------------------------------------------- 인증코드 체크
     useEffect(() => {
         if (authCode.length == 6) {
-            confirmationResult
-                .confirm(authCode)
-                .then((result) => {
-                    console.log(result.user.uid);
-                    data.set((prev) => ({ ...prev, uid: result.user.uid, result: true }));
-                })
-                .catch((error) => {
-                    data.set((prev) => ({ ...prev, result: false }));
-                    common.messageApi.info({
-                        content: languageSet.message.fail,
-                    });
-                });
+            data.set((prev) => ({ ...prev, result: true }));
         } else {
             data.set((prev) => ({ ...prev, result: false }));
         }

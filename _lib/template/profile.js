@@ -118,7 +118,7 @@ const Home = {
             value: value.value,
         };
 
-        const [helpText, sethelpText] = useState(lang.t(`signup.nickname.help-warning`));
+        const [helpText, sethelpText] = useState("");
         const [totalByte, settotalByte] = useState(0);
 
         useEffect(() => {

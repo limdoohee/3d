@@ -54,8 +54,8 @@
     font-weight: 700;
     font-size: 16px;
     display: flex;
-    gap: 2px;
-    align-items: flex-end;
+    gap: 4px;
+    align-items: center;
 }
 .dds.gnb .ant-drawer-body .point strong small {
     font-weight: 400;
