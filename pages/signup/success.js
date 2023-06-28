@@ -17,7 +17,7 @@ const Home = observer((props) => {
     auth.setCheckLogin(props);
     // 로그인 처리 분기 / 로그인 토큰이 있는 경우에만 접근 가능 : "loginOnly"
     // 로그인 토큰이 있을경우 보내는 페이지가 있는 경우 : okUrl 사용
-    checkLogin.loginResultCheck({ store: store, rule: "", result: props, okUrl: "/main" });
+    checkLogin.loginResultCheck({ store: store, rule: "", result: props });
     // 화면 출력
     return <>{common.pageInit && <View props={props} store={store} />}</>;
 });
