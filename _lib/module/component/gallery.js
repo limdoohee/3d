@@ -270,9 +270,9 @@ const Gallery = observer((props) => {
 
     function render() {
         // scene.getObjectByName(dropLength);
-        for (let i = 0; i <= dropLength; i++) {
-            if (scene.getObjectByName("model" + i)) scene.getObjectByName("model" + i).rotation.y += 0.01;
-        }
+        // for (let i = 0; i <= dropLength; i++) {
+        //     if (scene.getObjectByName("model" + i)) scene.getObjectByName("model" + i).rotation.y += 0.01;
+        // }
 
         // animate();
 
