@@ -140,6 +140,25 @@ const Component = {
             </>
         );
     }),
+    image: observer((props) => {
+        const router = useRouter();
+        const { open, setOpen, confirm, cancel } = props;
+        const onClose = () => {
+            setOpen(false);
+        };
+
+        return (
+            <>
+                <Modal open={open} onCancel={onClose} className="dds modal image" footer={[]}>
+                    {props.img && (
+                        <div className="imgWrapper">
+                            <img src={props.img} />
+                        </div>
+                    )}
+                </Modal>
+            </>
+        );
+    }),
 };
 
 export default Component;
