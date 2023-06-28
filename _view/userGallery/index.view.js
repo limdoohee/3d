@@ -133,7 +133,7 @@ const Home = observer((props) => {
                                                 common.uiChange("pointOpen", true);
                                             }}
                                         />
-                                        {gallery.data.pointBalance}
+                                        {common.numberFormat(gallery.data.pointBalance)}
                                         <DDS.icons.userPlus className="inviteCount" />
                                         {gallery.data.inviteCnt}
                                     </div>

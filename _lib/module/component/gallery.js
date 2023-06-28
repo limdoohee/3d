@@ -234,10 +234,10 @@ const Gallery = observer((props) => {
                                 case 3:
                                     model.scale.multiplyScalar(0.8);
                                     break;
-                                case 21:
+                                case 4:
                                     model.scale.multiplyScalar(6);
                                     break;
-                                case 22:
+                                case 5:
                                     model.position.y = -0.8;
                                     model.scale.multiplyScalar(6);
                                     break;

@@ -250,8 +250,8 @@ const MisteryBox = observer((props) => {
 
     function spaceRender() {
         requestAnimationFrame(spaceRender);
-        // const delta = clock.getDelta();
-        // if (mixer) mixer.update(delta);
+        const delta = clock.getDelta();
+        if (mixer) mixer.update(delta);
         // if (scene.getObjectByName("drop")) scene.getObjectByName("drop").rotation.y += 0.005;
         renderer.render(scene, camera);
     }
@@ -270,6 +270,7 @@ const MisteryBox = observer((props) => {
                 // 페이지 리로딩
                 window.location.replace("/main");
             } else {
+                console.log("dropOwnFlag", drop.data.curr.dropOwnFlag);
                 if (drop.data.curr.dropOwnFlag) {
                     const geometry = new THREE.BoxGeometry(3, 3, 0.5);
                     const material = new THREE.MeshBasicMaterial({
