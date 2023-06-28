@@ -1,13 +1,13 @@
 /* ------------------------------------------------------------------------ login 메인 */
 .login.wrap {
-    margin: 50px 0 32px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    height: calc(100vh - 82px);
+    min-height: var(--viewHeight);
+    background-color: #fff;
 }
 .login.wrap .inner {
-    padding: 0 20px 9vh;
+    padding: 50px 20px 32px 20px;
 }
 .login.wrap .inner h1 {
     max-width: 200px;
