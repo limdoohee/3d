@@ -181,7 +181,7 @@ const Home = observer((props) => {
                             <Progress percent={(gallery.data.myDropCnt / gallery.data.totalDropCnt) * 100} showInfo={false} strokeColor={"#FD6E24"} className="asdf" />
                         </div>
                     </div>
-                    <Gallery store={props.store} />
+                    {gallery.data.nickname && <Gallery store={props.store} />}
                     <DDS.modal.bottom {...modalData} />
                 </DDS.layout.content>
             </DDS.layout.container>
