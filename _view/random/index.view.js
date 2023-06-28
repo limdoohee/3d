@@ -274,8 +274,7 @@ const Home = observer((props) => {
                         gsap.to(box, { visible: false, duration: 1 });
                         setTimeout(() => {
                             loader.load(
-                                "https://asset.dropkitchen.xyz/contents/drops/Drop01_GraceGod/scene.gltf",
-                                // gallery.openedBox.contentUrl,
+                                gallery.openedBox.contentUrl,
                                 function (gltf) {
                                     model = gltf.scene;
                                     model.position.z = 3;
