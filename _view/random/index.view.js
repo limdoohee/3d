@@ -287,17 +287,24 @@ const Home = observer((props) => {
     }, []);
 
     const RightButton = () => {
-        return (
-            boxCnt > 0 && (
-                <DDS.button.default
-                    className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}
-                    onClick={() => {
-                        boxOpen && (location.href = "/userGallery?memberSeq=" + auth.loginResult.seq);
-                    }}
-                >
-                    {boxOpen ? lang.t("random.button.goGallery") : lang.t("random.button.open")}
-                </DDS.button.default>
-            )
+        return boxCnt > 0 ? (
+            <DDS.button.default
+                className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}
+                onClick={() => {
+                    boxOpen && (location.href = "/userGallery?memberSeq=" + auth.loginResult.seq);
+                }}
+            >
+                {boxOpen ? lang.t("random.button.goGallery") : lang.t("random.button.open")}
+            </DDS.button.default>
+        ) : (
+            <DDS.button.default
+                className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}
+                onClick={() => {
+                    boxOpen && (location.href = "/userGallery?memberSeq=" + auth.loginResult.seq);
+                }}
+            >
+                {boxOpen && lang.t("random.button.goGallery")}
+            </DDS.button.default>
         );
     };
 
