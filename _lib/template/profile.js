@@ -121,6 +121,12 @@ const Home = {
         const [helpText, sethelpText] = useState(lang.t(`signup.nickname.help-warning`));
         const [totalByte, settotalByte] = useState(0);
 
+        useEffect(() => {
+            var val = checkByte(value.value);
+            console.log(val);
+            settotalByte(val);
+        }, []);
+
         return (
             <>
                 <div className="dk profile nickname-input">

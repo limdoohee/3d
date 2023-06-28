@@ -135,7 +135,7 @@
     box-sizing: content-box;
     overflow: hidden;
 }
-.page-setting.sub .account > .profile .inner .camera input {
+.page-setting.sub .account > .profile .inner input {
     position: absolute;
     top: 0;
     left: 0;
