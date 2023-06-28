@@ -14,6 +14,7 @@ import DDS_Icons from "../../_lib/component/icons";
 import DDS_Profile from "../../_lib/component/profile";
 import DDS_Button from "../../_lib/component/button";
 import DDS_Logos from "../../_lib/component/logos";
+import DDS from "../../_lib/component/dds";
 //------------------------------------------------------------------------------- Component
 
 const home = {
@@ -101,7 +102,20 @@ const home = {
         }, [common.ui.chatOpen == true]);
 
         const clickProfile = (sender) => {
-            alert(sender.userId);
+            switch (process.env.STAGE) {
+                case "LOCAL":
+                    var s = "mango";
+                    break;
+                case "DEVELOPMENT":
+                    var s = "mango";
+                    break;
+                case "STAGING":
+                    var s = "plum";
+                    break;
+                default:
+                    break;
+            }
+            location.href = `/userGallery/?memberSeq=${sender.userId.replace(`dropkitchen_${s}_member_`, "")}`;
         };
 
         const [bottomDown, setbottomDown] = useState(false);
@@ -131,6 +145,14 @@ const home = {
                 false,
             );
         }, [messages]);
+
+        const [open, setOpen] = useState(false);
+        const [imageUrl, setimageUrl] = useState("");
+        const modalData = {
+            open: open,
+            setOpen: setOpen,
+            img: imageUrl,
+        };
 
         return (
             <div className="message-wrap" id="message-wrap">
@@ -197,7 +219,13 @@ const home = {
                                             <div className="inner">
                                                 {item.messageType == "user" && <div className="message">{item.message}</div>}
                                                 {item.messageType == "file" && (
-                                                    <div className="message image">
+                                                    <div
+                                                        className="message image"
+                                                        onClick={() => {
+                                                            setOpen(true);
+                                                            setimageUrl(item.url);
+                                                        }}
+                                                    >
                                                         {/*  */}
                                                         {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.url}`} /> : null}
                                                     </div>
@@ -213,7 +241,13 @@ const home = {
                                             <div className="inner">
                                                 {item.messageType == "admin" && <div className="message">{item.message}</div>}
                                                 {item.messageType == "file" && (
-                                                    <div className="message image">
+                                                    <div
+                                                        className="message image"
+                                                        onClick={() => {
+                                                            setOpen(true);
+                                                            setimageUrl(item.url);
+                                                        }}
+                                                    >
                                                         {/*  */}
                                                         {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.url}`} /> : null}
                                                     </div>
@@ -227,6 +261,7 @@ const home = {
                         );
                     })}
                 </ul>
+                <DDS.modal.image {...modalData} />
             </div>
         );
     },

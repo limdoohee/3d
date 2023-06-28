@@ -118,3 +118,56 @@
     align-items: center;
     flex-direction: row-reverse;
 }
+
+.dds.modal.image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    max-width: calc(100%);
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: var(--viewHeight);
+}
+.dds.modal.image .ant-modal-content {
+    border-radius: 16px;
+    padding: 32px 20px 20px;
+    width: 100%;
+    background-color: transparent;
+    box-shadow: none;
+}
+
+.dds.modal.image .imgWrapper {
+    width: 100%;
+    margin: 0 auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.dds.modal.image .ant-modal-close {
+    position: absolute;
+    top: 0;
+    inset-inline-end: 17px;
+    z-index: 1010;
+    padding: 0;
+    color: rgba(0, 0, 0, 0.45);
+    font-weight: 600;
+    line-height: 1;
+    text-decoration: none;
+    background: transparent;
+    border-radius: 4px;
+    width: 22px;
+    height: 22px;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    transition: color 0.2s, background-color 0.2s;
+}
+
+.dds.modal.image .ant-modal-close svg {
+    fill: #fff;
+    width: 24px;
+    height: 24px;
+}
