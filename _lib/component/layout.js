@@ -58,7 +58,7 @@ const Component = {
         common.messageApiLoad(messageApi);
 
         return (
-            <div className="ui back">
+            <div className="dds container ui back">
                 <h2
                     onClick={() => {
                         if (router.query.from) {
