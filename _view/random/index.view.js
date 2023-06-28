@@ -329,7 +329,7 @@ const Home = observer((props) => {
     const LeftButton = () => {
         return boxCnt > 0 ? (
             <DDS.button.default
-                className={`dds button secondary}`}
+                className={`dds button secondary`}
                 onClick={() => {
                     boxOpen ? window.location.replace("/random") : setModalOpen(true);
                 }}
@@ -339,7 +339,7 @@ const Home = observer((props) => {
         ) : (
             !boxOpen && (
                 <DDS.button.default
-                    className={`dds button ${!boxOpen ? "primary" : "secondary"}}`}
+                    className={`dds button ${!boxOpen ? "primary" : "secondary"}`}
                     onClick={() => {
                         boxOpen ? (location.href = "/random") : setModalOpen(true);
                     }}
