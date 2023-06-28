@@ -288,14 +288,16 @@ const Home = observer((props) => {
 
     const RightButton = () => {
         return (
-            <DDS.button.default
-                className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}
-                onClick={() => {
-                    boxOpen && (location.href = "userGallery?memberSeq=" + auth.loginResult.seq);
-                }}
-            >
-                {boxOpen ? lang.t("random.button.goGallery") : boxCnt > 0 && lang.t("random.button.open")}
-            </DDS.button.default>
+            boxCnt > 0 && (
+                <DDS.button.default
+                    className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}
+                    onClick={() => {
+                        boxOpen && (location.href = "/userGallery?memberSeq=" + auth.loginResult.seq);
+                    }}
+                >
+                    {boxOpen ? lang.t("random.button.goGallery") : lang.t("random.button.open")}
+                </DDS.button.default>
+            )
         );
     };
 
@@ -323,7 +325,7 @@ const Home = observer((props) => {
                         <Text />
                         <div className="ddsBtnWrapper">
                             <DDS.button.default
-                                className={`dds button secondary`}
+                                className={`dds button ${boxCnt > 0 ? "secondary" : "primary"}`}
                                 onClick={() => {
                                     boxOpen ? window.location.replace("/random") : setModalOpen(true);
                                 }}
