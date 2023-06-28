@@ -113,7 +113,7 @@ const Home = {
                         callback: (e) => {},
                     });
                 } else {
-                    Router.back();
+                    history.back();
                 }
             }
             return () => {
@@ -148,7 +148,7 @@ const Home = {
                     if (router.query.from) {
                         location.href = router.query.from;
                     } else {
-                        Router.back();
+                        history.back();
                     }
                 },
             },

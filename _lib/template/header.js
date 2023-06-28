@@ -36,7 +36,7 @@ const Home = {
                                     } else if (back) {
                                         back();
                                     } else {
-                                        Router.back();
+                                        history.back();
                                     }
                                 }}
                             />

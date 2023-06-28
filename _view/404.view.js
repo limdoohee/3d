@@ -31,7 +31,7 @@ const Home = observer((props) => {
                     <DDS.button.default
                         className={"dds button primary block"}
                         onClick={() => {
-                            router.back();
+                            history.back();
                         }}
                     >
                         {lang.t("error.404.historyBack")}
