@@ -19,7 +19,21 @@ const Home = observer((props) => {
 
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {
-        var params = { sendbirdId: "dropkitchen_member_" + router.query.memberSeq };
+        let s;
+        switch (process.env.STAGE) {
+            case "LOCAL":
+                s = "mango";
+                break;
+            case "DEVELOPMENT":
+                s = "mango";
+                break;
+            case "STAGING":
+                s = "plum";
+                break;
+            default:
+                break;
+        }
+        var params = { sendbirdId: `dropkitchen_${s}_member_` + router.query.memberSeq };
         gallery.getData(params, (e) => {
             common.debug(e);
             callback && callback(e);
@@ -117,10 +131,18 @@ const Home = observer((props) => {
                             >
                                 {gallery.data.ownFlag ? (
                                     <Badge count={<DDS.icons.pen />} className="profileMod">
-                                        <DDS.profile.default size={64} badge={<DDS.icons.badgeCrown className="cert" />} src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "../../static/img/profile.png"} />
+                                        <DDS.profile.default
+                                            size={64}
+                                            badge={<DDS.icons.badgeCrown className="cert" />}
+                                            src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"}
+                                        />
                                     </Badge>
                                 ) : (
-                                    <DDS.profile.default size={64} badge={<DDS.icons.badgeCrown className="cert" />} src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "../../static/img/profile.png"} />
+                                    <DDS.profile.default
+                                        size={64}
+                                        badge={<DDS.icons.badgeCrown className="cert" />}
+                                        src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"}
+                                    />
                                 )}
                             </div>
                             <div ref={ref}>
@@ -153,7 +175,7 @@ const Home = observer((props) => {
                                         setOpen(true);
                                     }}
                                 >
-                                    invite
+                                    Invite
                                 </DDS.button.default>
                                 <DDS.button.default
                                     className="dds button secondary"
