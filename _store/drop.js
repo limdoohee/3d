@@ -76,6 +76,7 @@ class Store {
         this.data.curr[key] = value;
         callback && callback();
     }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회
     async dropList(params, callback) {
         await Api.get(`/dks-api/v2/drop_list`, params, this.store.auth.loginResult.loginToken)

@@ -11,6 +11,8 @@
 /* =========================== container */
 .dds.container {
     padding: env(safe-area-inset-top, 0) 20px env(safe-area-inset-bottom, 0) 20px;
+    background-color: #fff;
+    min-height: var(--viewHeight);
 }
 
 @media (min-width: 640px) {

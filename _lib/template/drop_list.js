@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import React, { useState, useEffect, useRef, createRef, forwardRef, use } from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Store
 import Store from "../../_store/store";
@@ -9,7 +9,6 @@ const store = new Store();
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- Component
-import { Drawer } from "antd";
 import DDS from "../../_lib/component/dds";
 //------------------------------------------------------------------------------- Component
 
@@ -17,6 +16,15 @@ const Home = {
     default: observer((props) => {
         const router = useRouter();
         const { common, lang, drop, auth } = props.store;
+
+        const dropListLangSet = {
+            title: lang.t(`dropList.title`),
+            myCollection: lang.t(`dropList.myCollection`),
+            go: lang.t(`dropList.go`),
+            collected: lang.t(`dropList.collected`),
+            collect: lang.t(`dropList.collect`),
+            invite: { title: lang.t(`dropList.invite.desc`), desc: lang.t(`dropList.invite.desc`), give: lang.t(`dropList.invite.give`) },
+        };
 
         //------------------------------------------------- Init Load
         const initLoad = ({ initCheck, callback }) => {
@@ -40,22 +48,50 @@ const Home = {
         //------------------------------------------------- Router isReady
 
         const [open, setOpen] = useState(false);
+        const [shareModal, setshareModal] = useState(false);
 
-        const modalData = {
-            open: open,
-            setOpen: setOpen,
-            title: "현재 드롭이 진행중이에요.",
-            context: "메인에서 드롭을 받을 수 있어요. 메인으로 이동해볼까요?",
+        // const modalData = {
+        //     open: open,
+        //     setOpen: setOpen,
+        //     title: "현재 드롭이 진행중이에요.",
+        //     context: "메인에서 드롭을 받을 수 있어요. 메인으로 이동해볼까요?",
+        //     confirm: {
+        //         label: "드롭 받으러 가기",
+        //         action: () => {
+        //             router.push("/main");
+        //         },
+        //     },
+        //     cancel: {
+        //         label: "나중에",
+        //         action: () => {},
+        //     },
+        // };
+
+        const shareModalData = {
+            open: shareModal,
+            setOpen: setshareModal,
+            title: (
+                <>
+                    <div style={{ textAlign: "center", margin: "0 0 20px 0" }}>
+                        <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230628110209194_dk.webp" style={{ width: 120, height: 120 }} />
+                    </div>
+                    {dropListLangSet.invite.title}
+                </>
+            ),
+            context: <>{dropListLangSet.invite.desc}</>,
             confirm: {
-                label: "드롭 받으러 가기",
+                label: dropListLangSet.invite.give,
                 action: () => {
-                    // Router.push("/gallery");
+                    setshareModal(false);
+                    common.onShare({
+                        url: auth.loginResult.inviteLink,
+                    });
                 },
             },
-            cancel: {
-                label: "나중에",
-                action: () => {},
-            },
+            // cancel: {
+            //     label: "나중에",
+            //     action: () => {},
+            // },
         };
 
         return (
@@ -65,7 +101,7 @@ const Home = {
                         <div className="plate">
                             <span>
                                 <DDS.icons.drop />
-                                My Collection
+                                {dropListLangSet.myCollection}
                             </span>
                             <span>
                                 <strong>{drop.data.dropList.myDropCnt}</strong>/{drop.data.dropList.totalDropCnt}
@@ -102,23 +138,34 @@ const Home = {
                                     <div className="right">
                                         {item.dropOwnFlag ? (
                                             <>
-                                                <DDS.chips.default className={"primary"}>보유</DDS.chips.default>
+                                                <DDS.chips.default className={"primary"}>{dropListLangSet.collected}</DDS.chips.default>
                                                 <DDS.icons.envelopeOpenHeart
                                                     onClick={() => {
-                                                        common.onShare({
-                                                            url: auth.loginResult.inviteLink,
-                                                        });
+                                                        setshareModal(true);
                                                     }}
                                                 />
                                             </>
                                         ) : (
                                             <>
-                                                <DDS.chips.default className={"secondary"}>미보유</DDS.chips.default>
-                                                <DDS.icons.cubePlus
-                                                    onClick={() => {
-                                                        Router.push("/random");
-                                                    }}
-                                                />
+                                                {item.status == "processing" ? (
+                                                    <DDS.button.default
+                                                        className="dds button small go"
+                                                        onClick={() => {
+                                                            Router.push("/main");
+                                                        }}
+                                                    >
+                                                        {dropListLangSet.go}
+                                                    </DDS.button.default>
+                                                ) : (
+                                                    <>
+                                                        <DDS.chips.default className={"secondary"}>{dropListLangSet.collect}</DDS.chips.default>
+                                                        <DDS.icons.cubePlus
+                                                            onClick={() => {
+                                                                Router.push("/random");
+                                                            }}
+                                                        />
+                                                    </>
+                                                )}
                                             </>
                                         )}
                                     </div>
@@ -126,7 +173,7 @@ const Home = {
                             );
                         })}
                     </ul>
-                    <div className="bottom">
+                    {/* <div className="bottom">
                         <DDS.button.default
                             className="dds button primary large block"
                             onClick={() => {
@@ -135,9 +182,10 @@ const Home = {
                         >
                             미보유 드롭 받으러 가기
                         </DDS.button.default>
-                    </div>
+                    </div> */}
                 </div>
-                <DDS.modal.bottom {...modalData} />
+                {/* <DDS.modal.bottom {...modalData} /> */}
+                <DDS.modal.bottom {...shareModalData} />
             </>
         );
     }),
