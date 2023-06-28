@@ -96,6 +96,10 @@ const Home = observer((props) => {
         },
     };
 
+    const toDropList = () => {
+        gallery.data.ownFlag && (location.href = "/drops");
+    };
+
     return (
         <>
             <DDS.layout.container store={store}>
@@ -162,22 +166,20 @@ const Home = observer((props) => {
                                 </DDS.button.default>
                             </div>
                         )}
-                        <Link href="/drops">
-                            <div className="collection">
-                                <ul className="wrapper">
-                                    <li className="title">
-                                        <DDS.icons.drop />
-                                        Collection
-                                    </li>
-                                    <li className="count">
-                                        <strong>{gallery.data.myDropCnt}</strong>
-                                        <span className="slash">/</span>
-                                        {gallery.data.totalDropCnt}
-                                    </li>
-                                </ul>
-                                <Progress percent={(gallery.data.myDropCnt / gallery.data.totalDropCnt) * 100} showInfo={false} strokeColor={"#FD6E24"} className="asdf" />
-                            </div>
-                        </Link>
+                        <div className="collection" onClick={toDropList}>
+                            <ul className="wrapper">
+                                <li className="title">
+                                    <DDS.icons.drop />
+                                    Collection
+                                </li>
+                                <li className="count">
+                                    <strong>{gallery.data.myDropCnt}</strong>
+                                    <span className="slash">/</span>
+                                    {gallery.data.totalDropCnt}
+                                </li>
+                            </ul>
+                            <Progress percent={(gallery.data.myDropCnt / gallery.data.totalDropCnt) * 100} showInfo={false} strokeColor={"#FD6E24"} className="asdf" />
+                        </div>
                     </div>
                     {gallery.data.galleryLink && <Gallery store={props.store} />}
                     <DDS.modal.bottom {...modalData} />
