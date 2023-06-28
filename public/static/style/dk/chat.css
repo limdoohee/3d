@@ -40,10 +40,30 @@
 .dk.chat .title .owner .name {
     display: flex;
     flex-direction: column;
+    gap: 4px;
 }
 .dk.chat .title .owner .name strong {
     display: flex;
     align-items: center;
+    margin-left: 0;
+}
+.dk.chat .title .owner .name strong .t {
+    font-size: 16px;
+    font-weight: 700;
+    line-height: 100%;
+    letter-spacing: -0.32px;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.dk.chat .title .owner .name strong .dds.chips {
+    background: var(--orange-6, #fd6e24);
+    color: #fff;
+    font-size: 8px;
+    height: 12px;
+    padding: 2px 4px;
+    box-sizing: content-box;
 }
 .dk.chat .title .owner .name small {
     font-weight: 400;

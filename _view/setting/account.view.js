@@ -36,15 +36,15 @@ const Home = observer((props) => {
     //------------------------------------------------- Router isReady
 
     const headerRight = [
-        () => (
-            <DDS.button.default
-                className="dds button none"
-                icon={<DDS.icons.bars />}
-                onClick={() => {
-                    common.uiChange("gnbOpen", true);
-                }}
-            />
-        ),
+        // () => (
+        //     <DDS.button.default
+        //         className="dds button none"
+        //         icon={<DDS.icons.bars />}
+        //         onClick={() => {
+        //             common.uiChange("gnbOpen", true);
+        //         }}
+        //     />
+        // ),
     ];
 
     const [step, setStep] = useState(1);

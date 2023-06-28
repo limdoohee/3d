@@ -172,10 +172,10 @@ const Home = {
                                     />
                                     <span className="name">
                                         <strong>
-                                            {chat.state.currentlyJoinedChannel.name}
-                                            {/* <DDS_Icons.badgeCheck /> */}
+                                            <span className="t">{chat.state.currentlyJoinedChannel.name}</span>
+                                            <DDS.chips.default className={"secondary small"}>ARTIST</DDS.chips.default>
                                         </strong>
-                                        {/* <small>현재 활동 중</small> */}
+                                        <small>현재 활동 중</small>
                                     </span>
                                 </div>
                                 <div className="operators">
