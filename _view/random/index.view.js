@@ -320,7 +320,31 @@ const Home = observer((props) => {
                         boxOpen && (location.href = "/userGallery?memberSeq=" + auth.loginResult.seq);
                     }}
                 >
-                    lang.t("random.button.goGallery")
+                    {lang.t("random.button.goGallery")}
+                </DDS.button.default>
+            )
+        );
+    };
+
+    const LeftButton = () => {
+        return boxCnt > 0 ? (
+            <DDS.button.default
+                className={`dds button secondary}`}
+                onClick={() => {
+                    boxOpen ? window.location.replace("/random") : setModalOpen(true);
+                }}
+            >
+                {boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.buy")}
+            </DDS.button.default>
+        ) : (
+            !boxOpen && (
+                <DDS.button.default
+                    className={`dds button ${!boxOpen ? "primary" : "secondary"}}`}
+                    onClick={() => {
+                        boxOpen ? (location.href = "/random") : setModalOpen(true);
+                    }}
+                >
+                    {boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.buy")}
                 </DDS.button.default>
             )
         );
@@ -349,14 +373,7 @@ const Home = observer((props) => {
                     <div className={`bottom ${boxOpen ? "open" : ""}`}>
                         <Text />
                         <div className="ddsBtnWrapper">
-                            <DDS.button.default
-                                className={`dds button ${boxCnt > 0 ? "secondary" : "primary"}`}
-                                onClick={() => {
-                                    boxOpen ? window.location.replace("/random") : setModalOpen(true);
-                                }}
-                            >
-                                {boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.buy")}
-                            </DDS.button.default>
+                            <LeftButton />
                             <RightButton />
                         </div>
                     </div>
