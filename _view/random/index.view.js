@@ -24,12 +24,12 @@ const Home = observer((props) => {
     const [boxOpen, setBoxOpen] = useState(false);
     const [artName, setArtName] = useState("");
     const [artistName, setArtistName] = useState("");
+    const [img, setImg] = useState("../../static/3d/luckyBox/LuckyBox_Loop.gif");
     let btnClick = false;
 
     let renderer;
     let camera;
     const scene = new THREE.Scene();
-    let mixer = new THREE.AnimationMixer();
     let clock = new THREE.Clock();
     const loader = new GLTFLoader();
 
@@ -200,48 +200,11 @@ const Home = observer((props) => {
         pointLight.position.set(0, 4, 3);
         scene.add(pointLight);
 
-        loader.load(
-            // resource URL
-            "../../static/3d/luckyBox/locked/scene.gltf",
-            // called when the resource is loaded
-            function (gltf) {
-                model = gltf.scene;
-                model.scale.multiplyScalar(20);
-                model.rotation.set(0.3, -0.7, 0);
-                model.position.y = 3;
-                model.position.z = 3;
-                scene.add(model);
-
-                mixer = new THREE.AnimationMixer(model);
-                animationActions.push(mixer.clipAction(gltf.animations[0]));
-                mixer.clipAction(gltf.animations[0]).play();
-                activeAction = animationActions[0];
-
-                model.name = "box";
-
-                loader.load("../../static/3d/luckyBox/open/scene.gltf", (gltf) => {
-                    model = gltf.scene;
-                    model.position.y = 3;
-                    model.position.z = 3;
-
-                    const animationAction = mixer.clipAction(gltf.animations[0]);
-                    animationActions.push(animationAction);
-                });
-            },
-            undefined,
-            // called when loading has errors
-            function (error) {
-                console.log("An error happened");
-            },
-        );
-
         window.addEventListener("click", onTouchBox);
     }
 
     function spaceRender() {
         requestAnimationFrame(spaceRender);
-        const delta = clock.getDelta();
-        if (mixer) mixer.update(delta);
         renderer.render(scene, camera);
     }
 
@@ -249,7 +212,6 @@ const Home = observer((props) => {
         if (event.target.tagName === "SPAN" || event.target.tagName === "BUTTON") {
             console.log("btnClick", btnClick);
             if ((event.target.className.includes("luckyBox") || event.target.parentNode.className.includes("luckyBox")) && !btnClick) {
-                const box = scene.getObjectByName("box");
                 gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
                     btnClick = true;
                     console.log("click");
@@ -265,12 +227,15 @@ const Home = observer((props) => {
                         }, 3000);
                     }
                     if (e.dropSeq) {
+                        setImg("../../static/3d/luckyBox/LuckyBox_Open.gif");
+                        setTimeout(() => {
+                            document.querySelector(".box").classList.add("hidden");
+                        }, 1200);
                         setArtName(e.artName);
                         setArtistName(e.artistName);
                         setBoxOpen(true);
                         setBoxCnt((prev) => prev - 1);
                         setAction(animationActions[1]);
-                        gsap.to(box, { visible: false, duration: 1.3 });
                         setTimeout(() => {
                             loader.load(
                                 e.contentUrl,
@@ -301,10 +266,6 @@ const Home = observer((props) => {
                                             break;
                                     }
                                     scene.add(model);
-
-                                    mixer = new THREE.AnimationMixer(model);
-                                    mixer.clipAction(gltf.animations[0]).play();
-                                    model.name = "drop";
                                 },
                                 undefined,
                                 function (error) {
@@ -355,6 +316,9 @@ const Home = observer((props) => {
                             {gallery.data.unconfirmedLuckyBox && <div className="chips">N</div>}
                         </div>
                     )}
+                    <div className="box">
+                        <img src={img} alt="luckyBox" />
+                    </div>
                     <div className={`bottom ${boxOpen ? "open" : ""}`}>
                         <Text />
                         <div className="ddsBtnWrapper">
