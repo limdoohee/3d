@@ -8,6 +8,7 @@ html {
         sans-serif;
     font-size: 16px !important;
     color: var(--color-black) !important;
+    background-color: #fff;
 }
 *,
 *::placeholder {
