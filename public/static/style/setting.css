@@ -233,6 +233,19 @@
 .page-setting.sub .account > .form li .phone > .button {
     padding: 0 16px;
 }
+.page-setting.sub .account > .delete {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: var(--gray-6, #969696);
+    /* Regular/Line-height 1/Typography7 */
+    font-size: 14px;
+    letter-spacing: -0.28px;
+    padding: 23px 20px;
+    display: flex;
+    justify-content: space-between;
+}
 .page-setting.sub .confirm {
     position: fixed;
     bottom: 0;
