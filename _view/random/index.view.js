@@ -22,6 +22,8 @@ const Home = observer((props) => {
     const [incrDisabled, setIncrDisabled] = useState(false);
     const [helper, setHelper] = useState(false);
     const [boxOpen, setBoxOpen] = useState(false);
+    const [artName, setArtName] = useState("");
+    const [artistName, setArtistName] = useState("");
     let btnClick = false;
 
     let renderer;
@@ -145,7 +147,9 @@ const Home = observer((props) => {
             action: () => {
                 gallery.data.pointBalance >= 1500 &&
                     gallery.buyLuckyBox({ amount }, (e) => {
-                        setBoxCnt((prev) => prev + amount);
+                        gallery.getLuckyBox("", (e) => {
+                            setBoxCnt((prev) => prev + amount);
+                        });
 
                         common.messageApi.open({
                             className: "buyingMessage",
@@ -169,10 +173,6 @@ const Home = observer((props) => {
         ) : (
             <h2>{lang.t("random.desc")}</h2>
         );
-    };
-
-    const RightButton = () => {
-        return boxCnt > 0 && <DDS.button.default className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}>{boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.open")}</DDS.button.default>;
     };
 
     function setSpace() {
@@ -202,13 +202,13 @@ const Home = observer((props) => {
 
         loader.load(
             // resource URL
-            "../../static/3d/dropBox/dropbox__unlocked_loop.glb",
+            "../../static/3d/luckyBox/locked/scene.gltf",
             // called when the resource is loaded
             function (gltf) {
                 model = gltf.scene;
                 model.scale.multiplyScalar(20);
-                model.rotation.set(0.4, -0.7, -0.1);
-                model.position.y = 2;
+                model.rotation.set(0.3, -0.7, 0);
+                model.position.y = 3;
                 model.position.z = 3;
                 scene.add(model);
 
@@ -219,9 +219,9 @@ const Home = observer((props) => {
 
                 model.name = "box";
 
-                loader.load("../../static/3d/dropBox/dropbox_open2disappear.glb", (gltf) => {
+                loader.load("../../static/3d/luckyBox/open/scene.gltf", (gltf) => {
                     model = gltf.scene;
-                    model.position.y = 2;
+                    model.position.y = 3;
                     model.position.z = 3;
 
                     const animationAction = mixer.clipAction(gltf.animations[0]);
@@ -253,7 +253,6 @@ const Home = observer((props) => {
                 gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
                     btnClick = true;
                     console.log("click");
-
                     if (e.id === "invalid_request") {
                         common.messageApi.open({
                             key: "luckyBox",
@@ -265,22 +264,23 @@ const Home = observer((props) => {
                             btnClick = false;
                         }, 3000);
                     }
-                    if (e.data) {
-                        console.log("e.data", e.data);
-
+                    if (e.dropSeq) {
+                        setArtName(e.artName);
+                        setArtistName(e.artistName);
                         setBoxOpen(true);
                         setBoxCnt((prev) => prev - 1);
                         setAction(animationActions[1]);
-                        gsap.to(box, { visible: false, duration: 1 });
+                        gsap.to(box, { visible: false, duration: 1.3 });
                         setTimeout(() => {
                             loader.load(
-                                gallery.openedBox.contentUrl,
+                                e.contentUrl,
+                                // "https://asset.dropkitchen.xyz/contents/drops/Drop02_KimYunA/scene.gltf",
                                 function (gltf) {
                                     model = gltf.scene;
                                     model.position.z = 3;
                                     model.position.y = 1;
 
-                                    switch (gallery.openedBox.dropSeq) {
+                                    switch (e.dropSeq) {
                                         case 1:
                                             model.scale.multiplyScalar(14);
                                             break;
@@ -313,13 +313,9 @@ const Home = observer((props) => {
                             );
 
                             btnClick = false;
-                        }, 1000);
+                        }, 1500);
                     }
                 });
-            }
-            if (event.target.className.includes("confirm") || event.target.parentNode.className.includes("confirm")) {
-                // 페이지 리로딩
-                window.location.replace("/random");
             }
         }
     }
@@ -329,6 +325,19 @@ const Home = observer((props) => {
         spaceRender();
     }, []);
 
+    const RightButton = () => {
+        return (
+            <DDS.button.default
+                className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}
+                onClick={() => {
+                    boxOpen && (location.href = "userGallery?memberSeq=" + auth.loginResult.seq);
+                }}
+            >
+                {boxOpen ? lang.t("random.button.goGallery") : boxCnt > 0 && lang.t("random.button.open")}
+            </DDS.button.default>
+        );
+    };
+
     return (
         <DDS.layout.container store={store}>
             <DK_template_header.default store={store} title={lang.t("random.title")} />
@@ -336,8 +345,8 @@ const Home = observer((props) => {
                 <div className="random">
                     {boxOpen ? (
                         <div className="top">
-                            <h2>{gallery.openedBox.artName}</h2>
-                            <h3>{gallery.openedBox.artistName}</h3>
+                            <h2>{artName}</h2>
+                            <h3>{artistName}</h3>
                         </div>
                     ) : (
                         <div className="voucher">
@@ -350,12 +359,12 @@ const Home = observer((props) => {
                         <Text />
                         <div className="ddsBtnWrapper">
                             <DDS.button.default
-                                className={`dds button ${gallery.luckyBox.length > 0 ? "secondary" : "primary"}`}
+                                className={`dds button secondary`}
                                 onClick={() => {
-                                    boxOpen ? router.push("userGallery?memberSeq=" + auth.loginResult.seq) : setModalOpen(true);
+                                    boxOpen ? window.location.replace("/random") : setModalOpen(true);
                                 }}
                             >
-                                {boxOpen ? lang.t("random.button.goGallery") : lang.t("random.button.buy")}
+                                {boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.buy")}
                             </DDS.button.default>
                             <RightButton />
                         </div>

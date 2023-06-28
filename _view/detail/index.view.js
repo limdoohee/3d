@@ -166,7 +166,7 @@ const Home = observer((props) => {
                 className="dds button none gallery badge"
                 icon={<DDS.icons.myGalleryBlackOn />}
                 onClick={() => {
-                    router.push("/userGallery?memberSeq=" + auth.loginResult.seq);
+                    location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
                 }}
             />
         ),
@@ -263,7 +263,7 @@ const Home = observer((props) => {
                                     {/* 매거진 */}
                                     <DDS.icons.bookFilled
                                         onClick={() => {
-                                            router.push(`/magazine/?keyword=${drop.data.detail.artistName}`);
+                                            location.href = `/magazine/?keyword=${drop.data.detail.artistName}`;
                                         }}
                                     />
                                 </li>

@@ -47,7 +47,6 @@ const Component = {
                         <DDS_Button.default
                             className="dds button text"
                             onClick={() => {
-                                router.push("/");
                             }}
                         >
                             <DDS_Icons.gear />
@@ -55,7 +54,7 @@ const Component = {
                         <DDS_Button.default
                             className="dds button text"
                             onClick={() => {
-                                Router.push("/");
+                                location.href = "/";
                             }}
                         >
                             <DDS_Icons.house />
@@ -68,7 +67,7 @@ const Component = {
                     <div
                         className="point"
                         onClick={() => {
-                            Router.push("/point");
+                            location.href = "/point";
                         }}
                     >
                         <span>내 포인트</span>
@@ -86,10 +85,10 @@ const Component = {
                         <ul>
                             {menuData.gnb.map((Item, key) => (
                                 <li key={key}>
-                                    <Link href={Item.link}>
+                                    <a href={Item.link}>
                                         <Item.icon />
                                         <span>{Item.name}</span>
-                                    </Link>
+                                    </a>
                                 </li>
                             ))}
                         </ul>

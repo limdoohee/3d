@@ -20,7 +20,7 @@ const Home = () => {
             if (e.result) {
                 await cookie.remove("loginToken", { path: "/" });
                 await cookie.save("loginToken", router.query.token, { path: "/" });
-                router.push("/");
+                location.href = "/";
             }
         });
     } else {

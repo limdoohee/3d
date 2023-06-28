@@ -103,9 +103,7 @@ const Home = observer((props) => {
         if (cookies.get("device_alarm") === "Y") {
             if (auth.loginResult.dropsAgree === "N" || auth.loginResult.adsAgree === "N") setNotice(true);
         }
-    }, []);
 
-    useEffect(() => {
         dropData().then(() => {
             drop.dataChange("coachMark", "hidden");
             if (drop.data.curr.status === "ready") openTime = new Date(drop.data.curr.startAt);
@@ -118,7 +116,7 @@ const Home = observer((props) => {
                 drop.dataChange("coachMark", "");
             }
         });
-    }, [drop.data.curr.status]);
+    }, []);
 
     const headerLeft = <span></span>;
 
@@ -128,7 +126,7 @@ const Home = observer((props) => {
                 className={`dds button none gallery ${gallery.data.unconfirmedLuckyBox ? "badge" : ""}`}
                 icon={<DDS.icons.myGalleryBlackOn />}
                 onClick={() => {
-                    router.push("/userGallery?memberSeq=" + auth.loginResult.seq);
+                    location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
                 }}
             />
         ),
@@ -146,7 +144,7 @@ const Home = observer((props) => {
                 className="dds button none"
                 icon={<DDS.icons.bell />}
                 onClick={() => {
-                    router.push("/alarm");
+                    location.href = "/alarm";
                 }}
             />
         ),

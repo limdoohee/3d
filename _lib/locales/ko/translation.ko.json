@@ -145,7 +145,7 @@
         "button": {
             "open": "Lucky Box 열기",
             "buy": "구매하기",
-            "confirm": "확인",
+            "confirm": "닫기",
             "goGallery": "갤러리로 이동"
         },
         "modal": {

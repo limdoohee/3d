@@ -129,7 +129,7 @@ const Home = observer((props) => {
     const handleEnterPress = async (e, callback) => {
         if (e.key === "Enter" && e.nativeEvent.isComposing === false) {
             console.log("handleEnterPress");
-            Router.push(`/magazine/?keyword=${e.target.value}`);
+            location.href = `/magazine/?keyword=${e.target.value}`;
         }
     };
 
@@ -147,7 +147,7 @@ const Home = observer((props) => {
     ];
 
     const onMove = (seq) => {
-        router.push(`/magazine/d/${seq}`);
+        location.href = `/magazine/d/${seq}`;
     };
 
     return (

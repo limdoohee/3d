@@ -93,7 +93,7 @@ const home = {
         );
     },
     MessagePrint: ({ store, messages, myId, loadMessagesPrev }) => {
-        const { common, chat } = store;
+        const { common, chat, lang } = store;
         const [more, setmore] = useState(true);
 
         useEffect(() => {

@@ -41,7 +41,7 @@ const pageFunc = {
             if (result.result == "ok") {
                 if (okUrl) {
                     common.debug("상태 : 로그인 토큰이 정상적으로 존재 하여 로그인 성공 URL 이 있는경우");
-                    Router.push(okUrl);
+                    location.href = okUrl;
                 } else {
                     common.init();
                     common.debug("상태 : 로그인 토큰이 정상적으로 존재 하는 경우");
@@ -50,7 +50,7 @@ const pageFunc = {
                 switch (rule) {
                     case "loginOnly":
                         Cookie.remove("loginToken");
-                        Router.push("/login");
+                        location.href = "/login";
                         common.debug("상태 : 로그인 토큰 없이 로그인 있어야 되는 페이지 출력");
                         break;
                     default:

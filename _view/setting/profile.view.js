@@ -89,9 +89,10 @@ const Home = observer((props) => {
     const imageUpload = (e, k) => {
         const formData = new FormData();
         formData.append("file", e.target.files[0]);
-        // console.log(e.target.files[0]);
         auth.uploadProfileImage(formData, (res) => {
             if (res.imageSeq) {
+                console.log(res);
+                setthumbnailImage(res.imageUrl);
                 setimageSeq(res);
             }
         });
@@ -105,6 +106,8 @@ const Home = observer((props) => {
         }
     }, [imageSeq, inputNickname, introduction]);
 
+    const [thumbnailImage, setthumbnailImage] = useState(auth.loginResult.profileImage);
+
     return (
         <>
             <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
@@ -116,7 +119,7 @@ const Home = observer((props) => {
                         <div className="account">
                             <div className="profile">
                                 <div className="inner">
-                                    <DDS.profile.default src={auth.loginResult.profileImage ? auth.loginResult.profileImage : null} />
+                                    <DDS.profile.default src={thumbnailImage} />
                                     <div className="camera">
                                         <DDS.icons.camera />
                                     </div>

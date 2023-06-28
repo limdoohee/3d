@@ -1,0 +1,11 @@
+Model Information:
+* title:	Luckybox_open
+* source:	https://sketchfab.com/3d-models/luckybox-open-5c6a3469393d4cd8acaba834d9c454a4
+* author:	xxblue (https://sketchfab.com/xxblue)
+
+Model License:
+* license type:	CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)
+* requirements:	Author must be credited. Commercial use is allowed.
+
+If you use this 3D model in your project be sure to copy paste this credit wherever you share it:
+This work is based on "Luckybox_open" (https://sketchfab.com/3d-models/luckybox-open-5c6a3469393d4cd8acaba834d9c454a4) by xxblue (https://sketchfab.com/xxblue) licensed under CC-BY-4.0 (http://creativecommons.org/licenses/by/4.0/)

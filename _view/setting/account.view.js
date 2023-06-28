@@ -82,8 +82,7 @@ const Home = observer((props) => {
                                         <DDS.button.default
                                             className="dds button primary small"
                                             onClick={() => {
-                                                // setStep(2);
-                                                Router.push("/setting/phone");
+                                                location.href = "/setting/phone";
                                             }}
                                         >
                                             {lang.t("setting.account.info.phone")}

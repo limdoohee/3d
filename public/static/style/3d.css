@@ -2,7 +2,7 @@
     position: absolute;
     top: 0px;
     left: 0;
-    z-index: -1;
+    z-index: 0;
 }
 
 .dropSpace {
@@ -123,6 +123,7 @@
     top: 62px;
     left: 5vw;
     transition: all 0.5s ease-in-out;
+    z-index: 1;
 }
 
 .userInfo .profileMod .dds.icons {

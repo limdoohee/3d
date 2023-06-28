@@ -98,7 +98,7 @@ const PhoneChange = observer((props) => {
             console.log("params", params);
             console.log("e", e);
             if (e.result == "ok") {
-                Router.push("/setting/account");
+                location.href = "/setting/account";
             }
             actionCheck = false;
             setactionLoading(false);

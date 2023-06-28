@@ -57,7 +57,7 @@ const Home = observer((props) => {
                     <dl>
                         <dd
                             onClick={() => {
-                                Router.push(`/setting/profile`);
+                                location.href = "/setting/profile";
                             }}
                         >
                             <div className="profile">
@@ -76,7 +76,7 @@ const Home = observer((props) => {
                         <dt>{lang.t("setting.alarm.title")}</dt>
                         <dd
                             onClick={() => {
-                                Router.push(`/setting/alarm`);
+                                location.href = "/setting/alarm";
                             }}
                         >
                             <h4>{lang.t("setting.alarm.setting.title")}</h4>
@@ -89,7 +89,7 @@ const Home = observer((props) => {
                         <dt>{lang.t("setting.account.title")}</dt>
                         <dd
                             onClick={() => {
-                                Router.push(`/setting/account`);
+                                location.href = "/setting/account";
                             }}
                         >
                             <h4>{lang.t("setting.account.info.title")}</h4>
@@ -99,7 +99,7 @@ const Home = observer((props) => {
                         </dd>
                         <dd
                             onClick={() => {
-                                Router.push(`/setting/lang`);
+                                location.href = "/setting/lang";
                             }}
                         >
                             <h4>{lang.t("setting.account.language.title")}</h4>
@@ -113,7 +113,7 @@ const Home = observer((props) => {
                         <dt>{lang.t("setting.info.title")}</dt>
                         <dd
                             onClick={() => {
-                                Router.push(`/setting/info`);
+                                location.href = "/setting/info";
                             }}
                         >
                             <h4>{lang.t("setting.info.info.title")}</h4>
@@ -125,7 +125,7 @@ const Home = observer((props) => {
                     <dl>
                         <dd
                             onClick={() => {
-                                Router.push(`/setting/logout`);
+                                location.href = "/setting/logout";
                             }}
                         >
                             <h4>{lang.t("setting.logout.title")}</h4>
