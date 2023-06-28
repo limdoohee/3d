@@ -213,7 +213,6 @@ const Home = observer((props) => {
             console.log("btnClick", btnClick);
             if ((event.target.className.includes("luckyBox") || event.target.parentNode.className.includes("luckyBox")) && !btnClick) {
                 gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
-                    btnClick = true;
                     console.log("click");
                     if (e.id === "invalid_request") {
                         common.messageApi.open({
@@ -291,7 +290,7 @@ const Home = observer((props) => {
             <DDS.button.default
                 className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}
                 onClick={() => {
-                    boxOpen && (location.href = "/userGallery?memberSeq=" + auth.loginResult.seq);
+                    boxOpen ? (location.href = "/userGallery?memberSeq=" + auth.loginResult.seq) : (btnClick = true);
                 }}
             >
                 {boxOpen ? lang.t("random.button.goGallery") : lang.t("random.button.open")}
