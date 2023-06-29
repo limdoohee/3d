@@ -98,6 +98,18 @@ const Home = {
         const router = useRouter();
         const { common, lang, chat, auth } = props.store;
 
+        const langSet = {
+            now: lang.t("chat.now"),
+            format: lang.t("chat.format"),
+            info1: lang.t("chat.info1"),
+            info2: lang.t("chat.info2"),
+            info3: lang.t("chat.info3"),
+            info4: lang.t("chat.info4"),
+            info5: lang.t("chat.info5"),
+            info6: lang.t("chat.info6"),
+            info7: lang.t("chat.info7"),
+        };
+
         //------------------------------------------------- Init Load
         const initLoad = ({ initCheck, callback }) => {
             chat.joinChat({ name: auth.loginResult.nickname, id: `dropkitchen_member_${auth.loginResult.seq}`, url: Router.query.url });
@@ -140,10 +152,10 @@ const Home = {
         const modalData = {
             open: open,
             setOpen: setOpen,
-            title: "채팅방을 나가시겠어요?",
-            context: "대화 내용은 저장되지 않아요",
+            title: langSet.info4,
+            context: langSet.info5,
             confirm: {
-                label: "나가기",
+                label: langSet.info6,
                 action: () => {
                     if (router.query.from) {
                         location.href = router.query.from;
@@ -153,7 +165,7 @@ const Home = {
                 },
             },
             cancel: {
-                label: "취소",
+                label: langSet.info7,
                 action: () => {},
             },
         };
@@ -175,7 +187,7 @@ const Home = {
                                             <span className="t">{chat.state.currentlyJoinedChannel.name}</span>
                                             <DDS.chips.default className={"secondary small"}>ARTIST</DDS.chips.default>
                                         </strong>
-                                        <small>현재 활동 중</small>
+                                        <small>{langSet.now}</small>
                                     </span>
                                 </div>
                                 <div className="operators">
