@@ -31,7 +31,7 @@ class Store {
         await Api.post(`/dks-api/v2/change_cell_no`, params, this.store.auth.loginResult.loginToken)
             .then((response) => response.json())
             .then((data) => {
-                callback && callback(data.data);
+                callback && callback(data.data ? data.data : data);
             });
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 휴대폰 번호 변경
@@ -41,7 +41,17 @@ class Store {
         await Api.post(`/dks-api/v2/change_push_agree`, params, this.store.auth.loginResult.loginToken)
             .then((response) => response.json())
             .then((data) => {
-                callback && callback(data);
+                callback && callback(data.data ? data.data : data);
+            });
+    }
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 수신 변경
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 수신 변경
+    async signout(params, callback) {
+        await Api.post(`/dks-api/v2/signout`, params, this.store.auth.loginResult.loginToken)
+            .then((response) => response.json())
+            .then((data) => {
+                callback && callback(data.data ? data.data : data);
             });
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 알림 수신 변경
