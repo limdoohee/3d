@@ -28,7 +28,7 @@ const Component = {
             gnb: [
                 // { icon: () => <DDS_Icons.crown />, link: "", name: "Rank" },
                 { icon: () => <DDS_Icons.myGalleryBlackOn />, link: `/userGallery/?memberSeq=${auth.loginResult.seq}`, name: "My Gallery" },
-                { icon: () => <DDS_Icons.drop />, link: "/drops", name: "Drop list" },
+                { icon: () => <DDS_Icons.drop />, link: "/drops", name: "Art Drop list" },
                 { icon: () => <DDS_Icons.bookFilled />, link: "/magazine", name: "Magazine" },
                 { icon: () => <DDS_Icons.gear />, link: "/setting", name: "Setting" },
                 // { icon: () => <DDS_Icons.envelopeOpenTest />, link: "", name: "Feedback" },
@@ -60,7 +60,12 @@ const Component = {
                             <DDS_Icons.house />
                         </DDS_Button.default>
                     </div>
-                    <div className="personal">
+                    <div
+                        className="personal"
+                        onClick={() => {
+                            location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
+                        }}
+                    >
                         <DDS_Profile.default badge={<DDS_Icons.badgeCrown className="cert" />} src={auth.loginResult.profileImage ? auth.loginResult.profileImage : ""} />
                         <strong>{auth.loginResult && auth.loginResult.nickname}</strong>
                     </div>
