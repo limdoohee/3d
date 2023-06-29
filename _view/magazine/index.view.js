@@ -86,7 +86,7 @@ const Home = observer((props) => {
         {
             key: "3",
             label: `PICK`,
-            value: "value",
+            value: "pick",
         },
         {
             key: "4",

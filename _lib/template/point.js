@@ -19,12 +19,15 @@ const Home = {
         const router = useRouter();
         const { store } = props;
         const { common, lang, auth, point } = props.store;
+        const [migrateFlag, setMigrateFlag] = useState(false);
+        const [open, setOpen] = useState(false);
 
         //------------------------------------------------- Init Load
         const initLoad = ({ callback }) => {
             const params = {};
             point.pointHistory(params, (e) => {
                 common.debug(e);
+                e.migrateFlag && setMigrateFlag(e.migrateFlag);
                 callback && callback(e);
             });
         };
@@ -70,28 +73,43 @@ const Home = {
             settabKey(e);
         };
 
+        const modalData = {
+            open: open,
+            setOpen: setOpen,
+            title: "성공적으로 연동되었어요!",
+            context: "연동된 포인트는 내역에서 확인 가능해요",
+            confirm: {
+                label: "확인",
+                action: () => {},
+                close: () => {
+                    setOpen(false);
+                    location.href = "/point";
+                },
+            },
+        };
+
         const migratePoint = () => {
             const params = {};
+            setOpen(true);
             point.migratePoint(params, (e) => {
                 common.debug(e);
-                initLoad({
-                    callback: (e) => {},
-                });
             });
+        };
+
+        const MigratePoint = () => {
+            return (
+                <div className="connect">
+                    <DDS.button.default className="dds button primary" onClick={migratePoint}>
+                        {lang.t("point.connection.title")}
+                    </DDS.button.default>
+                    <p>{lang.t("point.connection.desc")}</p>
+                </div>
+            );
         };
 
         return (
             <>
                 <div className="dk point">
-                    {/* <div className="title">
-                        <div>
-                            <DDS.button.default className="dds button none" icon={<DDS.icons.angleLeft />} onClick={onClose} />
-                        </div>
-                        <h4>{lang.t("point.title")}</h4>
-                        <div>
-                            <DDS.button.default className="dds button none">{lang.t("point.information")}</DDS.button.default>
-                        </div>
-                    </div> */}
                     <div className="my-point">
                         <p>{lang.t("point.myPoints")}</p>
                         <h3>
@@ -100,16 +118,10 @@ const Home = {
                             </small>
                             <strong>{common.numberFormat(auth.loginResult.pointAmount)}</strong>
                         </h3>
-                        {/* {point.data.pointHistory.migrateFlag && ( */}
-                        <div className="connect">
-                            <DDS.button.default className="dds button primary" onClick={migratePoint}>
-                                {lang.t("point.connection.title")}
-                            </DDS.button.default>
-                            <p>{lang.t("point.connection.desc")}</p>
-                        </div>
-                        {/* )} */}
+                        {migrateFlag && <MigratePoint />}
                     </div>
                     <DDS.tabs.default defaultActiveKey={tabKey === 0 ? "0" : tabKey} items={items} onChange={onChange} className="pointTabs" />
+                    <DDS.modal.center {...modalData} />
                 </div>
             </>
         );
