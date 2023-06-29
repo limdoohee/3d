@@ -1,5 +1,5 @@
 .page-setting.main {
-    min-height: 100vh;
+    min-height: calc(100vh - 50px);
     background-color: #f5f5f5;
 }
 .page-setting dl {
@@ -363,4 +363,44 @@
     font-family: Pretendard;
     line-height: 150%;
     letter-spacing: -0.32px;
+}
+
+.page-setting.main .company {
+    display: flex;
+    padding: 16px 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-setting.main .company h2 {
+    color: #969696;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 14px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
+.page-setting.main .company .dds.icons {
+    width: 16px;
+    height: 16px;
+}
+
+.page-setting.main .company .dds.icons path {
+    fill: #bdbdbd;
+}
+
+.page-setting.main .info {
+    padding: 0 20px;
+    color: #969696;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+}
+
+.page-setting.main .info span {
+    text-decoration: underline;
+    margin-left: 5px;
 }

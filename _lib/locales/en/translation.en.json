@@ -3,6 +3,9 @@
     "common": {
         "check": "Check"
     },
+    "gnb": {
+        "point": "My points"
+    },
     "description": {
         "part1": "test1",
         "part2": "test2"
@@ -102,6 +105,20 @@
         "tabs": {
             "information": "Information",
             "history": "History"
+        },
+        "connection": {
+            "title": "Sync Existing Points",
+            "desc": "All your points will carry over one-to-one."
+        },
+        "tab1": {
+            "title": "dropkitchen™ Points Guide",
+            "signup": "when you sign up",
+            "drop": "when you collect digital art",
+            "invite": { "title": "when a friend joins", "subText1": "2,000P for the first 20 friends", "subText2": "200P for 21 friends and up", "btn": "Invite Sent" },
+            "collect30": { "title": "when you collect 30 digital artworks", "subText1": "선착순 300명에게 100,000P 지급" },
+            "accumulated": { "title": "Points Accumulated", "subText1": "You can collect points by acquiring new art drops, participating in events, and more.", "subText2": "The amount of points varies by item." },
+            "period": { "title": "Use/Expiration Period", "subText1": "Points expire after one year from the date it was earned, unless otherwise notified." },
+            "expiration": { "title": "Expiration", "subText1": "Points will expire if your account is deleted or deactivated due to inactivity." }
         }
     },
     "alarm": {
@@ -112,7 +129,7 @@
     },
     "setting": {
         "title": "setting",
-        "profile": { "title": "Edit Profile", "bio": "Bio" },
+        "profile": { "title": "Edit Profile", "bio": "Bio", "descPlaceHolder": "Tell us a little about yourself." },
         "alarm": {
             "title": "Notifications",
             "setting": { "title": "Preferences" },
@@ -146,7 +163,21 @@
                 "desc13": "Come back anytime!"
             }
         },
-        "info": { "title": "More info", "info": { "title": "About" } },
+        "info": {
+            "title": "Info",
+            "info": { "title": "About" },
+            "company": {
+                "about": "About XXBLUE",
+                "name": { "title": "Name of company", "desc": "XXBLUE" },
+                "businessNum": { "title": "Business registration number", "desc": "755-86-01476" },
+                "ceo": { "title": "Name of representative", "desc": "Lee Jung Bong" },
+                "address": { "title": "Address", "desc": "317, Dosan-daero, Gangnam-gu, Seoul, Republic of Korea" },
+                "contact": { "title": "Contact", "desc": "+82 25451476" },
+                "email": { "title": "Email", "desc": "info@dropkitchen.xyz" },
+                "ecommerceNum": { "title": "Ecommerce registration number", "desc": "2019-서울강남-03088" },
+                "checkBusiness": "Check Business Info"
+            }
+        },
         "logout": { "title": "Log out" },
         "save": "Save",
         "confirm": "Confirm"
@@ -211,6 +242,7 @@
         "modal": {
             "title": "Invite a friend and you both get a gift. It's a win-win!",
             "context": "Your friend receives free digital art, and you will receive extra points after they sign up!",
+            "subContext": "2,000P for the first 20 friends, 200P for 21 friends and up",
             "confirm": "Invite your friends, get points.",
             "close": "Later"
         }

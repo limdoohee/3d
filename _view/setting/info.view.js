@@ -20,6 +20,17 @@ const Home = observer((props) => {
     const { store } = props;
     const { common, lang, auth, magazine } = store;
     const router = useRouter();
+    const [viewInfo, setViewInfo] = useState(false);
+
+    const compInfo = [
+        { title: lang.t("setting.info.company.name.title"), desc: lang.t("setting.info.company.name.desc") },
+        { title: lang.t("setting.info.company.businessNum.title"), desc: lang.t("setting.info.company.businessNum.desc") },
+        { title: lang.t("setting.info.company.ceo.title"), desc: lang.t("setting.info.company.ceo.desc") },
+        { title: lang.t("setting.info.company.address.title"), desc: lang.t("setting.info.company.address.desc") },
+        { title: lang.t("setting.info.company.contact.title"), desc: lang.t("setting.info.company.contact.desc") },
+        { title: lang.t("setting.info.company.email.title"), desc: lang.t("setting.info.company.email.desc") },
+        { title: lang.t("setting.info.company.ecommerceNum.title"), desc: lang.t("setting.info.company.ecommerceNum.desc") },
+    ];
 
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {};
@@ -51,9 +62,30 @@ const Home = observer((props) => {
     const [policyOpen, setpolicyOpen] = useState(false);
     const [policyType, setpolicyType] = useState("terms");
 
+    const Info = () => {
+        return (
+            <ul className="info">
+                {compInfo.map((e, i) => (
+                    <li key={i}>
+                        {e.title} : {e.desc}
+                        {i === 6 && (
+                            <span
+                                onClick={() => {
+                                    router.push("https://www.ftc.go.kr/bizCommPop.do?wrkr_no=7558601476&apv_perm_no=");
+                                }}
+                            >
+                                {lang.t("setting.info.company.checkBusiness")}
+                            </span>
+                        )}
+                    </li>
+                ))}
+            </ul>
+        );
+    };
+
     return (
         <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
-            <DK_template_header.default store={store} title={lang.t("setting.title")} right={headerRight} />
+            <DK_template_header.default store={store} title={lang.t("setting.info.title")} right={headerRight} />
             <DK_template_GNB.default store={store} />
             {/* Content */}
             <DDS.layout.content>
@@ -96,6 +128,23 @@ const Home = observer((props) => {
                             )}
                         </dd>
                     </dl>
+                    <div className="company">
+                        <h2>{lang.t("setting.info.company.about")}</h2>
+                        {viewInfo ? (
+                            <DDS.icons.angleUp
+                                onClick={() => {
+                                    setViewInfo(false);
+                                }}
+                            />
+                        ) : (
+                            <DDS.icons.angleDown
+                                onClick={() => {
+                                    setViewInfo(true);
+                                }}
+                            />
+                        )}
+                    </div>
+                    {viewInfo && <Info />}
                 </div>
                 <DK_Template_Policy open={policyOpen} setopen={setpolicyOpen} type={policyType} store={store} />
             </DDS.layout.content>

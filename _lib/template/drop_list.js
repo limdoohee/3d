@@ -23,7 +23,7 @@ const Home = {
             go: lang.t(`dropList.go`),
             collected: lang.t(`dropList.collected`),
             collect: lang.t(`dropList.collect`),
-            invite: { title: lang.t(`dropList.invite.desc`), desc: lang.t(`dropList.invite.desc`), give: lang.t(`dropList.invite.give`) },
+            invite: { title: lang.t(`dropList.invite.title`), desc: lang.t(`dropList.invite.desc`), give: lang.t(`dropList.invite.give`) },
             empty: lang.t(`dropList.empty`),
         };
 
