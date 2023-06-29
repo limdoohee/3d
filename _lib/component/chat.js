@@ -111,6 +111,8 @@ const home = {
             info5: lang.t("chat.info5"),
             info6: lang.t("chat.info6"),
             info7: lang.t("chat.info7"),
+            info8: lang.t("chat.info8"),
+            info9: lang.t("chat.info9"),
         };
 
         useEffect(() => {
@@ -128,9 +130,11 @@ const home = {
                 case "STAGING":
                     var s = "plum";
                     break;
-                default:
+                case "PRODUCTION":
+                    var s = "www";
                     break;
             }
+
             location.href = `/userGallery/?memberSeq=${sender.userId.replace(`dropkitchen_${s}_member_`, "")}`;
         };
 
@@ -169,6 +173,25 @@ const home = {
             setOpen: setOpen,
             img: imageUrl,
         };
+
+        const [openGallery, setopenGallery] = useState(false);
+        const modalGallery = {
+            open: openGallery,
+            setOpen: setopenGallery,
+            title: langSet.info8,
+            context: langSet.info5,
+            confirm: {
+                label: langSet.info9,
+                action: () => {
+                    clickProfile(sender);
+                },
+            },
+            cancel: {
+                label: langSet.info7,
+                action: () => {},
+            },
+        };
+        const [sender, setsender] = useState();
 
         return (
             <div className="message-wrap" id="message-wrap">
@@ -224,9 +247,10 @@ const home = {
                                     <li className={item.sender.userId == myId ? "my" : null}>
                                         {item.sender.userId !== myId && (
                                             <DDS_Profile.default
-                                                src={item.sender.plainProfileUrl}
+                                                src={item.sender.plainProfileUrl ? item.sender.plainProfileUrl : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"}
                                                 onClick={() => {
-                                                    clickProfile(item.sender);
+                                                    setsender(item.sender);
+                                                    setopenGallery(true);
                                                 }}
                                             />
                                         )}
@@ -280,6 +304,7 @@ const home = {
                     })}
                 </ul>
                 <DDS.modal.image {...modalData} />
+                <DDS.modal.center {...modalGallery} />
             </div>
         );
     },
