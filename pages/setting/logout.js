@@ -5,6 +5,8 @@ const Home = () => {
     useEffect(() => {
         const logout = async () => {
             await cookie.remove("loginToken", { path: "/" });
+            await sessionStorage.clear();
+            await localStorage.clear();
             location.href = "/";
         };
         logout();

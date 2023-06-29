@@ -3,6 +3,7 @@ import Link from "next/link";
 import Router, { useRouter } from "next/router";
 import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
 import { observer } from "mobx-react-lite";
+import cookie from "react-cookies";
 //------------------------------------------------------------------------------- Antd
 import { Drawer, message } from "antd";
 //------------------------------------------------------------------------------- Antd
@@ -69,8 +70,9 @@ const Home = observer((props) => {
         cancel: {
             label: lang.t("setting.account.delete.desc10"),
             action: () => {
-                member.signout({}, (e) => {
+                member.signout({}, async (e) => {
                     if (e.result == "ok") {
+                        await cookie.remove("loginToken", { path: "/" });
                         location.href = "/setting/account_delete_complete";
                     } else {
                         common.messageApi.open({
@@ -107,7 +109,7 @@ const Home = observer((props) => {
                                     <DDS.icons.drop />
                                     {lang.t("setting.account.delete.desc3")}
                                 </div>
-                                <strong>10개</strong>
+                                <strong>{common.numberFormat(auth.loginResult.dropAmount)}개</strong>
                             </li>
                         </ul>
                         <ol>
