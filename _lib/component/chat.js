@@ -43,19 +43,25 @@ const home = {
                 const fileMessageParams = {};
                 fileMessageParams.file = e.currentTarget.files[0];
 
-                console.log(e.currentTarget.files[0]);
-
-                chat.state.currentlyJoinedChannel
-                    .sendFileMessage(fileMessageParams)
-                    .onSucceeded((message) => {
-                        const updatedMessages = [...chat.state.messages, message];
-                        chat.updateState({ ...chat.state, messages: updatedMessages, messageInputValue: "", file: null, uploadLoading: false });
-                        home.messageScrollDown();
-                    })
-                    .onFailed((error) => {
-                        console.log(error);
-                        console.log("failed");
-                    });
+                console.log(e.currentTarget.files[0].type);
+                var checkImage = e.currentTarget.files[0].type;
+                checkImage = checkImage.indexOf("image");
+                console.log(checkImage);
+                if (checkImage === 0) {
+                    chat.state.currentlyJoinedChannel
+                        .sendFileMessage(fileMessageParams)
+                        .onSucceeded((message) => {
+                            const updatedMessages = [...chat.state.messages, message];
+                            chat.updateState({ ...chat.state, messages: updatedMessages, messageInputValue: "", file: null, uploadLoading: false });
+                            home.messageScrollDown();
+                        })
+                        .onFailed((error) => {
+                            console.log(error);
+                            console.log("failed");
+                        });
+                } else {
+                    alert("이미지만 업로드 가능합니다.");
+                }
             }
         };
 
