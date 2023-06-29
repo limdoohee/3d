@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useLayoutEffect } from "react";
 import Router, { useRouter } from "next/router";
 import { observer } from "mobx-react-lite";
 
@@ -16,6 +16,7 @@ const Home = observer((props) => {
     const { common, lang, gallery, auth } = store;
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
+    const [headerRight, setHeaderRight] = useState([]);
 
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {
@@ -48,52 +49,80 @@ const Home = observer((props) => {
     useEffect(() => {
         if (router.isReady && router.pathname == "/userGallery") {
             initLoad({
-                callback: (e) => {},
+                callback: (e) => {
+                    gallery.data.ownFlag
+                        ? setHeaderRight([
+                              () => (
+                                  <DDS.button.default
+                                      className="dds button none"
+                                      icon={<DDS.icons.shareNode />}
+                                      onClick={() => {
+                                          window.location.href = "native://share?contents=" + encodeURI(gallery.data.galleryLink);
+                                      }}
+                                  />
+                              ),
+                              () => (
+                                  <DDS.button.default
+                                      className="dds button none"
+                                      icon={<DDS.icons.bell />}
+                                      onClick={() => {
+                                          location.href = "/alarm";
+                                      }}
+                                  />
+                              ),
+                              () => (
+                                  <DDS.button.default
+                                      className="dds button none"
+                                      icon={<DDS.icons.bars />}
+                                      onClick={() => {
+                                          common.uiChange("gnbOpen", true);
+                                      }}
+                                  />
+                              ),
+                          ])
+                        : setHeaderRight([
+                              () => (
+                                  <DDS.button.default
+                                      className={`dds button none gallery ${gallery.data.unconfirmedLuckyBox ? "badge" : ""}`}
+                                      icon={<DDS.icons.myGalleryBlackOn />}
+                                      onClick={() => {
+                                          location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
+                                      }}
+                                  />
+                              ),
+                              () => (
+                                  <DDS.button.default
+                                      className="dds button none"
+                                      icon={<DDS.icons.shareNode />}
+                                      onClick={() => {
+                                          window.location.href = "native://share?contents=" + encodeURI(gallery.data.galleryLink);
+                                      }}
+                                  />
+                              ),
+                              () => (
+                                  <DDS.button.default
+                                      className="dds button none"
+                                      icon={<DDS.icons.bell />}
+                                      onClick={() => {
+                                          location.href = "/alarm";
+                                      }}
+                                  />
+                              ),
+                              () => (
+                                  <DDS.button.default
+                                      className="dds button none"
+                                      icon={<DDS.icons.bars />}
+                                      onClick={() => {
+                                          common.uiChange("gnbOpen", true);
+                                      }}
+                                  />
+                              ),
+                          ]);
+                },
             });
         }
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
-
-    const headerRight = [
-        () =>
-            !gallery.data.ownFlag && (
-                <DDS.button.default
-                    className={`dds button none gallery ${gallery.data.unconfirmedLuckyBox ? "badge" : ""}`}
-                    icon={<DDS.icons.myGalleryBlackOn />}
-                    onClick={() => {
-                        location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
-                    }}
-                />
-                // <div></div>
-            ),
-        () => (
-            <DDS.button.default
-                className="dds button none"
-                icon={<DDS.icons.shareNode />}
-                onClick={() => {
-                    window.location.href = "native://share?contents=" + encodeURI(gallery.data.galleryLink);
-                }}
-            />
-        ),
-        () => (
-            <DDS.button.default
-                className="dds button none"
-                icon={<DDS.icons.bell />}
-                onClick={() => {
-                    location.href = "/alarm";
-                }}
-            />
-        ),
-        () => (
-            <DDS.button.default
-                className="dds button none"
-                icon={<DDS.icons.bars />}
-                onClick={() => {
-                    common.uiChange("gnbOpen", true);
-                }}
-            />
-        ),
-    ];
 
     const modalData = {
         open: open,
@@ -123,89 +152,90 @@ const Home = observer((props) => {
                 <DK_template_header.default store={store} className="top" right={headerRight} />
                 <DK_template_GNB.default store={store} />
                 <DDS.layout.content>
-                    <div className="userInfo">
-                        <div className={`profile ${ref.current?.offsetHeight < 69 ? "center" : ""}`}>
-                            <div
-                                onClick={() => {
-                                    {
-                                        gallery.data.ownFlag && (location.href = "/setting/profile/");
-                                    }
-                                }}
-                            >
-                                {gallery.data.ownFlag ? (
-                                    <Badge count={<DDS.icons.pen />} className="profileMod">
+                    {gallery.data.nickname && (
+                        <div className="userInfo">
+                            <div className={`profile ${ref.current?.clientHeight < 69 ? "center" : ""}`}>
+                                <div
+                                    onClick={() => {
+                                        {
+                                            gallery.data.ownFlag && (location.href = "/setting/profile/");
+                                        }
+                                    }}
+                                >
+                                    {gallery.data.ownFlag ? (
+                                        <Badge count={<DDS.icons.pen />} className="profileMod">
+                                            <DDS.profile.default
+                                                size={64}
+                                                badge={<DDS.icons.badgeCrown className="cert" />}
+                                                src={gallery.data.profileImage ? gallery.data.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"}
+                                            />
+                                        </Badge>
+                                    ) : (
                                         <DDS.profile.default
                                             size={64}
                                             badge={<DDS.icons.badgeCrown className="cert" />}
-                                            src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"}
+                                            src={gallery.data.profileImage ? gallery.data.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"}
                                         />
-                                    </Badge>
-                                ) : (
-                                    <DDS.profile.default
-                                        size={64}
-                                        badge={<DDS.icons.badgeCrown className="cert" />}
-                                        src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"}
-                                    />
-                                )}
-                            </div>
-                            <div ref={ref}>
-                                <div className="nickname">
-                                    <p>{gallery.data.nickname}</p>
-                                    {gallery.data.artistFlag && <DDS.chips.default className="third">ARTIST</DDS.chips.default>}
+                                    )}
                                 </div>
-                                <h4>{gallery.data.introduction}</h4>
-
-                                {gallery.data.ownFlag && (
-                                    <div className="point">
-                                        <DDS.icons.point
-                                            onClick={() => {
-                                                common.uiChange("pointOpen", true);
-                                            }}
-                                        />
-                                        {common.numberFormat(gallery.data.pointBalance)}
-                                        <DDS.icons.userPlus className="inviteCount" />
-                                        {gallery.data.inviteCnt}
+                                <div ref={ref}>
+                                    <div className="nickname">
+                                        <p>{gallery.data.nickname}</p>
+                                        {gallery.data.artistFlag && <DDS.chips.default className="third">ARTIST</DDS.chips.default>}
                                     </div>
-                                )}
+                                    <h4>{gallery.data.introduction}</h4>
+                                    {gallery.data.ownFlag && (
+                                        <div className="point">
+                                            <DDS.icons.point
+                                                onClick={() => {
+                                                    common.uiChange("pointOpen", true);
+                                                }}
+                                            />
+                                            {common.numberFormat(gallery.data.pointBalance)}
+                                            <DDS.icons.userPlus className="inviteCount" />
+                                            {gallery.data.inviteCnt}
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            {gallery.data.ownFlag && (
+                                <div className="ddsBtnWrapper">
+                                    <DDS.button.default
+                                        className="dds button primary"
+                                        icon={<DDS.icons.paperPlane />}
+                                        onClick={() => {
+                                            setOpen(true);
+                                        }}
+                                    >
+                                        Invite
+                                    </DDS.button.default>
+                                    <DDS.button.default
+                                        className="dds button secondary"
+                                        icon={<DDS.icons.cube />}
+                                        onClick={(e) => {
+                                            location.href = "/random";
+                                        }}
+                                    >
+                                        Lucky Box
+                                    </DDS.button.default>
+                                </div>
+                            )}
+                            <div className="collection" onClick={toDropList}>
+                                <ul className="wrapper">
+                                    <li className="title">
+                                        <DDS.icons.drop />
+                                        Collection
+                                    </li>
+                                    <li className="count">
+                                        <strong>{gallery.data.myDropCnt}</strong>
+                                        <span className="slash">/</span>
+                                        {gallery.data.totalDropCnt}
+                                    </li>
+                                </ul>
+                                <Progress percent={(gallery.data.myDropCnt / gallery.data.totalDropCnt) * 100} showInfo={false} strokeColor={"#FD6E24"} className="asdf" />
                             </div>
                         </div>
-                        {gallery.data.ownFlag && (
-                            <div className="ddsBtnWrapper">
-                                <DDS.button.default
-                                    className="dds button primary"
-                                    icon={<DDS.icons.paperPlane />}
-                                    onClick={() => {
-                                        setOpen(true);
-                                    }}
-                                >
-                                    Invite
-                                </DDS.button.default>
-                                <DDS.button.default
-                                    className="dds button secondary"
-                                    icon={<DDS.icons.cube />}
-                                    onClick={(e) => {
-                                        location.href = "/random";
-                                    }}
-                                >
-                                    Lucky Box
-                                </DDS.button.default>
-                            </div>
-                        )}
-                        <div className="collection" onClick={toDropList}>
-                            <ul className="wrapper">
-                                <li className="title">
-                                    <DDS.icons.drop />
-                                    Collection
-                                </li>
-                                <li className="count">
-                                    <strong>{gallery.data.myDropCnt}</strong>
-                                    <span className="slash">/</span>
-                                    {gallery.data.totalDropCnt}
-                                </li>
-                            </ul>
-                            <Progress percent={(gallery.data.myDropCnt / gallery.data.totalDropCnt) * 100} showInfo={false} strokeColor={"#FD6E24"} className="asdf" />
-                        </div>
-                    </div>
+                    )}
                     {gallery.data.nickname && <Gallery store={props.store} />}
                     <DDS.modal.bottom {...modalData} />
                 </DDS.layout.content>
