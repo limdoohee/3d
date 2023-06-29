@@ -127,7 +127,24 @@
         "account": {
             "title": "Your Account",
             "info": { "title": "Account information", "email": "Email", "phone": "Phone number" },
-            "language": { "title": "Language" }
+            "language": { "title": "Language" },
+            "delete": {
+                "title": "Delete Account",
+                "ask": "회원 정보를 삭제하시겠어요?",
+                "desc1": "Wait! Check this before you go.",
+                "desc2": "You'll lose",
+                "desc3": "And artworks",
+                "desc4": "You'll only be able to rejoin using your email account details after 30 days.",
+                "desc5": "If you leave and rejoin, your existing data cannot be restored.",
+                "desc6": "I understand.",
+                "desc7": "Are you sure?",
+                "desc8": "Once you leave, you can't rejoin for at least 30 days using the same email address.",
+                "desc9": "Never Mind!",
+                "desc10": "Yes, Delete My Account",
+                "desc11": "See you next time!",
+                "desc12": "Thanks for using dropkitchen™.",
+                "desc13": "Come back anytime!"
+            }
         },
         "info": { "title": "More info", "info": { "title": "About" } },
         "logout": { "title": "Log out" },
