@@ -230,5 +230,16 @@
         "collect": "Collect",
         "invite": { "title": "Invite a friend and you both get a gift. It's a win-win!", "desc": "Your friend receives free digital art, and you receive extra points when they sign up.", "give": "Invite your friends, get points." },
         "empty": "아트 드롭을 준비중입니다."
+    },
+    "chat": {
+        "now": "Online",
+        "format": "YYYY. MM. DD.",
+        "info1": "Welcome to live chat!",
+        "info2": "If the operating policy is violated, there may be restrictions on using the chat room.",
+        "info3": "Please create a chat room that respects and considers others.",
+        "info4": "Leave the chat room?",
+        "info5": "Conversations are not saved",
+        "info6": "Exit",
+        "info7": "Cancel"
     }
 }

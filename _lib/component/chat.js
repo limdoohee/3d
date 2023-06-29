@@ -42,6 +42,9 @@ const home = {
                 chat.updateState({ ...chat.state, uploadLoading: true });
                 const fileMessageParams = {};
                 fileMessageParams.file = e.currentTarget.files[0];
+
+                console.log(e.currentTarget.files[0]);
+
                 chat.state.currentlyJoinedChannel
                     .sendFileMessage(fileMessageParams)
                     .onSucceeded((message) => {
@@ -62,6 +65,7 @@ const home = {
                     callback: () => {
                         console.log("sendMessage");
                         home.messageScrollDown();
+                        chat.updateState({ ...chat.state, messageInputValue: "" });
                     },
                 });
             }
@@ -72,7 +76,7 @@ const home = {
             <div className="message-input">
                 <div className="upload">
                     <DDS_Icons.plus className="dds icons" />
-                    <input id="upload" type="file" onChange={onFileInputChange} onClick={() => {}} />
+                    <input id="upload" type="file" onChange={onFileInputChange} onClick={() => {}} accept="image/*" />
                 </div>
                 <DDS_Input.default
                     className="dds input secondary rounded"
@@ -96,6 +100,18 @@ const home = {
     MessagePrint: ({ store, messages, myId, loadMessagesPrev }) => {
         const { common, chat, lang } = store;
         const [more, setmore] = useState(true);
+
+        const langSet = {
+            now: lang.t("chat.now"),
+            format: lang.t("chat.format"),
+            info1: lang.t("chat.info1"),
+            info2: lang.t("chat.info2"),
+            info3: lang.t("chat.info3"),
+            info4: lang.t("chat.info4"),
+            info5: lang.t("chat.info5"),
+            info6: lang.t("chat.info6"),
+            info7: lang.t("chat.info7"),
+        };
 
         useEffect(() => {
             home.messageScrollDown();
@@ -182,13 +198,13 @@ const home = {
                             이전 대화 보기
                         </DDS_Button.default>
                     )} */}
-                    <p>{moment(messages[0] && messages[0].createdAt).format("YYYY년 MM월 DD일")}</p>
+                    <p>{moment(messages[0] && messages[0].createdAt).format(langSet.format)}</p>
                     <h6>
-                        실시간 채팅에 오신것을 환영해요!
+                        {langSet.info1}
                         <br />
-                        운영정책을 위반할 시 채팅방 이용에 제한이 있을 수 있어요.
+                        {langSet.info2}
                         <br />
-                        상대방을 존중하고 배려하는 대화방을 만들어주세요.
+                        {langSet.info3}
                     </h6>
                 </div>
                 <ul className="messages">
