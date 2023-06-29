@@ -49,7 +49,7 @@ const Home = observer((props) => {
                             }}
                         >
                             <div className="profile">
-                                <DDS.profile.default src={auth.loginResult.profileImage} />
+                                <DDS.profile.default src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"} />
                                 <div className="name">
                                     <h4>{auth.loginResult.nickname}</h4>
                                     <p>{lang.t("setting.profile.title")}</p>
