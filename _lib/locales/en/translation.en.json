@@ -168,6 +168,10 @@
         "info": {
             "title": "Info",
             "info": { "title": "About" },
+            "termsOfUse": "Terms of Use",
+            "privacyPolicy": "Privacy Policy",
+            "version": "Version",
+            "update": "Update",
             "company": {
                 "about": "About XXBLUE",
                 "name": { "title": "Name of company", "desc": "XXBLUE" },
@@ -201,7 +205,7 @@
             "title": "Buy a Lucky Box",
             "boxName": "Lucky Box",
             "point": "Total",
-            "payment": "Spend",
+            "payment": "Use",
             "helper": "포인트가 부족합니다.",
             "confirm": "Buy Now",
             "close": "Close"

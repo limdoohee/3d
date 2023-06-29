@@ -98,7 +98,7 @@ const Home = observer((props) => {
                                 setpolicyType("terms");
                             }}
                         >
-                            <h4>이용약관</h4>
+                            <h4>{lang.t("setting.info.termsOfUse")}</h4>
                             <span>
                                 <DDS.button.default className="dds button none" icon={<DDS.icons.angleRight />} />
                             </span>
@@ -110,7 +110,7 @@ const Home = observer((props) => {
                                 setpolicyType("privacy");
                             }}
                         >
-                            <h4>개인정보처리방침</h4>
+                            <h4>{lang.t("setting.info.privacyPolicy")}</h4>
                             <span>
                                 <DDS.button.default className="dds button none" icon={<DDS.icons.angleRight />} />
                             </span>
@@ -119,11 +119,14 @@ const Home = observer((props) => {
                     <dl>
                         <dd className="none">
                             <div className="alarm-info">
-                                <h4>앱 버전 V{auth.loginResult.appVersion}</h4>
+                                <h4>
+                                    {lang.t("setting.info.version")}
+                                    {auth.loginResult.appVersion}
+                                </h4>
                             </div>
                             {auth.loginResult.appVersion !== auth.loginResult.latestAppVersion && (
                                 <span>
-                                    <DDS.button.default className="dds button primary">업데이트</DDS.button.default>
+                                    <DDS.button.default className="dds button primary">{lang.t("setting.info.update")}</DDS.button.default>
                                 </span>
                             )}
                         </dd>
