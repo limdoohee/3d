@@ -76,10 +76,10 @@ const Home = {
         const modalData = {
             open: open,
             setOpen: setOpen,
-            title: "성공적으로 연동되었어요!",
-            context: "연동된 포인트는 내역에서 확인 가능해요",
+            title: lang.t("point.modal.title"),
+            context: lang.t("point.modal.desc"),
             confirm: {
-                label: "확인",
+                label: lang.t("point.modal.cta"),
                 action: () => {},
                 close: () => {
                     setOpen(false);
@@ -258,7 +258,7 @@ const PointList = observer((props) => {
                         );
                     })
                 ) : (
-                    <li>포인트 내역이 없습니다.</li>
+                    <li>{lang.t("point.empty")}</li>
                 )}
             </ul>
         </>
