@@ -36,18 +36,6 @@ const Home = observer((props) => {
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
 
-    const headerRight = [
-        // () => (
-        //     <DDS.button.default
-        //         className="dds button none"
-        //         icon={<DDS.icons.bars />}
-        //         onClick={() => {
-        //             common.uiChange("gnbOpen", true);
-        //         }}
-        //     />
-        // ),
-    ];
-
     const [inputNickname, setinputNickname] = useState({ value: auth.loginResult.nickname, result: false });
     const [introduction, setintroduction] = useState({ value: auth.loginResult.introduction, result: false });
     const [imageSeq, setimageSeq] = useState();
@@ -111,7 +99,7 @@ const Home = observer((props) => {
     return (
         <>
             <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
-                <DK_template_header.default store={store} title={lang.t("setting.profile.title")} right={headerRight} />
+                <DK_template_header.default store={store} title={lang.t("setting.profile.title")} />
                 <DK_template_GNB.default store={store} />
                 {/* Content */}
                 <DDS.layout.content>
@@ -158,26 +146,54 @@ const IntroductionInput = (props) => {
 
     const onChange = (e) => {
         var v = e.target.value;
-        setvalue((prevstate) => ({ ...prevstate, value: v }));
+        var t = checkByte(v);
+
+        if (t <= 50) {
+            settotalByte(t);
+            setvalue((prevstate) => ({ ...prevstate, value: v }));
+        } else {
+            settotalByte(50);
+        }
     };
 
     const inputSetting = {
         className: "dds input primary",
-        placeholder: "소개글을 입력해주세요",
-        onKeyUp: onChange,
+        placeholder: lang.t("setting.profile.descPlaceHolder"),
+        onChange: onChange,
         // onKeyDown: onChange,
         defaultValue: value.value,
         rows: 4,
+        value: value.value,
         // maxLength: 6,
     };
 
+    const checkByte = (v) => {
+        var t = 0;
+        if (v) {
+            for (var i = 0; i < v.length; i++) {
+                var currentByte = v.charCodeAt(i);
+                if (currentByte > 128) {
+                    t += 2;
+                } else {
+                    t++;
+                }
+            }
+        }
+        return t;
+    };
+
+    useEffect(() => {
+        settotalByte(checkByte(value.value));
+    }, []);
+
     const [helpText, sethelpText] = useState("");
+    const [totalByte, settotalByte] = useState(0);
 
     return (
         <>
             <h5>
                 <strong>{lang.t("setting.profile.bio")}</strong>
-                <span>{value.value ? value.value.length : 0}/50</span>
+                <span>{totalByte}/50</span>
             </h5>
             <DDS.input.textarea {...inputSetting} />
             <p>{helpText}</p>
