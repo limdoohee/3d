@@ -47,6 +47,8 @@ const Home = observer((props) => {
         },
     };
 
+    const [inviteValue, setinviteValue] = useState({ type: null, code: null });
+
     //------------------------------------------------- Init Load
     const initLoad = ({ callback }) => {
         callback && callback();
@@ -68,6 +70,13 @@ const Home = observer((props) => {
                 },
                 getAuth(app),
             );
+
+            const cookieInviteType = cookie.load("invite_type", { path: "/" });
+            const cookieInviteCode = cookie.load("invite_code", { path: "/" });
+
+            setinviteValue({ type: cookieInviteType !== null && cookieInviteType !== undefined ? cookieInviteType : null, code: cookieInviteCode !== null && cookieInviteCode !== undefined ? cookieInviteCode : null });
+
+            console.log(cookie.load("invite_type", { path: "/" }), cookie.load("invite_code", { path: "/" }));
         }
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
@@ -97,9 +106,11 @@ const Home = observer((props) => {
             adsAgree: sessionStorage.getItem("signupMarketing"),
             terms1Agree: "Y",
             terms2Agree: "Y",
-            type: sessionStorage.getItem("type") && sessionStorage.getItem("type"),
-            code: sessionStorage.getItem("code") && sessionStorage.getItem("code"),
+            type: inviteValue.type && sessionStorage.getItem("type"),
+            code: inviteValue.code && inviteValue.code,
         };
+        inviteValue.type && (params.type = inviteValue.type);
+        inviteValue.code && (params.code = inviteValue.code);
         console.log(params);
         await auth.phoneVerify(params, async (e) => {
             common.debug(e);
