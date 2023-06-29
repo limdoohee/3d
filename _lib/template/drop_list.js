@@ -24,6 +24,7 @@ const Home = {
             collected: lang.t(`dropList.collected`),
             collect: lang.t(`dropList.collect`),
             invite: { title: lang.t(`dropList.invite.desc`), desc: lang.t(`dropList.invite.desc`), give: lang.t(`dropList.invite.give`) },
+            empty: lang.t(`dropList.empty`),
         };
 
         //------------------------------------------------- Init Load
@@ -110,67 +111,66 @@ const Home = {
                             <DDS.progress.default percent={(100 / drop.data.dropList.totalDropCnt) * drop.data.dropList.myDropCnt} showInfo={false} />
                         </div>
                     </div>
-                    <ul className="list">
-                        {drop.data.dropList.dropList.map((item, key) => {
-                            return (
-                                <li key={key}>
-                                    <div className="left">
+                    <ul className={`list ${drop.data.dropList.totalDropCnt === 0 ? "empty" : ""}`}>
+                        {drop.data.dropList.totalDropCnt === 0 ? (
+                            <li>{dropListLangSet.empty}</li>
+                        ) : (
+                            drop.data.dropList.dropList.map((item, key) => {
+                                return (
+                                    <li key={key}>
                                         <div
-                                            className="image"
+                                            className="left"
                                             onClick={() => {
                                                 window.location.href = "native://drop_detail?dropSeq=" + item.dropSeq;
                                             }}
                                         >
-                                            <img src={item.thumbnailUrl} />
-                                            {item.status == "processing" && <span className="label now">NOW</span>}
+                                            <div className="image">
+                                                <img src={item.dropOwnFlag ? item.thumbnailUrl : "https://asset.dropkitchen.xyz/contents/202306_dev/20230629112650847_dk.webp"} alt={item.artName} />
+                                                {item.status == "processing" && <span className="label now">NOW</span>}
+                                            </div>
+                                            <div className="name">
+                                                <h4>Art Drop #{item.dropSeq}</h4>
+                                                {((item.status === "processing" && item.dropOwnFlag) || item.status === "closed") && <p>{item.artName}</p>}
+                                            </div>
                                         </div>
-                                        <div
-                                            className="name"
-                                            onClick={() => {
-                                                window.location.href = "native://drop_detail?dropSeq=" + item.dropSeq;
-                                            }}
-                                        >
-                                            <h4>{item.dropRound}</h4>
-                                            <p>{item.artName}</p>
-                                        </div>
-                                    </div>
-                                    <div className="right">
-                                        {item.dropOwnFlag ? (
-                                            <>
-                                                <DDS.chips.default className={"primary"}>{dropListLangSet.collected}</DDS.chips.default>
-                                                <DDS.icons.envelopeOpenHeart
-                                                    onClick={() => {
-                                                        setshareModal(true);
-                                                    }}
-                                                />
-                                            </>
-                                        ) : (
-                                            <>
-                                                {item.status == "processing" ? (
-                                                    <DDS.button.default
-                                                        className="dds button small go"
+                                        <div className="right">
+                                            {item.dropOwnFlag ? (
+                                                <>
+                                                    <DDS.chips.default className={"primary"}>{dropListLangSet.collected}</DDS.chips.default>
+                                                    <DDS.icons.paperPlanePlus
                                                         onClick={() => {
-                                                            window.location.href = "/main";
+                                                            setshareModal(true);
                                                         }}
-                                                    >
-                                                        {dropListLangSet.go}
-                                                    </DDS.button.default>
-                                                ) : (
-                                                    <>
-                                                        <DDS.chips.default className={"secondary"}>{dropListLangSet.collect}</DDS.chips.default>
-                                                        <DDS.icons.cubePlus
+                                                    />
+                                                </>
+                                            ) : (
+                                                <>
+                                                    {item.status == "processing" ? (
+                                                        <DDS.button.default
+                                                            className="dds button small go"
                                                             onClick={() => {
-                                                                window.location.href = "/random";
+                                                                window.location.href = "/main";
                                                             }}
-                                                        />
-                                                    </>
-                                                )}
-                                            </>
-                                        )}
-                                    </div>
-                                </li>
-                            );
-                        })}
+                                                        >
+                                                            {dropListLangSet.go}
+                                                        </DDS.button.default>
+                                                    ) : (
+                                                        <>
+                                                            <DDS.chips.default className={"secondary"}>{dropListLangSet.collect}</DDS.chips.default>
+                                                            <DDS.icons.cubePlus
+                                                                onClick={() => {
+                                                                    window.location.href = "/random";
+                                                                }}
+                                                            />
+                                                        </>
+                                                    )}
+                                                </>
+                                            )}
+                                        </div>
+                                    </li>
+                                );
+                            })
+                        )}
                     </ul>
                     {/* <div className="bottom">
                         <DDS.button.default

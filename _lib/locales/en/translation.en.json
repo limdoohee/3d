@@ -194,7 +194,7 @@
         "modal": {
             "title": "Invite a friend and you both get a gift. It's a win-win!",
             "context": "Your friend receives free digital art, and you will receive extra points after they sign up!",
-            "confirm": "nvite your friends, get points.",
+            "confirm": "Invite your friends, get points.",
             "close": "Later"
         }
     },
@@ -211,6 +211,7 @@
         "go": "GO!",
         "collected": "Collected",
         "collect": "Collect",
-        "invite": { "title": "Invite a friend and you both get a gift. It's a win-win!", "desc": "Your friend receives free digital art, and you receive extra points when they sign up.", "give": "Invite your friends, get points." }
+        "invite": { "title": "Invite a friend and you both get a gift. It's a win-win!", "desc": "Your friend receives free digital art, and you receive extra points when they sign up.", "give": "Invite your friends, get points." },
+        "empty": "아트 드롭을 준비중입니다."
     }
 }
