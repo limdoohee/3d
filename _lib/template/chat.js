@@ -161,6 +161,7 @@ const Home = {
                         location.href = router.query.from;
                     } else {
                         history.back();
+                        chat.disconnect();
                     }
                 },
             },
@@ -169,6 +170,11 @@ const Home = {
                 action: () => {},
             },
         };
+
+        useEffect(() => {
+            console.log(chat.state.currentlyJoinedChannelOperators.length);
+            common.debug(chat.state.currentlyJoinedChannelOperators);
+        }, [chat.state.currentlyJoinedChannelOperators]);
 
         return (
             <>
@@ -192,7 +198,7 @@ const Home = {
                                 </div>
                                 <div className="operators">
                                     <DDS_Icons.user className="dds icons small" />
-                                    {chat.state.currentlyJoinedChannelOperators.length}
+                                    {chat.state.participantCount}
                                 </div>
                             </div>
                             {/* <h1>{chat.state.currentlyJoinedChannel.name}</h1> */}

@@ -46,6 +46,7 @@
     display: flex;
     align-items: center;
     margin-left: 0;
+    gap: 4px;
 }
 .dk.chat .title .owner .name strong .t {
     font-size: 16px;
