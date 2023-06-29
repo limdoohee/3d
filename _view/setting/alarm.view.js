@@ -6,6 +6,7 @@ import { observer } from "mobx-react-lite";
 import Sticky from "react-sticky-el";
 import { InView } from "react-intersection-observer";
 import { animateScroll as scroll, Events, scrollSpy, scroller, Element } from "react-scroll";
+import cookie from "react-cookies";
 //------------------------------------------------------------------------------- Component
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
@@ -52,7 +53,9 @@ const Home = observer((props) => {
 
     const changePushAgree = (type, status) => {
         var params = { type: type, status: status };
-        member.changePushAgree(params, (e) => {});
+        member.changePushAgree(params, (e) => {
+            location.href = "native://reload";
+        });
     };
 
     return (
@@ -62,7 +65,7 @@ const Home = observer((props) => {
             {/* Content */}
             <DDS.layout.content>
                 <div className="page-setting main">
-                    {Router.query.device_alarm == "N" && (
+                    {cookie.load("device_alarm", { path: "/" }) == "N" && (
                         <dl>
                             <dd className="none">
                                 <div className="alarm-info">

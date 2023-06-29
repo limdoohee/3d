@@ -126,6 +126,7 @@ const Home = observer((props) => {
                 <div
                     onClick={() => {
                         lang.changeLanguage("en");
+                        location.href = "native://reload";
                         setOpenLang(false);
                     }}
                 >
@@ -136,6 +137,7 @@ const Home = observer((props) => {
                     onClick={() => {
                         lang.changeLanguage("ko");
                         setOpenLang(false);
+                        location.href = "native://reload";
                     }}
                 >
                     한국어

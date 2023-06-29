@@ -59,6 +59,7 @@ const Home = observer((props) => {
                             className="none"
                             onClick={() => {
                                 lang.changeLanguage("ko");
+                                location.href = "native://reload";
                             }}
                         >
                             <h4>
@@ -74,6 +75,7 @@ const Home = observer((props) => {
                             className="none"
                             onClick={() => {
                                 lang.changeLanguage("en");
+                                location.href = "native://reload";
                             }}
                         >
                             <h4>
