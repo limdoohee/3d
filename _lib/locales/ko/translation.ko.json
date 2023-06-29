@@ -146,7 +146,7 @@
         },
         "account": {
             "title": "계정",
-            "info": { "title": "계정 정보" },
+            "info": { "title": "계정 정보", "email": "Email", "phone": "Mobile number" },
             "language": { "title": "언어" },
             "delete": {
                 "title": "회원 탈퇴",

@@ -145,7 +145,7 @@
         },
         "account": {
             "title": "Your Account",
-            "info": { "title": "Account information", "email": "Email", "phone": "Phone number" },
+            "info": { "title": "Account information", "email": "Email", "phone": "Mobile number" },
             "language": { "title": "Language" },
             "delete": {
                 "title": "Delete Account",
