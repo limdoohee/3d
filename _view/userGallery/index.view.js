@@ -189,7 +189,7 @@ const Home = observer((props) => {
                                         <div className="point">
                                             <DDS.icons.point
                                                 onClick={() => {
-                                                    common.uiChange("pointOpen", true);
+                                                    location.href = "/point";
                                                 }}
                                             />
                                             {common.numberFormat(gallery.data.pointBalance)}
