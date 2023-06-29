@@ -9,7 +9,7 @@
         "dev:staging": "env-cmd -f _env/.env.staging next dev -p 3333",
         "dev:production": "env-cmd -f _env/.env.production next dev -p 3333",
         "clean:next": "rm -rf ./.next",
-        "plum": "env-cmd -f _env/.env.staging next build",
+        "www": "env-cmd -f _env/.env.production next build",
         "terra": "env-cmd -f _env/.env.staging next build",
         "bud": "env-cmd -f _env/.env.staging next build",
         "bigwave": "env-cmd -f _env/.env.production next build",
