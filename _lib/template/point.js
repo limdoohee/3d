@@ -132,7 +132,7 @@ const PointInformation = observer((props) => {
                     </li>
                     <li>
                         <DDS.icons.drop className="dds icon large" />
-                        <span className="desc">드롭 획득 시</span>
+                        <span className="desc">디지털 아트 획득 시</span>
                         <strong>1,000P</strong>
                     </li>
                     <li>
@@ -166,8 +166,13 @@ const PointInformation = observer((props) => {
                     </li>
                     <li>
                         <DDS.icons.crown className="dds icon large" />
-                        <span className="desc">드롭 30개 획득 시</span>
-                        <strong>10,000P</strong>
+                        <span className="desc">
+                            <dl>
+                                <dt>디지털 아트 30개 획득 시</dt>
+                                <dd>선착순 300명에게 100,000P 지급</dd>
+                            </dl>
+                        </span>
+                        <strong>100,000P</strong>
                     </li>
                 </ul>
                 <ol>
