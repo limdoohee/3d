@@ -223,7 +223,7 @@ const PointList = observer((props) => {
                                     {/* <span>{item.description}</span> */}
                                 </div>
                                 <div>
-                                    <strong className={item.pointAmount > 0 ? "plus" : ""}>{common.numberFormat(item.pointAmount)}</strong>
+                                    <strong className={item.pointAmount > 0 ? "plus" : ""}>{common.numberFormat(parseInt(item.pointAmount))}</strong>
                                     <span>{moment(item.createdAt).format("YYYY.MM.DD")}</span>
                                 </div>
                             </li>

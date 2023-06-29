@@ -175,6 +175,7 @@
     letter-spacing: -0.02em;
     color: #969696;
     margin-top: 6px;
+    word-break: break-all;
 }
 
 .userInfo .profile .point {
