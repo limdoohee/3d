@@ -73,7 +73,14 @@ const Home = observer((props) => {
                                     <p>{lang.t("setting.alarm.deviceOn.desc")}</p>
                                 </div>
                                 <span>
-                                    <DDS.button.default className="dds button primary small">{lang.t("setting.alarm.preferences")}</DDS.button.default>
+                                    <DDS.button.default
+                                        className="dds button primary small"
+                                        onClick={() => {
+                                            window.location.href = "native://device_alarm_settings";
+                                        }}
+                                    >
+                                        {lang.t("setting.alarm.preferences")}
+                                    </DDS.button.default>
                                 </span>
                             </dd>
                         </dl>
