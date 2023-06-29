@@ -112,7 +112,22 @@ const Home = {
 
         //------------------------------------------------- Init Load
         const initLoad = ({ initCheck, callback }) => {
-            chat.joinChat({ name: auth.loginResult.nickname, id: `dropkitchen_member_${auth.loginResult.seq}`, url: Router.query.url });
+            switch (process.env.STAGE) {
+                case "LOCAL":
+                    var s = "mango";
+                    break;
+                case "DEVELOPMENT":
+                    var s = "mango";
+                    break;
+                case "STAGING":
+                    var s = "plum";
+                    break;
+                case "PRODUCTION":
+                    var s = "www";
+                    break;
+            }
+
+            chat.joinChat({ name: auth.loginResult.nickname, id: `dropkitchen_${s}_member_${auth.loginResult.seq}`, url: Router.query.url });
         };
         //------------------------------------------------- Init Load
 
