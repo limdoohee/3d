@@ -109,7 +109,7 @@ const Home = observer((props) => {
                         <div className="account">
                             <div className="profile">
                                 <div className="inner">
-                                    <DDS.profile.default src={thumbnailImage} />
+                                    <DDS.profile.default src={thumbnailImage ? thumbnailImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"} />
                                     <div className="camera">
                                         <DDS.icons.camera />
                                     </div>

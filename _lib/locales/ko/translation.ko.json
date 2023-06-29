@@ -169,6 +169,10 @@
         "info": {
             "title": "정보",
             "info": { "title": "정보" },
+            "termsOfUse": "이용약관",
+            "privacyPolicy": "개인정보 처리방침",
+            "version": "현재 버전 V",
+            "update": "업데이트",
             "company": {
                 "about": "엑스바이블루 사업자 정보",
                 "name": { "title": "상호명", "desc": "엑스바이블루" },
