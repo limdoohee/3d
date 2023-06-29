@@ -243,7 +243,8 @@ const home = {
                                                         }}
                                                     >
                                                         {/*  */}
-                                                        {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.url}`} /> : null}
+                                                        {/* {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.url}`} /> : null} */}
+                                                        <img src={`${item.url}`} />
                                                     </div>
                                                 )}
                                                 <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
@@ -265,7 +266,8 @@ const home = {
                                                         }}
                                                     >
                                                         {/*  */}
-                                                        {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.url}`} /> : null}
+                                                        {/* {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.url}`} /> : null} */}
+                                                        <img src={`${item.url}`} />
                                                     </div>
                                                 )}
                                                 <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
