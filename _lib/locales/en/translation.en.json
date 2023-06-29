@@ -114,12 +114,14 @@
             "title": "dropkitchen™ Points Guide",
             "signup": "when you sign up",
             "drop": "when you collect digital art",
-            "invite": { "title": "when a friend joins", "subText1": "2,000P for the first 20 friends", "subText2": "200P for 21 friends and up", "btn": "Invite Sent" },
+            "invite": { "title": "when a friend joins", "subText1": "2,000P for the first 20 friends", "subText2": "200P for 21 friends and up", "btn": "Invite" },
             "collect30": { "title": "when you collect 30 digital artworks", "subText1": "선착순 300명에게 100,000P 지급" },
             "accumulated": { "title": "Points Accumulated", "subText1": "You can collect points by acquiring new art drops, participating in events, and more.", "subText2": "The amount of points varies by item." },
             "period": { "title": "Use/Expiration Period", "subText1": "Points expire after one year from the date it was earned, unless otherwise notified." },
             "expiration": { "title": "Expiration", "subText1": "Points will expire if your account is deleted or deactivated due to inactivity." }
-        }
+        },
+        "modal": { "title": "All updated!", "desc": "You can check your points in “Points Log”", "cta": "OK" },
+        "empty": "포인트 내역이 없습니다."
     },
     "alarm": {
         "title": "alarm"
@@ -128,8 +130,8 @@
         "title": "magazine"
     },
     "setting": {
-        "title": "setting",
-        "profile": { "title": "Edit Profile", "bio": "Bio", "descPlaceHolder": "Tell us a little about yourself." },
+        "title": "Setting",
+        "profile": { "title": "Edit Profile", "bio": "Bio", "descPlaceHolder": "Tell us a little about yourself.", "save": "Saved!!" },
         "alarm": {
             "title": "Notifications",
             "setting": { "title": "Preferences" },
@@ -203,7 +205,9 @@
             "helper": "포인트가 부족합니다.",
             "confirm": "Buy Now",
             "close": "Close"
-        }
+        },
+        "message1": "You already have all available drops.",
+        "message2": "Lucky Box purchased."
     },
     "main": {
         "coachMark": {
@@ -261,7 +265,7 @@
         "collected": "Collected",
         "collect": "Collect",
         "invite": { "title": "Invite a friend and you both get a gift. It's a win-win!", "desc": "Your friend receives free digital art, and you receive extra points when they sign up.", "give": "Invite your friends, get points." },
-        "empty": "아트 드롭을 준비중입니다."
+        "empty": "The art drops are coming soon!"
     },
     "chat": {
         "now": "Online",

@@ -41,6 +41,11 @@ const Home = observer((props) => {
     const [imageSeq, setimageSeq] = useState();
     const [submitCheck, setsubmitCheck] = useState(false);
 
+    const messageData = {
+        key: "saved",
+        content: lang.t("setting.profile.save"),
+    };
+
     const complete = () => {
         // analysisSubmit
         common.analysisSubmit({
@@ -60,10 +65,7 @@ const Home = observer((props) => {
                 auth.checkLoginCSR({}, (re) => {
                     console.log("checkLoginCSR", re);
                     setsubmitCheck(false);
-                    common.messageApi.open({
-                        type: "success",
-                        content: "프로필 변경이 완료되었습니다.",
-                    });
+                    common.messageApi.open(messageData);
                 });
             } else {
                 common.messageApi.open({
@@ -87,7 +89,7 @@ const Home = observer((props) => {
     };
 
     useEffect(() => {
-        if (imageSeq || inputNickname.value !== auth.loginResult.nickname || introduction.value !== auth.loginResult.introduction) {
+        if (inputNickname.value.length > 0 && (imageSeq || inputNickname.value !== auth.loginResult.nickname || introduction.value !== auth.loginResult.introduction)) {
             setsubmitCheck(true);
         } else {
             setsubmitCheck(false);
