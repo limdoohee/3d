@@ -46,6 +46,10 @@ class Store {
     }
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 목록 조회
 
+    initMagazineList(key, value, callback) {
+        this.data.magazineList.list = [];
+    }
+
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 매거진 상세 조회
     async magazineDetail(params, callback) {
         await Api.get(`/dks-api/v2/magazine_detail`, params, this.store.auth.loginResult.loginToken)
