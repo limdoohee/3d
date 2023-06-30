@@ -141,7 +141,7 @@ const Home = {
                         <span>{totalByte}/20</span>
                     </h5>
                     <DDS.input.default {...inputSetting} className="dds input primary large" />
-                    <p>{helpText}</p>
+                    <p className={value.result ? "success" : ""}>{helpText}</p>
                 </div>
             </>
         );

@@ -54,3 +54,6 @@
     letter-spacing: -0.02em;
     color: #e02431;
 }
+.dk.profile.nickname-input p.success {
+    color: var(--broccoli-6, #149946);
+}
