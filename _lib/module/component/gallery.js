@@ -31,11 +31,10 @@ const Gallery = observer((props) => {
     let dropLength;
 
     // Limits;
+    let minX = -0.1;
     let maxX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
-    let minX = 0;
-    let maxZ = 4;
     let minZ = 0;
-
+    let maxZ = 4;
     // // State
     let positionX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
     let positionZ = 10;
@@ -87,6 +86,7 @@ const Gallery = observer((props) => {
         controls.minDistance = 5;
         controls.maxDistance = 15;
         controls.enableRotate = false;
+        controls.enabled = false;
         controls.update();
 
         window.addEventListener("click", clickDrop);
@@ -97,13 +97,11 @@ const Gallery = observer((props) => {
                 controls.target.setX(x < minX ? minX : maxX);
                 camera.position.setX(positionX);
             }
-
             const z = controls.target.z;
             if (z < minZ || z > maxZ) {
                 controls.target.setZ(z < minZ ? minZ : maxZ);
                 camera.position.setZ(positionZ);
             }
-
             if (!isNaN(camera.position.x)) positionX = camera.position.x;
             if (!isNaN(camera.position.z)) positionZ = camera.position.z;
         });
@@ -120,6 +118,10 @@ const Gallery = observer((props) => {
                 },
             });
         }, 300);
+
+        setTimeout(() => {
+            controls.enabled = true;
+        }, 350);
     }
 
     function clickDrop(event) {
