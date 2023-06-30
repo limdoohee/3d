@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, createRef, forwardRef } from "react
 import { observer } from "mobx-react-lite";
 import "../../_lib/module/i18n";
 import { useTranslation } from "react-i18next";
-
+import cookie from "react-cookies";
 //------------------------------------------------------------------------------- Antd
 import { Drawer } from "antd";
 //------------------------------------------------------------------------------- Antd
@@ -39,6 +39,13 @@ const Home = observer((props) => {
 
     const [policyOpen, setpolicyOpen] = useState(false);
     const [policyType, setpolicyType] = useState("terms");
+
+    useEffect(() => {
+        if (router.isReady) {
+            var cookieAll = cookie.loadAll({ path: "/" });
+            alert(JSON.stringify(cookieAll));
+        }
+    }, [router.isReady]);
 
     return (
         <>
