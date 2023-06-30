@@ -10,6 +10,8 @@ import DK_template_header from "../../_lib/template/header";
 import DK_template_GNB from "../../_lib/template/gnb";
 import Gallery from "../../_lib/module/component/gallery";
 
+import { Drawer } from "antd";
+
 const Home = observer((props) => {
     const router = useRouter();
     const { store } = props;
@@ -17,6 +19,8 @@ const Home = observer((props) => {
     const [open, setOpen] = useState(false);
     const ref = useRef(null);
     const [headerRight, setHeaderRight] = useState([]);
+    const [height, setHeight] = useState(0);
+    const [profileOpen, setProfileOpen] = useState(false);
 
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {
@@ -124,6 +128,10 @@ const Home = observer((props) => {
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
 
+    useEffect(() => {
+        setHeight(ref.current?.clientHeight);
+    }, [gallery.data]);
+
     const modalData = {
         open: open,
         setOpen: setOpen,
@@ -155,11 +163,11 @@ const Home = observer((props) => {
                 <DDS.layout.content>
                     {gallery.data.nickname && (
                         <div className="userInfo">
-                            <div className={`profile ${ref.current?.clientHeight < 69 ? "center" : ""}`}>
+                            <div className={`profile ${height > 64 ? "" : "center"}`}>
                                 <div
                                     onClick={() => {
                                         {
-                                            gallery.data.ownFlag && (location.href = "/setting/profile/");
+                                            gallery.data.ownFlag ? (location.href = "/setting/profile/") : setProfileOpen(true);
                                         }
                                     }}
                                 >
@@ -168,14 +176,14 @@ const Home = observer((props) => {
                                             <DDS.profile.default
                                                 size={64}
                                                 badge={<DDS.icons.badgeCrown className="cert" />}
-                                                src={gallery.data.profileImage ? gallery.data.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"}
+                                                src={gallery.data.profileImage ? gallery.data.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230630141950960_dk.webp"}
                                             />
                                         </Badge>
                                     ) : (
                                         <DDS.profile.default
                                             size={64}
                                             badge={<DDS.icons.badgeCrown className="cert" />}
-                                            src={gallery.data.profileImage ? gallery.data.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"}
+                                            src={gallery.data.profileImage ? gallery.data.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230630141950960_dk.webp"}
                                         />
                                     )}
                                 </div>
@@ -239,6 +247,9 @@ const Home = observer((props) => {
                     )}
                     {gallery.data.nickname && <Gallery store={props.store} />}
                     <DDS.modal.bottom {...modalData} />
+                    <Drawer className="profileView" placement={"right"} open={profileOpen} closeIcon={<DDS.button.default className="dds button primary" icon={<DDS.icons.xmark onClick={() => setProfileOpen(false)} />} />}>
+                        <img src={gallery.data.profileImage ? gallery.data.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230630141950960_dk.webp"} alt="profile image" />
+                    </Drawer>
                 </DDS.layout.content>
             </DDS.layout.container>
         </>

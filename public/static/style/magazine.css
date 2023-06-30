@@ -108,6 +108,10 @@
 }
 .page-magazine .contents .content p {
     margin: 0 0 8px 0 !important;
+    font-size: 14px;
+    font-family: Pretendard;
+    line-height: 150%;
+    letter-spacing: -0.28px;
 }
 /* .page-magazine .contents .content h1 {
     font-weight: 800;
