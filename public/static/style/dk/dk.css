@@ -6,6 +6,7 @@
 @import url("./random.css");
 @import url("./profile.css");
 @import url("./auth.css");
+@import url("./ar.css");
 
 .dk.error {
     min-height: 100vh;

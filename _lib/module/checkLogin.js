@@ -38,6 +38,11 @@ const pageFunc = {
         const { common } = store;
         // 로그인 분기
         useEffect(() => {
+            if (process.env.STAGE == "PRODUCTION") {
+                var broswerInfo = navigator.userAgent;
+                var webViewCheck = broswerInfo.indexOf(";;;aos;") !== -1 ? true : false;
+            }
+
             if (result.result == "ok") {
                 if (okUrl) {
                     common.debug("상태 : 로그인 토큰이 정상적으로 존재 하여 로그인 성공 URL 이 있는경우");
@@ -52,6 +57,9 @@ const pageFunc = {
                         Cookie.remove("loginToken");
                         location.href = "/login";
                         common.debug("상태 : 로그인 토큰 없이 로그인 있어야 되는 페이지 출력");
+                        break;
+                    case "public":
+                        common.init();
                         break;
                     default:
                         common.init();

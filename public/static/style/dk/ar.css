@@ -1,0 +1,25 @@
+.dk.ar {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    z-index: 0;
+}
+.dk.ar #model {
+    width: 100%;
+    height: 100vh;
+    position: relative;
+    z-index: 100;
+}
+.dk.ar .ant-btn {
+    position: fixed;
+    bottom: 0;
+    z-index: 200;
+    background-color: #000;
+    color: #fff;
+    width: calc(100% - 40px);
+    font-size: 16px;
+    height: 50px;
+}
