@@ -40,18 +40,27 @@ const Home = observer((props) => {
     const [policyOpen, setpolicyOpen] = useState(false);
     const [policyType, setpolicyType] = useState("terms");
 
-    useEffect(() => {
-        if (router.isReady) {
-            // var cookieAll = cookie.loadAll({ path: "/" });
-            // alert(JSON.stringify(cookieAll));
+    const [checkCookieCount, setcheckCookieCount] = useState(0);
+    const checkCookie = () => {
+        if (process.env.STAGE !== "PRODUCTION") {
+            var cookieAll = cookie.loadAll({ path: "/" });
+            alert(JSON.stringify(cookieAll));
         }
-    }, [router.isReady]);
+    };
 
     return (
         <>
             <div className="login wrap">
                 <div className="inner">
-                    <h1>
+                    <h1
+                        onClick={() => {
+                            setcheckCookieCount(checkCookieCount + 1);
+                            console.log(checkCookieCount);
+                            if (checkCookieCount == 10) {
+                                checkCookie();
+                            }
+                        }}
+                    >
                         <DDS.logos.default />
                     </h1>
                     <p id="login-desc">
