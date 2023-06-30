@@ -115,7 +115,7 @@
             "signup": "when you sign up",
             "drop": "when you collect digital art",
             "invite": { "title": "when a friend joins", "subText1": "2,000P for the first 20 friends", "subText2": "200P for 21 friends and up", "btn": "Invite" },
-            "collect30": { "title": "when you collect 30 digital artworks", "subText1": "선착순 300명에게 100,000P 지급" },
+            "collect30": { "title": "when you collect 30 digital artworks", "subText1": "First 300 get 100,000P" },
             "accumulated": { "title": "Points Accumulated", "subText1": "You can collect points by acquiring new art drops, participating in events, and more.", "subText2": "The amount of points varies by item." },
             "period": { "title": "Use/Expiration Period", "subText1": "Points expire after one year from the date it was earned, unless otherwise notified." },
             "expiration": { "title": "Expiration", "subText1": "Points will expire if your account is deleted or deactivated due to inactivity." }
