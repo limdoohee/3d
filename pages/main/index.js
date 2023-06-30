@@ -8,7 +8,7 @@ const store = new Store();
 import checkLogin from "../../_lib/module/checkLogin";
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- View
-import View from "../../_view/main/index.view";
+// import View from "../../_view/main/index.view";
 //------------------------------------------------------------------------------- View
 
 const Home = observer((props) => {
