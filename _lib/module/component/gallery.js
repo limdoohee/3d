@@ -51,7 +51,7 @@ const Gallery = observer((props) => {
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         // camera
-        camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         dropData.length === 0 ? camera.position.set(0, 0, 10) : camera.position.set((dropData.length - 1) * 2.5, 0, 10);
 
         // light
@@ -148,7 +148,7 @@ const Gallery = observer((props) => {
 
     function setSpace() {
         const space = Math.ceil(dropData.length / 7) + 1;
-        for (let i = 1; i <= space; i++) {
+        for (let i = 1; i <= 5; i++) {
             fbx.load("../../static/3d/gallery/gallery" + i + ".fbx", (obj) => {
                 obj.scale.multiplyScalar(0.3);
                 obj.position.z = 10;
