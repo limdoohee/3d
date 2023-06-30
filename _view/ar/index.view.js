@@ -59,14 +59,14 @@ const Home = observer((props) => {
 
     return (
         <>
-            <DDS.layout.container className={"fluid"} store={store}>
+            <DDS.layout.back className={"fluid"} store={store}>
                 <DDS.layout.content>
                     <div className="dk ar" style={{ opacity: init ? "1" : "0" }}>
                         <model-viewer src={drop.data.detail.contentUrl} id="model" ar ar-modes="webxr scene-viewer quick-look" camera-controls shadow-intensity="1" autoplay></model-viewer>
                         <DDS.button.default onClick={actibateAR}>View in your space</DDS.button.default>
                     </div>
                 </DDS.layout.content>
-            </DDS.layout.container>
+            </DDS.layout.back>
         </>
     );
 });
