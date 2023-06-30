@@ -62,6 +62,7 @@ class Store {
             currentlyJoinedChannelOperators: [],
             messages: [],
             channels: [],
+            participantCount: 0,
             showChannelCreate: false,
             messageInputValue: "",
             userNameInputValue: "",
@@ -159,6 +160,7 @@ class Store {
 
             // setup connection event handlers
             const connectionHandler = new ConnectionHandler();
+
             connectionHandler.onReconnectSucceeded = async () => {
                 console.log("onReconnectSucceeded");
                 const [messages, error] = await this.loadMessages.open(channelToJoin);
@@ -167,6 +169,7 @@ class Store {
 
             //listen for incoming messages
             const channelHandler = new OpenChannelHandler();
+
             channelHandler.onMessageUpdated = (channel, message) => {
                 console.log("onMessageUpdated");
                 const messageIndex = this.state.messages.findIndex((item) => item.messageId == message.messageId);
@@ -221,9 +224,19 @@ class Store {
             //     });
             // };
 
+            channelHandler.onUserEntered = (e, el) => {
+                console.log("onUserEntered", e, el);
+                this.state.participantCount = e.participantCount;
+            };
+            channelHandler.onUserExited = (e, el) => {
+                console.log("onUserExited", e, el);
+                this.state.participantCount = e.participantCount;
+            };
+
             // // 사용자 입장
             // channelToJoin.onUserEntered = (user) => {
             //     // 메타데이터 업데이트: 사용자를 온라인 목록에 추가
+            //     console.log("channelToJoin.onUserEntered");
             //     channel.getMetaData(["onlineUsers"], (response, error) => {
             //         if (error) {
             //             console.error(error);
@@ -248,6 +261,7 @@ class Store {
             // // 사용자 퇴장
             // channelToJoin.onUserExited = (user) => {
             //     // 메타데이터 업데이트: 사용자를 온라인 목록에서 제거
+            //     console.log("channelToJoin.onUserExited");
             //     channel.getMetaData(["onlineUsers"], (response, error) => {
             //         if (error) {
             //             console.error(error);
@@ -273,9 +287,7 @@ class Store {
             // };
 
             this.sb.openChannel.addOpenChannelHandler(uuid(), channelHandler);
-            this.state = { ...this.state, currentlyJoinedChannel: channelToJoin, messages: [], loading: false, currentlyJoinedChannelOperators: operators };
-
-            console.log({ ...this.state, currentlyJoinedChannel: channelToJoin, messages: [], loading: false, currentlyJoinedChannelOperators: operators });
+            this.state = { ...this.state, currentlyJoinedChannel: channelToJoin, messages: [], loading: false, currentlyJoinedChannelOperators: operators, participantCount: channelToJoin.participantCount };
         }
         //////////////////////////////////////////////////////////////////// openChannel
 

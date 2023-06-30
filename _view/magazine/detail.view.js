@@ -43,16 +43,16 @@ const Home = observer((props) => {
     //------------------------------------------------- Router isReady
 
     const headerRight = [
-        () => (
-            <DDS.button.default
-                className="dds button none"
-                icon={<DDS.icons.shareNode />}
-                onClick={() => {
-                    // common.uiChange("gnbOpen", true);
-                    common.onShare({ url: `${process.env.URL}/magazine/d/${router.query.seq}/` });
-                }}
-            />
-        ),
+        // () => (
+        //     <DDS.button.default
+        //         className="dds button none"
+        //         icon={<DDS.icons.shareNode />}
+        //         onClick={() => {
+        //             // common.uiChange("gnbOpen", true);
+        //             common.onShare({ url: `${process.env.URL}/magazine/d/${router.query.seq}/` });
+        //         }}
+        //     />
+        // ),
     ];
 
     return (

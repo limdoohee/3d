@@ -36,22 +36,15 @@ const Home = observer((props) => {
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
 
-    const headerRight = [
-        // () => (
-        //     <DDS.button.default
-        //         className="dds button none"
-        //         icon={<DDS.icons.bars />}
-        //         onClick={() => {
-        //             common.uiChange("gnbOpen", true);
-        //         }}
-        //     />
-        // ),
-    ];
-
     const [inputNickname, setinputNickname] = useState({ value: auth.loginResult.nickname, result: false });
     const [introduction, setintroduction] = useState({ value: auth.loginResult.introduction, result: false });
     const [imageSeq, setimageSeq] = useState();
     const [submitCheck, setsubmitCheck] = useState(false);
+
+    const messageData = {
+        key: "saved",
+        content: lang.t("setting.profile.save"),
+    };
 
     const complete = () => {
         // analysisSubmit
@@ -72,10 +65,7 @@ const Home = observer((props) => {
                 auth.checkLoginCSR({}, (re) => {
                     console.log("checkLoginCSR", re);
                     setsubmitCheck(false);
-                    common.messageApi.open({
-                        type: "success",
-                        content: "프로필 변경이 완료되었습니다.",
-                    });
+                    common.messageApi.open(messageData);
                 });
             } else {
                 common.messageApi.open({
@@ -99,7 +89,7 @@ const Home = observer((props) => {
     };
 
     useEffect(() => {
-        if (imageSeq || inputNickname.value !== auth.loginResult.nickname || introduction.value !== auth.loginResult.introduction) {
+        if (inputNickname.value.length > 0 && (imageSeq || inputNickname.value !== auth.loginResult.nickname || introduction.value !== auth.loginResult.introduction)) {
             setsubmitCheck(true);
         } else {
             setsubmitCheck(false);
@@ -111,7 +101,7 @@ const Home = observer((props) => {
     return (
         <>
             <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
-                <DK_template_header.default store={store} title={lang.t("setting.profile.title")} right={headerRight} />
+                <DK_template_header.default store={store} title={lang.t("setting.profile.title")} />
                 <DK_template_GNB.default store={store} />
                 {/* Content */}
                 <DDS.layout.content>
@@ -119,7 +109,7 @@ const Home = observer((props) => {
                         <div className="account">
                             <div className="profile">
                                 <div className="inner">
-                                    <DDS.profile.default src={thumbnailImage} />
+                                    <DDS.profile.default src={thumbnailImage ? thumbnailImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"} />
                                     <div className="camera">
                                         <DDS.icons.camera />
                                     </div>
@@ -158,26 +148,54 @@ const IntroductionInput = (props) => {
 
     const onChange = (e) => {
         var v = e.target.value;
-        setvalue((prevstate) => ({ ...prevstate, value: v }));
+        var t = checkByte(v);
+
+        if (t <= 50) {
+            settotalByte(t);
+            setvalue((prevstate) => ({ ...prevstate, value: v }));
+        } else {
+            settotalByte(50);
+        }
     };
 
     const inputSetting = {
         className: "dds input primary",
-        placeholder: "소개글을 입력해주세요",
-        onKeyUp: onChange,
+        placeholder: lang.t("setting.profile.descPlaceHolder"),
+        onChange: onChange,
         // onKeyDown: onChange,
         defaultValue: value.value,
         rows: 4,
+        value: value.value,
         // maxLength: 6,
     };
 
+    const checkByte = (v) => {
+        var t = 0;
+        if (v) {
+            for (var i = 0; i < v.length; i++) {
+                var currentByte = v.charCodeAt(i);
+                if (currentByte > 128) {
+                    t += 2;
+                } else {
+                    t++;
+                }
+            }
+        }
+        return t;
+    };
+
+    useEffect(() => {
+        settotalByte(checkByte(value.value));
+    }, []);
+
     const [helpText, sethelpText] = useState("");
+    const [totalByte, settotalByte] = useState(0);
 
     return (
         <>
             <h5>
                 <strong>{lang.t("setting.profile.bio")}</strong>
-                <span>{value.value ? value.value.length : 0}/50</span>
+                <span>{totalByte}/50</span>
             </h5>
             <DDS.input.textarea {...inputSetting} />
             <p>{helpText}</p>

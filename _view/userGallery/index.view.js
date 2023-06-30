@@ -130,6 +130,7 @@ const Home = observer((props) => {
         img: "../../static/img/invite.png",
         title: lang.t("gallery.modal.title"),
         context: lang.t("gallery.modal.context"),
+        subContext: "(" + lang.t("gallery.modal.subContext") + ")",
         confirm: {
             label: lang.t("gallery.modal.confirm"),
             action: () => {
@@ -188,7 +189,7 @@ const Home = observer((props) => {
                                         <div className="point">
                                             <DDS.icons.point
                                                 onClick={() => {
-                                                    common.uiChange("pointOpen", true);
+                                                    location.href = "/point";
                                                 }}
                                             />
                                             {common.numberFormat(gallery.data.pointBalance)}

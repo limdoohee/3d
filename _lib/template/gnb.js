@@ -11,7 +11,7 @@ import DDS_Profile from "../component/profile";
 const Component = {
     default: observer((props) => {
         const { store } = props;
-        const { common, auth } = store;
+        const { common, auth, lang } = store;
         const router = useRouter();
 
         const onClose = () => {
@@ -66,7 +66,7 @@ const Component = {
                             location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
                         }}
                     >
-                        <DDS_Profile.default badge={<DDS_Icons.badgeCrown className="cert" />} src={auth.loginResult.profileImage ? auth.loginResult.profileImage : ""} />
+                        <DDS_Profile.default badge={<DDS_Icons.badgeCrown className="cert" />} src={auth.loginResult.profileImage ? auth.loginResult.profileImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"} />
                         <strong>{auth.loginResult && auth.loginResult.nickname}</strong>
                     </div>
                     <div
@@ -75,7 +75,7 @@ const Component = {
                             location.href = "/point";
                         }}
                     >
-                        <span>내 포인트</span>
+                        <span>{lang.t("gnb.point")}</span>
                         <strong>
                             <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
                                 <path
