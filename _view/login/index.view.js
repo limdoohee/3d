@@ -42,8 +42,8 @@ const Home = observer((props) => {
 
     useEffect(() => {
         if (router.isReady) {
-            var cookieAll = cookie.loadAll({ path: "/" });
-            alert(JSON.stringify(cookieAll));
+            // var cookieAll = cookie.loadAll({ path: "/" });
+            // alert(JSON.stringify(cookieAll));
         }
     }, [router.isReady]);
 
