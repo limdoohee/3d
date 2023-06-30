@@ -59,6 +59,9 @@ const pageFunc = {
                         break;
                 }
             }
+            //======================================== ReactGA
+            common.gaCheck(window.location.pathname, window.location.search, window.dataLayer);
+            //======================================== ReactGA
         }, []);
     },
 };
