@@ -31,7 +31,7 @@ const Gallery = observer((props) => {
     let dropLength;
 
     // Limits;
-    let minX = -0.1;
+    let minX = -1;
     let maxX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
     let minZ = 0;
     let maxZ = 4;
@@ -86,7 +86,6 @@ const Gallery = observer((props) => {
         controls.minDistance = 5;
         controls.maxDistance = 15;
         controls.enableRotate = false;
-        controls.enabled = false;
         controls.update();
 
         window.addEventListener("click", clickDrop);
@@ -118,10 +117,6 @@ const Gallery = observer((props) => {
                 },
             });
         }, 300);
-
-        setTimeout(() => {
-            controls.enabled = true;
-        }, 350);
     }
 
     function clickDrop(event) {
