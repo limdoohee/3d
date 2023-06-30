@@ -172,11 +172,29 @@ const Home = observer((props) => {
         }
     }, [authenticationValue.result]);
 
+    const [checkCookieCount, setcheckCookieCount] = useState(0);
+    const checkCookie = () => {
+        if (process.env.STAGE !== "PRODUCTION") {
+            var cookieAll = cookie.loadAll({ path: "/" });
+            alert(JSON.stringify(cookieAll));
+        }
+    };
+
     return (
         <>
             <DDS.layout.back className={"fluid"} store={store}>
                 <div className="auth ui mobile">
-                    <h2>{lang.t(`signup.mobile.title`)}</h2>
+                    <h2
+                        onClick={() => {
+                            setcheckCookieCount(checkCookieCount + 1);
+                            console.log(checkCookieCount);
+                            if (checkCookieCount == 10) {
+                                checkCookie();
+                            }
+                        }}
+                    >
+                        {lang.t(`signup.mobile.title`)}
+                    </h2>
                     <AuthenticationPhone data={{ value: authenticationValue, set: setauthenticationValue }} store={store} />
                     <div id="recaptcha-container"></div>
                     <DDS.button.default className="agree-check" disabled={authenticationValue.result && actionLoading === false ? false : true} onClick={nextStep}>
