@@ -33,16 +33,14 @@ const Home = observer((props) => {
     //------------------------------------------------- Router isReady
     useEffect(() => {
         if (router.isReady && router.pathname == "/ar/[pid]") {
-            var broswerInfo = navigator.userAgent;
-            var webViewCheck = broswerInfo.indexOf(";;;aos;") !== -1 ? true : false;
             initLoad({
                 callback: async () => {
-                    if (webViewCheck === false) {
-                        location.href = drop.data.dropLink;
-                    } else {
+                    if (router.query.from) {
                         console.log("model", document.querySelector("#model"));
                         setmodel(document.querySelector("#model"));
                         setinit(true);
+                    } else {
+                        location.href = drop.data.dropLink;
                     }
                 },
             });

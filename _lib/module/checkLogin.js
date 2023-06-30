@@ -38,10 +38,10 @@ const pageFunc = {
         const { common } = store;
         // 로그인 분기
         useEffect(() => {
-            if (process.env.STAGE == "PRODUCTION") {
-                var broswerInfo = navigator.userAgent;
-                var webViewCheck = broswerInfo.indexOf(";;;aos;") !== -1 ? true : false;
-            }
+            // if (process.env.STAGE == "PRODUCTION") {
+            //     var broswerInfo = navigator.userAgent;
+            //     var webViewCheck = broswerInfo.indexOf(";;;aos;") !== -1 ? true : false;
+            // }
 
             if (result.result == "ok") {
                 if (okUrl) {
