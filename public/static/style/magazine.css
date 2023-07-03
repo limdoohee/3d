@@ -19,9 +19,6 @@
     top: 50px !important;
     z-index: 1000;
 }
-.page-magazine .dds.tabs .adm-tabs-header {
-    padding: 0 20px;
-}
 .page-magazine .sort {
     padding: 12px 20px;
     display: flex;

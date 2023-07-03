@@ -6,7 +6,7 @@ const Component = {
         const { items, defaultActiveKey, onChange } = props;
         return (
             <>
-                <Tabs defaultActiveKey={defaultActiveKey} className={`dds tabs ${props.className}`} onChange={onChange}>
+                <Tabs defaultActiveKey={defaultActiveKey} className={`dds tabs ${props.className} ${items.length < 5 ? "tabsPart" : ""}`} onChange={onChange}>
                     {items.map((item, key) => (
                         <Tabs.Tab title={item.label} key={key}>
                             {item.children && item.children}
