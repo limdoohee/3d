@@ -15,11 +15,16 @@
     position: relative;
 }
 
+.dk.error img {
+    width: 200px;
+    height: 200px;
+    margin: 113px 0;
+}
+
 .dk.error .center {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
     text-align: center;
 }
 .dk.error .bottom {
