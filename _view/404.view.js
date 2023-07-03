@@ -20,12 +20,15 @@ const Home = observer((props) => {
         <DDS.layout.container store={store}>
             <div className="dk error">
                 <div className="center">
-                    <h3>Oops...</h3>
-                    <p>
-                        {lang.t("error.404.description1")}
-                        <br />
-                        {lang.t("error.404.description2")}
-                    </p>
+                    <img src="https://asset.dropkitchen.xyz/contents/202307_dev/20230703163409652_dk.webp" alt="error" />
+                    <div>
+                        <h3>Oops...</h3>
+                        <p>
+                            {lang.t("error.404.description1")}
+                            <br />
+                            {lang.t("error.404.description2")}
+                        </p>
+                    </div>
                 </div>
                 <div className="bottom">
                     <DDS.button.default

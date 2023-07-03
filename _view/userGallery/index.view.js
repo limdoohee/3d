@@ -135,7 +135,7 @@ const Home = observer((props) => {
     const modalData = {
         open: open,
         setOpen: setOpen,
-        img: "../../static/img/invite.png",
+        img: "https://asset.dropkitchen.xyz/contents/202307_dev/20230703164613868_dk.webp",
         title: lang.t("gallery.modal.title"),
         context: lang.t("gallery.modal.context"),
         subContext: "(" + lang.t("gallery.modal.subContext") + ")",
