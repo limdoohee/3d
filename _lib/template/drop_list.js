@@ -70,15 +70,9 @@ const Home = {
         const shareModalData = {
             open: shareModal,
             setOpen: setshareModal,
-            title: (
-                <>
-                    <div style={{ textAlign: "center", margin: "0 0 20px 0" }}>
-                        <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230628110209194_dk.webp" style={{ width: 120, height: 120 }} />
-                    </div>
-                    {dropListLangSet.invite.title}
-                </>
-            ),
-            context: <>{dropListLangSet.invite.desc}</>,
+            img: "https://asset.dropkitchen.xyz/contents/202307_dev/20230703164613868_dk.webp",
+            title: dropListLangSet.invite.title,
+            context: dropListLangSet.invite.desc,
             confirm: {
                 label: dropListLangSet.invite.give,
                 action: () => {

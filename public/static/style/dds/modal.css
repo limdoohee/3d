@@ -12,9 +12,9 @@
 }
 
 .dds.modal.bottom .imgWrapper {
-    width: 160px;
-    height: 160px;
-    margin: 0 auto 20px;
+    width: 120px;
+    height: 120px;
+    margin: 20px auto 40px;
     display: flex;
     align-items: center;
     justify-content: center;
