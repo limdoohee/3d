@@ -73,6 +73,7 @@ const Home = {
             img: "https://asset.dropkitchen.xyz/contents/202307_dev/20230703164613868_dk.webp",
             title: dropListLangSet.invite.title,
             context: dropListLangSet.invite.desc,
+            subContext: "(" + lang.t("gallery.modal.subContext") + ")",
             confirm: {
                 label: dropListLangSet.invite.give,
                 action: () => {
@@ -82,10 +83,10 @@ const Home = {
                     });
                 },
             },
-            // cancel: {
-            //     label: "나중에",
-            //     action: () => {},
-            // },
+            cancel: {
+                label: lang.t("gallery.modal.close"),
+                action: () => {},
+            },
         };
 
         return (
