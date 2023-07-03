@@ -121,7 +121,12 @@
             "expiration": { "title": "Expiration", "subText1": "Points will expire if your account is deleted or deactivated due to inactivity." }
         },
         "modal": { "title": "All updated!", "desc": "You can check your points in “Points Log”", "cta": "OK" },
-        "empty": "포인트 내역이 없습니다."
+        "empty": "포인트 내역이 없습니다.",
+        "sort": {
+            "all": "All",
+            "accumulated": "Accumulated",
+            "used": "Used"
+        }
     },
     "alarm": {
         "title": "alarm"
