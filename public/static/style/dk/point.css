@@ -345,16 +345,3 @@
     background: #fff;
     z-index: 1;
 }
-
-.dk.point .dds.tabs .adm-tabs-tab {
-    width: 100%;
-    text-align: center;
-}
-
-.dk.point .dds.tabs .adm-tabs-header {
-    padding: 0 20px;
-}
-
-.dk.point .dds.tabs .adm-tabs-tab-wrapper {
-    padding: 0;
-}
