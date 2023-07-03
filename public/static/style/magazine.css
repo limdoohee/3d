@@ -19,9 +19,6 @@
     top: 50px !important;
     z-index: 1000;
 }
-.page-magazine .dds.tabs .adm-tabs-header {
-    padding: 0 20px;
-}
 .page-magazine .sort {
     padding: 12px 20px;
     display: flex;
@@ -32,7 +29,6 @@
     display: flex;
     align-items: center;
     box-shadow: none;
-    gap: 5px;
     padding: 0;
 }
 .page-magazine .sort .ant-btn svg {
@@ -42,7 +38,7 @@
 
 .page-magazine .list {
     padding: 0 20px 20px 20px;
-    gap: 20px;
+    gap: 40px;
     display: flex;
     flex-direction: column;
 }
@@ -108,6 +104,10 @@
 }
 .page-magazine .contents .content p {
     margin: 0 0 8px 0 !important;
+    font-size: 14px;
+    font-family: Pretendard;
+    line-height: 150%;
+    letter-spacing: -0.28px;
 }
 /* .page-magazine .contents .content h1 {
     font-weight: 800;

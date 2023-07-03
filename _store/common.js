@@ -4,6 +4,9 @@ import { makeAutoObservable, toJS, configure } from "mobx";
 import copy from "copy-to-clipboard";
 import { BrowserView, MobileView, isBrowser, isMobile, isAndroid } from "react-device-detect";
 import Cookies from "react-cookies";
+// import ReactGA from "react-ga";
+import TagManager from "react-gtm-module";
+import ReactGA from "react-ga4";
 //------------------------------------------------------------------------------- Module//------------------------------------------------------------------------------- Module
 import Api from "../_lib/module/api";
 import i18n from "../_lib/module/i18n";
@@ -159,6 +162,124 @@ class Store {
 
     messageApiLoad(el) {
         this.messageApi = el;
+    }
+
+    // ReactGA
+    gtm = null;
+    fbq = null;
+    twq = null;
+    gaId = "G-TKT2T3MCKT";
+    gtmId = "GTM-P5FWLBF";
+    facebookId = "688390069534103";
+    twitterId = "od7q0";
+
+    gaCheck(pathname, search, dataLayer) {
+        /////////////////////////////////////////////////////////////////////////////////// ReactGA
+        const code = this.gaId;
+        // ReactGA.initialize(code);
+        // ReactGA.pageview(pathname + search);
+        // var dataLayer = window.dataLayer || [];
+        // function gtag() {
+        //     dataLayer.push(arguments);
+        // }
+        // gtag("js", new Date());
+        // gtag("config", code);
+
+        ReactGA.initialize(code);
+        /////////////////////////////////////////////////////////////////////////////////// ReactGA
+        /////////////////////////////////////////////////////////////////////////////////// ReactGTM
+        const tagManagerArgs = {
+            gtmId: this.gtmId,
+        };
+        TagManager.initialize(tagManagerArgs);
+
+        this.gtm = TagManager;
+
+        // const tagManagerArgs = {
+        //     dataLayer: {
+        //         userId: "001",
+        //         userProject: "project",
+        //         page: "home",
+        //     },
+        //     dataLayerName: "PageDataLayer",
+        // };
+        // this.gtm.dataLayer(tagManagerArgs)
+
+        // dataLayer = dataLayer || [];
+        // function gtag() {
+        //     dataLayer.push(arguments);
+        // }
+        // gtag("js", new Date());
+
+        // gtag("config", "G-TKT2T3MCKT");
+
+        // (function (w, d, s, l, i) {
+        //     w[l] = w[l] || [];
+        //     w[l].push({ "gtm.start": new Date().getTime(), event: "gtm.js" });
+        //     var f = d.getElementsByTagName(s)[0],
+        //         j = d.createElement(s),
+        //         dl = l != "dataLayer" ? "&l=" + l : "";
+        //     j.async = true;
+        //     j.src = "https://www.googletagmanager.com/gtm.js?id=" + i + dl;
+        //     f.parentNode.insertBefore(j, f);
+        // })(window, document, "script", "dataLayer", "GTM-P5FWLBF");
+
+        /////////////////////////////////////////////////////////////////////////////////// ReactGTM
+        /////////////////////////////////////////////////////////////////////////////////// Facebook Pixel
+        !(function (f, b, e, v, n, t, s) {
+            if (f.fbq) return;
+            n = f.fbq = function () {
+                n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+            };
+            if (!f._fbq) f._fbq = n;
+            n.push = n;
+            n.loaded = !0;
+            n.version = "2.0";
+            n.queue = [];
+            t = b.createElement(e);
+            t.async = !0;
+            t.src = v;
+            s = b.getElementsByTagName(e)[0];
+            s.parentNode.insertBefore(t, s);
+        })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+        fbq("init", this.facebookId);
+        fbq("track", "PageView");
+        this.fbq = fbq;
+        this.debug(fbq);
+        /////////////////////////////////////////////////////////////////////////////////// Facebook Pixel
+        /////////////////////////////////////////////////////////////////////////////////// Twitter
+        !(function (e, t, n, s, u, a) {
+            e.twq ||
+                ((s = e.twq =
+                    function () {
+                        s.exe ? s.exe.apply(s, arguments) : s.queue.push(arguments);
+                    }),
+                (s.version = "1.1"),
+                (s.queue = []),
+                (u = t.createElement(n)),
+                (u.async = !0),
+                (u.src = "//static.ads-twitter.com/uwt.js"),
+                (a = t.getElementsByTagName(n)[0]),
+                a.parentNode.insertBefore(u, a));
+        })(window, document, "script");
+        twq("init", this.twitterId);
+        twq("track", "PageView");
+        this.twq = twq;
+        /////////////////////////////////////////////////////////////////////////////////// Twitter
+        /////////////////////////////////////////////////////////////////////////////////// Clarity
+        (function (c, l, a, r, i, t, y) {
+            c[a] =
+                c[a] ||
+                function () {
+                    (c[a].q = c[a].q || []).push(arguments);
+                };
+            t = l.createElement(r);
+            t.async = 1;
+            t.src = "https://www.clarity.ms/tag/" + i;
+            y = l.getElementsByTagName(r)[0];
+            y.parentNode.insertBefore(t, y);
+        })(window, document, "clarity", "script", "fm4ync5fwa");
+        /////////////////////////////////////////////////////////////////////////////////// Clarity
     }
 }
 //////////////////////////// makeAutoObservable

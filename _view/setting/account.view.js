@@ -91,6 +91,16 @@ const Home = observer((props) => {
                                 </h4>
                             </li>
                         </ul>
+                        <div className="delete">
+                            <span>{lang.t("setting.account.delete.ask")}</span>
+                            <span
+                                onClick={() => {
+                                    location.href = "/setting/account_delete";
+                                }}
+                            >
+                                {lang.t("setting.account.delete.title")}
+                            </span>
+                        </div>
                     </div>
                 </div>
             </DDS.layout.content>

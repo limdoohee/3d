@@ -47,6 +47,8 @@ const Home = observer((props) => {
         },
     };
 
+    const [inviteValue, setinviteValue] = useState({ type: null, code: null });
+
     //------------------------------------------------- Init Load
     const initLoad = ({ callback }) => {
         callback && callback();
@@ -68,6 +70,13 @@ const Home = observer((props) => {
                 },
                 getAuth(app),
             );
+
+            const cookieInviteType = cookie.load("invite_type", { path: "/" });
+            const cookieInviteCode = cookie.load("invite_code", { path: "/" });
+
+            setinviteValue({ type: cookieInviteType !== null && cookieInviteType !== undefined ? cookieInviteType : null, code: cookieInviteCode !== null && cookieInviteCode !== undefined ? cookieInviteCode : null });
+
+            console.log(cookie.load("invite_type", { path: "/" }), cookie.load("invite_code", { path: "/" }));
         }
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
@@ -97,9 +106,11 @@ const Home = observer((props) => {
             adsAgree: sessionStorage.getItem("signupMarketing"),
             terms1Agree: "Y",
             terms2Agree: "Y",
-            type: sessionStorage.getItem("type") && sessionStorage.getItem("type"),
-            code: sessionStorage.getItem("code") && sessionStorage.getItem("code"),
+            type: inviteValue.type && sessionStorage.getItem("type"),
+            code: inviteValue.code && inviteValue.code,
         };
+        inviteValue.type && (params.type = inviteValue.type);
+        inviteValue.code && (params.code = inviteValue.code);
         console.log(params);
         await auth.phoneVerify(params, async (e) => {
             common.debug(e);
@@ -161,11 +172,29 @@ const Home = observer((props) => {
         }
     }, [authenticationValue.result]);
 
+    const [checkCookieCount, setcheckCookieCount] = useState(0);
+    const checkCookie = () => {
+        if (process.env.STAGE !== "PRODUCTION") {
+            var cookieAll = cookie.loadAll({ path: "/" });
+            alert(JSON.stringify(cookieAll));
+        }
+    };
+
     return (
         <>
             <DDS.layout.back className={"fluid"} store={store}>
                 <div className="auth ui mobile">
-                    <h2>{lang.t(`signup.mobile.title`)}</h2>
+                    <h2
+                        onClick={() => {
+                            setcheckCookieCount(checkCookieCount + 1);
+                            console.log(checkCookieCount);
+                            if (checkCookieCount == 10) {
+                                checkCookie();
+                            }
+                        }}
+                    >
+                        {lang.t(`signup.mobile.title`)}
+                    </h2>
                     <AuthenticationPhone data={{ value: authenticationValue, set: setauthenticationValue }} store={store} />
                     <div id="recaptcha-container"></div>
                     <DDS.button.default className="agree-check" disabled={authenticationValue.result && actionLoading === false ? false : true} onClick={nextStep}>

@@ -42,17 +42,26 @@ const home = {
                 chat.updateState({ ...chat.state, uploadLoading: true });
                 const fileMessageParams = {};
                 fileMessageParams.file = e.currentTarget.files[0];
-                chat.state.currentlyJoinedChannel
-                    .sendFileMessage(fileMessageParams)
-                    .onSucceeded((message) => {
-                        const updatedMessages = [...chat.state.messages, message];
-                        chat.updateState({ ...chat.state, messages: updatedMessages, messageInputValue: "", file: null, uploadLoading: false });
-                        home.messageScrollDown();
-                    })
-                    .onFailed((error) => {
-                        console.log(error);
-                        console.log("failed");
-                    });
+
+                console.log(e.currentTarget.files[0].type);
+                var checkImage = e.currentTarget.files[0].type;
+                checkImage = checkImage.indexOf("image");
+                console.log(checkImage);
+                if (checkImage === 0) {
+                    chat.state.currentlyJoinedChannel
+                        .sendFileMessage(fileMessageParams)
+                        .onSucceeded((message) => {
+                            const updatedMessages = [...chat.state.messages, message];
+                            chat.updateState({ ...chat.state, messages: updatedMessages, messageInputValue: "", file: null, uploadLoading: false });
+                            home.messageScrollDown();
+                        })
+                        .onFailed((error) => {
+                            console.log(error);
+                            console.log("failed");
+                        });
+                } else {
+                    alert("이미지만 업로드 가능합니다.");
+                }
             }
         };
 
@@ -62,6 +71,7 @@ const home = {
                     callback: () => {
                         console.log("sendMessage");
                         home.messageScrollDown();
+                        chat.updateState({ ...chat.state, messageInputValue: "" });
                     },
                 });
             }
@@ -72,7 +82,7 @@ const home = {
             <div className="message-input">
                 <div className="upload">
                     <DDS_Icons.plus className="dds icons" />
-                    <input id="upload" type="file" onChange={onFileInputChange} onClick={() => {}} />
+                    <input id="upload" type="file" onChange={onFileInputChange} onClick={() => {}} accept="image/*" />
                 </div>
                 <DDS_Input.default
                     className="dds input secondary rounded"
@@ -97,6 +107,20 @@ const home = {
         const { common, chat, lang } = store;
         const [more, setmore] = useState(true);
 
+        const langSet = {
+            now: lang.t("chat.now"),
+            format: lang.t("chat.format"),
+            info1: lang.t("chat.info1"),
+            info2: lang.t("chat.info2"),
+            info3: lang.t("chat.info3"),
+            info4: lang.t("chat.info4"),
+            info5: lang.t("chat.info5"),
+            info6: lang.t("chat.info6"),
+            info7: lang.t("chat.info7"),
+            info8: lang.t("chat.info8"),
+            info9: lang.t("chat.info9"),
+        };
+
         useEffect(() => {
             home.messageScrollDown();
         }, [common.ui.chatOpen == true]);
@@ -112,9 +136,11 @@ const home = {
                 case "STAGING":
                     var s = "plum";
                     break;
-                default:
+                case "PRODUCTION":
+                    var s = "www";
                     break;
             }
+
             location.href = `/userGallery/?memberSeq=${sender.userId.replace(`dropkitchen_${s}_member_`, "")}`;
         };
 
@@ -154,6 +180,25 @@ const home = {
             img: imageUrl,
         };
 
+        const [openGallery, setopenGallery] = useState(false);
+        const modalGallery = {
+            open: openGallery,
+            setOpen: setopenGallery,
+            title: langSet.info8,
+            context: langSet.info5,
+            confirm: {
+                label: langSet.info9,
+                action: () => {
+                    clickProfile(sender);
+                },
+            },
+            cancel: {
+                label: langSet.info7,
+                action: () => {},
+            },
+        };
+        const [sender, setsender] = useState();
+
         return (
             <div className="message-wrap" id="message-wrap">
                 {bottomDown && (
@@ -182,13 +227,13 @@ const home = {
                             이전 대화 보기
                         </DDS_Button.default>
                     )} */}
-                    <p>{moment(messages[0] && messages[0].createdAt).format("YYYY년 MM월 DD일")}</p>
+                    <p>{moment(messages[0] && messages[0].createdAt).format(langSet.format)}</p>
                     <h6>
-                        실시간 채팅에 오신것을 환영해요!
+                        {langSet.info1}
                         <br />
-                        운영정책을 위반할 시 채팅방 이용에 제한이 있을 수 있어요.
+                        {langSet.info2}
                         <br />
-                        상대방을 존중하고 배려하는 대화방을 만들어주세요.
+                        {langSet.info3}
                     </h6>
                 </div>
                 <ul className="messages">
@@ -208,9 +253,10 @@ const home = {
                                     <li className={item.sender.userId == myId ? "my" : null}>
                                         {item.sender.userId !== myId && (
                                             <DDS_Profile.default
-                                                src={item.sender.plainProfileUrl}
+                                                src={item.sender.plainProfileUrl ? item.sender.plainProfileUrl : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"}
                                                 onClick={() => {
-                                                    clickProfile(item.sender);
+                                                    setsender(item.sender);
+                                                    setopenGallery(true);
                                                 }}
                                             />
                                         )}
@@ -227,7 +273,8 @@ const home = {
                                                         }}
                                                     >
                                                         {/*  */}
-                                                        {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.url}`} /> : null}
+                                                        {/* {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.url}`} /> : null} */}
+                                                        <img src={`${item.url}`} />
                                                     </div>
                                                 )}
                                                 <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
@@ -249,7 +296,8 @@ const home = {
                                                         }}
                                                     >
                                                         {/*  */}
-                                                        {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.url}`} /> : null}
+                                                        {/* {item.type == "image/jpeg" || item.type == "image/png" ? <img src={`${item.url}`} /> : null} */}
+                                                        <img src={`${item.url}`} />
                                                     </div>
                                                 )}
                                                 <div className="date">{moment(item.createdAt).format("A HH:mm")}</div>
@@ -262,6 +310,7 @@ const home = {
                     })}
                 </ul>
                 <DDS.modal.image {...modalData} />
+                <DDS.modal.center {...modalGallery} />
             </div>
         );
     },

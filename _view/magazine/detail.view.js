@@ -49,7 +49,7 @@ const Home = observer((props) => {
                 icon={<DDS.icons.shareNode />}
                 onClick={() => {
                     // common.uiChange("gnbOpen", true);
-                    common.onShare({ url: `${process.env.URL}/magazine/d/${router.query.seq}/` });
+                    common.onShare({ url: magazine.data.magazineDetail.deepLink });
                 }}
             />
         ),

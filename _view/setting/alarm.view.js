@@ -1,18 +1,13 @@
-import Head from "next/head";
-import Link from "next/link";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import Sticky from "react-sticky-el";
-import { InView } from "react-intersection-observer";
-import { animateScroll as scroll, Events, scrollSpy, scroller, Element } from "react-scroll";
+import cookie from "react-cookies";
 //------------------------------------------------------------------------------- Component
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
 import DK_template_GNB from "../../_lib/template/gnb";
 //------------------------------------------------------------------------------- Component
 //------------------------------------------------------------------------------- Module
-import Date_Module from "../../_lib/module/date";
 //------------------------------------------------------------------------------- Module
 
 const Home = observer((props) => {
@@ -24,7 +19,7 @@ const Home = observer((props) => {
     const [checked, setchecked] = useState(checkSet);
 
     //------------------------------------------------- Init Load
-    const initLoad = ({ initCheck, callback }) => {};
+    const initLoad = () => {};
     //------------------------------------------------- Init Load
 
     //------------------------------------------------- Router isReady
@@ -32,37 +27,27 @@ const Home = observer((props) => {
         if (router.isReady && router.pathname == "/setting/alarm") {
             common.getBuildId();
             initLoad({
-                callback: (e) => {},
+                callback: () => {},
             });
         }
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
 
-    const headerRight = [
-        () => (
-            <DDS.button.default
-                className="dds button none"
-                icon={<DDS.icons.bars />}
-                onClick={() => {
-                    common.uiChange("gnbOpen", true);
-                }}
-            />
-        ),
-    ];
-
     const changePushAgree = (type, status) => {
         var params = { type: type, status: status };
-        member.changePushAgree(params, (e) => {});
+        member.changePushAgree(params, () => {
+            location.href = "native://reload";
+        });
     };
 
     return (
         <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
-            <DK_template_header.default store={store} title={lang.t("setting.alarm.title")} right={headerRight} />
+            <DK_template_header.default store={store} title={lang.t("setting.alarm.title")} />
             <DK_template_GNB.default store={store} />
             {/* Content */}
             <DDS.layout.content>
                 <div className="page-setting main">
-                    {Router.query.device_alarm == "N" && (
+                    {cookie.load("device_alarm", { path: "/" }) == "N" && (
                         <dl>
                             <dd className="none">
                                 <div className="alarm-info">
@@ -70,7 +55,14 @@ const Home = observer((props) => {
                                     <p>{lang.t("setting.alarm.deviceOn.desc")}</p>
                                 </div>
                                 <span>
-                                    <DDS.button.default className="dds button primary small">{lang.t("setting.alarm.preferences")}</DDS.button.default>
+                                    <DDS.button.default
+                                        className="dds button primary small"
+                                        onClick={() => {
+                                            window.location.href = "native://device_alarm_settings";
+                                        }}
+                                    >
+                                        {lang.t("setting.alarm.preferences")}
+                                    </DDS.button.default>
                                 </span>
                             </dd>
                         </dl>

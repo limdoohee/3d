@@ -105,7 +105,7 @@ const Home = observer((props) => {
             setAmount(amount + 1);
             setDescDisabled(false);
             setIncrDisabled(false);
-            if (gallery.data.pointBalance <= (amount + 2) * 1500) {
+            if (gallery.data.pointBalance < (amount + 2) * 1500) {
                 setIncrDisabled(true);
             }
         } else {
@@ -149,6 +149,18 @@ const Home = observer((props) => {
         );
     };
 
+    const messageData1 = {
+        key: "luckyBox",
+        icon: <DDS.icons.circleExclamation />,
+        className: "arMessage",
+        content: lang.t("random.message1"),
+    };
+
+    const messageData2 = {
+        className: "buyingMessage",
+        content: lang.t("random.message2"),
+    };
+
     const modalData = {
         open: modalOpen,
         setOpen: setModalOpen,
@@ -162,16 +174,14 @@ const Home = observer((props) => {
                     setHelper(true);
                 }),
             action: () => {
-                gallery.data.pointBalance >= 1500 &&
+                1500 <= gallery.data.pointBalance &&
                     gallery.buyLuckyBox({ amount }, (e) => {
                         gallery.getLuckyBox("", (e) => {
+                            setAmount(1);
                             setBoxCnt((prev) => prev + amount);
                         });
 
-                        common.messageApi.open({
-                            className: "buyingMessage",
-                            content: "Lucky Box 구매가 완료되었습니다.",
-                        });
+                        common.messageApi.open(messageData2);
                     });
             },
         },
@@ -228,16 +238,11 @@ const Home = observer((props) => {
     function onTouchBox(event) {
         if (event.target.tagName === "SPAN" || event.target.tagName === "BUTTON") {
             console.log("btnClick", btnClick);
-            if ((event.target.className.includes("luckyBox") || event.target.parentNode.className.includes("luckyBox")) && !btnClick) {
+            if ((event.target.className.includes("luckyBox") || event.target.parentNode?.className.includes("luckyBox")) && !btnClick) {
                 gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
                     console.log("click");
                     if (e.id === "invalid_request") {
-                        common.messageApi.open({
-                            key: "luckyBox",
-                            icon: <DDS.icons.circleExclamation />,
-                            className: "arMessage",
-                            content: "이미 모든 드롭을 보유하고 있습니다.",
-                        });
+                        common.messageApi.open(messageData1);
                         setTimeout(() => {
                             btnClick = false;
                         }, 3000);

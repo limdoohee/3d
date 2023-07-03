@@ -1,11 +1,6 @@
-import Head from "next/head";
-import Link from "next/link";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import Sticky from "react-sticky-el";
-import { InView } from "react-intersection-observer";
-import { animateScroll as scroll, Events, scrollSpy, scroller, Element } from "react-scroll";
 //------------------------------------------------------------------------------- Component
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
@@ -13,16 +8,15 @@ import DK_template_GNB from "../../_lib/template/gnb";
 import DK_template_profile from "../../_lib/template/profile";
 //------------------------------------------------------------------------------- Component
 //------------------------------------------------------------------------------- Module
-import Date_Module from "../../_lib/module/date";
 //------------------------------------------------------------------------------- Module
 
 const Home = observer((props) => {
     const { store } = props;
-    const { common, lang, auth, magazine } = store;
+    const { common, lang, auth } = store;
     const router = useRouter();
 
     //------------------------------------------------- Init Load
-    const initLoad = ({ initCheck, callback }) => {};
+    const initLoad = () => {};
     //------------------------------------------------- Init Load
 
     //------------------------------------------------- Router isReady
@@ -30,28 +24,20 @@ const Home = observer((props) => {
         if (router.isReady && router.pathname == "/setting") {
             common.getBuildId();
             initLoad({
-                callback: (e) => {},
+                callback: () => {},
             });
         }
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
 
-    const headerRight = [
-        // () => (
-        //     <DDS.button.default
-        //         className="dds button none"
-        //         icon={<DDS.icons.bars />}
-        //         onClick={() => {
-        //             common.uiChange("gnbOpen", true);
-        //         }}
-        //     />
-        // ),
-    ];
-
     const [inputNickname, setinputNickname] = useState({ value: auth.loginResult.nickname, result: false });
     const [introduction, setintroduction] = useState({ value: auth.loginResult.introduction, result: false });
-    const [imageSeq, setimageSeq] = useState();
     const [submitCheck, setsubmitCheck] = useState(false);
+
+    const messageData = {
+        key: "saved",
+        content: lang.t("setting.profile.save"),
+    };
 
     const complete = () => {
         // analysisSubmit
@@ -64,7 +50,7 @@ const Home = observer((props) => {
         var params = {};
         inputNickname.value !== auth.loginResult.nickname && (params.nickname = inputNickname.value);
         introduction.value !== auth.loginResult.introduction && (params.introduction = introduction.value);
-        imageSeq && (params.profileImageSeq = imageSeq.imageSeq);
+        thumbnailImage !== auth.loginResult.profileImage && (params.profileImageUrl = thumbnailImage);
         console.log(params);
         auth.changeProfile(params, (res) => {
             console.log("changeProfile", res);
@@ -72,10 +58,7 @@ const Home = observer((props) => {
                 auth.checkLoginCSR({}, (re) => {
                     console.log("checkLoginCSR", re);
                     setsubmitCheck(false);
-                    common.messageApi.open({
-                        type: "success",
-                        content: "프로필 변경이 완료되었습니다.",
-                    });
+                    common.messageApi.open(messageData);
                 });
             } else {
                 common.messageApi.open({
@@ -86,32 +69,45 @@ const Home = observer((props) => {
         });
     };
 
-    const imageUpload = (e, k) => {
+    const imageUpload = (e) => {
         const formData = new FormData();
         formData.append("file", e.target.files[0]);
         auth.uploadProfileImage(formData, (res) => {
             if (res.imageSeq) {
                 console.log(res);
                 setthumbnailImage(res.imageUrl);
-                setimageSeq(res);
+                setsubmitCheck(true);
             }
         });
     };
 
+    const deletePhoto = () => {
+        setthumbnailImage(null);
+        setsubmitCheck(true);
+    };
+
     useEffect(() => {
-        if (imageSeq || inputNickname.value !== auth.loginResult.nickname || introduction.value !== auth.loginResult.introduction) {
+        if (inputNickname.value.length > 0 && (thumbnailImage !== auth.loginResult.profileImage || inputNickname.value !== auth.loginResult.nickname || introduction.value !== auth.loginResult.introduction)) {
             setsubmitCheck(true);
         } else {
             setsubmitCheck(false);
         }
-    }, [imageSeq, inputNickname, introduction]);
+    }, [thumbnailImage, inputNickname, introduction]);
 
     const [thumbnailImage, setthumbnailImage] = useState(auth.loginResult.profileImage);
+
+    const DeletePhoto = () => {
+        return (
+            <DDS.button.default className="dds button none" onClick={deletePhoto}>
+                {lang.t("setting.profile.deletePhoto")}
+            </DDS.button.default>
+        );
+    };
 
     return (
         <>
             <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
-                <DK_template_header.default store={store} title={lang.t("setting.profile.title")} right={headerRight} />
+                <DK_template_header.default store={store} title={lang.t("setting.profile.title")} />
                 <DK_template_GNB.default store={store} />
                 {/* Content */}
                 <DDS.layout.content>
@@ -119,13 +115,13 @@ const Home = observer((props) => {
                         <div className="account">
                             <div className="profile">
                                 <div className="inner">
-                                    <DDS.profile.default src={thumbnailImage} />
+                                    <DDS.profile.default src={thumbnailImage ? thumbnailImage : "https://asset.dropkitchen.xyz/contents/202306_dev/20230628174629865_dk.webp"} />
                                     <div className="camera">
                                         <DDS.icons.camera />
                                     </div>
                                     <input type="file" onChange={imageUpload} />
                                 </div>
-                                {/* <DDS.button.default className="dds button none">현재 사진 삭제</DDS.button.default> */}
+                                {thumbnailImage && <DeletePhoto />}
                             </div>
                             <ul className="form">
                                 <li>
@@ -154,33 +150,59 @@ export default Home;
 //////////////////////////////////////////////////////////////////////// IntroductionInput
 const IntroductionInput = (props) => {
     const { value, setvalue, store } = props;
-    const { common, auth, lang } = store;
+    const { lang } = store;
 
     const onChange = (e) => {
         var v = e.target.value;
-        setvalue((prevstate) => ({ ...prevstate, value: v }));
+        var t = checkByte(v);
+
+        if (t <= 50) {
+            settotalByte(t);
+            setvalue((prevstate) => ({ ...prevstate, value: v }));
+        } else {
+            settotalByte(50);
+        }
     };
 
     const inputSetting = {
         className: "dds input primary",
-        placeholder: "소개글을 입력해주세요",
-        onKeyUp: onChange,
+        placeholder: lang.t("setting.profile.descPlaceHolder"),
+        onChange: onChange,
         // onKeyDown: onChange,
         defaultValue: value.value,
         rows: 4,
+        value: value.value,
         // maxLength: 6,
     };
 
-    const [helpText, sethelpText] = useState("");
+    const checkByte = (v) => {
+        var t = 0;
+        if (v) {
+            for (var i = 0; i < v.length; i++) {
+                var currentByte = v.charCodeAt(i);
+                if (currentByte > 128) {
+                    t += 2;
+                } else {
+                    t++;
+                }
+            }
+        }
+        return t;
+    };
+
+    useEffect(() => {
+        settotalByte(checkByte(value.value));
+    }, []);
+
+    const [totalByte, settotalByte] = useState(0);
 
     return (
         <>
             <h5>
                 <strong>{lang.t("setting.profile.bio")}</strong>
-                <span>{value.value ? value.value.length : 0}/50</span>
+                <span>{totalByte}/50</span>
             </h5>
             <DDS.input.textarea {...inputSetting} />
-            <p>{helpText}</p>
         </>
     );
 };

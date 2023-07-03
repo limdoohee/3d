@@ -15,7 +15,7 @@ const Component = {
 
         return (
             <>
-                {pageMotion ? (
+                {/* {pageMotion ? (
                     <motion.div
                         initial={{ x: 50, opacity: 0, duration: 300 }}
                         animate={{ x: 0, opacity: 1, duration: 300 }}
@@ -45,7 +45,21 @@ const Component = {
                         {contextHolder}
                         {children}
                     </div>
-                )}
+                )} */}
+                <div
+                    // initial={{ x: 50, opacity: 0, duration: 300 }}
+                    // animate={{ x: 0, opacity: 1, duration: 300 }}
+                    // exit={{ x: 50, opacity: 0, duration: 300 }}
+                    // transition={{
+                    //     type: "spring",
+                    //     stiffness: 260,
+                    //     damping: 20,
+                    // }}
+                    className={`dds container ${className}`}
+                >
+                    {contextHolder}
+                    {children}
+                </div>
             </>
         );
     },

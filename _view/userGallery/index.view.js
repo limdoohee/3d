@@ -138,6 +138,7 @@ const Home = observer((props) => {
         img: "https://asset.dropkitchen.xyz/contents/202307_dev/20230703164613868_dk.webp",
         title: lang.t("gallery.modal.title"),
         context: lang.t("gallery.modal.context"),
+        subContext: "(" + lang.t("gallery.modal.subContext") + ")",
         confirm: {
             label: lang.t("gallery.modal.confirm"),
             action: () => {

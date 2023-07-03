@@ -32,10 +32,9 @@ const Home = observer((props) => {
 
     //------------------------------------------------- Init Load
     const initLoad = ({ initCheck, callback }) => {
-        var params = { size: 4, page: initCheck ? 0 : page };
+        var params = { size: 4, page: initCheck ? 0 : page, sort: sortValue + ",desc" };
         category && (params.category = category);
         router.query.keyword && (params.keyword = router.query.keyword);
-        console.log(params);
         magazine.magazineList(params, (e) => {
             if (!page) {
                 setinit(true);
@@ -43,7 +42,6 @@ const Home = observer((props) => {
             common.debug(e);
             callback && callback(e);
             setpage(page + 1);
-            console.log(magazine.data.magazineList.page.totalPages);
         });
     };
     //------------------------------------------------- Init Load
@@ -86,7 +84,7 @@ const Home = observer((props) => {
         {
             key: "3",
             label: `PICK`,
-            value: "value",
+            value: "pick",
         },
         {
             key: "4",
@@ -136,8 +134,19 @@ const Home = observer((props) => {
     const sortOpenAction = (e) => {
         setsortOpen(true);
     };
-    const sortChange = (e) => {
+    const sortChange = async (e) => {
         setsortValue(e);
+
+        magazine.initMagazineList();
+        await setpage(0);
+        var params = { size: 4, page: page, sort: e + ",desc" };
+        category && (params.category = category);
+        router.query.keyword && (params.keyword = router.query.keyword);
+        magazine.magazineList(params, (e) => {
+            if (!page) {
+                setinit(true);
+            }
+        });
     };
 
     const sortItems = [
@@ -168,9 +177,11 @@ const Home = observer((props) => {
                             sortOpenAction();
                         }}
                     >
-                        {sortItems.map((e, i) => {
-                            return <React.Fragment key={i}>{e.key == sortValue && e.label}</React.Fragment>;
-                        })}
+                        {sortItems
+                            .filter((e) => e.key === sortValue)
+                            .map((e, i) => {
+                                return <React.Fragment key={i}>{e.key == sortValue && e.label}</React.Fragment>;
+                            })}
                         <DDS.icons.angleDown />
                     </DDS.button.default>
                 </div>

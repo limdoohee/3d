@@ -52,18 +52,24 @@ const Home = {
 
                 if (t > 2) {
                     var params = { nickname: v };
-                    auth.checkNickname(params, (e) => {
-                        // common.debug(e);
-                        // sethelpText(e.id ? e.message : "사용 가능한 닉네임 입니다.");
-                        // setvalue((prevstate) => ({ ...prevstate, result: e.id ? false : true }));
-                        if (e.id) {
-                            sethelpText(e.message);
-                            setvalue((prevstate) => ({ ...prevstate, result: false }));
-                        } else {
-                            sethelpText(languageSet["help-success"]);
-                            setvalue((prevstate) => ({ ...prevstate, result: true }));
-                        }
-                    });
+                    if (auth.loginResult.nickname === v) {
+                        sethelpText("");
+                        setvalue((prevstate) => ({ ...prevstate, result: true }));
+                    } else {
+                        auth.checkNickname(params, (e) => {
+                            // common.debug(e);
+                            // sethelpText(e.id ? e.message : "사용 가능한 닉네임 입니다.");
+                            // setvalue((prevstate) => ({ ...prevstate, result: e.id ? false : true }));
+
+                            if (e.id) {
+                                sethelpText(e.message);
+                                setvalue((prevstate) => ({ ...prevstate, result: false }));
+                            } else {
+                                sethelpText(languageSet["help-success"]);
+                                setvalue((prevstate) => ({ ...prevstate, result: true }));
+                            }
+                        });
+                    }
                 } else {
                     sethelpText(languageSet["help-warning"]);
                     setvalue((prevstate) => ({ ...prevstate, result: false }));
@@ -135,7 +141,7 @@ const Home = {
                         <span>{totalByte}/20</span>
                     </h5>
                     <DDS.input.default {...inputSetting} className="dds input primary large" />
-                    <p>{helpText}</p>
+                    <p className={value.result ? "success" : ""}>{helpText}</p>
                 </div>
             </>
         );

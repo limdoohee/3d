@@ -1,5 +1,5 @@
 .page-setting.main {
-    min-height: 100vh;
+    min-height: calc(100vh - 50px);
     background-color: #f5f5f5;
 }
 .page-setting dl {
@@ -16,7 +16,7 @@
     margin: 0;
     font-weight: 400;
     font-size: 14px;
-    color: #af6262;
+    color: #969696;
 }
 .page-setting dl dd {
     padding: 20px;
@@ -100,12 +100,12 @@
     margin: 20px 0 32px 0;
 }
 .page-setting.sub .account > .profile {
-    padding: 20px;
+    padding: 20px 20px 32px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 23px;
+    gap: 19px;
 }
 .page-setting.sub .account > .profile > .dds.button {
     font-weight: 400;
@@ -114,6 +114,7 @@
     letter-spacing: -0.02em;
     color: #fd6e24;
     height: auto;
+    box-shadow: none;
 }
 
 .page-setting.sub .account > .profile .inner {
@@ -233,6 +234,19 @@
 .page-setting.sub .account > .form li .phone > .button {
     padding: 0 16px;
 }
+.page-setting.sub .account > .delete {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: var(--gray-6, #969696);
+    /* Regular/Line-height 1/Typography7 */
+    font-size: 14px;
+    letter-spacing: -0.28px;
+    padding: 23px 20px;
+    display: flex;
+    justify-content: space-between;
+}
 .page-setting.sub .confirm {
     position: fixed;
     bottom: 0;
@@ -247,9 +261,6 @@
     width: 100%;
     padding: 20px;
 }
-.page-setting.sub .save .button {
-}
-
 .page-setting .alarm-info {
     display: flex;
     gap: 8px;
@@ -261,4 +272,133 @@
     line-height: 130%;
     letter-spacing: -0.02em;
     color: #969696;
+}
+
+.page-setting.sub .account-delete {
+    padding: 20px 20px 0 20px;
+}
+.page-setting.sub .account-delete > h4 {
+    font-size: 22px;
+    font-weight: 700;
+    line-height: 130%;
+    letter-spacing: -0.66px;
+    margin: 0 0 32px 0;
+}
+.page-setting.sub .account-delete ul {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin: 0 0 32px 0;
+}
+.page-setting.sub .account-delete ul li {
+    display: flex;
+    padding: 16px;
+    align-items: center;
+    gap: 12px;
+    justify-content: space-between;
+    border-radius: 8px;
+    background: var(--gray-1, #f5f5f5);
+}
+.page-setting.sub .account-delete ul li div {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+.page-setting.sub .account-delete ol {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+    margin: 0 0 32px 0;
+}
+.page-setting.sub .account-delete ol li {
+    color: var(--gray-8, #404040);
+    /* Regular/Typography6 */
+    font-size: 16px;
+    line-height: 150%;
+    letter-spacing: -0.32px;
+    padding: 0 0 0 10px;
+    position: relative;
+}
+.page-setting.sub .account-delete ol li::before {
+    content: "";
+    position: absolute;
+    background-color: var(--gray-8, #404040);
+    width: 4px;
+    height: 4px;
+    top: 0.5em;
+    left: 0;
+    border-radius: 4px;
+}
+
+.page-setting.sub .account-delete .complete {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.page-setting.sub .account-delete .complete .image {
+    margin: 0 0 80px 0;
+}
+.page-setting.sub .account-delete .complete h4 {
+    color: var(--gray-9, #1f1f1f);
+    text-align: center;
+    font-size: 22px;
+    font-family: Pretendard;
+    font-weight: 700;
+    line-height: 150%;
+    letter-spacing: -0.66px;
+    margin: 0 0 8px 0;
+}
+.page-setting.sub .account-delete .complete p {
+    color: var(--gray-9, #1f1f1f);
+    text-align: center;
+
+    /* Regular/Typography6 */
+    font-size: 16px;
+    font-family: Pretendard;
+    line-height: 150%;
+    letter-spacing: -0.32px;
+}
+
+.page-setting.main .company {
+    display: flex;
+    padding: 16px 20px;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.page-setting.main .company h2 {
+    color: #969696;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 14px;
+    letter-spacing: -0.02em;
+    text-align: left;
+}
+
+.page-setting.main .company .dds.icons {
+    width: 16px;
+    height: 16px;
+}
+
+.page-setting.main .company .dds.icons path {
+    fill: #bdbdbd;
+}
+
+.page-setting.main .info {
+    padding: 0 20px;
+    color: #969696;
+    font-family: Pretendard;
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 18px;
+    letter-spacing: -0.02em;
+}
+
+.page-setting.main .info span {
+    text-decoration: underline;
+    margin-left: 5px;
 }

@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, createRef, forwardRef } from "react
 import { observer } from "mobx-react-lite";
 import "../../_lib/module/i18n";
 import { useTranslation } from "react-i18next";
-
+import cookie from "react-cookies";
 //------------------------------------------------------------------------------- Antd
 import { Drawer } from "antd";
 //------------------------------------------------------------------------------- Antd
@@ -40,11 +40,27 @@ const Home = observer((props) => {
     const [policyOpen, setpolicyOpen] = useState(false);
     const [policyType, setpolicyType] = useState("terms");
 
+    const [checkCookieCount, setcheckCookieCount] = useState(0);
+    const checkCookie = () => {
+        if (process.env.STAGE !== "PRODUCTION") {
+            var cookieAll = cookie.loadAll({ path: "/" });
+            alert(JSON.stringify(cookieAll));
+        }
+    };
+
     return (
         <>
             <div className="login wrap">
                 <div className="inner">
-                    <h1>
+                    <h1
+                        onClick={() => {
+                            setcheckCookieCount(checkCookieCount + 1);
+                            console.log(checkCookieCount);
+                            if (checkCookieCount == 10) {
+                                checkCookie();
+                            }
+                        }}
+                    >
                         <DDS.logos.default />
                     </h1>
                     <p id="login-desc">
@@ -126,6 +142,7 @@ const Home = observer((props) => {
                 <div
                     onClick={() => {
                         lang.changeLanguage("en");
+                        location.href = "native://reload";
                         setOpenLang(false);
                     }}
                 >
@@ -136,6 +153,7 @@ const Home = observer((props) => {
                     onClick={() => {
                         lang.changeLanguage("ko");
                         setOpenLang(false);
+                        location.href = "native://reload";
                     }}
                 >
                     한국어
