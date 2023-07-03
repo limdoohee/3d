@@ -177,9 +177,11 @@ const Home = observer((props) => {
                             sortOpenAction();
                         }}
                     >
-                        {sortItems.map((e, i) => {
-                            return <React.Fragment key={i}>{e.key == sortValue && e.label}</React.Fragment>;
-                        })}
+                        {sortItems
+                            .filter((e) => e.key === sortValue)
+                            .map((e, i) => {
+                                return <React.Fragment key={i}>{e.key == sortValue && e.label}</React.Fragment>;
+                            })}
                         <DDS.icons.angleDown />
                     </DDS.button.default>
                 </div>

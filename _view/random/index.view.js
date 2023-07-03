@@ -105,7 +105,7 @@ const Home = observer((props) => {
             setAmount(amount + 1);
             setDescDisabled(false);
             setIncrDisabled(false);
-            if (gallery.data.pointBalance <= (amount + 2) * 1500) {
+            if (gallery.data.pointBalance < (amount + 2) * 1500) {
                 setIncrDisabled(true);
             }
         } else {
@@ -174,9 +174,10 @@ const Home = observer((props) => {
                     setHelper(true);
                 }),
             action: () => {
-                gallery.data.pointBalance >= 1500 &&
+                1500 <= gallery.data.pointBalance &&
                     gallery.buyLuckyBox({ amount }, (e) => {
                         gallery.getLuckyBox("", (e) => {
+                            setAmount(1);
                             setBoxCnt((prev) => prev + amount);
                         });
 

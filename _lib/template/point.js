@@ -237,30 +237,72 @@ const PointList = observer((props) => {
     const router = useRouter();
     const { tabKey } = props;
     const { common, lang, point } = props.store;
+    const [sortValue, setsortValue] = useState("All");
+    const [sortOpen, setsortOpen] = useState(false);
+
+    const sortItems = [
+        { key: "All", label: lang.t("point.sort.all") },
+        { key: "plus", label: lang.t("point.sort.accumulated") },
+        { key: "minus", label: lang.t("point.sort.used") },
+    ];
+
+    const sortOpenAction = (e) => {
+        setsortOpen(true);
+    };
+
+    const sortChange = async (e) => {
+        setsortValue(e);
+    };
+
     return (
         <>
+            <div className="sort">
+                {point.data.pointHistory.point.length > 0 && (
+                    <DDS.button.default
+                        onClick={() => {
+                            sortOpenAction();
+                        }}
+                    >
+                        {sortItems
+                            .filter((e) => e.key === sortValue)
+                            .map((e) => (
+                                <React.Fragment key={e.key}>{e.label}</React.Fragment>
+                            ))}
+                        <DDS.icons.angleDown />
+                    </DDS.button.default>
+                )}
+            </div>
             <ul className={`point-list ${point.data.pointHistory.point.length > 0 ? "" : "empty"}`}>
                 {point.data.pointHistory.point.length > 0 ? (
-                    point.data.pointHistory.point.map((item, key) => {
-                        return (
-                            <React.Fragment key={key}>
-                                <li>
+                    point.data.pointHistory.point
+                        .filter((e) => (sortValue === "plus" ? e.pointAmount > 0 : sortValue === "minus" ? e.pointAmount < 0 : e))
+                        .map((item, key) => {
+                            return (
+                                <li key={key}>
                                     <div>
                                         <strong>{item.description}</strong>
-                                        {/* <span>{item.description}</span> */}
                                     </div>
                                     <div>
                                         <strong className={item.pointAmount > 0 ? "plus" : ""}>{common.numberFormat(parseInt(item.pointAmount))}</strong>
                                         <span>{moment(item.createdAt).format("YYYY.MM.DD")}</span>
                                     </div>
                                 </li>
-                            </React.Fragment>
-                        );
-                    })
+                            );
+                        })
                 ) : (
                     <li>{lang.t("point.empty")}</li>
                 )}
             </ul>
+            <DDS.actionsheet.default
+                open={sortOpen}
+                onClose={(callback) => {
+                    setsortOpen(false);
+                    callback && callback();
+                }}
+                items={sortItems}
+                active={sortValue}
+                change={sortChange}
+            />
         </>
     );
 });
