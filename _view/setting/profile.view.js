@@ -82,6 +82,7 @@ const Home = observer((props) => {
             if (res.imageSeq) {
                 console.log(res);
                 setthumbnailImage(res.imageUrl);
+                setsubmitCheck(true);
             }
         });
     };
