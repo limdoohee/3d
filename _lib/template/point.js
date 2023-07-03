@@ -1,16 +1,12 @@
-import Head from "next/head";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import moment from "moment";
 //------------------------------------------------------------------------------- Store
-import Store from "../../_store/store";
-const store = new Store();
 //------------------------------------------------------------------------------- Store
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- Component
-import { Drawer } from "antd";
 import DDS from "../../_lib/component/dds";
 //------------------------------------------------------------------------------- Component
 
@@ -37,7 +33,7 @@ const Home = {
             if (router.isReady && router.pathname == "/point") {
                 common.getBuildId();
                 initLoad({
-                    callback: (e) => {},
+                    callback: () => {},
                 });
             }
         }, [router.isReady, router.asPath]);
@@ -131,7 +127,7 @@ const Home = {
 export default Home;
 
 const PointInformation = observer((props) => {
-    const { common, lang, auth } = props.store;
+    const { lang, auth } = props.store;
     const [open, setOpen] = useState(false);
 
     const modalData = {
@@ -234,8 +230,6 @@ const PointInformation = observer((props) => {
 });
 
 const PointList = observer((props) => {
-    const router = useRouter();
-    const { tabKey } = props;
     const { common, lang, point } = props.store;
     const [sortValue, setsortValue] = useState("All");
     const [sortOpen, setsortOpen] = useState(false);
@@ -246,7 +240,7 @@ const PointList = observer((props) => {
         { key: "minus", label: lang.t("point.sort.used") },
     ];
 
-    const sortOpenAction = (e) => {
+    const sortOpenAction = () => {
         setsortOpen(true);
     };
 

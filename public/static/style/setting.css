@@ -261,9 +261,6 @@
     width: 100%;
     padding: 20px;
 }
-.page-setting.sub .save .button {
-}
-
 .page-setting .alarm-info {
     display: flex;
     gap: 8px;

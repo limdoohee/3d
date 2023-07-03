@@ -54,3 +54,6 @@
 .dds.input.secondary.ant-input-affix-wrapper:focus {
     background: #ededed;
 }
+textarea.dds.input {
+    resize: none;
+}
