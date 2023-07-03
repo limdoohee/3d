@@ -38,7 +38,6 @@ const Home = observer((props) => {
 
     const [inputNickname, setinputNickname] = useState({ value: auth.loginResult.nickname, result: false });
     const [introduction, setintroduction] = useState({ value: auth.loginResult.introduction, result: false });
-    const [imageSeq, setimageSeq] = useState();
     const [submitCheck, setsubmitCheck] = useState(false);
 
     const messageData = {
@@ -57,7 +56,7 @@ const Home = observer((props) => {
         var params = {};
         inputNickname.value !== auth.loginResult.nickname && (params.nickname = inputNickname.value);
         introduction.value !== auth.loginResult.introduction && (params.introduction = introduction.value);
-        imageSeq && (params.profileImageSeq = imageSeq.imageSeq);
+        thumbnailImage !== auth.loginResult.profileImage && (params.profileImageUrl = thumbnailImage);
         console.log(params);
         auth.changeProfile(params, (res) => {
             console.log("changeProfile", res);
@@ -83,20 +82,32 @@ const Home = observer((props) => {
             if (res.imageSeq) {
                 console.log(res);
                 setthumbnailImage(res.imageUrl);
-                setimageSeq(res);
             }
         });
     };
 
+    const deletePhoto = () => {
+        setthumbnailImage(null);
+        setsubmitCheck(true);
+    };
+
     useEffect(() => {
-        if (inputNickname.value.length > 0 && (imageSeq || inputNickname.value !== auth.loginResult.nickname || introduction.value !== auth.loginResult.introduction)) {
+        if (inputNickname.value.length > 0 && (thumbnailImage !== auth.loginResult.profileImage || inputNickname.value !== auth.loginResult.nickname || introduction.value !== auth.loginResult.introduction)) {
             setsubmitCheck(true);
         } else {
             setsubmitCheck(false);
         }
-    }, [imageSeq, inputNickname, introduction]);
+    }, [thumbnailImage, inputNickname, introduction]);
 
     const [thumbnailImage, setthumbnailImage] = useState(auth.loginResult.profileImage);
+
+    const DeletePhoto = () => {
+        return (
+            <DDS.button.default className="dds button none" onClick={deletePhoto}>
+                {lang.t("setting.profile.deletePhoto")}
+            </DDS.button.default>
+        );
+    };
 
     return (
         <>
@@ -115,7 +126,7 @@ const Home = observer((props) => {
                                     </div>
                                     <input type="file" onChange={imageUpload} />
                                 </div>
-                                {/* <DDS.button.default className="dds button none">현재 사진 삭제</DDS.button.default> */}
+                                {thumbnailImage && <DeletePhoto />}
                             </div>
                             <ul className="form">
                                 <li>

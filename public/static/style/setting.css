@@ -100,12 +100,12 @@
     margin: 20px 0 32px 0;
 }
 .page-setting.sub .account > .profile {
-    padding: 20px;
+    padding: 20px 20px 32px;
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    gap: 23px;
+    gap: 19px;
 }
 .page-setting.sub .account > .profile > .dds.button {
     font-weight: 400;
@@ -114,6 +114,7 @@
     letter-spacing: -0.02em;
     color: #fd6e24;
     height: auto;
+    box-shadow: none;
 }
 
 .page-setting.sub .account > .profile .inner {
