@@ -137,7 +137,7 @@
     },
     "setting": {
         "title": "설정",
-        "profile": { "title": "내 정보 수정", "bio": "소개", "descPlaceHolder": "소개 문구를 입력해 주세요", "save": "저장되었습니다!" },
+        "profile": { "title": "내 정보 수정", "bio": "소개", "descPlaceHolder": "소개 문구를 입력해 주세요", "save": "저장되었습니다!", "deletePhoto": "현재 사진 삭제" },
         "alarm": {
             "title": "알림",
             "setting": { "title": "알림 설정" },
@@ -151,7 +151,7 @@
         },
         "account": {
             "title": "계정",
-            "info": { "title": "계정 정보", "email": "Email", "phone": "Mobile number" },
+            "info": { "title": "계정 정보", "email": "이메일", "phone": "휴대폰 번호" },
             "language": { "title": "언어" },
             "delete": {
                 "title": "회원 탈퇴",

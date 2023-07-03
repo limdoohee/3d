@@ -136,7 +136,7 @@
     },
     "setting": {
         "title": "Setting",
-        "profile": { "title": "Edit Profile", "bio": "Bio", "descPlaceHolder": "Tell us a little about yourself.", "save": "Saved!!" },
+        "profile": { "title": "Edit Profile", "bio": "Bio", "descPlaceHolder": "Tell us a little about yourself.", "save": "Saved!!", "deletePhoto": "Delete Photo" },
         "alarm": {
             "title": "Notifications",
             "setting": { "title": "Preferences" },

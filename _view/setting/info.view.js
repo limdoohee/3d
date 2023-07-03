@@ -47,18 +47,6 @@ const Home = observer((props) => {
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
 
-    const headerRight = [
-        () => (
-            <DDS.button.default
-                className="dds button none"
-                icon={<DDS.icons.bars />}
-                onClick={() => {
-                    common.uiChange("gnbOpen", true);
-                }}
-            />
-        ),
-    ];
-
     const [policyOpen, setpolicyOpen] = useState(false);
     const [policyType, setpolicyType] = useState("terms");
 
@@ -85,7 +73,7 @@ const Home = observer((props) => {
 
     return (
         <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
-            <DK_template_header.default store={store} title={lang.t("setting.info.title")} right={headerRight} />
+            <DK_template_header.default store={store} title={lang.t("setting.info.title")} />
             <DK_template_GNB.default store={store} />
             {/* Content */}
             <DDS.layout.content>
