@@ -35,21 +35,9 @@ const Home = observer((props) => {
     }, [router.isReady, router.asPath]);
     //------------------------------------------------- Router isReady
 
-    const headerRight = [
-        () => (
-            <DDS.button.default
-                className="dds button none"
-                icon={<DDS.icons.bars />}
-                onClick={() => {
-                    common.uiChange("gnbOpen", true);
-                }}
-            />
-        ),
-    ];
-
     return (
         <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
-            <DK_template_header.default store={store} title={lang.t("setting.title")} right={headerRight} />
+            <DK_template_header.default store={store} title={lang.t("setting.account.language.title")} r />
             <DK_template_GNB.default store={store} />
             {/* Content */}
             <DDS.layout.content>
