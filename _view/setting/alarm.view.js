@@ -1,18 +1,12 @@
-import Head from "next/head";
-import Link from "next/link";
 import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import Sticky from "react-sticky-el";
-import { InView } from "react-intersection-observer";
-import { animateScroll as scroll, Events, scrollSpy, scroller, Element } from "react-scroll";
 //------------------------------------------------------------------------------- Component
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
 import DK_template_GNB from "../../_lib/template/gnb";
 //------------------------------------------------------------------------------- Component
 //------------------------------------------------------------------------------- Module
-import Date_Module from "../../_lib/module/date";
 //------------------------------------------------------------------------------- Module
 
 const Home = observer((props) => {
@@ -24,7 +18,7 @@ const Home = observer((props) => {
     const [checked, setchecked] = useState(checkSet);
 
     //------------------------------------------------- Init Load
-    const initLoad = ({ initCheck, callback }) => {};
+    const initLoad = () => {};
     //------------------------------------------------- Init Load
 
     //------------------------------------------------- Router isReady
@@ -32,7 +26,7 @@ const Home = observer((props) => {
         if (router.isReady && router.pathname == "/setting/alarm") {
             common.getBuildId();
             initLoad({
-                callback: (e) => {},
+                callback: () => {},
             });
         }
     }, [router.isReady, router.asPath]);
@@ -40,7 +34,7 @@ const Home = observer((props) => {
 
     const changePushAgree = (type, status) => {
         var params = { type: type, status: status };
-        member.changePushAgree(params, (e) => {});
+        member.changePushAgree(params, () => {});
     };
 
     return (

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import React from "react";
 import { Tabs } from "antd-mobile";
 
 const Component = {

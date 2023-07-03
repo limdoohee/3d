@@ -1,7 +1,4 @@
-import Head from "next/head";
-import Link from "next/link";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import React from "react";
 import { observer } from "mobx-react-lite";
 //------------------------------------------------------------------------------- Component
 import DDS from "../../_lib/component/dds";
@@ -9,7 +6,6 @@ import DDS from "../../_lib/component/dds";
 
 const Home = observer((props) => {
     const { store } = props;
-    const router = useRouter();
 
     const onChange = (key) => {
         console.log(key);
@@ -53,7 +49,7 @@ const Home = observer((props) => {
                 <div className="dds style-guide">
                     <p>
                         <DDS.button.default
-                            onClick={(e) => {
+                            onClick={() => {
                                 location.href = "/dds";
                             }}
                         >

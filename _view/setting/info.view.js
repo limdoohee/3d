@@ -1,11 +1,6 @@
-import Head from "next/head";
-import Link from "next/link";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import Sticky from "react-sticky-el";
-import { InView } from "react-intersection-observer";
-import { animateScroll as scroll, Events, scrollSpy, scroller, Element } from "react-scroll";
 //------------------------------------------------------------------------------- Component
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
@@ -13,12 +8,11 @@ import DK_template_GNB from "../../_lib/template/gnb";
 import DK_Template_Policy from "../../_lib/template/policy";
 //------------------------------------------------------------------------------- Component
 //------------------------------------------------------------------------------- Module
-import Date_Module from "../../_lib/module/date";
 //------------------------------------------------------------------------------- Module
 
 const Home = observer((props) => {
     const { store } = props;
-    const { common, lang, auth, magazine } = store;
+    const { common, lang, auth } = store;
     const router = useRouter();
     const [viewInfo, setViewInfo] = useState(false);
 
@@ -33,7 +27,7 @@ const Home = observer((props) => {
     ];
 
     //------------------------------------------------- Init Load
-    const initLoad = ({ initCheck, callback }) => {};
+    const initLoad = () => {};
     //------------------------------------------------- Init Load
 
     //------------------------------------------------- Router isReady
@@ -41,7 +35,7 @@ const Home = observer((props) => {
         if (router.isReady && router.pathname == "/setting") {
             common.getBuildId();
             initLoad({
-                callback: (e) => {},
+                callback: () => {},
             });
         }
     }, [router.isReady, router.asPath]);
