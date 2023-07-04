@@ -87,30 +87,49 @@ const Home = observer((props) => {
 
                     <ul className="login-sns">
                         {login_data.map((l, idx) => {
-                            return (
-                                <li
-                                    key={idx}
-                                    className={l.className}
-                                    onClick={() => {
-                                        `${auth.login(`${l.className}`, router.asPath)}`;
-                                    }}
-                                >
-                                    {l.img}
-                                    <span>{l.login_title} </span>
-                                    {recentLogin === l.className.toUpperCase() && <span className="recent">{t(`login.main.recent`)}</span>}
-                                </li>
-                            );
+                            var view = true;
+                            if (localStorage.getItem("reviewYn") === "Y") {
+                                switch (l.className) {
+                                    case "kakao":
+                                        view = false;
+                                        break;
+                                    case "naver":
+                                        view = false;
+                                        break;
+                                }
+                            }
+                            if (view) {
+                                return (
+                                    <li
+                                        key={idx}
+                                        className={l.className}
+                                        onClick={() => {
+                                            `${auth.login(`${l.className}`, router.asPath)}`;
+                                        }}
+                                    >
+                                        {l.img}
+                                        <span>{l.login_title} </span>
+                                        {recentLogin === l.className.toUpperCase() && <span className="recent">{t(`login.main.recent`)}</span>}
+                                    </li>
+                                );
+                            }
                         })}
                     </ul>
-                    <div className="help">
-                        <div>
-                            <p>{t(`login.main.help`)}</p>
-                            <strong onClick={showSignUp}>
-                                {t(`login.main.signUp`)}
-                                <span className="tooltip">{t(`login.main.tooltip`)}</span>
-                            </strong>
+                    {localStorage.getItem("reviewYn") !== "Y" && (
+                        <div className="help">
+                            <div>
+                                <p>{t(`login.main.help`)}</p>
+                                <strong
+                                    onClick={() => {
+                                        showSignUp();
+                                    }}
+                                >
+                                    {t(`login.main.signUp`)}
+                                    <span className="tooltip">{t(`login.main.tooltip`)}</span>
+                                </strong>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 <div className="language-select">
