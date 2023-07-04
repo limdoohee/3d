@@ -9,8 +9,9 @@ const Home = observer(() => {
             await cookie.remove("loginToken", { path: "/" });
             await cookie.save("loginToken", Router.query.loginToken, { path: "/" });
 
-            Router.query.type && sessionStorage.setItem("type");
-            Router.query.code && sessionStorage.setItem("code");
+            Router.query.type && sessionStorage.setItem("type", Router.query.type);
+            Router.query.code && sessionStorage.setItem("code", Router.query.code);
+            Router.query.reviewYn === "Y" && localStorage.setItem("reviewYn", Router.query.reviewYn);
 
             location.href = "/";
         };
