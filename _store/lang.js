@@ -24,6 +24,12 @@ class Store {
         localStorage.setItem("lang", lng);
         Cookies.save("lang", lng);
         this.changeLangApi({ lang: lng });
+
+        this.store.common.analysisSubmit({
+            component: "lang",
+            componentId: `lang_change_${lng}`,
+            action: "click",
+        });
     }
 
     check() {

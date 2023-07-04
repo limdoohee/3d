@@ -78,6 +78,11 @@ const Home = observer((props) => {
                             onClick={() => {
                                 setpolicyOpen(true);
                                 setpolicyType("terms");
+                                common.analysisSubmit({
+                                    component: "terms",
+                                    componentId: `terms_read`,
+                                    action: "click",
+                                });
                             }}
                         >
                             <h4>{lang.t("setting.info.termsOfUse")}</h4>
@@ -88,6 +93,11 @@ const Home = observer((props) => {
                         <dd
                             className="none"
                             onClick={() => {
+                                common.analysisSubmit({
+                                    component: "privacy",
+                                    componentId: `privacy_read`,
+                                    action: "click",
+                                });
                                 setpolicyOpen(true);
                                 setpolicyType("privacy");
                             }}

@@ -156,6 +156,11 @@ const Home = observer((props) => {
     ];
 
     const onMove = (seq) => {
+        common.analysisSubmit({
+            component: "magazine",
+            componentId: "magazine_read",
+            action: "click",
+        });
         location.href = `/magazine/d/${seq}`;
     };
 

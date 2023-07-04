@@ -44,6 +44,12 @@ const Home = {
             const params = { pushSeq: item.seq };
             alarm.readPush(params, (e) => {
                 item.targetUrl && item.targetUrl !== null && item.targetUrl !== undefined ? (location.href = item.targetUrl) : "";
+
+                common.analysisSubmit({
+                    component: "alarm",
+                    componentId: "alarm_read",
+                    action: "click",
+                });
             });
         };
 

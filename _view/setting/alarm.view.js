@@ -34,6 +34,12 @@ const Home = observer((props) => {
     //------------------------------------------------- Router isReady
 
     const changePushAgree = (type, status) => {
+        common.analysisSubmit({
+            component: "alarm",
+            componentId: `alarm_agree_${type}_${status}`,
+            action: "click",
+        });
+
         var params = { type: type, status: status };
         member.changePushAgree(params, () => {
             location.href = "native://reload";
