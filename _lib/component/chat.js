@@ -72,6 +72,11 @@ const home = {
                         console.log("sendMessage");
                         home.messageScrollDown();
                         chat.updateState({ ...chat.state, messageInputValue: "" });
+                        chat.store.common.analysisSubmit({
+                            component: "chat",
+                            componentId: "send_message",
+                            action: "click",
+                        });
                     },
                 });
             }

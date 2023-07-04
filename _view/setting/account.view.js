@@ -82,6 +82,11 @@ const Home = observer((props) => {
                                         <DDS.button.default
                                             className="dds button primary small"
                                             onClick={() => {
+                                                common.analysisSubmit({
+                                                    component: "account",
+                                                    componentId: "account_change_phone",
+                                                    action: "click",
+                                                });
                                                 location.href = "/setting/phone";
                                             }}
                                         >
@@ -95,6 +100,11 @@ const Home = observer((props) => {
                             <span>{lang.t("setting.account.delete.ask")}</span>
                             <span
                                 onClick={() => {
+                                    common.analysisSubmit({
+                                        component: "account",
+                                        componentId: "account_delete_request",
+                                        action: "click",
+                                    });
                                     location.href = "/setting/account_delete";
                                 }}
                             >

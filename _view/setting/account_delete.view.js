@@ -70,6 +70,11 @@ const Home = observer((props) => {
         cancel: {
             label: lang.t("setting.account.delete.desc10"),
             action: () => {
+                common.analysisSubmit({
+                    component: "account",
+                    componentId: "account_delete_confirm",
+                    action: "click",
+                });
                 member.signout({}, async (e) => {
                     if (e.result == "ok") {
                         await cookie.remove("loginToken", { path: "/" });
@@ -131,6 +136,11 @@ const Home = observer((props) => {
                             className="dds button primary block large"
                             onClick={() => {
                                 setOpen(true);
+                                common.analysisSubmit({
+                                    component: "account",
+                                    componentId: "account_delete_start",
+                                    action: "click",
+                                });
                             }}
                             disabled={!check}
                         >

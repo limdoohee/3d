@@ -128,6 +128,12 @@ class Store {
         this.pageInit = true;
         this.debug("페이지 Init 완료");
         this.debug(this.pageInit);
+
+        this.analysisSubmit({
+            component: "",
+            componentId: "",
+            action: "enter",
+        });
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 데이터 수집

@@ -55,6 +55,11 @@ const Home = observer((props) => {
         auth.changeProfile(params, (res) => {
             console.log("changeProfile", res);
             if (res.result == "ok") {
+                common.analysisSubmit({
+                    component: "profile",
+                    componentId: `pprofile_change_complete`,
+                    action: "click",
+                });
                 auth.checkLoginCSR({}, (re) => {
                     console.log("checkLoginCSR", re);
                     setsubmitCheck(false);
