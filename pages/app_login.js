@@ -1,23 +1,32 @@
-import Router from "next/router";
+import Router, { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import cookie from "react-cookies";
 
 const Home = observer(() => {
+    const router = useRouter();
+
+    const appCheck = async (callback) => {
+        await cookie.remove("loginToken", { path: "/" });
+        await cookie.save("loginToken", router.query.loginToken, { path: "/" });
+
+        router.query.type && (await sessionStorage.setItem("type", router.query.type));
+        router.query.code && (await sessionStorage.setItem("code", router.query.code));
+        if (router.query.reviewYn == "Y") {
+            console.log("reviewYn");
+            await localStorage.setItem("reviewYn", router.query.reviewYn);
+        }
+        callback();
+    };
+
     useEffect(() => {
-        const appCheck = async () => {
-            await cookie.remove("loginToken", { path: "/" });
-            await cookie.save("loginToken", Router.query.loginToken, { path: "/" });
+        if (router.isReady) {
+            appCheck(() => {
+                location.href = "/";
+            });
+        }
+    }, [router.isReady]);
 
-            Router.query.type && sessionStorage.setItem("type", Router.query.type);
-            Router.query.code && sessionStorage.setItem("code", Router.query.code);
-            Router.query.reviewYn === "Y" && localStorage.setItem("reviewYn", Router.query.reviewYn);
-
-            location.href = "/";
-        };
-
-        appCheck();
-    }, []);
     return <></>;
 });
 
