@@ -67,6 +67,11 @@ const Home = observer((props) => {
                             className="dds button primary block large"
                             onClick={() => {
                                 //
+                                common.analysisSubmit({
+                                    component: "account",
+                                    componentId: "account_delete_complete",
+                                    action: "click",
+                                });
                                 location.href = "/login";
                             }}
                         >
