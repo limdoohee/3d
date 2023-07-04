@@ -59,6 +59,7 @@ const Home = observer((props) => {
                     console.log("checkLoginCSR", re);
                     setsubmitCheck(false);
                     common.messageApi.open(messageData);
+                    location.href = "native://reload";
                 });
             } else {
                 common.messageApi.open({

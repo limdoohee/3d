@@ -12,7 +12,7 @@ const Home = observer(() => {
 
         router.query.type && (await sessionStorage.setItem("type", router.query.type));
         router.query.code && (await sessionStorage.setItem("code", router.query.code));
-        if (router.query.reviewYn == "Y") {
+        if (router.query.reviewYn) {
             console.log("reviewYn");
             await localStorage.setItem("reviewYn", router.query.reviewYn);
         }
