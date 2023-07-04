@@ -7,9 +7,10 @@ const Home = observer(() => {
     const router = useRouter();
 
     const appCheck = async (callback) => {
-        await cookie.remove("loginToken", { path: "/" });
-        await cookie.save("loginToken", router.query.loginToken, { path: "/" });
-
+        if (router.query.loginToken) {
+            await cookie.remove("loginToken", { path: "/" });
+            await cookie.save("loginToken", router.query.loginToken, { path: "/" });
+        }
         router.query.type && (await sessionStorage.setItem("type", router.query.type));
         router.query.code && (await sessionStorage.setItem("code", router.query.code));
         if (router.query.reviewYn) {
