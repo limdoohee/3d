@@ -201,8 +201,8 @@
             "desc": "You got the digital art!\nWant to view it in My Gallery?"
         },
         "button": {
-            "open": "Open Your Lucky Box",
-            "buy": "Buy Lucky Box",
+            "open": "Open",
+            "buy": "Buy",
             "confirm": "Confirm",
             "goGallery": "Go to My Gallery"
         },
