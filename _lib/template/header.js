@@ -31,6 +31,11 @@ const Home = {
                                 className="dds button none"
                                 icon={<DDS.icons.angleLeft />}
                                 onClick={() => {
+                                    common.analysisSubmit({
+                                        component: "button",
+                                        componentId: "header_back",
+                                        action: "click",
+                                    });
                                     if (router.query.from) {
                                         location.href = router.query.from;
                                     } else if (back) {
