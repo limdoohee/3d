@@ -220,28 +220,28 @@ const Gallery = observer((props) => {
                         function (gltf) {
                             model = gltf.scene;
                             model.position.set(i * 2.5, -1, 0);
+                            model.scale.multiplyScalar(6);
 
-                            switch (dropData[i].dropSeq) {
-                                case 1:
-                                    model.scale.multiplyScalar(7);
-                                    break;
-                                case 2:
-                                    model.scale.multiplyScalar(10);
-                                    break;
-                                case 3:
-                                    model.scale.multiplyScalar(0.8);
-                                    break;
-                                case 4:
-                                    model.scale.multiplyScalar(6);
-                                    break;
-                                case 5:
-                                    model.position.y = -0.8;
-                                    model.scale.multiplyScalar(6);
-                                    break;
-                                default:
-                                    model.scale.multiplyScalar(10);
-                                    break;
-                            }
+                            // switch (dropData[i].dropSeq) {
+                            //     case 1:
+                            //         model.scale.multiplyScalar(6);
+                            //         break;
+                            //     case 2:
+                            //         model.scale.multiplyScalar(6);
+                            //         break;
+                            //     case 3:
+                            //         model.scale.multiplyScalar(6);
+                            //         break;
+                            //     case 4:
+                            //         model.scale.multiplyScalar(6);
+                            //         break;
+                            //     case 5:
+                            //         model.scale.multiplyScalar(6);
+                            //         break;
+                            //     default:
+                            //         model.scale.multiplyScalar(6);
+                            //         break;
+                            // }
                             scene.add(model);
 
                             model.name = "model" + i;
