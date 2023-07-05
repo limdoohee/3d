@@ -6,7 +6,7 @@ const Home = () => {
         const logout = async () => {
             await cookie.remove("loginToken", { path: "/" });
             await sessionStorage.clear();
-            await localStorage.clear();
+            // await localStorage.clear();
             location.href = "/";
         };
         logout();
