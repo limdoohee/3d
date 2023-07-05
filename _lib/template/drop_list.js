@@ -77,6 +77,11 @@ const Home = {
             confirm: {
                 label: dropListLangSet.invite.give,
                 action: () => {
+                    common.analysisSubmit({
+                        component: "button",
+                        componentId: "invite_complete",
+                        action: "click",
+                    });
                     setshareModal(false);
                     common.onShare({
                         url: auth.loginResult.inviteLink,
@@ -85,14 +90,30 @@ const Home = {
             },
             cancel: {
                 label: lang.t("gallery.modal.close"),
-                action: () => {},
+                action: () => {
+                    common.analysisSubmit({
+                        component: "button",
+                        componentId: "invite_cancel",
+                        action: "click",
+                    });
+                },
             },
         };
 
         return (
             <>
                 <div className="dk drop-list">
-                    <div className="collection">
+                    <div
+                        className="collection"
+                        onClick={() => {
+                            common.analysisSubmit({
+                                component: "button",
+                                componentId: "dropList_gallery",
+                                action: "click",
+                            });
+                            location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
+                        }}
+                    >
                         <div className="plate">
                             <span>
                                 <DDS.icons.drop />
@@ -116,6 +137,11 @@ const Home = {
                                         <div
                                             className="left"
                                             onClick={() => {
+                                                common.analysisSubmit({
+                                                    component: "button",
+                                                    componentId: "dropList_detail",
+                                                    action: "click",
+                                                });
                                                 window.location.href = "native://drop_detail?dropSeq=" + item.dropSeq;
                                             }}
                                         >
@@ -134,6 +160,11 @@ const Home = {
                                                     <DDS.chips.default className={"primary"}>{dropListLangSet.collected}</DDS.chips.default>
                                                     <DDS.icons.paperPlanePlus
                                                         onClick={() => {
+                                                            common.analysisSubmit({
+                                                                component: "button",
+                                                                componentId: "dropList_invite",
+                                                                action: "click",
+                                                            });
                                                             setshareModal(true);
                                                         }}
                                                     />
@@ -144,6 +175,11 @@ const Home = {
                                                         <DDS.button.default
                                                             className="dds button small go"
                                                             onClick={() => {
+                                                                common.analysisSubmit({
+                                                                    component: "button",
+                                                                    componentId: "dropList_main",
+                                                                    action: "click",
+                                                                });
                                                                 window.location.href = "/main";
                                                             }}
                                                         >
@@ -154,6 +190,11 @@ const Home = {
                                                             <DDS.chips.default className={"secondary"}>{dropListLangSet.collect}</DDS.chips.default>
                                                             <DDS.icons.cubePlus
                                                                 onClick={() => {
+                                                                    common.analysisSubmit({
+                                                                        component: "button",
+                                                                        componentId: "dropList_luckyBox",
+                                                                        action: "click",
+                                                                    });
                                                                     window.location.href = "/random";
                                                                 }}
                                                             />
