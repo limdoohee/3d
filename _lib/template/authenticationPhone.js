@@ -9,6 +9,7 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import { useTimer, useStopwatch } from "react-timer-hook";
 import moment from "moment";
+import { animateScroll as scroll, Events, scrollSpy, scroller, Element } from "react-scroll";
 
 import countryCodeDataEN from "../locales/en/countryCode.en.json";
 import countryCodeDataKo from "../locales/ko/countryCode.ko.json";
@@ -83,6 +84,9 @@ const Home = observer((props) => {
                         common.messageApi.info({
                             content: "Resend code complete!",
                         });
+                    setTimeout(() => {
+                        focusCode();
+                    }, 250);
                 })
                 .catch((error) => {
                     common.debug(error);
@@ -147,6 +151,19 @@ const Home = observer((props) => {
             data.set((prev) => ({ ...prev, authCode: v }));
         },
         maxLength: 6,
+        id: "code-change",
+        onFocus: (e) => {
+            focusCode();
+        },
+    };
+
+    const focusCode = () => {
+        var v = document.querySelector("#code-change").offsetTop;
+        console.log("focus", v);
+        scroll.scrollTo(v, {
+            smooth: true,
+            duration: 0,
+        });
     };
 
     const [countryCodeData, setcountryCodeData] = useState({ arr: [], select: null });
