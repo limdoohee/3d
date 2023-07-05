@@ -177,12 +177,23 @@ const Home = observer((props) => {
         confirm: {
             label: lang.t("gallery.modal.confirm"),
             action: () => {
+                common.analysisSubmit({
+                    component: "button",
+                    componentId: "invite_complete",
+                    action: "click",
+                });
                 window.location.href = "native://share?contents=" + encodeURI(auth.loginResult.inviteLink);
             },
         },
         cancel: {
             label: lang.t("gallery.modal.close"),
-            action: () => {},
+            action: () => {
+                common.analysisSubmit({
+                    component: "button",
+                    componentId: "invite_cancel",
+                    action: "click",
+                });
+            },
         },
     };
 
@@ -260,7 +271,7 @@ const Home = observer((props) => {
                                         onClick={() => {
                                             common.analysisSubmit({
                                                 component: "button",
-                                                componentId: "invite",
+                                                componentId: "gallery_invite",
                                                 action: "click",
                                             });
                                             setOpen(true);
