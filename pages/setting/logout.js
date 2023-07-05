@@ -3,13 +3,15 @@ import cookie from "react-cookies";
 
 const Home = () => {
     useEffect(() => {
-        const logout = async () => {
+        const logout = async (callback) => {
             await cookie.remove("loginToken", { path: "/" });
             await sessionStorage.clear();
             // await localStorage.clear();
-            location.href = "/";
+            callback();
         };
-        logout();
+        logout(() => {
+            location.href = "/";
+        });
     }, []);
     return <></>;
 };
