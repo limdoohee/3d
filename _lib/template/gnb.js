@@ -27,10 +27,54 @@ const Component = {
         const menuData = {
             gnb: [
                 // { icon: () => <DDS_Icons.crown />, link: "", name: "Rank" },
-                { icon: () => <DDS_Icons.myGalleryBlackOn />, link: `/userGallery/?memberSeq=${auth.loginResult.seq}`, name: "My Gallery" },
-                { icon: () => <DDS_Icons.drop />, link: "/drops", name: "Art Drop list" },
-                { icon: () => <DDS_Icons.bookFilled />, link: "/magazine", name: "Magazine" },
-                { icon: () => <DDS_Icons.gear />, link: "/setting", name: "Setting" },
+                {
+                    icon: () => <DDS_Icons.myGalleryBlackOn />,
+                    link: `/userGallery/?memberSeq=${auth.loginResult.seq}`,
+                    name: "My Gallery",
+                    click: () => {
+                        common.analysisSubmit({
+                            component: "button",
+                            componentId: "menu_my_gallery",
+                            action: "click",
+                        });
+                    },
+                },
+                {
+                    icon: () => <DDS_Icons.drop />,
+                    link: "/drops",
+                    name: "Art Drop list",
+                    click: () => {
+                        common.analysisSubmit({
+                            component: "button",
+                            componentId: "menu_drop_list",
+                            action: "click",
+                        });
+                    },
+                },
+                {
+                    icon: () => <DDS_Icons.bookFilled />,
+                    link: "/magazine",
+                    name: "Magazine",
+                    click: () => {
+                        common.analysisSubmit({
+                            component: "button",
+                            componentId: "menu_magazine",
+                            action: "click",
+                        });
+                    },
+                },
+                {
+                    icon: () => <DDS_Icons.gear />,
+                    link: "/setting",
+                    name: "Setting",
+                    click: () => {
+                        common.analysisSubmit({
+                            component: "button",
+                            componentId: "menu_setting",
+                            action: "click",
+                        });
+                    },
+                },
                 // { icon: () => <DDS_Icons.envelopeOpenTest />, link: "", name: "Feedback" },
             ],
         };
@@ -54,6 +98,11 @@ const Component = {
                         <DDS_Button.default
                             className="dds button text"
                             onClick={() => {
+                                common.analysisSubmit({
+                                    component: "button",
+                                    componentId: "menu_home",
+                                    action: "click",
+                                });
                                 location.href = "/";
                             }}
                         >
@@ -63,6 +112,11 @@ const Component = {
                     <div
                         className="personal"
                         onClick={() => {
+                            common.analysisSubmit({
+                                component: "button",
+                                componentId: "menu_my_gallery",
+                                action: "click",
+                            });
                             location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
                         }}
                     >
@@ -72,6 +126,11 @@ const Component = {
                     <div
                         className="point"
                         onClick={() => {
+                            common.analysisSubmit({
+                                component: "button",
+                                componentId: "menu_my_point",
+                                action: "click",
+                            });
                             location.href = "/point";
                         }}
                     >
@@ -89,7 +148,7 @@ const Component = {
                     <nav>
                         <ul>
                             {menuData.gnb.map((Item, key) => (
-                                <li key={key}>
+                                <li key={key} onClick={Item.click}>
                                     <a href={Item.link}>
                                         <Item.icon />
                                         <span>{Item.name}</span>
