@@ -208,6 +208,11 @@
     height: 30px;
 }
 
+.userInfo .ddsBtnWrapper .dds.button.badge::after {
+    top: 7px;
+    right: 20px;
+}
+
 .userInfo .ddsBtnWrapper .dds.button .dds.icons {
     width: 14px;
     height: 14px;

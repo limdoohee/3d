@@ -61,6 +61,11 @@ const Home = observer((props) => {
                                       className="dds button none"
                                       icon={<DDS.icons.shareNode />}
                                       onClick={() => {
+                                          common.analysisSubmit({
+                                              component: "button",
+                                              componentId: "header_share",
+                                              action: "click",
+                                          });
                                           window.location.href = "native://share?contents=" + encodeURI(gallery.data.galleryLink);
                                       }}
                                   />
@@ -68,8 +73,13 @@ const Home = observer((props) => {
                               () => (
                                   <DDS.button.default
                                       className="dds button none"
-                                      icon={<DDS.icons.bell />}
+                                      icon={auth.loginResult.newPushCnt > 0 ? <DDS.icons.bellOn /> : <DDS.icons.bell />}
                                       onClick={() => {
+                                          common.analysisSubmit({
+                                              component: "button",
+                                              componentId: "header_alarm",
+                                              action: "click",
+                                          });
                                           location.href = "/alarm";
                                       }}
                                   />
@@ -79,6 +89,11 @@ const Home = observer((props) => {
                                       className="dds button none"
                                       icon={<DDS.icons.bars />}
                                       onClick={() => {
+                                          common.analysisSubmit({
+                                              component: "button",
+                                              componentId: "header_menu",
+                                              action: "click",
+                                          });
                                           common.uiChange("gnbOpen", true);
                                       }}
                                   />
@@ -90,6 +105,11 @@ const Home = observer((props) => {
                                       className={`dds button none gallery ${gallery.data.unconfirmedLuckyBox ? "badge" : ""}`}
                                       icon={<DDS.icons.myGalleryBlackOn />}
                                       onClick={() => {
+                                          common.analysisSubmit({
+                                              component: "button",
+                                              componentId: "header_gallery",
+                                              action: "click",
+                                          });
                                           location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
                                       }}
                                   />
@@ -99,6 +119,11 @@ const Home = observer((props) => {
                                       className="dds button none"
                                       icon={<DDS.icons.shareNode />}
                                       onClick={() => {
+                                          common.analysisSubmit({
+                                              component: "button",
+                                              componentId: "header_share",
+                                              action: "click",
+                                          });
                                           window.location.href = "native://share?contents=" + encodeURI(gallery.data.galleryLink);
                                       }}
                                   />
@@ -106,8 +131,13 @@ const Home = observer((props) => {
                               () => (
                                   <DDS.button.default
                                       className="dds button none"
-                                      icon={<DDS.icons.bell />}
+                                      icon={auth.loginResult.newPushCnt > 0 ? <DDS.icons.bellOn /> : <DDS.icons.bell />}
                                       onClick={() => {
+                                          common.analysisSubmit({
+                                              component: "button",
+                                              componentId: "header_alarm",
+                                              action: "click",
+                                          });
                                           location.href = "/alarm";
                                       }}
                                   />
@@ -117,6 +147,11 @@ const Home = observer((props) => {
                                       className="dds button none"
                                       icon={<DDS.icons.bars />}
                                       onClick={() => {
+                                          common.analysisSubmit({
+                                              component: "button",
+                                              componentId: "header_menu",
+                                              action: "click",
+                                          });
                                           common.uiChange("gnbOpen", true);
                                       }}
                                   />
@@ -167,6 +202,11 @@ const Home = observer((props) => {
                                 <div
                                     onClick={() => {
                                         {
+                                            common.analysisSubmit({
+                                                component: "button",
+                                                componentId: "profile",
+                                                action: "click",
+                                            });
                                             gallery.data.ownFlag ? (location.href = "/setting/profile/") : setProfileOpen(true);
                                         }
                                     }}
@@ -197,6 +237,11 @@ const Home = observer((props) => {
                                         <div className="point">
                                             <DDS.icons.point
                                                 onClick={() => {
+                                                    common.analysisSubmit({
+                                                        component: "button",
+                                                        componentId: "point",
+                                                        action: "click",
+                                                    });
                                                     location.href = "/point";
                                                 }}
                                             />
@@ -213,15 +258,25 @@ const Home = observer((props) => {
                                         className="dds button primary"
                                         icon={<DDS.icons.paperPlane />}
                                         onClick={() => {
+                                            common.analysisSubmit({
+                                                component: "button",
+                                                componentId: "invite",
+                                                action: "click",
+                                            });
                                             setOpen(true);
                                         }}
                                     >
                                         Invite
                                     </DDS.button.default>
                                     <DDS.button.default
-                                        className="dds button secondary"
+                                        className={`dds button secondary ${gallery.data.unconfirmedLuckyBox ? "badge" : ""}`}
                                         icon={<DDS.icons.cube />}
                                         onClick={(e) => {
+                                            common.analysisSubmit({
+                                                component: "button",
+                                                componentId: "luckyBox",
+                                                action: "click",
+                                            });
                                             location.href = "/random";
                                         }}
                                     >
