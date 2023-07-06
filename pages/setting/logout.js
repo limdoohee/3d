@@ -1,15 +1,24 @@
 import React, { useEffect } from "react";
 import cookie from "react-cookies";
+//------------------------------------------------------------------------------- Store
+import Store from "../../_store/store";
+const store = new Store();
+//------------------------------------------------------------------------------- Store
 
 const Home = () => {
+    const { auth } = store;
     useEffect(() => {
-        const logout = async () => {
-            await cookie.remove("loginToken", { path: "/" });
-            await sessionStorage.clear();
-            await localStorage.clear();
-            location.href = "/";
+        const logout = (callback) => {
+            auth.logout({}, async (e) => {
+                await cookie.remove("loginToken", { path: "/" });
+                await sessionStorage.clear();
+                // await localStorage.clear();
+                callback();
+            });
         };
-        logout();
+        logout(() => {
+            location.href = "/";
+        });
     }, []);
     return <></>;
 };
