@@ -176,20 +176,3 @@
     justify-content: center;
     margin-top: 36px;
 }
-
-.arMessage {
-    margin-bottom: 36px;
-}
-
-.arMessage .ant-message-custom-content {
-    display: flex;
-    align-items: center;
-}
-
-.arMessage .ant-message-custom-content .dds.icons {
-    margin-right: 8px;
-}
-
-.arMessage .ant-message-custom-content .dds.icons path {
-    fill: #fd6e24;
-}
