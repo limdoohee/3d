@@ -1,3 +1,15 @@
+.dds.tabs .adm-tabs-header {
+    padding: 0 20px;
+}
+
+.dds.tabs .adm-tabs-tab-list {
+    gap: 16px;
+}
+
+.dds.tabs .adm-tabs-tab-wrapper {
+    padding: 0;
+}
+
 .dds.tabs .adm-tabs-header .adm-tabs-tab-list {
     height: 48px;
 }
@@ -18,4 +30,21 @@
 
 .dds.tabs .adm-tabs-tab-line {
     background-color: #1f1f1f;
+}
+
+.dds.tabs.tabsPart {
+    flex: 1;
+}
+
+.dds.tabs.tabsPart .adm-tabs-tab-list {
+    gap: 0;
+}
+
+.dds.tabs .adm-tabs-tab-wrapper {
+    padding: 0;
+}
+
+.dds.tabs.tabsPart .adm-tabs-header .adm-tabs-tab {
+    width: 100%;
+    text-align: center;
 }

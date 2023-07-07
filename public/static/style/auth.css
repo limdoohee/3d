@@ -2,6 +2,9 @@
 .auth.ui {
     padding: 20px;
 }
+.auth.ui.mobile {
+    padding: 20px 20px 80px 20px;
+}
 .auth.ui input {
     /* height: 48px; */
 }
@@ -19,6 +22,7 @@
     font-size: 22px;
     line-height: 130%;
     margin-bottom: 32px;
+    word-break: keep-all;
 }
 .auth.terms .agree-list .adm-checkbox.all {
     margin-bottom: 34px;
@@ -87,12 +91,6 @@
 .auth.terms .agree-list .policy li .dds.checkbox {
     width: calc(100% - 24px);
 }
-.auth.ui.nickname .agree-check {
-    width: 100%;
-    left: 0;
-    bottom: 0;
-    border-radius: 0;
-}
 .auth.ui .agree-check {
     width: calc(100% - 40px);
     position: fixed;
@@ -103,6 +101,11 @@
     font-size: 16px;
     border: 0;
 }
+/* .auth.ui.nickname .agree-check {
+    width: calc(100% - 40px);
+    bottom: 0;
+    border-radius: 0;
+} */
 
 .ant-drawer > div {
     min-width: 100vw;
@@ -154,7 +157,9 @@
 
 /* -------------------------------------------------------------------------- auth terms */
 /* -------------------------------------------------------------------------- auth nickname */
-
+.auth.nickname {
+    padding: 20px 20px 60px 20px;
+}
 .auth.ui.nickname .nickname-list li {
     margin-top: 32px;
     display: flex;

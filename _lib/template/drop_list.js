@@ -70,34 +70,50 @@ const Home = {
         const shareModalData = {
             open: shareModal,
             setOpen: setshareModal,
-            title: (
-                <>
-                    <div style={{ textAlign: "center", margin: "0 0 20px 0" }}>
-                        <img src="https://asset.dropkitchen.xyz/contents/202306_dev/20230628110209194_dk.webp" style={{ width: 120, height: 120 }} />
-                    </div>
-                    {dropListLangSet.invite.title}
-                </>
-            ),
-            context: <>{dropListLangSet.invite.desc}</>,
+            img: "https://asset.dropkitchen.xyz/contents/202307_dev/20230703164613868_dk.webp",
+            title: dropListLangSet.invite.title,
+            context: dropListLangSet.invite.desc,
+            subContext: "(" + lang.t("gallery.modal.subContext") + ")",
             confirm: {
                 label: dropListLangSet.invite.give,
                 action: () => {
+                    common.analysisSubmit({
+                        component: "button",
+                        componentId: "invite_complete",
+                        action: "click",
+                    });
                     setshareModal(false);
                     common.onShare({
                         url: auth.loginResult.inviteLink,
                     });
                 },
             },
-            // cancel: {
-            //     label: "나중에",
-            //     action: () => {},
-            // },
+            cancel: {
+                label: lang.t("gallery.modal.close"),
+                action: () => {
+                    common.analysisSubmit({
+                        component: "button",
+                        componentId: "invite_cancel",
+                        action: "click",
+                    });
+                },
+            },
         };
 
         return (
             <>
                 <div className="dk drop-list">
-                    <div className="collection">
+                    <div
+                        className="collection"
+                        onClick={() => {
+                            common.analysisSubmit({
+                                component: "button",
+                                componentId: "dropList_gallery",
+                                action: "click",
+                            });
+                            location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
+                        }}
+                    >
                         <div className="plate">
                             <span>
                                 <DDS.icons.drop />
@@ -121,6 +137,11 @@ const Home = {
                                         <div
                                             className="left"
                                             onClick={() => {
+                                                common.analysisSubmit({
+                                                    component: "button",
+                                                    componentId: "dropList_detail",
+                                                    action: "click",
+                                                });
                                                 window.location.href = "native://drop_detail?dropSeq=" + item.dropSeq;
                                             }}
                                         >
@@ -139,6 +160,11 @@ const Home = {
                                                     <DDS.chips.default className={"primary"}>{dropListLangSet.collected}</DDS.chips.default>
                                                     <DDS.icons.paperPlanePlus
                                                         onClick={() => {
+                                                            common.analysisSubmit({
+                                                                component: "button",
+                                                                componentId: "dropList_invite",
+                                                                action: "click",
+                                                            });
                                                             setshareModal(true);
                                                         }}
                                                     />
@@ -149,6 +175,11 @@ const Home = {
                                                         <DDS.button.default
                                                             className="dds button small go"
                                                             onClick={() => {
+                                                                common.analysisSubmit({
+                                                                    component: "button",
+                                                                    componentId: "dropList_main",
+                                                                    action: "click",
+                                                                });
                                                                 window.location.href = "/main";
                                                             }}
                                                         >
@@ -159,6 +190,11 @@ const Home = {
                                                             <DDS.chips.default className={"secondary"}>{dropListLangSet.collect}</DDS.chips.default>
                                                             <DDS.icons.cubePlus
                                                                 onClick={() => {
+                                                                    common.analysisSubmit({
+                                                                        component: "button",
+                                                                        componentId: "dropList_luckyBox",
+                                                                        action: "click",
+                                                                    });
                                                                     window.location.href = "/random";
                                                                 }}
                                                             />

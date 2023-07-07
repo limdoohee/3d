@@ -6,6 +6,7 @@
 @import url("./random.css");
 @import url("./profile.css");
 @import url("./auth.css");
+@import url("./ar.css");
 
 .dk.error {
     min-height: 100vh;
@@ -15,11 +16,16 @@
     position: relative;
 }
 
+.dk.error img {
+    width: 200px;
+    height: 200px;
+    margin: 113px 0;
+}
+
 .dk.error .center {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 20px;
     text-align: center;
 }
 .dk.error .bottom {

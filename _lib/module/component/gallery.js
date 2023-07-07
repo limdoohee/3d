@@ -31,11 +31,10 @@ const Gallery = observer((props) => {
     let dropLength;
 
     // Limits;
+    let minX = -1;
     let maxX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
-    let minX = 0;
-    let maxZ = 4;
     let minZ = 0;
-
+    let maxZ = 4;
     // // State
     let positionX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
     let positionZ = 10;
@@ -47,12 +46,12 @@ const Gallery = observer((props) => {
         // render hive
         renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setSize(window.screen.width, window.screen.height);
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
         // camera
-        camera = new THREE.PerspectiveCamera(90, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         dropData.length === 0 ? camera.position.set(0, 0, 10) : camera.position.set((dropData.length - 1) * 2.5, 0, 10);
 
         // light
@@ -97,13 +96,11 @@ const Gallery = observer((props) => {
                 controls.target.setX(x < minX ? minX : maxX);
                 camera.position.setX(positionX);
             }
-
             const z = controls.target.z;
             if (z < minZ || z > maxZ) {
                 controls.target.setZ(z < minZ ? minZ : maxZ);
                 camera.position.setZ(positionZ);
             }
-
             if (!isNaN(camera.position.x)) positionX = camera.position.x;
             if (!isNaN(camera.position.z)) positionZ = camera.position.z;
         });
@@ -146,7 +143,7 @@ const Gallery = observer((props) => {
 
     function setSpace() {
         const space = Math.ceil(dropData.length / 7) + 1;
-        for (let i = 1; i <= space; i++) {
+        for (let i = 1; i <= 5; i++) {
             fbx.load("../../static/3d/gallery/gallery" + i + ".fbx", (obj) => {
                 obj.scale.multiplyScalar(0.3);
                 obj.position.z = 10;
@@ -223,28 +220,28 @@ const Gallery = observer((props) => {
                         function (gltf) {
                             model = gltf.scene;
                             model.position.set(i * 2.5, -1, 0);
+                            model.scale.multiplyScalar(6);
 
-                            switch (dropData[i].dropSeq) {
-                                case 1:
-                                    model.scale.multiplyScalar(7);
-                                    break;
-                                case 2:
-                                    model.scale.multiplyScalar(10);
-                                    break;
-                                case 3:
-                                    model.scale.multiplyScalar(0.8);
-                                    break;
-                                case 4:
-                                    model.scale.multiplyScalar(6);
-                                    break;
-                                case 5:
-                                    model.position.y = -0.8;
-                                    model.scale.multiplyScalar(6);
-                                    break;
-                                default:
-                                    model.scale.multiplyScalar(10);
-                                    break;
-                            }
+                            // switch (dropData[i].dropSeq) {
+                            //     case 1:
+                            //         model.scale.multiplyScalar(6);
+                            //         break;
+                            //     case 2:
+                            //         model.scale.multiplyScalar(6);
+                            //         break;
+                            //     case 3:
+                            //         model.scale.multiplyScalar(6);
+                            //         break;
+                            //     case 4:
+                            //         model.scale.multiplyScalar(6);
+                            //         break;
+                            //     case 5:
+                            //         model.scale.multiplyScalar(6);
+                            //         break;
+                            //     default:
+                            //         model.scale.multiplyScalar(6);
+                            //         break;
+                            // }
                             scene.add(model);
 
                             model.name = "model" + i;

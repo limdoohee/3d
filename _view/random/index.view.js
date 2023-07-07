@@ -90,6 +90,11 @@ const Home = observer((props) => {
 
     function decrementCount() {
         if (amount != 1) {
+            common.analysisSubmit({
+                component: "button",
+                componentId: "luckyBox_count_decrement",
+                action: "click",
+            });
             setAmount(amount - 1);
             setIncrDisabled(false);
             setDescDisabled(false);
@@ -102,10 +107,15 @@ const Home = observer((props) => {
     }
     function incrementCount() {
         if ((amount + 1) * 1500 <= gallery.data.pointBalance) {
+            common.analysisSubmit({
+                component: "button",
+                componentId: "luckyBox_count_increment",
+                action: "click",
+            });
             setAmount(amount + 1);
             setDescDisabled(false);
             setIncrDisabled(false);
-            if (gallery.data.pointBalance <= (amount + 2) * 1500) {
+            if (gallery.data.pointBalance < (amount + 2) * 1500) {
                 setIncrDisabled(true);
             }
         } else {
@@ -171,12 +181,24 @@ const Home = observer((props) => {
             close:
                 gallery.data.pointBalance < 1500 &&
                 (() => {
+                    common.analysisSubmit({
+                        component: "button",
+                        componentId: "luckyBox_modal_close",
+                        action: "click",
+                    });
                     setHelper(true);
                 }),
             action: () => {
-                gallery.data.pointBalance >= 1500 &&
+                1500 <= gallery.data.pointBalance &&
                     gallery.buyLuckyBox({ amount }, (e) => {
+                        common.analysisSubmit({
+                            component: "button",
+                            componentId: "luckyBox_modal_buy",
+                            action: "click",
+                        });
+
                         gallery.getLuckyBox("", (e) => {
+                            setAmount(1);
                             setBoxCnt((prev) => prev + amount);
                         });
 
@@ -264,27 +286,28 @@ const Home = observer((props) => {
                                     model = gltf.scene;
                                     model.position.z = 3;
                                     model.position.y = 1;
+                                    model.scale.multiplyScalar(6);
 
-                                    switch (e.dropSeq) {
-                                        case 1:
-                                            model.scale.multiplyScalar(14);
-                                            break;
-                                        case 2:
-                                            model.scale.multiplyScalar(20);
-                                            break;
-                                        case 3:
-                                            model.scale.multiplyScalar(1.5);
-                                            break;
-                                        case 4:
-                                            model.scale.multiplyScalar(15);
-                                            break;
-                                        case 5:
-                                            model.scale.multiplyScalar(15);
-                                            break;
-                                        default:
-                                            model.scale.multiplyScalar(1);
-                                            break;
-                                    }
+                                    // switch (e.dropSeq) {
+                                    //     case 1:
+                                    //         model.scale.multiplyScalar(14);
+                                    //         break;
+                                    //     case 2:
+                                    //         model.scale.multiplyScalar(20);
+                                    //         break;
+                                    //     case 3:
+                                    //         model.scale.multiplyScalar(1.5);
+                                    //         break;
+                                    //     case 4:
+                                    //         model.scale.multiplyScalar(15);
+                                    //         break;
+                                    //     case 5:
+                                    //         model.scale.multiplyScalar(15);
+                                    //         break;
+                                    //     default:
+                                    //         model.scale.multiplyScalar(1);
+                                    //         break;
+                                    // }
                                     scene.add(model);
                                 },
                                 undefined,
@@ -311,7 +334,21 @@ const Home = observer((props) => {
             <DDS.button.default
                 className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}
                 onClick={() => {
-                    boxOpen ? (location.href = "/userGallery?memberSeq=" + auth.loginResult.seq) : (btnClick = true);
+                    if (boxOpen) {
+                        location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
+                        common.analysisSubmit({
+                            component: "button",
+                            componentId: "luckyBox_my_gallery",
+                            action: "click",
+                        });
+                    } else {
+                        btnClick = true;
+                        common.analysisSubmit({
+                            component: "button",
+                            componentId: "luckyBox_open",
+                            action: "click",
+                        });
+                    }
                 }}
             >
                 {boxOpen ? lang.t("random.button.goGallery") : lang.t("random.button.open")}
@@ -321,7 +358,14 @@ const Home = observer((props) => {
                 <DDS.button.default
                     className={`dds button primary ${!boxOpen ? "luckyBox" : "confirm"}`}
                     onClick={() => {
-                        boxOpen && (location.href = "/userGallery?memberSeq=" + auth.loginResult.seq);
+                        if (boxOpen) {
+                            location.href = "/userGallery?memberSeq=" + auth.loginResult.seq;
+                            common.analysisSubmit({
+                                component: "button",
+                                componentId: "luckyBox_my_gallery",
+                                action: "click",
+                            });
+                        }
                     }}
                 >
                     {lang.t("random.button.goGallery")}
@@ -335,7 +379,21 @@ const Home = observer((props) => {
             <DDS.button.default
                 className={`dds button secondary`}
                 onClick={() => {
-                    boxOpen ? window.location.replace("/random") : setModalOpen(true);
+                    if (boxOpen) {
+                        location.href = "/random";
+                        common.analysisSubmit({
+                            component: "button",
+                            componentId: "luckyBox",
+                            action: "click",
+                        });
+                    } else {
+                        setModalOpen(true);
+                        common.analysisSubmit({
+                            component: "button",
+                            componentId: "luckyBox_buy",
+                            action: "click",
+                        });
+                    }
                 }}
             >
                 {boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.buy")}
@@ -344,7 +402,21 @@ const Home = observer((props) => {
             <DDS.button.default
                 className={`dds button ${!boxOpen ? "primary" : "secondary"}`}
                 onClick={() => {
-                    boxOpen ? (location.href = "/random") : setModalOpen(true);
+                    if (boxOpen) {
+                        location.href = "/random";
+                        common.analysisSubmit({
+                            component: "button",
+                            componentId: "luckyBox",
+                            action: "click",
+                        });
+                    } else {
+                        setModalOpen(true);
+                        common.analysisSubmit({
+                            component: "button",
+                            componentId: "luckyBox_buy",
+                            action: "click",
+                        });
+                    }
                 }}
             >
                 {boxOpen ? lang.t("random.button.confirm") : lang.t("random.button.buy")}

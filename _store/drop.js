@@ -29,6 +29,7 @@ class Store {
         detail: {},
         dropList: { dropList: [], totalDropCnt: 0, myDropCnt: 0 },
         mainLink: "",
+        dropLink: null,
     };
 
     constructor(store) {
@@ -51,6 +52,7 @@ class Store {
             .then((response) => response.json())
             .then((data) => {
                 this.data.detail = data.data.drop;
+                this.data.dropLink = data.data.dropLink;
                 callback && callback(data.data ? data.data : data);
             });
     }

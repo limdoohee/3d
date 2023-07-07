@@ -4,7 +4,7 @@ import React, { useState, useEffect, useRef, createRef, forwardRef } from "react
 import { observer } from "mobx-react-lite";
 import "../../_lib/module/i18n";
 import { useTranslation } from "react-i18next";
-
+import cookie from "react-cookies";
 //------------------------------------------------------------------------------- Antd
 import { Drawer } from "antd";
 //------------------------------------------------------------------------------- Antd
@@ -40,11 +40,27 @@ const Home = observer((props) => {
     const [policyOpen, setpolicyOpen] = useState(false);
     const [policyType, setpolicyType] = useState("terms");
 
+    const [checkCookieCount, setcheckCookieCount] = useState(0);
+    const checkCookie = () => {
+        if (process.env.STAGE !== "PRODUCTION") {
+            var cookieAll = cookie.loadAll({ path: "/" });
+            alert(JSON.stringify(cookieAll));
+        }
+    };
+
     return (
         <>
             <div className="login wrap">
                 <div className="inner">
-                    <h1>
+                    <h1
+                        onClick={() => {
+                            setcheckCookieCount(checkCookieCount + 1);
+                            console.log(checkCookieCount);
+                            if (checkCookieCount == 10) {
+                                checkCookie();
+                            }
+                        }}
+                    >
                         <DDS.logos.default />
                     </h1>
                     <p id="login-desc">
@@ -71,30 +87,49 @@ const Home = observer((props) => {
 
                     <ul className="login-sns">
                         {login_data.map((l, idx) => {
-                            return (
-                                <li
-                                    key={idx}
-                                    className={l.className}
-                                    onClick={() => {
-                                        `${auth.login(`${l.className}`, router.asPath)}`;
-                                    }}
-                                >
-                                    {l.img}
-                                    <span>{l.login_title} </span>
-                                    {recentLogin === l.className.toUpperCase() && <span className="recent">{t(`login.main.recent`)}</span>}
-                                </li>
-                            );
+                            var view = true;
+                            if (localStorage.getItem("reviewYn") === "Y") {
+                                switch (l.className) {
+                                    case "kakao":
+                                        view = false;
+                                        break;
+                                    case "naver":
+                                        view = false;
+                                        break;
+                                }
+                            }
+                            if (view) {
+                                return (
+                                    <li
+                                        key={idx}
+                                        className={l.className}
+                                        onClick={() => {
+                                            `${auth.login(`${l.className}`, router.asPath)}`;
+                                        }}
+                                    >
+                                        {l.img}
+                                        <span>{l.login_title} </span>
+                                        {recentLogin === l.className.toUpperCase() && <span className="recent">{t(`login.main.recent`)}</span>}
+                                    </li>
+                                );
+                            }
                         })}
                     </ul>
-                    <div className="help">
-                        <div>
-                            <p>{t(`login.main.help`)}</p>
-                            <strong onClick={showSignUp}>
-                                {t(`login.main.signUp`)}
-                                <span className="tooltip">{t(`login.main.tooltip`)}</span>
-                            </strong>
+                    {localStorage.getItem("reviewYn") !== "Y" && (
+                        <div className="help">
+                            <div>
+                                <p>{t(`login.main.help`)}</p>
+                                <strong
+                                    onClick={() => {
+                                        showSignUp();
+                                    }}
+                                >
+                                    {t(`login.main.signUp`)}
+                                    <span className="tooltip">{t(`login.main.tooltip`)}</span>
+                                </strong>
+                            </div>
                         </div>
-                    </div>
+                    )}
                 </div>
 
                 <div className="language-select">

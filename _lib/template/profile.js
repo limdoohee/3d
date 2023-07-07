@@ -13,6 +13,7 @@ import moment from "moment";
 
 import countryCodeDataEN from "../../_lib/locales/en/countryCode.en.json";
 import countryCodeDataKo from "../../_lib/locales/ko/countryCode.ko.json";
+import { animateScroll as scroll, Events, scrollSpy, scroller, Element } from "react-scroll";
 //------------------------------------------------------------------------------- Antd
 import { Drawer } from "antd";
 //------------------------------------------------------------------------------- Antd
@@ -122,6 +123,15 @@ const Home = {
             defaultValue: value.value,
             maxLength: 20,
             value: value.value,
+            id: "nickname-change",
+            onFocus: (e) => {
+                var v = document.querySelector("#nickname-change").offsetTop;
+                console.log("focus", v);
+                scroll.scrollTo(v, {
+                    smooth: true,
+                    duration: 0,
+                });
+            },
         };
 
         const [helpText, sethelpText] = useState("");
@@ -141,7 +151,7 @@ const Home = {
                         <span>{totalByte}/20</span>
                     </h5>
                     <DDS.input.default {...inputSetting} className="dds input primary large" />
-                    <p>{helpText}</p>
+                    <p className={value.result ? "success" : ""}>{helpText}</p>
                 </div>
             </>
         );

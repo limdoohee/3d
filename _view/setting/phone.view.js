@@ -98,6 +98,11 @@ const PhoneChange = observer((props) => {
             console.log("params", params);
             console.log("e", e);
             if (e.result == "ok") {
+                common.analysisSubmit({
+                    component: "phone",
+                    componentId: `phone_change_complete`,
+                    action: "click",
+                });
                 location.href = "/setting/account";
             }
             actionCheck = false;
@@ -109,6 +114,11 @@ const PhoneChange = observer((props) => {
         e.preventDefault();
         if (actionCheck == false) {
             actionCheck = true;
+            common.analysisSubmit({
+                component: "phone",
+                componentId: `phone_code_submit`,
+                action: "click",
+            });
             setactionLoading(true);
             authenticationValue.confirmationResult
                 .confirm(authenticationValue.authCode)

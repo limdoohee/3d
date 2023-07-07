@@ -287,6 +287,17 @@
     height: 2px;
 }
 
+.dk.point .point-information .dds.button.primary {
+    height: auto;
+    padding: 10px 12px;
+}
+
+.dk.point .point-information .dds.button.primary span {
+    font-size: 14px;
+    line-height: 100%;
+    letter-spacing: -0.28px;
+}
+
 .dk.point .point-list.empty {
     display: flex;
     align-items: center;
@@ -302,4 +313,35 @@
     line-height: 24px;
     letter-spacing: -0.02em;
     text-align: center;
+}
+
+.pointTabs .sort {
+    padding: 12px 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.pointTabs .sort .ant-btn {
+    border: 0;
+    display: flex;
+    align-items: center;
+    box-shadow: none;
+    padding: 0;
+    gap: 4px;
+}
+
+.pointTabs .sort .ant-btn svg {
+    width: 12px;
+    height: 12px;
+}
+
+.pointTabs .sort .dds.icons {
+    width: auto;
+}
+
+.dk.point .adm-tabs-header {
+    position: sticky;
+    top: 50px;
+    background: #fff;
+    z-index: 1;
 }

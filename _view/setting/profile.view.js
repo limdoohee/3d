@@ -1,11 +1,6 @@
-import Head from "next/head";
-import Link from "next/link";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
-import Sticky from "react-sticky-el";
-import { InView } from "react-intersection-observer";
-import { animateScroll as scroll, Events, scrollSpy, scroller, Element } from "react-scroll";
 //------------------------------------------------------------------------------- Component
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
@@ -13,16 +8,15 @@ import DK_template_GNB from "../../_lib/template/gnb";
 import DK_template_profile from "../../_lib/template/profile";
 //------------------------------------------------------------------------------- Component
 //------------------------------------------------------------------------------- Module
-import Date_Module from "../../_lib/module/date";
 //------------------------------------------------------------------------------- Module
 
 const Home = observer((props) => {
     const { store } = props;
-    const { common, lang, auth, magazine } = store;
+    const { common, lang, auth } = store;
     const router = useRouter();
 
     //------------------------------------------------- Init Load
-    const initLoad = ({ initCheck, callback }) => {};
+    const initLoad = () => {};
     //------------------------------------------------- Init Load
 
     //------------------------------------------------- Router isReady
@@ -30,7 +24,7 @@ const Home = observer((props) => {
         if (router.isReady && router.pathname == "/setting") {
             common.getBuildId();
             initLoad({
-                callback: (e) => {},
+                callback: () => {},
             });
         }
     }, [router.isReady, router.asPath]);
@@ -38,7 +32,6 @@ const Home = observer((props) => {
 
     const [inputNickname, setinputNickname] = useState({ value: auth.loginResult.nickname, result: false });
     const [introduction, setintroduction] = useState({ value: auth.loginResult.introduction, result: false });
-    const [imageSeq, setimageSeq] = useState();
     const [submitCheck, setsubmitCheck] = useState(false);
 
     const messageData = {
@@ -57,15 +50,21 @@ const Home = observer((props) => {
         var params = {};
         inputNickname.value !== auth.loginResult.nickname && (params.nickname = inputNickname.value);
         introduction.value !== auth.loginResult.introduction && (params.introduction = introduction.value);
-        imageSeq && (params.profileImageSeq = imageSeq.imageSeq);
+        thumbnailImage !== auth.loginResult.profileImage && (params.profileImageUrl = thumbnailImage);
         console.log(params);
         auth.changeProfile(params, (res) => {
             console.log("changeProfile", res);
             if (res.result == "ok") {
+                common.analysisSubmit({
+                    component: "profile",
+                    componentId: `pprofile_change_complete`,
+                    action: "click",
+                });
                 auth.checkLoginCSR({}, (re) => {
                     console.log("checkLoginCSR", re);
                     setsubmitCheck(false);
                     common.messageApi.open(messageData);
+                    location.href = "native://reload";
                 });
             } else {
                 common.messageApi.open({
@@ -76,27 +75,40 @@ const Home = observer((props) => {
         });
     };
 
-    const imageUpload = (e, k) => {
+    const imageUpload = (e) => {
         const formData = new FormData();
         formData.append("file", e.target.files[0]);
         auth.uploadProfileImage(formData, (res) => {
             if (res.imageSeq) {
                 console.log(res);
                 setthumbnailImage(res.imageUrl);
-                setimageSeq(res);
+                setsubmitCheck(true);
             }
         });
     };
 
+    const deletePhoto = () => {
+        setthumbnailImage(null);
+        setsubmitCheck(true);
+    };
+
     useEffect(() => {
-        if (inputNickname.value.length > 0 && (imageSeq || inputNickname.value !== auth.loginResult.nickname || introduction.value !== auth.loginResult.introduction)) {
+        if (inputNickname.value.length > 0 && (thumbnailImage !== auth.loginResult.profileImage || inputNickname.value !== auth.loginResult.nickname || introduction.value !== auth.loginResult.introduction)) {
             setsubmitCheck(true);
         } else {
             setsubmitCheck(false);
         }
-    }, [imageSeq, inputNickname, introduction]);
+    }, [thumbnailImage, inputNickname, introduction]);
 
     const [thumbnailImage, setthumbnailImage] = useState(auth.loginResult.profileImage);
+
+    const DeletePhoto = () => {
+        return (
+            <DDS.button.default className="dds button none" onClick={deletePhoto}>
+                {lang.t("setting.profile.deletePhoto")}
+            </DDS.button.default>
+        );
+    };
 
     return (
         <>
@@ -115,7 +127,7 @@ const Home = observer((props) => {
                                     </div>
                                     <input type="file" onChange={imageUpload} />
                                 </div>
-                                {/* <DDS.button.default className="dds button none">현재 사진 삭제</DDS.button.default> */}
+                                {thumbnailImage && <DeletePhoto />}
                             </div>
                             <ul className="form">
                                 <li>
@@ -144,7 +156,7 @@ export default Home;
 //////////////////////////////////////////////////////////////////////// IntroductionInput
 const IntroductionInput = (props) => {
     const { value, setvalue, store } = props;
-    const { common, auth, lang } = store;
+    const { lang } = store;
 
     const onChange = (e) => {
         var v = e.target.value;
@@ -188,7 +200,6 @@ const IntroductionInput = (props) => {
         settotalByte(checkByte(value.value));
     }, []);
 
-    const [helpText, sethelpText] = useState("");
     const [totalByte, settotalByte] = useState(0);
 
     return (
@@ -198,7 +209,6 @@ const IntroductionInput = (props) => {
                 <span>{totalByte}/50</span>
             </h5>
             <DDS.input.textarea {...inputSetting} />
-            <p>{helpText}</p>
         </>
     );
 };

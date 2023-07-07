@@ -1,16 +1,12 @@
-import Head from "next/head";
-import Router, { useRouter } from "next/router";
-import React, { useState, useEffect, useRef, createRef, forwardRef } from "react";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
 import moment from "moment";
 //------------------------------------------------------------------------------- Store
-import Store from "../../_store/store";
-const store = new Store();
 //------------------------------------------------------------------------------- Store
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- Module
 //------------------------------------------------------------------------------- Component
-import { Drawer } from "antd";
 import DDS from "../../_lib/component/dds";
 //------------------------------------------------------------------------------- Component
 
@@ -37,7 +33,7 @@ const Home = {
             if (router.isReady && router.pathname == "/point") {
                 common.getBuildId();
                 initLoad({
-                    callback: (e) => {},
+                    callback: () => {},
                 });
             }
         }, [router.isReady, router.asPath]);
@@ -131,13 +127,13 @@ const Home = {
 export default Home;
 
 const PointInformation = observer((props) => {
-    const { common, lang, auth } = props.store;
+    const { lang, auth } = props.store;
     const [open, setOpen] = useState(false);
 
     const modalData = {
         open: open,
         setOpen: setOpen,
-        img: "../../static/img/invite.png",
+        img: "https://asset.dropkitchen.xyz/contents/202307_dev/20230703164613868_dk.webp",
         title: lang.t("gallery.modal.title"),
         context: lang.t("gallery.modal.context"),
         subContext: "(" + lang.t("gallery.modal.subContext") + ")",
@@ -234,33 +230,73 @@ const PointInformation = observer((props) => {
 });
 
 const PointList = observer((props) => {
-    const router = useRouter();
-    const { tabKey } = props;
     const { common, lang, point } = props.store;
+    const [sortValue, setsortValue] = useState("All");
+    const [sortOpen, setsortOpen] = useState(false);
+
+    const sortItems = [
+        { key: "All", label: lang.t("point.sort.all") },
+        { key: "plus", label: lang.t("point.sort.accumulated") },
+        { key: "minus", label: lang.t("point.sort.used") },
+    ];
+
+    const sortOpenAction = () => {
+        setsortOpen(true);
+    };
+
+    const sortChange = async (e) => {
+        setsortValue(e);
+    };
+
     return (
         <>
+            <div className="sort">
+                {point.data.pointHistory.point.length > 0 && (
+                    <DDS.button.default
+                        onClick={() => {
+                            sortOpenAction();
+                        }}
+                    >
+                        {sortItems
+                            .filter((e) => e.key === sortValue)
+                            .map((e) => (
+                                <React.Fragment key={e.key}>{e.label}</React.Fragment>
+                            ))}
+                        <DDS.icons.angleDown />
+                    </DDS.button.default>
+                )}
+            </div>
             <ul className={`point-list ${point.data.pointHistory.point.length > 0 ? "" : "empty"}`}>
                 {point.data.pointHistory.point.length > 0 ? (
-                    point.data.pointHistory.point.map((item, key) => {
-                        return (
-                            <React.Fragment key={key}>
-                                <li>
+                    point.data.pointHistory.point
+                        .filter((e) => (sortValue === "plus" ? e.pointAmount > 0 : sortValue === "minus" ? e.pointAmount < 0 : e))
+                        .map((item, key) => {
+                            return (
+                                <li key={key}>
                                     <div>
                                         <strong>{item.description}</strong>
-                                        {/* <span>{item.description}</span> */}
                                     </div>
                                     <div>
                                         <strong className={item.pointAmount > 0 ? "plus" : ""}>{common.numberFormat(parseInt(item.pointAmount))}</strong>
                                         <span>{moment(item.createdAt).format("YYYY.MM.DD")}</span>
                                     </div>
                                 </li>
-                            </React.Fragment>
-                        );
-                    })
+                            );
+                        })
                 ) : (
                     <li>{lang.t("point.empty")}</li>
                 )}
             </ul>
+            <DDS.actionsheet.default
+                open={sortOpen}
+                onClose={(callback) => {
+                    setsortOpen(false);
+                    callback && callback();
+                }}
+                items={sortItems}
+                active={sortValue}
+                change={sortChange}
+            />
         </>
     );
 });
