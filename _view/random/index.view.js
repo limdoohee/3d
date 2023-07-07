@@ -266,7 +266,7 @@ const Home = observer((props) => {
                         common.messageApi.open({
                             key: "luckyBox",
                             icon: <DDS.icons.circleExclamation />,
-                            className: "arMessage",
+                            className: "errorMessage",
                             content: `${e.message}`,
                         });
                         setTimeout(() => {
