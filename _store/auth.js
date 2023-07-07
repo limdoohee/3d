@@ -3,11 +3,14 @@ import { makeAutoObservable, toJS, configure } from "mobx";
 //------------------------------------------------------------------------------- Module//------------------------------------------------------------------------------- Module
 import Api from "../_lib/module/api";
 import cookie from "react-cookie";
+import { Cookies } from "react-cookie";
 //------------------------------------------------------------------------------- Module
 
 configure({
     enforceActions: "never",
 });
+
+const cookies = new Cookies();
 
 //////////////////////////// makeAutoObservable
 class Store {
@@ -148,7 +151,7 @@ class Store {
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 로그아웃
     async logout(params, callback) {
-        await Api.get(`/dks-api/v2/logout`, params, this.store.auth.loginResult.loginToken)
+        await Api.post(`/dks-api/v2/logout`, params, cookies.get("loginToken"))
             .then((response) => response.json())
             .then((data) => {
                 callback && callback(data.data ? data.data : data);
