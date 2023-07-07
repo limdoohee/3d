@@ -10,7 +10,7 @@ const Home = () => {
     useEffect(() => {
         const logout = (callback) => {
             auth.logout({}, async (e) => {
-                if (e.id) {
+                if (e.id === "ok") {
                     await cookie.remove("loginToken", { path: "/" });
                     await sessionStorage.clear();
                     // await localStorage.clear();
