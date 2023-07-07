@@ -78,13 +78,20 @@ const Home = observer((props) => {
     const imageUpload = (e) => {
         const formData = new FormData();
         formData.append("file", e.target.files[0]);
-        auth.uploadProfileImage(formData, (res) => {
-            if (res.imageSeq) {
-                console.log(res);
-                setthumbnailImage(res.imageUrl);
-                setsubmitCheck(true);
-            }
-        });
+        var checkImage = e.target.files[0].type;
+        checkImage = checkImage.indexOf("image");
+        console.log(checkImage);
+        if (checkImage === 0) {
+            auth.uploadProfileImage(formData, (res) => {
+                if (res.imageSeq) {
+                    console.log(res);
+                    setthumbnailImage(res.imageUrl);
+                    setsubmitCheck(true);
+                }
+            });
+        } else {
+            alert("이미지만 업로드 가능합니다.");
+        }
     };
 
     const deletePhoto = () => {
@@ -125,7 +132,7 @@ const Home = observer((props) => {
                                     <div className="camera">
                                         <DDS.icons.camera />
                                     </div>
-                                    <input type="file" onChange={imageUpload} />
+                                    <input type="file" onChange={imageUpload} capture="filesystem" accept="image/*" />
                                 </div>
                                 {thumbnailImage && <DeletePhoto />}
                             </div>
