@@ -263,7 +263,12 @@ const Home = observer((props) => {
                 gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
                     console.log("click");
                     if (e.id === "invalid_request") {
-                        common.messageApi.open(messageData1);
+                        common.messageApi.open({
+                            key: "luckyBox",
+                            icon: <DDS.icons.circleExclamation />,
+                            className: "arMessage",
+                            content: `${e.message}`,
+                        });
                         setTimeout(() => {
                             btnClick = false;
                         }, 3000);
