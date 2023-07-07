@@ -10,10 +10,12 @@ const Home = () => {
     useEffect(() => {
         const logout = (callback) => {
             auth.logout({}, async (e) => {
-                await cookie.remove("loginToken", { path: "/" });
-                await sessionStorage.clear();
-                // await localStorage.clear();
-                callback();
+                if (e.id) {
+                    await cookie.remove("loginToken", { path: "/" });
+                    await sessionStorage.clear();
+                    // await localStorage.clear();
+                    callback();
+                }
             });
         };
         logout(() => {
