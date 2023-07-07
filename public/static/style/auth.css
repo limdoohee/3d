@@ -153,6 +153,28 @@
 .modal.agreement .ant-drawer-body .terms > p {
     line-height: 150%;
     font-size: 16px;
+    margin: 1em 0;
+}
+
+.modal.agreement .ant-drawer-body .terms ul,
+.modal.agreement .ant-drawer-body .terms ol {
+    padding-inline-start: 40px;
+}
+
+.modal.agreement .ant-drawer-body .terms ul line {
+    list-style: disc;
+}
+
+.modal.agreement .ant-drawer-body .terms ol li {
+    list-style: decimal;
+}
+
+.modal.agreement .ant-drawer-body .terms ol li ol li {
+    list-style: lower-alpha;
+}
+
+.modal.agreement .ant-drawer-body .terms ol li ol li ol li {
+    list-style: lower-roman;
 }
 
 /* -------------------------------------------------------------------------- auth terms */
