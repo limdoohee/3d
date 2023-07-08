@@ -242,3 +242,20 @@
 .buyingMessage {
     margin-bottom: 58px;
 }
+
+.errorMessage {
+    margin-bottom: 58px;
+}
+
+.errorMessage .ant-message-custom-content {
+    display: flex;
+    align-items: center;
+}
+
+.errorMessage .ant-message-custom-content .dds.icons {
+    margin-right: 8px;
+}
+
+.errorMessage .ant-message-custom-content .dds.icons path {
+    fill: #fd6e24;
+}

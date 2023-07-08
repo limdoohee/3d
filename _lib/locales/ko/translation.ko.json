@@ -133,7 +133,8 @@
         "title": "알림"
     },
     "magazine": {
-        "title": "매거진"
+        "title": "매거진",
+        "sort": { "created": "최신순", "view": "조회순" }
     },
     "setting": {
         "title": "설정",

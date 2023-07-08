@@ -132,7 +132,7 @@ const Home = observer((props) => {
                                     <div className="camera">
                                         <DDS.icons.camera />
                                     </div>
-                                    <input type="file" onChange={imageUpload} capture="filesystem" accept="image/*" />
+                                    <input type="file" onChange={imageUpload} accept="image/*" />
                                 </div>
                                 {thumbnailImage && <DeletePhoto />}
                             </div>
