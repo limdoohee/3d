@@ -151,8 +151,8 @@ const Home = observer((props) => {
 
     const sortItems = [
         //
-        { key: "createdAt", label: "최신순" },
-        { key: "viewCount", label: "조회순" },
+        { key: "createdAt", label: lang.t("magazine.sort.created") },
+        { key: "viewCount", label: lang.t("magazine.sort.view") },
     ];
 
     const onMove = (seq) => {
