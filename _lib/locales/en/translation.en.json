@@ -132,7 +132,8 @@
         "title": "alarm"
     },
     "magazine": {
-        "title": "magazine"
+        "title": "magazine",
+        "sort": { "created": "newest", "view": "view" }
     },
     "setting": {
         "title": "Setting",
