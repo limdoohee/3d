@@ -28,6 +28,7 @@ const Home = {
     NickNameInput: observer((props) => {
         const { value, setvalue, store } = props;
         const { common, auth, lang } = store;
+        const [warn, setWarn] = useState(false);
 
         let languageSet = {
             title: lang.t(`signup.nickname.title`),
@@ -65,9 +66,11 @@ const Home = {
                             if (e.id) {
                                 sethelpText(e.message);
                                 setvalue((prevstate) => ({ ...prevstate, result: false }));
+                                setWarn(true);
                             } else {
                                 sethelpText(languageSet["help-success"]);
                                 setvalue((prevstate) => ({ ...prevstate, result: true }));
+                                setWarn(false);
                             }
                         });
                     }
@@ -145,7 +148,7 @@ const Home = {
 
         return (
             <>
-                <div className="dk profile nickname-input">
+                <div className={`dk profile nickname-input ${warn ? "red" : ""}`}>
                     <h5>
                         <strong>{lang.t(`signup.nickname.label2`)}</strong>
                         <span>{totalByte}/20</span>
