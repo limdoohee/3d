@@ -269,7 +269,7 @@ const MisteryBox = observer((props) => {
         if (drop.data.curr.status) {
             if (drop.data.curr.status === "closed") {
                 // 페이지 리로딩
-                window.location.replace("/main");
+                window.location.replace("native://home");
             } else {
                 console.log("dropOwnFlag", drop.data.curr.dropOwnFlag);
                 if (drop.data.curr.dropOwnFlag) {

@@ -202,7 +202,7 @@
     color: #969696;
 }
 .page-setting.sub .account > .form li h5 span {
-    color: var(--color-red);
+    color: #969696;
 }
 .page-setting.sub .account > .form li:has(input:focus) h5 strong {
     color: #404040;
@@ -401,4 +401,15 @@
 .page-setting.main .info span {
     text-decoration: underline;
     margin-left: 5px;
+}
+
+.page-setting.sub .account > .form li .red h5 strong,
+.page-setting.sub .account > .form li .red h5 span,
+.page-setting.sub .account > .form li:has(input:focus) .red h5 strong,
+.page-setting.sub .account > .form li:has(input:focus) .red h5 span {
+    color: var(--color-red, #e02431);
+}
+
+.page-setting.sub .account > .form li .red .dds.input.primary {
+    border-color: var(--color-red, #e02431);
 }
