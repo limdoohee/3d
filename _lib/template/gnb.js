@@ -103,7 +103,7 @@ const Component = {
                                     componentId: "menu_home",
                                     action: "click",
                                 });
-                                location.href = "/";
+                                location.href = "/main";
                             }}
                         >
                             <DDS_Icons.house />
