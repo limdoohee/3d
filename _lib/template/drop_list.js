@@ -180,7 +180,7 @@ const Home = {
                                                                     componentId: "dropList_main",
                                                                     action: "click",
                                                                 });
-                                                                window.location.href = "/main";
+                                                                window.location.href = "native://home";
                                                             }}
                                                         >
                                                             {dropListLangSet.go}

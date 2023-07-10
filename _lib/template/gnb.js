@@ -103,7 +103,7 @@ const Component = {
                                     componentId: "menu_home",
                                     action: "click",
                                 });
-                                location.href = "/main";
+                                location.href = "native://home";
                             }}
                         >
                             <DDS_Icons.house />
