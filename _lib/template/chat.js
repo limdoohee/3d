@@ -208,7 +208,7 @@ const Home = {
                                             <span className="t">{chat.state.currentlyJoinedChannel.name}</span>
                                             <DDS.chips.default className={"secondary small"}>ARTIST</DDS.chips.default>
                                         </strong>
-                                        <small>{langSet.now}</small>
+                                        {/* <small>{langSet.now}</small> */}
                                     </span>
                                 </div>
                                 <div className="operators">
