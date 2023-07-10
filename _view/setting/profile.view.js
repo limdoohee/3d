@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
+import { animateScroll as scroll } from "react-scroll";
 //------------------------------------------------------------------------------- Component
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
@@ -50,7 +51,7 @@ const Home = observer((props) => {
         var params = {};
         inputNickname.value !== auth.loginResult.nickname && (params.nickname = inputNickname.value);
         introduction.value !== auth.loginResult.introduction && (params.introduction = introduction.value);
-        thumbnailImage !== auth.loginResult.profileImage && (params.profileImageUrl = thumbnailImage);
+        params.profileImageUrl = thumbnailImage;
         console.log(params);
         auth.changeProfile(params, (res) => {
             console.log("changeProfile", res);
@@ -185,6 +186,14 @@ const IntroductionInput = (props) => {
         defaultValue: value.value,
         rows: 4,
         value: value.value,
+        id: "bio-change",
+        onFocus: (e) => {
+            var v = document.querySelector("#bio-change").offsetTop;
+            scroll.scrollTo(v, {
+                smooth: true,
+                duration: 0,
+            });
+        },
         // maxLength: 6,
     };
 
