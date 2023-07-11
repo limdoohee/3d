@@ -302,7 +302,7 @@ const Gallery = observer((props) => {
         } else {
             for (let i = 0; i < dropData.length; i++) {
                 dropLength = i;
-                if (dropData[i].lowContentUrl) {
+                if (dropData[i].contentUrl) {
                     // 포디움
                     fbx.load("../../static/3d/podium/Podium.fbx", (obj) => {
                         obj.scale.multiplyScalar(0.3);
