@@ -1,6 +1,7 @@
 import { useRouter } from "next/router";
 import React, { useState, useEffect } from "react";
 import { observer } from "mobx-react-lite";
+import { isAndroid, isIOS, isMobile } from "react-device-detect";
 //------------------------------------------------------------------------------- Component
 import DDS from "../../_lib/component/dds";
 import DK_template_header from "../../_lib/template/header";
@@ -64,6 +65,15 @@ const Home = observer((props) => {
             </ul>
         );
     };
+    const updateApp = () => {
+        if (isAndroid) {
+            location.href = "https://play.google.com/store/apps/details?id=com.xxblue.dropkitchen&isExternBrowser=Y&pli=1";
+        } else if (isIOS) {
+            location.href = "https://apps.apple.com/app/id6443930923?isExternBrowser=Y";
+        } else {
+            location.href = "https://play.google.com/store/apps/details?id=com.xxblue.dropkitchen&isExternBrowser=Y&pli=1";
+        }
+    };
 
     return (
         <DDS.layout.container className={"fluid"} store={store} pageMotion={true}>
@@ -118,7 +128,9 @@ const Home = observer((props) => {
                             </div>
                             {auth.loginResult.appVersion !== auth.loginResult.latestAppVersion && (
                                 <span>
-                                    <DDS.button.default className="dds button primary">{lang.t("setting.info.update")}</DDS.button.default>
+                                    <DDS.button.default className="dds button primary" onClick={updateApp}>
+                                        {lang.t("setting.info.update")}
+                                    </DDS.button.default>
                                 </span>
                             )}
                         </dd>
