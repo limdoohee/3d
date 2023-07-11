@@ -365,7 +365,7 @@ const Gallery = observer((props) => {
                                     model.scale.multiplyScalar(5);
                                     break;
                                 default:
-                                    model.scale.multiplyScalar(6);
+                                    model.scale.multiplyScalar(0.8);
                                     break;
                             }
                             scene.add(model);
@@ -375,9 +375,9 @@ const Gallery = observer((props) => {
                             //     console.log(object);
                             //     object.name = "drop" + i;
                             // });
-                            mixer = new THREE.AnimationMixer(model);
-                            mixer.clipAction(gltf.animations[0]).play();
-                            mixers.push(mixer);
+                            // mixer = new THREE.AnimationMixer(model);
+                            // mixer.clipAction(gltf.animations[0]).play();
+                            // mixers.push(mixer);
                         },
                         undefined,
                         function (error) {
