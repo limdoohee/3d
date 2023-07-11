@@ -338,7 +338,7 @@ const Gallery = observer((props) => {
 
                     // 드롭
                     loader.load(
-                        dropData[i].lowContentUrl,
+                        dropData[i].contentUrl,
                         function (gltf) {
                             model = gltf.scene;
                             model.position.set(i * 2.5, -1.2, 0);
@@ -365,7 +365,7 @@ const Gallery = observer((props) => {
                                     model.scale.multiplyScalar(5);
                                     break;
                                 default:
-                                    model.scale.multiplyScalar(0.8);
+                                    model.scale.multiplyScalar(6);
                                     break;
                             }
                             scene.add(model);
