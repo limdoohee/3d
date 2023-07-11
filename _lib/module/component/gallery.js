@@ -9,12 +9,130 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import gsap from "gsap";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 
 const Gallery = observer((props) => {
     const router = useRouter();
     const { gallery, common } = props.store;
 
     let dropData = gallery.data.collection;
+    // let dropData = [
+    //     {
+    //         dropSeq: 1,
+    //         dropRound: "1",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop01.glb",
+    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop01.glb",
+    //     },
+    //     {
+    //         dropSeq: 2,
+    //         dropRound: "2",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop02.glb",
+    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop02.glb",
+    //     },
+    //     {
+    //         dropSeq: 3,
+    //         dropRound: "3",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop03.glb",
+    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop03.glb",
+    //     },
+    //     {
+    //         dropSeq: 4,
+    //         dropRound: "4",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop04.glb",
+    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop04.glb",
+    //     },
+    //     {
+    //         dropSeq: 5,
+    //         dropRound: "5",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop05.glb",
+    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop05.glb",
+    //     },
+    //     {
+    //         dropSeq: 6,
+    //         dropRound: "6",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop06.glb",
+    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop06.glb",
+    //     },
+    //     {
+    //         dropSeq: 8,
+    //         dropRound: "8",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop08.glb",
+    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop08.glb",
+    //     },
+    //     {
+    //         dropSeq: 1,
+    //         dropRound: "1",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop01.glb",
+    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop01.glb",
+    //     },
+    //     {
+    //         dropSeq: 2,
+    //         dropRound: "2",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop02.glb",
+    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop02.glb",
+    //     },
+    //     {
+    //         dropSeq: 3,
+    //         dropRound: "3",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop03.glb",
+    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop03.glb",
+    //     },
+    //     {
+    //         dropSeq: 4,
+    //         dropRound: "4",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop04.glb",
+    //     },
+    //     {
+    //         dropSeq: 5,
+    //         dropRound: "5",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop05.glb",
+    //     },
+    //     {
+    //         dropSeq: 6,
+    //         dropRound: "6",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop06.glb",
+    //     },
+    //     {
+    //         dropSeq: 8,
+    //         dropRound: "8",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop08.glb",
+    //     },
+    //     {
+    //         dropSeq: 1,
+    //         dropRound: "1",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop01.glb",
+    //     },
+    //     {
+    //         dropSeq: 2,
+    //         dropRound: "2",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop02.glb",
+    //     },
+    //     {
+    //         dropSeq: 3,
+    //         dropRound: "3",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop03.glb",
+    //     },
+    //     {
+    //         dropSeq: 4,
+    //         dropRound: "4",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop04.glb",
+    //     },
+    //     {
+    //         dropSeq: 5,
+    //         dropRound: "5",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop05.glb",
+    //     },
+    //     {
+    //         dropSeq: 6,
+    //         dropRound: "6",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop06.glb",
+    //     },
+    //     {
+    //         dropSeq: 8,
+    //         dropRound: "8",
+    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop08.glb",
+    //     },
+    // ];
     const { back, setBack } = props;
 
     const scene = new THREE.Scene();
@@ -22,6 +140,10 @@ const Gallery = observer((props) => {
 
     const fbx = new FBXLoader();
     const loader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("../draco/");
+    loader.setDRACOLoader(dracoLoader);
+
     const mixers = [];
     let mixer = new THREE.AnimationMixer();
     let clock = new THREE.Clock();
@@ -180,7 +302,7 @@ const Gallery = observer((props) => {
         } else {
             for (let i = 0; i < dropData.length; i++) {
                 dropLength = i;
-                if (dropData[i].contentUrl) {
+                if (dropData[i].lowContentUrl) {
                     // 포디움
                     fbx.load("../../static/3d/podium/Podium.fbx", (obj) => {
                         obj.scale.multiplyScalar(0.3);
@@ -219,29 +341,33 @@ const Gallery = observer((props) => {
                         dropData[i].contentUrl,
                         function (gltf) {
                             model = gltf.scene;
-                            model.position.set(i * 2.5, -1, 0);
-                            model.scale.multiplyScalar(6);
+                            model.position.set(i * 2.5, -1.2, 0);
 
-                            // switch (dropData[i].dropSeq) {
-                            //     case 1:
-                            //         model.scale.multiplyScalar(6);
-                            //         break;
-                            //     case 2:
-                            //         model.scale.multiplyScalar(6);
-                            //         break;
-                            //     case 3:
-                            //         model.scale.multiplyScalar(6);
-                            //         break;
-                            //     case 4:
-                            //         model.scale.multiplyScalar(6);
-                            //         break;
-                            //     case 5:
-                            //         model.scale.multiplyScalar(6);
-                            //         break;
-                            //     default:
-                            //         model.scale.multiplyScalar(6);
-                            //         break;
-                            // }
+                            switch (dropData[i].dropSeq) {
+                                case 1:
+                                    model.scale.multiplyScalar(7);
+                                    break;
+                                case 2:
+                                    model.scale.multiplyScalar(10);
+                                    break;
+                                case 3:
+                                    model.scale.multiplyScalar(0.8);
+                                    break;
+                                case 4:
+                                    model.scale.multiplyScalar(6);
+                                    break;
+                                case 5:
+                                    model.position.y = -1.1;
+                                    model.scale.multiplyScalar(6);
+                                    break;
+                                case 8:
+                                    model.position.y = -0.6;
+                                    model.scale.multiplyScalar(5);
+                                    break;
+                                default:
+                                    model.scale.multiplyScalar(6);
+                                    break;
+                            }
                             scene.add(model);
 
                             model.name = "model" + i;
@@ -249,10 +375,13 @@ const Gallery = observer((props) => {
                             //     console.log(object);
                             //     object.name = "drop" + i;
                             // });
+                            // mixer = new THREE.AnimationMixer(model);
+                            // mixer.clipAction(gltf.animations[0]).play();
+                            // mixers.push(mixer);
                         },
                         undefined,
                         function (error) {
-                            console.log("An error happened");
+                            console.log("error", error);
                         },
                     );
                 }
@@ -271,7 +400,7 @@ const Gallery = observer((props) => {
         //     if (scene.getObjectByName("model" + i)) scene.getObjectByName("model" + i).rotation.y += 0.01;
         // }
 
-        // animate();
+        animate();
 
         requestAnimationFrame(render);
         renderer.render(scene, camera);
