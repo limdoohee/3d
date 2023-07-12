@@ -304,7 +304,8 @@ const Home = observer((props) => {
                                     <li className="count">
                                         <strong>{gallery.data.myDropCnt}</strong>
                                         <span className="slash">/</span>
-                                        {gallery.data.totalDropCnt}
+                                        {/* {gallery.data.totalDropCnt} */}
+                                        30
                                     </li>
                                 </ul>
                                 <Progress percent={(gallery.data.myDropCnt / gallery.data.totalDropCnt) * 100} showInfo={false} strokeColor={"#FD6E24"} className="asdf" />
