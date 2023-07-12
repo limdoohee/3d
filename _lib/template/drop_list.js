@@ -120,11 +120,11 @@ const Home = {
                                 {dropListLangSet.myCollection}
                             </span>
                             <span>
-                                <strong>{drop.data.dropList.myDropCnt}</strong>/{drop.data.dropList.totalDropCnt}
+                                <strong>{drop.data.dropList.myDropCnt}</strong>/30
                             </span>
                         </div>
                         <div className="progress">
-                            <DDS.progress.default percent={(100 / drop.data.dropList.totalDropCnt) * drop.data.dropList.myDropCnt} showInfo={false} />
+                            <DDS.progress.default percent={(100 / 30) * drop.data.dropList.myDropCnt} showInfo={false} />
                         </div>
                     </div>
                     <ul className={`list ${drop.data.dropList.totalDropCnt === 0 ? "empty" : ""}`}>
