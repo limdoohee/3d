@@ -16,123 +16,6 @@ const Gallery = observer((props) => {
     const { gallery, common } = props.store;
 
     let dropData = gallery.data.collection;
-    // let dropData = [
-    //     {
-    //         dropSeq: 1,
-    //         dropRound: "1",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop01.glb",
-    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop01.glb",
-    //     },
-    //     {
-    //         dropSeq: 2,
-    //         dropRound: "2",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop02.glb",
-    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop02.glb",
-    //     },
-    //     {
-    //         dropSeq: 3,
-    //         dropRound: "3",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop03.glb",
-    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop03.glb",
-    //     },
-    //     {
-    //         dropSeq: 4,
-    //         dropRound: "4",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop04.glb",
-    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop04.glb",
-    //     },
-    //     {
-    //         dropSeq: 5,
-    //         dropRound: "5",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop05.glb",
-    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop05.glb",
-    //     },
-    //     {
-    //         dropSeq: 6,
-    //         dropRound: "6",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop06.glb",
-    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop06.glb",
-    //     },
-    //     {
-    //         dropSeq: 8,
-    //         dropRound: "8",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop08.glb",
-    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop08.glb",
-    //     },
-    //     {
-    //         dropSeq: 1,
-    //         dropRound: "1",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop01.glb",
-    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop01.glb",
-    //     },
-    //     {
-    //         dropSeq: 2,
-    //         dropRound: "2",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop02.glb",
-    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop02.glb",
-    //     },
-    //     {
-    //         dropSeq: 3,
-    //         dropRound: "3",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop03.glb",
-    //         lowContentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop03.glb",
-    //     },
-    //     {
-    //         dropSeq: 4,
-    //         dropRound: "4",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop04.glb",
-    //     },
-    //     {
-    //         dropSeq: 5,
-    //         dropRound: "5",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop05.glb",
-    //     },
-    //     {
-    //         dropSeq: 6,
-    //         dropRound: "6",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop06.glb",
-    //     },
-    //     {
-    //         dropSeq: 8,
-    //         dropRound: "8",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop08.glb",
-    //     },
-    //     {
-    //         dropSeq: 1,
-    //         dropRound: "1",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop01.glb",
-    //     },
-    //     {
-    //         dropSeq: 2,
-    //         dropRound: "2",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop02.glb",
-    //     },
-    //     {
-    //         dropSeq: 3,
-    //         dropRound: "3",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop03.glb",
-    //     },
-    //     {
-    //         dropSeq: 4,
-    //         dropRound: "4",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop04.glb",
-    //     },
-    //     {
-    //         dropSeq: 5,
-    //         dropRound: "5",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop05.glb",
-    //     },
-    //     {
-    //         dropSeq: 6,
-    //         dropRound: "6",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop06.glb",
-    //     },
-    //     {
-    //         dropSeq: 8,
-    //         dropRound: "8",
-    //         contentUrl: "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop08.glb",
-    //     },
-    // ];
     const { back, setBack } = props;
 
     const scene = new THREE.Scene();
@@ -338,7 +221,7 @@ const Gallery = observer((props) => {
 
                     // 드롭
                     loader.load(
-                        dropData[i].contentUrl,
+                        dropData[i].lowContentUrl,
                         function (gltf) {
                             model = gltf.scene;
                             model.position.set(i * 2.5, -1.2, 0);
