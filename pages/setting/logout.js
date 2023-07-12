@@ -19,7 +19,7 @@ const Home = () => {
             });
         };
         logout(() => {
-            location.href = "/";
+            location.href = "/login";
         });
     }, []);
     return <></>;
