@@ -59,9 +59,9 @@ const Gallery = observer((props) => {
         dropData.length === 0 ? camera.position.set(0, 0, 10) : camera.position.set((dropData.length - 1) * 2.5, 0, 10);
 
         // light
-        scene.add(new THREE.AmbientLight(0xffffff, 0.4));
+        scene.add(new THREE.AmbientLight(0xffffff, 0.35));
 
-        const pointLight1 = new THREE.PointLight(0xffffff, 0.25, 100);
+        const pointLight1 = new THREE.PointLight(0xffffff, 0.3, 100);
         pointLight1.position.set(3, 3, -5);
         scene.add(pointLight1);
 
@@ -69,7 +69,7 @@ const Gallery = observer((props) => {
         // pointLight2.position.set(30, 3, -15);
         // scene.add(pointLight2);
 
-        const pointLight3 = new THREE.PointLight(0xffffff, 0.25, 100);
+        const pointLight3 = new THREE.PointLight(0xffffff, 0.3, 100);
         pointLight3.position.set(75, 3, -5);
         scene.add(pointLight3);
 
