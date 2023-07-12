@@ -68,11 +68,12 @@ const Home = observer((props) => {
     const updateApp = () => {
         if (isAndroid) {
             location.href = "https://play.google.com/store/apps/details?id=com.xxblue.dropkitchen&isExternBrowser=Y&pli=1";
-        } else if (isIOS) {
-            location.href = "https://apps.apple.com/app/id6443930923?isExternBrowser=Y";
         } else {
-            location.href = "https://play.google.com/store/apps/details?id=com.xxblue.dropkitchen&isExternBrowser=Y&pli=1";
+            location.href = "https://apps.apple.com/app/id6443930923?isExternBrowser=Y";
         }
+        // else {
+        //     location.href = "https://play.google.com/store/apps/details?id=com.xxblue.dropkitchen&isExternBrowser=Y&pli=1";
+        // }
     };
 
     return (
