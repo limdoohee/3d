@@ -61,16 +61,16 @@ const Gallery = observer((props) => {
         // light
         scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
-        const pointLight1 = new THREE.PointLight(0xffffff, 0.2, 100);
-        pointLight1.position.set(1, 3, -5);
+        const pointLight1 = new THREE.PointLight(0xffffff, 0.25, 100);
+        pointLight1.position.set(3, 3, -5);
         scene.add(pointLight1);
 
-        const pointLight2 = new THREE.PointLight(0xffffff, 0.2, 100);
-        pointLight2.position.set(45, 3, -5);
-        scene.add(pointLight2);
+        // const pointLight2 = new THREE.PointLight(0xffffff, 0.25, 100);
+        // pointLight2.position.set(30, 3, -15);
+        // scene.add(pointLight2);
 
-        const pointLight3 = new THREE.PointLight(0xffffff, 0.2, 100);
-        pointLight3.position.set(100, 3, -5);
+        const pointLight3 = new THREE.PointLight(0xffffff, 0.25, 100);
+        pointLight3.position.set(75, 3, -5);
         scene.add(pointLight3);
 
         const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x333333, 0.7);
@@ -207,13 +207,6 @@ const Gallery = observer((props) => {
                         function (gltf) {
                             model = gltf.scene;
                             model.position.set(i * 2.5, -1.2, 0);
-
-                            model.traverse(function (child) {
-                                if (child.isMesh) {
-                                    child.material.roughness = 0;
-                                    child.material.metalness = 0;
-                                }
-                            });
 
                             switch (dropData[i].dropSeq) {
                                 case 1:
