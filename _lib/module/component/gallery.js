@@ -216,7 +216,7 @@ const Gallery = observer((props) => {
                                     model.scale.multiplyScalar(10);
                                     break;
                                 case 3:
-                                    model.scale.multiplyScalar(7);
+                                    model.scale.multiplyScalar(0.8);
                                     break;
                                 case 4:
                                     model.scale.multiplyScalar(6);
