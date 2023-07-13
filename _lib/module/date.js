@@ -8,17 +8,18 @@ import { useTimer, useStopwatch } from "react-timer-hook";
 import moment from "moment";
 const pageFunc = {
     timeRemain: {
-        default: ({ time, onExpire }) => {
+        default: ({ time, store }) => {
+            const { lang } = store;
             var now = moment().unix();
             var timestamp = moment(time).unix();
             var currentTime = now - timestamp;
             var timePrint = "";
             if (currentTime < 3600) {
-                timePrint = `${(currentTime / 60).toFixed(0)}분전`;
+                timePrint = `${(currentTime / 60).toFixed(0)}${lang.t("magazine.before.min")}`;
             } else if (currentTime < 86400) {
-                timePrint = `${(currentTime / 3600).toFixed(0)}시간전`;
+                timePrint = `${(currentTime / 3600).toFixed(0)}${lang.t("magazine.before.hour")}`;
             } else if (currentTime < 86400 * 7) {
-                timePrint = `${(currentTime / 86400).toFixed(0)}일전`;
+                timePrint = `${(currentTime / 86400).toFixed(0)}${lang.t("magazine.before.day")}`;
             }
             // else if (currentTime < 86400 * 30 * 12) {
             //     timePrint = `${(currentTime / (86400 * 30)).toFixed(0)}개월전`;

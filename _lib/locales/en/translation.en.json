@@ -133,7 +133,8 @@
     },
     "magazine": {
         "title": "magazine",
-        "sort": { "created": "newest", "view": "view" }
+        "sort": { "created": "newest", "view": "view" },
+        "before": { "min": " minutes ago", "hour": " hours ago", "day": " days ago" }
     },
     "setting": {
         "title": "Setting",

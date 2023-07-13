@@ -134,7 +134,8 @@
     },
     "magazine": {
         "title": "매거진",
-        "sort": { "created": "최신순", "view": "조회순" }
+        "sort": { "created": "최신순", "view": "조회순" },
+        "before": { "min": "분전", "hour": "시간전", "day": "일전" }
     },
     "setting": {
         "title": "설정",
