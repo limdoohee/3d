@@ -114,7 +114,10 @@ const Home = observer((props) => {
                                     <DDS.icons.drop />
                                     {lang.t("setting.account.delete.desc3")}
                                 </div>
-                                <strong>{common.numberFormat(auth.loginResult.dropAmount)}개</strong>
+                                <strong>
+                                    {common.numberFormat(auth.loginResult.dropAmount)}
+                                    {lang.t("setting.account.delete.dropUnit")}
+                                </strong>
                             </li>
                         </ul>
                         <ol>
