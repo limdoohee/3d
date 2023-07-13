@@ -59,21 +59,47 @@ const Gallery = observer((props) => {
         dropData.length === 0 ? camera.position.set(0, 0, 10) : camera.position.set((dropData.length - 1) * 2.5, 0, 10);
 
         // light
-        scene.add(new THREE.AmbientLight(0xffffff, 0.35));
+        // scene.add(new THREE.AmbientLight(0xffffff, 0.35));
 
-        const pointLight1 = new THREE.PointLight(0xffffff, 0.3, 100);
-        pointLight1.position.set(3, 3, -5);
-        scene.add(pointLight1);
+        // const pointLight1 = new THREE.PointLight(0xffffff, 0.3, 50);
+        // pointLight1.position.set(0, 0, -6);
+        // scene.add(pointLight1);
 
-        // const pointLight2 = new THREE.PointLight(0xffffff, 0.25, 100);
-        // pointLight2.position.set(30, 3, -15);
+        // const pointLight2 = new THREE.PointLight(0xffffff, 0.3, 100);
+        // pointLight2.position.set(37, 0, -7);
         // scene.add(pointLight2);
 
-        const pointLight3 = new THREE.PointLight(0xffffff, 0.3, 100);
-        pointLight3.position.set(75, 3, -5);
+        // const pointLight3 = new THREE.PointLight(0xffffff, 0.3, 50);
+        // pointLight3.position.set(70, 0, -7);
+        // scene.add(pointLight3);
+
+        scene.add(new THREE.AmbientLight(0xffffff, 0.25));
+
+        const pointLight1 = new THREE.PointLight(0xffffff, 0.2, 50);
+        pointLight1.position.set(0, 5, -6);
+        scene.add(pointLight1);
+
+        const pointLight2 = new THREE.PointLight(0xffffff, 0.1, 50);
+        pointLight2.position.set(37, 5, -8);
+        scene.add(pointLight2);
+
+        const pointLight3 = new THREE.PointLight(0xffffff, 0.2, 50);
+        pointLight3.position.set(70, 5, -7);
         scene.add(pointLight3);
 
-        const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x333333, 0.7);
+        const pointLight4 = new THREE.PointLight(0xffffff, 0.25, 100);
+        pointLight4.position.set(5, 1, 7);
+        scene.add(pointLight4);
+
+        const pointLight5 = new THREE.PointLight(0xffffff, 0.25, 100);
+        pointLight5.position.set(35, 1, 7);
+        scene.add(pointLight5);
+
+        const pointLight6 = new THREE.PointLight(0xffffff, 0.25, 100);
+        pointLight6.position.set(65, 1, 7);
+        scene.add(pointLight6);
+
+        const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x333333, 0.55);
         scene.add(hemisphereLight);
 
         // controls
@@ -216,14 +242,15 @@ const Gallery = observer((props) => {
                                     model.scale.multiplyScalar(10);
                                     break;
                                 case 3:
-                                    model.scale.multiplyScalar(0.8);
+                                    model.scale.multiplyScalar(7);
                                     break;
                                 case 4:
+                                    model.position.y = -1;
                                     model.scale.multiplyScalar(6);
                                     break;
                                 case 5:
                                     model.position.y = -1.1;
-                                    model.scale.multiplyScalar(6);
+                                    model.scale.multiplyScalar(7);
                                     break;
                                 case 8:
                                     model.position.y = -0.6;
