@@ -151,8 +151,12 @@ const Home = {
 
         const onClose = () => {
             // setOpen(true);
-            history.back();
-            // chat.disconnect();
+            if (router.query.from) {
+                location.href = router.query.from;
+            } else {
+                history.back();
+                // chat.disconnect();
+            }
         };
 
         const [loading, setloading] = useState(false);
