@@ -258,6 +258,9 @@
 .page-setting.sub .save.focus {
     padding: 0;
 }
+.page-setting.sub .save.focus .dds.button {
+    border-radius: 0;
+}
 .page-setting.sub .save {
     position: fixed;
     bottom: 0;

@@ -191,11 +191,6 @@ const IntroductionInput = (props) => {
         onFocus: (e) => {
             setFocus(true);
             document.querySelector(".account").style.height = document.querySelector(".account").scrollHeight + 68 + "px";
-            var v = document.querySelector("#bio-change").offsetTop;
-            scroll.scrollTo(v, {
-                smooth: true,
-                duration: 0,
-            });
         },
         onBlur: (e) => {
             setFocus(false);
