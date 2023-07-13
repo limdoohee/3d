@@ -33,6 +33,7 @@
     line-height: 100%;
     letter-spacing: -0.02em;
     color: #bdbdbd;
+    flex: 0 0 auto;
 }
 
 .dk.alarm .alarm-list li .content p {
