@@ -129,11 +129,12 @@
         }
     },
     "alarm": {
-        "title": "alarm"
+        "title": "Notifications"
     },
     "magazine": {
         "title": "magazine",
-        "sort": { "created": "newest", "view": "view" }
+        "sort": { "created": "newest", "view": "view" },
+        "before": { "min": " minutes ago", "hour": " hours ago", "day": " days ago" }
     },
     "setting": {
         "title": "Setting",
@@ -155,7 +156,7 @@
             "language": { "title": "Language" },
             "delete": {
                 "title": "Delete Account",
-                "ask": "회원 정보를 삭제하시겠어요?",
+                "ask": "Do you want to delete your account information?",
                 "desc1": "Wait! Check this before you go.",
                 "desc2": "You'll lose",
                 "desc3": "And artworks",
@@ -168,7 +169,8 @@
                 "desc10": "Yes, Delete My Account",
                 "desc11": "See you next time!",
                 "desc12": "Thanks for using dropkitchen™.",
-                "desc13": "Come back anytime!"
+                "desc13": "Come back anytime!",
+                "dropUnit": " artwork"
             }
         },
         "info": {

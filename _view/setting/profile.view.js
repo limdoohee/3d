@@ -34,6 +34,7 @@ const Home = observer((props) => {
     const [inputNickname, setinputNickname] = useState({ value: auth.loginResult.nickname, result: false });
     const [introduction, setintroduction] = useState({ value: auth.loginResult.introduction, result: false });
     const [submitCheck, setsubmitCheck] = useState(false);
+    const [focus, setFocus] = useState(false);
 
     const messageData = {
         key: "saved",
@@ -142,11 +143,11 @@ const Home = observer((props) => {
                                     <DK_template_profile.NickNameInput value={inputNickname} setvalue={setinputNickname} store={store} />
                                 </li>
                                 <li>
-                                    <IntroductionInput value={introduction} setvalue={setintroduction} store={store} />
+                                    <IntroductionInput value={introduction} setvalue={setintroduction} store={store} setFocus={setFocus} />
                                 </li>
                             </ul>
                         </div>
-                        <div className="save">
+                        <div className={`save ${focus ? "focus" : ""}`}>
                             <DDS.button.default className="dds button primary block large" onClick={complete} disabled={submitCheck ? false : true}>
                                 {lang.t("setting.save")}
                             </DDS.button.default>
@@ -163,7 +164,7 @@ export default Home;
 
 //////////////////////////////////////////////////////////////////////// IntroductionInput
 const IntroductionInput = (props) => {
-    const { value, setvalue, store } = props;
+    const { value, setvalue, store, setFocus } = props;
     const { lang } = store;
 
     const onChange = (e) => {
@@ -188,11 +189,17 @@ const IntroductionInput = (props) => {
         value: value.value,
         id: "bio-change",
         onFocus: (e) => {
+            setFocus(true);
+            document.querySelector(".account").style.height = document.querySelector(".account").scrollHeight + 68 + "px";
             var v = document.querySelector("#bio-change").offsetTop;
             scroll.scrollTo(v, {
                 smooth: true,
                 duration: 0,
             });
+        },
+        onBlur: (e) => {
+            setFocus(false);
+            document.querySelector(".account").style.height = document.querySelector(".account").scrollHeight - 68 + "px";
         },
         // maxLength: 6,
     };

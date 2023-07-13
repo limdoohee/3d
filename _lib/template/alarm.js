@@ -76,7 +76,7 @@ const Home = {
                                     <h4>
                                         <strong>{item.title}</strong>
                                         <span>
-                                            <Module_date.timeRemain.default time={item.createdAt} />
+                                            <Module_date.timeRemain.default time={item.createdAt} store={store} />
                                         </span>
                                     </h4>
                                     <p>{item.content}</p>

@@ -190,7 +190,7 @@ const home = {
             open: openGallery,
             setOpen: setopenGallery,
             title: langSet.info8,
-            context: langSet.info5,
+            // context: langSet.info5,
             confirm: {
                 label: langSet.info9,
                 action: () => {
@@ -218,7 +218,14 @@ const home = {
                     </div>
                 )}
                 <div className="more">
-                    {/* {more && (
+                    <h6>
+                        {langSet.info1}
+                        <br />
+                        {langSet.info2}
+                        <br />
+                        {langSet.info3}
+                    </h6>
+                    {more && (
                         <DDS_Button.default
                             className="dds button secondary"
                             onClick={() => {
@@ -231,15 +238,8 @@ const home = {
                         >
                             이전 대화 보기
                         </DDS_Button.default>
-                    )} */}
+                    )}
                     <p>{moment(messages[0] && messages[0].createdAt).format(langSet.format)}</p>
-                    <h6>
-                        {langSet.info1}
-                        <br />
-                        {langSet.info2}
-                        <br />
-                        {langSet.info3}
-                    </h6>
                 </div>
                 <ul className="messages">
                     {messages.map((item, key) => {
@@ -252,8 +252,7 @@ const home = {
 
                         return (
                             <React.Fragment key={key}>
-                                {dateCheck && <li className="date">{moment(item.createdAt).format("YYYY년 MM월 DD일")}</li>}
-
+                                {dateCheck && <li className="date">{moment(item.createdAt).format("YYYY. MM. DD.")}</li>}
                                 {item.sender ? (
                                     <li className={item.sender.userId == myId ? "my" : null}>
                                         {item.sender.userId !== myId && (
