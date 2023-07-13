@@ -12,11 +12,9 @@ import gsap from "gsap";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 
 const Gallery = observer((props) => {
-    const router = useRouter();
     const { gallery, common } = props.store;
 
     let dropData = gallery.data.collection;
-    const { back, setBack } = props;
 
     const scene = new THREE.Scene();
     let camera, renderer, controls;
@@ -43,15 +41,16 @@ const Gallery = observer((props) => {
     // // State
     let positionX = dropData.length - 1 < 1 ? 2.5 : (dropData.length - 1) * 2.5;
     let positionZ = 10;
-    let phi;
-    let theta;
+
+    let lastPos = (dropData.length - 1) * 2.5;
+    let rendered = [];
 
     function init() {
         const canvas = document.getElementById("space");
         // render hive
         renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
         renderer.setPixelRatio(window.devicePixelRatio);
-        renderer.setSize(window.screen.width, window.screen.height);
+        renderer.setSize(window.innerWidth, window.innerHeight);
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
@@ -60,29 +59,21 @@ const Gallery = observer((props) => {
         dropData.length === 0 ? camera.position.set(0, 0, 10) : camera.position.set((dropData.length - 1) * 2.5, 0, 10);
 
         // light
-        let light = new THREE.DirectionalLight(0xffffff, 1);
-        light.position.set(10, 7, 0);
-        scene.add(new THREE.AmbientLight(0xffffff, 0.2));
+        scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
-        const pointLight1 = new THREE.PointLight(0xffffff, 0.4, 100);
-        pointLight1.position.set(1, 3, -5);
+        const pointLight1 = new THREE.PointLight(0xffffff, 0.25, 100);
+        pointLight1.position.set(3, 3, -5);
         scene.add(pointLight1);
-        // const pointLightHelper1 = new THREE.PointLightHelper(pointLight1, 1, "red");
-        // scene.add(pointLightHelper1);
 
-        const pointLight2 = new THREE.PointLight(0xffffff, 0.4, 100);
-        pointLight2.position.set(45, 3, -5);
-        scene.add(pointLight2);
-        // const pointLightHelper2 = new THREE.PointLightHelper(pointLight2, 1, "red");
-        // scene.add(pointLightHelper2);
+        // const pointLight2 = new THREE.PointLight(0xffffff, 0.25, 100);
+        // pointLight2.position.set(30, 3, -15);
+        // scene.add(pointLight2);
 
-        const pointLight3 = new THREE.PointLight(0xffffff, 0.4, 100);
-        pointLight3.position.set(100, 3, -5);
+        const pointLight3 = new THREE.PointLight(0xffffff, 0.25, 100);
+        pointLight3.position.set(75, 3, -5);
         scene.add(pointLight3);
-        // const pointLightHelper3 = new THREE.PointLightHelper(pointLight3, 1, "red");
-        // scene.add(pointLightHelper3);
 
-        const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x333333, 0.6);
+        const hemisphereLight = new THREE.HemisphereLight(0xffffff, 0x333333, 0.7);
         scene.add(hemisphereLight);
 
         // controls
@@ -106,8 +97,15 @@ const Gallery = observer((props) => {
                 controls.target.setZ(z < minZ ? minZ : maxZ);
                 camera.position.setZ(positionZ);
             }
+
             if (!isNaN(camera.position.x)) positionX = camera.position.x;
             if (!isNaN(camera.position.z)) positionZ = camera.position.z;
+            lastPos = controls.target.x > minX && controls.target.x;
+
+            // 이미 렌더링 된 파일있는지 중복체크
+            if (2 < parseInt(controls.target.x / 2.5) && !rendered.includes(parseInt(controls.target.x / 2.5) - 3)) {
+                dynamicRender(dropData.length - parseInt(controls.target.x / 2.5) + 3, dropData.length - parseInt(controls.target.x / 2.5) + 3);
+            }
         });
 
         // 첫 로딩시, 화면 줌인
@@ -137,10 +135,8 @@ const Gallery = observer((props) => {
 
         if (intersects.length > 0 && !common.ui.gnbOpen) {
             parent = intersects[0].object.parent;
-            // console.log(intersects[0].object);
 
             if (intersects[0].object.name.includes("drop")) {
-                // console.log(dropData[parseInt(intersects[0].object.name.replace(/[^0-9]/g, ""))].dropSeq);
                 window.location.href = "native://drop_detail?dropSeq=" + dropData[parseInt(intersects[0].object.name.replace(/[^0-9]/g, ""))].dropSeq;
             }
         }
@@ -166,26 +162,12 @@ const Gallery = observer((props) => {
             });
         }
     }
-    var mesh = [];
 
-    const setDrop = () => {
-        if (dropData.length === 0) {
-            fbx.load("../../static/3d/podium/Podium.fbx", (obj) => {
-                obj.scale.multiplyScalar(0.3);
-                obj.position.set(0, 0, 0.8);
-                obj.traverse(function (child) {
-                    if (child.isMesh) {
-                        child.castShadow = true;
-                        child.receiveShadow = true;
-                    }
-                });
-                obj.name = "column0";
-                scene.add(obj);
-            });
-        } else {
-            for (let i = 0; i < dropData.length; i++) {
-                dropLength = i;
+    const dynamicRender = (start, end) => {
+        if (start <= dropData.length && end <= dropData.length) {
+            for (let i = dropData.length - start; dropData.length - end <= i; i--) {
                 if (dropData[i].contentUrl) {
+                    rendered.push(i);
                     // 포디움
                     fbx.load("../../static/3d/podium/Podium.fbx", (obj) => {
                         obj.scale.multiplyScalar(0.3);
@@ -234,7 +216,7 @@ const Gallery = observer((props) => {
                                     model.scale.multiplyScalar(10);
                                     break;
                                 case 3:
-                                    model.scale.multiplyScalar(0.8);
+                                    model.scale.multiplyScalar(7);
                                     break;
                                 case 4:
                                     model.scale.multiplyScalar(6);
@@ -252,15 +234,7 @@ const Gallery = observer((props) => {
                                     break;
                             }
                             scene.add(model);
-
                             model.name = "model" + i;
-                            // model.traverse(function (object) {
-                            //     console.log(object);
-                            //     object.name = "drop" + i;
-                            // });
-                            // mixer = new THREE.AnimationMixer(model);
-                            // mixer.clipAction(gltf.animations[0]).play();
-                            // mixers.push(mixer);
                         },
                         undefined,
                         function (error) {
@@ -269,6 +243,27 @@ const Gallery = observer((props) => {
                     );
                 }
             }
+        }
+    };
+
+    const setDrop = () => {
+        if (dropData.length === 0) {
+            fbx.load("../../static/3d/podium/Podium.fbx", (obj) => {
+                obj.scale.multiplyScalar(0.3);
+                obj.position.set(0, 0, 0.8);
+                obj.traverse(function (child) {
+                    if (child.isMesh) {
+                        child.castShadow = true;
+                        child.receiveShadow = true;
+                    }
+                });
+                obj.name = "column0";
+                scene.add(obj);
+            });
+        } else {
+            let end;
+            end = dropData.length < 5 ? dropData.length : 5;
+            dynamicRender(1, end);
         }
     };
 
