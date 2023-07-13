@@ -103,6 +103,8 @@ class Store {
         this.sb = sendbirdChat;
         this.state.loading = false;
 
+        this.loadChannels("openChannel");
+
         callback && callback();
     }
 
@@ -114,7 +116,7 @@ class Store {
             let channels;
             switch (channelType) {
                 case "openChannel":
-                    channelQuery = this.sb[`${channelType}`].createOpenChannelListQuery({ limit: 30 });
+                    channelQuery = this.sb[`${channelType}`].createOpenChannelListQuery({ limit: 130 });
                     channels = await channelQuery.next();
                     break;
                 case "groupChannel":
@@ -130,6 +132,7 @@ class Store {
                     channels = await collection.loadMore();
                     break;
             }
+
             this.store.common.debug(channels);
             this.state = { ...this.state, channels: channels, loading: false, settingUpUser: false };
         } catch (error) {
@@ -153,10 +156,11 @@ class Store {
             // const channelToJoin = this.state.channels.find((channel) => channel.url === channelUrl);
             await channelToJoin.enter();
             const [operators, operatorsError] = await this.getChannelOperators(channelToJoin);
-            // const [messages, error] = await this.loadMessages.open(channelToJoin);
-            // if (error) {
-            //     return this.onError(error);
-            // }
+            const [messages, error] = await this.loadMessages.open(channelToJoin);
+            if (error) {
+                return this.onError(error);
+            }
+            console.log("channelToJoin", messages);
 
             // setup connection event handlers
             const connectionHandler = new ConnectionHandler();
@@ -179,26 +183,29 @@ class Store {
             };
 
             channelHandler.onMessageReceived = (channel, message) => {
-                const check = this.state.messages.findIndex((item) => item.messageId == message.messageId);
-                console.log("onMessageReceived", check);
-                if (check == -1) {
-                    const updatedMessages = [...this.state.messages, message];
-                    this.state = { ...this.state, messages: updatedMessages };
+                // const check = this.state.messages.findIndex((item) => item.messageId == message.messageId);
+                // console.log("onMessageReceived", check);
+                // if (check == -1) {
+                //     const updatedMessages = [...this.state.messages, message];
+                //     this.state = { ...this.state, messages: updatedMessages };
 
-                    setTimeout(() => {
-                        if (document.querySelector("#message-wrap")) {
-                            var v = document.querySelector("#message-wrap").scrollHeight;
-                            scroll.scrollTo(v, {
-                                smooth: true,
-                                duration: 0,
-                                containerId: "message-wrap",
-                            });
-                        }
-                    }, 100);
-                }
+                //     setTimeout(() => {
+                //         if (document.querySelector("#message-wrap")) {
+                //             var v = document.querySelector("#message-wrap").scrollHeight;
+                //             scroll.scrollTo(v, {
+                //                 smooth: true,
+                //                 duration: 0,
+                //                 containerId: "message-wrap",
+                //             });
+                //         }
+                //     }, 100);
+                // }
+
+                const updatedMessages = [...this.state.messages, message];
+                this.state = { ...this.state, messages: updatedMessages };
             };
             channelHandler.onMessageDeleted = (channel, message) => {
-                // console.log("onMessageDeleted");
+                console.log("onMessageDeleted");
                 const updatedMessages = this.state.messages.filter((messageObject) => {
                     return messageObject.messageId !== message;
                 });
@@ -287,7 +294,7 @@ class Store {
             // };
 
             this.sb.openChannel.addOpenChannelHandler(uuid(), channelHandler);
-            this.state = { ...this.state, currentlyJoinedChannel: channelToJoin, messages: [], loading: false, currentlyJoinedChannelOperators: operators, participantCount: channelToJoin.participantCount };
+            this.state = { ...this.state, currentlyJoinedChannel: channelToJoin, messages: messages, loading: false, currentlyJoinedChannelOperators: operators, participantCount: channelToJoin.participantCount };
         }
         //////////////////////////////////////////////////////////////////// openChannel
 
@@ -345,7 +352,7 @@ class Store {
             try {
                 //list all messages
                 const messageListParams = {};
-                messageListParams.prevResultSize = 0;
+                messageListParams.prevResultSize = 30;
                 // messageListParams.reverse = true;
                 const unixMilliseconds = timeFlag ? timeFlag : new Date().getTime();
                 const messages = await channel.getMessagesByTimestamp(unixMilliseconds, messageListParams);
