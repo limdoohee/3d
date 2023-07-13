@@ -150,7 +150,9 @@ const Home = {
         //------------------------------------------------- Router isReady
 
         const onClose = () => {
-            setOpen(true);
+            // setOpen(true);
+            history.back();
+            // chat.disconnect();
         };
 
         const [loading, setloading] = useState(false);
@@ -168,7 +170,7 @@ const Home = {
             open: open,
             setOpen: setOpen,
             title: langSet.info4,
-            context: langSet.info5,
+            // context: langSet.info5,
             confirm: {
                 label: langSet.info6,
                 action: () => {

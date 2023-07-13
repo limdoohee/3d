@@ -190,7 +190,7 @@ const home = {
             open: openGallery,
             setOpen: setopenGallery,
             title: langSet.info8,
-            context: langSet.info5,
+            // context: langSet.info5,
             confirm: {
                 label: langSet.info9,
                 action: () => {
