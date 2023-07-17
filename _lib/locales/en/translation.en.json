@@ -132,8 +132,8 @@
         "title": "Notifications"
     },
     "magazine": {
-        "title": "magazine",
-        "sort": { "created": "newest", "view": "view" },
+        "title": "Magazine",
+        "sort": { "created": "Latest", "view": "Most Viewed" },
         "before": { "min": " minutes ago", "hour": " hours ago", "day": " days ago" }
     },
     "setting": {
