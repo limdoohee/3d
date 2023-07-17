@@ -140,7 +140,11 @@ class Store {
         // 브라우저 환경 필터링
         var broswerInfo = navigator.userAgent;
         var webViewCheck = broswerInfo.indexOf(";;;aos;") !== -1 ? true : false;
-        if (webViewCheck) {
+
+        var userAgent = window.navigator.userAgent.toLowerCase();
+        var isIOSWebView = /iphone|ipod|ipad/.test(userAgent) && !/safari/.test(userAgent);
+
+        if (webViewCheck || isIOSWebView) {
             this.debug("Check : 웹뷰인 경우");
             action();
         } else {
@@ -153,7 +157,7 @@ class Store {
                     location.href = "https://dropkitchen.xyz/";
                 }
             } else {
-                this.debug("Check : 웹뷰인 경우");
+                this.debug("Check : 웹뷰가 아닌데 디버깅이 가능한 경우");
                 action();
             }
         }
