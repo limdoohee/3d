@@ -117,23 +117,50 @@ class Store {
     }
 
     init() {
-        // localStorage 기본 언어 설정
-        let defaultLanguage = "en";
-        if (localStorage.getItem("lang")) {
-            defaultLanguage = localStorage.getItem("lang");
-        }
-        localStorage.setItem("lang", defaultLanguage);
-        this.store.lang.changeLanguage(defaultLanguage);
-        Cookies.save("lang", defaultLanguage);
-        this.pageInit = true;
-        this.debug("페이지 Init 완료");
-        this.debug(this.pageInit);
+        var action = () => {
+            // localStorage 기본 언어 설정
+            let defaultLanguage = "en";
+            if (localStorage.getItem("lang")) {
+                defaultLanguage = localStorage.getItem("lang");
+            }
+            localStorage.setItem("lang", defaultLanguage);
+            this.store.lang.changeLanguage(defaultLanguage);
+            Cookies.save("lang", defaultLanguage);
+            this.pageInit = true;
+            this.debug("페이지 Init 완료");
+            this.debug(this.pageInit);
 
-        this.analysisSubmit({
-            component: "",
-            componentId: "",
-            action: "enter",
-        });
+            this.analysisSubmit({
+                component: "",
+                componentId: "",
+                action: "enter",
+            });
+        };
+
+        // 브라우저 환경 필터링
+        var broswerInfo = navigator.userAgent;
+        var webViewCheck = broswerInfo.indexOf(";;;aos;") !== -1 ? true : false;
+
+        var userAgent = window.navigator.userAgent.toLowerCase();
+        var isIOSWebView = /iphone|ipod|ipad/.test(userAgent) && !/safari/.test(userAgent);
+
+        if (webViewCheck || isIOSWebView) {
+            this.debug("Check : 웹뷰인 경우");
+            action();
+        } else {
+            if (localStorage.getItem("browserDebug") !== "Y") {
+                if (isMobile) {
+                    this.debug("Check : 웹뷰가 아니면서 모바일");
+                    location.href = "https://dropkitchen.xyz/";
+                } else {
+                    this.debug("Check : 웹뷰가 아니면서 모바일이 아닌 경우");
+                    location.href = "https://dropkitchen.xyz/";
+                }
+            } else {
+                this.debug("Check : 웹뷰가 아닌데 디버깅이 가능한 경우");
+                action();
+            }
+        }
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////// 데이터 수집

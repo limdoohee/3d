@@ -96,6 +96,10 @@ const home = {
                     value={value}
                     onChange={onMessageInputChange}
                     onKeyDown={(event) => handleEnterPress(event, onSend)}
+                    onFocus={(e) => {
+                        e.preventDefault();
+                        home.messageScrollDown();
+                    }}
                 />
                 {/* <div className="message-input-buttons">
                     <button className="send-message-button" onClick={onSend}>
