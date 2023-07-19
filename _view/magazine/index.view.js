@@ -207,7 +207,7 @@ const Home = observer((props) => {
                                 <div className="category">
                                     <strong>{item.category}</strong>
                                     <span>
-                                        <Date_Module.timeRemain.default time={item.updatedAt} store={store} />
+                                        <Date_Module.timeRemain.default time={item.reservedAt} store={store} />
                                     </span>
                                 </div>
                                 <h4
