@@ -10,6 +10,7 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { MapControls } from "three/addons/controls/MapControls.js";
 import gsap from "gsap";
+import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 
 const Home = observer((props) => {
     const router = useRouter();
@@ -32,6 +33,9 @@ const Home = observer((props) => {
     const scene = new THREE.Scene();
     let clock = new THREE.Clock();
     const loader = new GLTFLoader();
+    const dracoLoader = new DRACOLoader();
+    dracoLoader.setDecoderPath("../draco/");
+    loader.setDRACOLoader(dracoLoader);
 
     let model;
     const animationActions = [];
@@ -231,7 +235,7 @@ const Home = observer((props) => {
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1000);
+        camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.set(0, 2.6, 10);
 
         const controls = new MapControls(camera, renderer.domElement);
@@ -244,8 +248,8 @@ const Home = observer((props) => {
         scene.add(new THREE.AmbientLight(0xffffff, 0.6));
 
         // PointLight
-        const pointLight = new THREE.PointLight(0xffffff, 0.1);
-        pointLight.position.set(0, 4, 3);
+        const pointLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        pointLight.position.set(0, 4, 5);
         scene.add(pointLight);
 
         window.addEventListener("click", onTouchBox);
@@ -258,10 +262,8 @@ const Home = observer((props) => {
 
     function onTouchBox(event) {
         if (event.target.tagName === "SPAN" || event.target.tagName === "BUTTON") {
-            console.log("btnClick", btnClick);
             if ((event.target.className.includes("luckyBox") || event.target.parentNode?.className.includes("luckyBox")) && !btnClick) {
                 gallery.openLuckyBox({ luckyBoxSeq: gallery.luckyBox[0].seq }, (e) => {
-                    console.log("click");
                     if (e.id === "invalid_request") {
                         common.messageApi.open({
                             key: "luckyBox",
@@ -285,39 +287,54 @@ const Home = observer((props) => {
                         setAction(animationActions[1]);
                         setTimeout(() => {
                             loader.load(
-                                e.contentUrl,
-                                // "https://asset.dropkitchen.xyz/contents/drops/Drop02_KimYunA/scene.gltf",
+                                e.lowContentUrl,
                                 function (gltf) {
                                     model = gltf.scene;
                                     model.position.z = 3;
                                     model.position.y = 1;
-                                    model.scale.multiplyScalar(6);
 
-                                    // switch (e.dropSeq) {
-                                    //     case 1:
-                                    //         model.scale.multiplyScalar(14);
-                                    //         break;
-                                    //     case 2:
-                                    //         model.scale.multiplyScalar(20);
-                                    //         break;
-                                    //     case 3:
-                                    //         model.scale.multiplyScalar(1.5);
-                                    //         break;
-                                    //     case 4:
-                                    //         model.scale.multiplyScalar(15);
-                                    //         break;
-                                    //     case 5:
-                                    //         model.scale.multiplyScalar(15);
-                                    //         break;
-                                    //     default:
-                                    //         model.scale.multiplyScalar(1);
-                                    //         break;
-                                    // }
+                                    switch (e.dropSeq) {
+                                        case 4:
+                                            model.position.y = 2;
+                                            model.scale.multiplyScalar(15);
+                                            break;
+                                        case 5:
+                                            model.position.y = 1.5;
+                                            model.scale.multiplyScalar(15);
+                                            break;
+                                        case 7:
+                                            model.scale.multiplyScalar(11);
+                                            break;
+                                        case 8:
+                                            model.position.y = 3.5;
+                                            model.scale.multiplyScalar(12);
+                                            break;
+                                        case 9:
+                                            model.position.y = 2;
+                                            model.scale.multiplyScalar(0.4);
+                                            break;
+                                        case 10:
+                                            model.position.y = 1.5;
+                                            model.scale.multiplyScalar(10);
+                                            break;
+                                        case 11:
+                                            model.position.x = 0.5;
+                                            model.position.y = 3.5;
+                                            model.scale.multiplyScalar(0.1);
+                                            break;
+                                        case 12:
+                                            model.position.y = 2;
+                                            model.scale.multiplyScalar(10);
+                                            break;
+                                        default:
+                                            model.scale.multiplyScalar(15);
+                                            break;
+                                    }
                                     scene.add(model);
                                 },
                                 undefined,
                                 function (error) {
-                                    console.log("An error happened");
+                                    console.log("error", error);
                                 },
                             );
 
