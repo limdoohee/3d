@@ -32,7 +32,7 @@ const Home = observer((props) => {
 
     //------------------------------------------------- Router isReady
     useEffect(() => {
-        console.log(router.pathname);
+        console.log(router.query);
         if (router.isReady && router.pathname == "/magazine/d/[seq]") {
             common.getBuildId();
             initLoad({
