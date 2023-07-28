@@ -23,7 +23,7 @@ const Home = observer(() => {
     useEffect(() => {
         if (router.isReady) {
             appCheck(() => {
-                location.href = "/";
+                location.href = "/main";
             });
         }
     }, [router.isReady]);
