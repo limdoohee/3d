@@ -8,6 +8,7 @@
 
 .dds.tabs .adm-tabs-tab-wrapper {
     padding: 0;
+    flex: 1;
 }
 
 .dds.tabs .adm-tabs-header .adm-tabs-tab-list {

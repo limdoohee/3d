@@ -18,6 +18,18 @@ const Home = {
         const [migrateFlag, setMigrateFlag] = useState(false);
         const [open, setOpen] = useState(false);
 
+        const [items, setitems] = useState([
+            {
+                key: 0,
+                label: lang.t("point.tabs.information"),
+                children: <PointInformation store={store} />,
+            },
+            {
+                key: 1,
+                label: lang.t("point.tabs.history"),
+                children: <PointList store={store} tabKey={tabKey} />,
+            },
+        ]);
         //------------------------------------------------- Init Load
         const initLoad = ({ callback }) => {
             const params = {};
@@ -35,6 +47,16 @@ const Home = {
                 initLoad({
                     callback: () => {},
                 });
+                if (localStorage.getItem("lang") == "ko") {
+                    setitems((prev) => [
+                        ...prev,
+                        {
+                            key: 2,
+                            label: "시나몬 이벤트",
+                            children: <EventPage store={store} tabKey={tabKey} />,
+                        },
+                    ]);
+                }
             }
         }, [router.isReady, router.asPath]);
         //------------------------------------------------- Router isReady
@@ -50,19 +72,6 @@ const Home = {
         const onClose = () => {
             common.uiChange("pointOpen", false);
         };
-
-        const items = [
-            {
-                key: 0,
-                label: lang.t("point.tabs.information"),
-                children: <PointInformation store={store} />,
-            },
-            {
-                key: 1,
-                label: lang.t("point.tabs.history"),
-                children: <PointList store={store} tabKey={tabKey} />,
-            },
-        ];
 
         const onChange = (e) => {
             // console.log(e);
@@ -297,6 +306,24 @@ const PointList = observer((props) => {
                 active={sortValue}
                 change={sortChange}
             />
+        </>
+    );
+});
+
+const EventPage = observer((props) => {
+    const { common, lang, point } = props.store;
+
+    const registEventCode = () => {
+        var params = {
+            code: "",
+        };
+        point.registEventCode(params, (res) => {
+            //
+        });
+    };
+    return (
+        <>
+            <div className="point-event">시나몬 이벤트</div>
         </>
     );
 });
