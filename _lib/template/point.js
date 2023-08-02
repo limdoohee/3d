@@ -52,7 +52,7 @@ const Home = {
                         ...prev,
                         {
                             key: 2,
-                            label: "시나몬 이벤트",
+                            label: "이벤트",
                             children: <EventPage store={store} tabKey={tabKey} />,
                         },
                     ]);
@@ -125,7 +125,7 @@ const Home = {
                         </h3>
                         {migrateFlag && <MigratePoint />}
                     </div>
-                    <DDS.tabs.default defaultActiveKey={tabKey === 0 ? "0" : tabKey} items={items} onChange={onChange} className="pointTabs" />
+                    <DDS.tabs.default defaultActiveKey={tabKey === 0 ? "0" : tabKey} items={items} onChange={onChange} className="pointTabs" dot={2} />
                     <DDS.modal.center {...modalData} />
                 </div>
             </>
