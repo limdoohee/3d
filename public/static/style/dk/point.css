@@ -345,3 +345,90 @@
     background: #fff;
     z-index: 1;
 }
+
+.point-event .upper {
+    padding: 12px 0 0 0;
+}
+.point-event .upper {
+    padding: 24px 20px;
+}
+.point-event .upper > h3 {
+    color: var(--gray-9, #1f1f1f);
+
+    /* Bold/Line-height 1/Typography3 */
+    font-family: Pretendard;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 22px */
+    letter-spacing: -0.66px;
+
+    text-align: center;
+    margin: 0 0 24px 0;
+}
+.point-event .upper .code {
+    display: flex;
+    flex-direction: column;
+    padding: 32px 40px 20px 40px;
+    border-radius: 16px;
+    background: var(--gray-1, #f5f5f5);
+}
+.point-event .upper .code p {
+    color: var(--gray-9, #1f1f1f);
+    text-align: center;
+
+    /* Regular/Line-height 1/Typography7 */
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%; /* 14px */
+    letter-spacing: -0.28px;
+    margin: 0 0 16px 0;
+}
+
+.point-event .upper .code .dds.input {
+    margin: 0 0 32px 0;
+}
+.point-event .upper .code .dds.button {
+    justify-content: center;
+}
+.point-event .info {
+    border-top: 12px solid var(--gray-1, #f5f5f5);
+    padding: 32px 20px 0 20px;
+}
+.point-event .info > h3 {
+    color: var(--gray-9, #1f1f1f);
+
+    /* Bold/Line-height 1/Typography6 */
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 16px */
+    letter-spacing: -0.32px;
+    margin: 0 0 8px 0;
+}
+.point-event .info > ul li {
+    color: var(--gray-8, #404040);
+
+    /* Regular/Typography7 */
+    font-family: Pretendard;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 21px */
+    letter-spacing: -0.28px;
+    position: relative;
+    padding: 0 0 0 8px;
+}
+.point-event .info > ul li::after {
+    content: "";
+    position: absolute;
+    top: calc(50% - 2px);
+    left: 0;
+    background-color: var(--gray-8, #404040);
+    width: 4px;
+    height: 4px;
+    border-radius: 4px;
+}

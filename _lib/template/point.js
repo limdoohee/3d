@@ -18,6 +18,19 @@ const Home = {
         const [migrateFlag, setMigrateFlag] = useState(false);
         const [open, setOpen] = useState(false);
 
+        const [items, setitems] = useState([
+            {
+                key: 0,
+                label: lang.t("point.tabs.information"),
+                children: <PointInformation store={store} />,
+                // children: <EventPage store={store} tabKey={tabKey} />,
+            },
+            {
+                key: 1,
+                label: lang.t("point.tabs.history"),
+                children: <PointList store={store} tabKey={tabKey} />,
+            },
+        ]);
         //------------------------------------------------- Init Load
         const initLoad = ({ callback }) => {
             const params = {};
@@ -35,6 +48,16 @@ const Home = {
                 initLoad({
                     callback: () => {},
                 });
+                if (localStorage.getItem("lang") == "ko") {
+                    setitems((prev) => [
+                        ...prev,
+                        {
+                            key: 2,
+                            label: "이벤트",
+                            children: <EventPage store={store} tabKey={tabKey} settabKey={settabKey} />,
+                        },
+                    ]);
+                }
             }
         }, [router.isReady, router.asPath]);
         //------------------------------------------------- Router isReady
@@ -50,19 +73,6 @@ const Home = {
         const onClose = () => {
             common.uiChange("pointOpen", false);
         };
-
-        const items = [
-            {
-                key: 0,
-                label: lang.t("point.tabs.information"),
-                children: <PointInformation store={store} />,
-            },
-            {
-                key: 1,
-                label: lang.t("point.tabs.history"),
-                children: <PointList store={store} tabKey={tabKey} />,
-            },
-        ];
 
         const onChange = (e) => {
             // console.log(e);
@@ -116,7 +126,7 @@ const Home = {
                         </h3>
                         {migrateFlag && <MigratePoint />}
                     </div>
-                    <DDS.tabs.default defaultActiveKey={tabKey === 0 ? "0" : tabKey} items={items} onChange={onChange} className="pointTabs" />
+                    <DDS.tabs.default defaultActiveKey={tabKey === 0 ? "0" : tabKey} items={items} onChange={onChange} className="pointTabs" dot={2} activeKey={tabKey === 0 ? "0" : tabKey} />
                     <DDS.modal.center {...modalData} />
                 </div>
             </>
@@ -297,6 +307,79 @@ const PointList = observer((props) => {
                 active={sortValue}
                 change={sortChange}
             />
+        </>
+    );
+});
+
+const EventPage = observer((props) => {
+    const { settabKey } = props;
+    const { common, lang, point } = props.store;
+
+    const registEventCode = () => {
+        var params = {
+            code: code,
+        };
+        point.registEventCode(params, (res) => {
+            if (res.id) {
+                common.messageApi.warning({
+                    content: res.message,
+                });
+            } else {
+                setopen(true);
+            }
+        });
+    };
+
+    const [code, setcode] = useState("");
+
+    const [open, setopen] = useState(false);
+    const modalSetting = {
+        open: open,
+        setOpen: setopen,
+        title: "코드가 등록되었어요!",
+        context: "적립된 포인트는 내역에서 확인 가능해요",
+        confirm: {
+            label: "확인",
+            action: () => {
+                // clickProfile(sender);
+                settabKey(1);
+                var t = document.querySelector(`.adm-tabs  > div:nth-child(3)`);
+                if (t) {
+                    t.style.display = "block";
+                }
+            },
+        },
+    };
+
+    return (
+        <>
+            <div className="point-event">
+                <div className="upper">
+                    <h3>신한은행 시나몬 이벤트</h3>
+                    <div className="code">
+                        <p>이벤트 코드를 입력해주세요</p>
+                        <DDS.input.default
+                            className="dds input primary large"
+                            placeholder="코드 번호 입력"
+                            onKeyUp={(e) => {
+                                setcode(e.target.value);
+                            }}
+                        />
+                        <DDS.button.default className="dds button primary large" onClick={registEventCode}>
+                            코드 등록
+                        </DDS.button.default>
+                    </div>
+                </div>
+                <div className="info">
+                    <h3>안내사항</h3>
+                    <ul>
+                        <li>코드 등록시 3,000 포인트가 적립됩니다.</li>
+                        <li>한 아이디당 하나의 쿠폰코드만 사용가능합니다.</li>
+                        <li>적립된 포인트는 포인트 > 내역에서 확인 가능합니다.</li>
+                    </ul>
+                </div>
+            </div>
+            <DDS.modal.center {...modalSetting}>ssds</DDS.modal.center>
         </>
     );
 });

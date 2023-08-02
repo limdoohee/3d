@@ -8,6 +8,24 @@
 
 .dds.tabs .adm-tabs-tab-wrapper {
     padding: 0;
+    flex: 1;
+    display: flex;
+}
+.dds.tabs .adm-tabs-tab-wrapper.dot .adm-tabs-tab {
+    position: relative;
+}
+.dds.tabs .adm-tabs-tab-wrapper.dot .adm-tabs-tab:after {
+    position: absolute;
+    content: "";
+    top: calc(50% - 0.8em);
+    right: -4px;
+    background-color: #fd6e24;
+    width: 4px;
+    height: 4px;
+    border-radius: 4px;
+}
+
+.dds.tabs .adm-tabs-tab-wrapper .adm-tabs-tab {
 }
 
 .dds.tabs .adm-tabs-header .adm-tabs-tab-list {
@@ -45,6 +63,7 @@
 }
 
 .dds.tabs.tabsPart .adm-tabs-header .adm-tabs-tab {
-    width: 100%;
+    width: auto;
     text-align: center;
+    display: inline-block;
 }
