@@ -18,6 +18,7 @@ const Home = {
         const [migrateFlag, setMigrateFlag] = useState(false);
         const [open, setOpen] = useState(false);
 
+        const [tabKey, settabKey] = useState(0);
         const [items, setitems] = useState([
             {
                 key: 0,
@@ -61,8 +62,6 @@ const Home = {
             }
         }, [router.isReady, router.asPath]);
         //------------------------------------------------- Router isReady
-
-        const [tabKey, settabKey] = useState(0);
 
         useEffect(() => {
             return () => {
