@@ -18,6 +18,7 @@ const Home = {
         const [migrateFlag, setMigrateFlag] = useState(false);
         const [open, setOpen] = useState(false);
 
+        const [tabKey, settabKey] = useState(0);
         const [items, setitems] = useState([
             {
                 key: 0,
@@ -61,8 +62,6 @@ const Home = {
             }
         }, [router.isReady, router.asPath]);
         //------------------------------------------------- Router isReady
-
-        const [tabKey, settabKey] = useState(0);
 
         useEffect(() => {
             return () => {
@@ -320,12 +319,13 @@ const EventPage = observer((props) => {
             code: code,
         };
         point.registEventCode(params, (res) => {
-            if (res.id) {
+            console.log(res);
+            if (res.id == "ok") {
+                setopen(true);
+            } else {
                 common.messageApi.warning({
                     content: res.message,
                 });
-            } else {
-                setopen(true);
             }
         });
     };
@@ -342,9 +342,9 @@ const EventPage = observer((props) => {
             label: "확인",
             action: () => {
                 // clickProfile(sender);
-                settabKey(1);
                 var t = document.querySelector(`.adm-tabs  > div:nth-child(3)`);
-                if (t) {
+                if (t.style.display == "none") {
+                    settabKey(1);
                     t.style.display = "block";
                 }
             },
