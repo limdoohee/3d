@@ -252,6 +252,23 @@ const Home = observer((props) => {
         pointLight.position.set(0, 4, 5);
         scene.add(pointLight);
 
+        // 디버깅용
+        // loader.load(
+        //     "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop15.glb",
+        //     function (gltf) {
+        //         model = gltf.scene;
+        //         model.position.y = 2.5;
+        //         model.position.z = 3;
+        //         model.scale.multiplyScalar(13);
+
+        //         scene.add(model);
+        //     },
+        //     undefined,
+        //     function (error) {
+        //         console.log("error", error);
+        //     },
+        // );
+
         window.addEventListener("click", onTouchBox);
     }
 
@@ -325,6 +342,16 @@ const Home = observer((props) => {
                                         case 12:
                                             model.position.y = 2;
                                             model.scale.multiplyScalar(10);
+                                            break;
+                                        case 14:
+                                            model.position.x = 0.2;
+                                            model.position.y = 1.5;
+                                            model.position.z = 3;
+                                            model.scale.multiplyScalar(11);
+                                            break;
+                                        case 15:
+                                            model.position.y = 2.5;
+                                            model.scale.multiplyScalar(13);
                                             break;
                                         default:
                                             model.scale.multiplyScalar(15);
