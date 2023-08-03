@@ -3,12 +3,12 @@ import { Tabs } from "antd-mobile";
 
 const Component = {
     default: (props) => {
-        const { items, defaultActiveKey, onChange } = props;
+        const { items, defaultActiveKey, tabPosition, activeKey, onChange, dot } = props;
         return (
             <>
-                <Tabs defaultActiveKey={defaultActiveKey} className={`dds tabs ${props.className} ${items.length < 5 ? "tabsPart" : ""}`} onChange={onChange}>
+                <Tabs defaultActiveKey={defaultActiveKey} className={`dds tabs ${props.className} ${items.length < 5 ? "tabsPart" : ""}`} onChange={onChange} activeKey={activeKey}>
                     {items.map((item, key) => (
-                        <Tabs.Tab title={item.label} key={key}>
+                        <Tabs.Tab title={item.label} key={key} className={`${key == dot ? "dot" : ""}`}>
                             {item.children && item.children}
                         </Tabs.Tab>
                     ))}
