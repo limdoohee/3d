@@ -94,20 +94,18 @@ const Home = observer((props) => {
     let actionCheck = false;
     const [actionLoading, setactionLoading] = useState(false);
 
-    const phoneVerify = async (uid) => {
+    const phoneVerify = async () => {
         var params = {
             clientId: sessionStorage.getItem("loginClientId"),
             email: sessionStorage.getItem("loginEmail"),
             countryCode: authenticationValue.countryCode,
-            uid: uid,
-            lang: localStorage.getItem("lang"),
             cellNo: authenticationValue.cellNo,
             nickname: sessionStorage.getItem("signupNickname"),
-            adsAgree: sessionStorage.getItem("signupMarketing"),
+            type: "",
+            code: "",
             terms1Agree: "Y",
             terms2Agree: "Y",
-            type: inviteValue.type && sessionStorage.getItem("type"),
-            code: inviteValue.code && inviteValue.code,
+            adsAgree: sessionStorage.getItem("signupMarketing"),
         };
         inviteValue.type && (params.type = inviteValue.type);
         inviteValue.code && (params.code = inviteValue.code);
@@ -142,18 +140,33 @@ const Home = observer((props) => {
         if (actionCheck == false) {
             actionCheck = true;
             setactionLoading(true);
-            authenticationValue.confirmationResult
-                .confirm(authenticationValue.authCode)
-                .then((result) => {
-                    phoneVerify(result.user.uid);
-                })
-                .catch((error) => {
+
+            var params = { cellNo: authenticationValue.cellNo, authCode: authenticationValue.authCode };
+            auth.checkAuthCode(params, (res) => {
+                console.log(res);
+                if (res.result == "ok") {
+                    phoneVerify();
+                } else {
                     actionCheck = false;
                     setactionLoading(false);
                     common.messageApi.info({
-                        content: languageSet.message.fail,
+                        content: res.message,
                     });
-                });
+                }
+            });
+
+            // authenticationValue.confirmationResult
+            //     .confirm(authenticationValue.authCode)
+            //     .then((result) => {
+            //         phoneVerify(result.user.uid);
+            //     })
+            //     .catch((error) => {
+            //         actionCheck = false;
+            //         setactionLoading(false);
+            //         common.messageApi.info({
+            //             content: languageSet.message.fail,
+            //         });
+            //     });
         }
     };
 
