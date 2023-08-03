@@ -23,7 +23,7 @@ import DDS from "../../_lib/component/dds";
 
 const Home = observer((props) => {
     const { data, store } = props;
-    const { common, lang } = store;
+    const { common, lang, auth } = store;
     const { countryCode, cellNo, authCode, uid, confirmationResult } = data.value;
 
     const [open, setOpen] = useState(false);
@@ -74,9 +74,10 @@ const Home = observer((props) => {
     // ----------------------------------------------------------- 인증코드 발송
     const handleSendCode = () => {
         if (cellNo.length > 6) {
-            const appVerifier = window.recaptchaVerifier;
-            signInWithPhoneNumber(getAuth(), "+" + countryCode + cellNo, appVerifier)
-                .then((res) => {
+            var params = { countryCode: countryCode, cellNo: cellNo };
+            auth.sendAuthCode(params, (res) => {
+                console.log(res);
+                if (res.result == "ok") {
                     data.set((prev) => ({ ...prev, confirmationResult: res, authCode: "" }));
                     initTime();
                     setcount(count + 1);
@@ -86,14 +87,34 @@ const Home = observer((props) => {
                         });
                     setTimeout(() => {
                         focusCode();
-                    }, 250);
-                })
-                .catch((error) => {
-                    common.debug(error);
+                    }, 500);
+                } else {
                     common.messageApi.info({
                         content: "error",
                     });
-                });
+                }
+            });
+
+            // const appVerifier = window.recaptchaVerifier;
+            // signInWithPhoneNumber(getAuth(), "+" + countryCode + cellNo, appVerifier)
+            //     .then((res) => {
+            //         data.set((prev) => ({ ...prev, confirmationResult: res, authCode: "" }));
+            //         initTime();
+            //         setcount(count + 1);
+            //         count > 0 &&
+            //             common.messageApi.info({
+            //                 content: "Resend code complete!",
+            //             });
+            //         setTimeout(() => {
+            //             focusCode();
+            //         }, 250);
+            //     })
+            //     .catch((error) => {
+            //         common.debug(error);
+            //         common.messageApi.info({
+            //             content: "error",
+            //         });
+            //     });
         } else {
             common.messageApi.info({
                 content: languageSet.message.fail,
