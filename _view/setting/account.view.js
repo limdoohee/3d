@@ -78,7 +78,7 @@ const Home = observer((props) => {
                                 </h5>
                                 <h4>
                                     <strong>{auth.loginResult.cellNo}</strong>
-                                    <span>
+                                    {/* <span>
                                         <DDS.button.default
                                             className="dds button primary small"
                                             onClick={() => {
@@ -92,7 +92,7 @@ const Home = observer((props) => {
                                         >
                                             {lang.t("setting.account.info.phone")}
                                         </DDS.button.default>
-                                    </span>
+                                    </span> */}
                                 </h4>
                             </li>
                         </ul>
