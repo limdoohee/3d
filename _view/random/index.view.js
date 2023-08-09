@@ -367,6 +367,14 @@ const Home = observer((props) => {
                                             model.rotation.y = -0.2;
                                             model.scale.multiplyScalar(11);
                                             break;
+                                        case 18:
+                                            model.position.y = 2.8;
+                                            model.position.z = 3;
+                                            model.rotation.x = 0.7;
+                                            model.rotation.y = -0.2;
+                                            model.scale.multiplyScalar(11);
+                                            break;
+
                                         default:
                                             model.scale.multiplyScalar(15);
                                             break;
