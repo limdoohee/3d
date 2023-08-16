@@ -309,6 +309,11 @@ const Gallery = observer((props) => {
                                     model.position.y = -1.15;
                                     model.scale.multiplyScalar(8);
                                     break;
+                                case 21:
+                                    model.position.y = -1.3;
+                                    model.position.z = 0.3;
+                                    model.scale.multiplyScalar(2.5);
+                                    break;
                                 case 26:
                                     model.position.y = -0.8;
                                     model.position.z = -0.1;
