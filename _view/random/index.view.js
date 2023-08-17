@@ -254,13 +254,13 @@ const Home = observer((props) => {
 
         // 디버깅용
         // loader.load(
-        //     "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop22.glb",
+        //     "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop23.glb",
         //     function (gltf) {
         //         model = gltf.scene;
-        //         model.position.y = 2.5;
+        //         model.position.y = 2;
         //         model.position.z = 3;
-        //         // model.rotation.x = 0.3;
-        //         model.scale.multiplyScalar(5);
+        //         model.rotation.x = 0.3;
+        //         model.scale.multiplyScalar(8);
 
         //         scene.add(model);
         //     },
@@ -390,6 +390,17 @@ const Home = observer((props) => {
                                             model.position.z = 3;
                                             model.rotation.x = 0.3;
                                             model.scale.multiplyScalar(7);
+                                            break;
+                                        case 22:
+                                            model.position.y = 2.2;
+                                            model.position.z = 3;
+                                            model.scale.multiplyScalar(5);
+                                            break;
+                                        case 23:
+                                            model.position.y = 2.3;
+                                            model.position.z = 3;
+                                            model.rotation.x = 0.3;
+                                            model.scale.multiplyScalar(8);
                                             break;
                                         default:
                                             model.scale.multiplyScalar(15);
