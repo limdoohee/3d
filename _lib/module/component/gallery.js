@@ -325,8 +325,7 @@ const Gallery = observer((props) => {
                                     break;
                                 case 24:
                                     model.position.x = i * 2.5 - 0.25;
-                                    model.position.y = -1.2;
-                                    model.rotation.x = 0.3;
+                                    model.position.y = -1.25;
                                     model.rotation.y = -0.6;
                                     model.scale.multiplyScalar(7);
                                     break;
