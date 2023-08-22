@@ -329,10 +329,21 @@ const Gallery = observer((props) => {
                                     model.rotation.y = -0.6;
                                     model.scale.multiplyScalar(7);
                                     break;
+                                case 25:
+                                    model.scale.multiplyScalar(6);
+                                    break;
                                 case 26:
-                                    model.position.y = -0.5;
+                                    model.position.y = -0.8;
                                     model.position.z = -0.1;
                                     model.scale.multiplyScalar(0.6);
+                                    break;
+                                case 28:
+                                    model.position.y = -0.7;
+                                    model.scale.multiplyScalar(4.5);
+                                    break;
+                                case 30:
+                                    model.rotation.y = -1.8;
+                                    model.scale.multiplyScalar(4.5);
                                     break;
                                 default:
                                     model.scale.multiplyScalar(6);
