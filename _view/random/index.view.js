@@ -254,15 +254,14 @@ const Home = observer((props) => {
 
         // 디버깅용
         // loader.load(
-        //     "https://asset.dropkitchen.xyz/contents/drops_glb_low/drop24.glb",
+        //     "https://s3.ap-northeast-2.amazonaws.com/dropkitchen.xyz/public/contents/asset_259/drop30_jiyongho_static.glb",
         //     function (gltf) {
         //         model = gltf.scene;
-        //         model.position.x = -0.5;
-        //         model.position.y = 1.8;
+        //         model.position.y = 1.9;
         //         model.position.z = 3;
-        //         model.rotation.x = 0.3;
-        //         model.rotation.y = -0.6;
-        //         model.scale.multiplyScalar(18);
+        //         model.rotation.y = -1.7;
+        //         // model.rotation.y = Math.PI * 1;
+        //         model.scale.multiplyScalar(13);
 
         //         scene.add(model);
         //     },
@@ -411,6 +410,34 @@ const Home = observer((props) => {
                                             model.rotation.x = 0.3;
                                             model.rotation.y = -0.6;
                                             model.scale.multiplyScalar(18);
+                                            break;
+                                        case 25:
+                                            model.position.x = -0.5;
+                                            model.position.y = 1.8;
+                                            model.position.z = 3;
+                                            model.rotation.x = 0.3;
+                                            model.rotation.y = -0.6;
+                                            model.scale.multiplyScalar(18);
+                                            break;
+                                        case 26:
+                                            model.position.y = 2.7;
+                                            model.position.z = 3;
+                                            model.scale.multiplyScalar(1.5);
+                                            break;
+                                        case 27:
+                                            break;
+                                        case 28:
+                                            model.position.y = 3.2;
+                                            model.position.z = 3;
+                                            model.scale.multiplyScalar(12);
+                                            break;
+                                        case 29:
+                                            break;
+                                        case 30:
+                                            model.position.y = 1.9;
+                                            model.position.z = 3;
+                                            model.rotation.y = -1.7;
+                                            model.scale.multiplyScalar(13);
                                             break;
                                         default:
                                             model.scale.multiplyScalar(15);
