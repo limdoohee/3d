@@ -422,14 +422,14 @@ const Home = observer((props) => {
                                             model.scale.multiplyScalar(10);
                                             break;
                                         case 29:
-                                            model.position.y = 1.9;
-                                            model.rotation.y = -1.7;
-                                            model.scale.multiplyScalar(13);
-                                            break;
-                                        case 30:
                                             model.position.y = 0;
                                             model.position.z = 3;
                                             model.scale.multiplyScalar(9);
+                                            break;
+                                        case 30:
+                                            model.position.y = 1.9;
+                                            model.rotation.y = -1.7;
+                                            model.scale.multiplyScalar(13);
                                             break;
                                         default:
                                             model.scale.multiplyScalar(15);
