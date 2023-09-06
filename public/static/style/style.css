@@ -12,3 +12,60 @@
 }
 
 /* ------------------------------------------------------------------------ 전역 css 설정 */
+
+.dds.closing {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    position: relative;
+    gap: 64px;
+}
+.dds.closing > button {
+    position: absolute;
+    bottom: 20px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    justify-content: center;
+}
+
+.dds.closing > div h1 {
+    color: var(--gray-9, #1f1f1f);
+    text-align: center;
+
+    /* Bold/Typography3 */
+    font-family: Pretendard;
+    font-size: 22px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 130%; /* 28.6px */
+    letter-spacing: -0.66px;
+    margin: 0 0 12px 0;
+}
+.dds.closing > div h4 {
+    color: var(--gray-9, #1f1f1f);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+    letter-spacing: -0.32px;
+    margin: 0 0 12px 0;
+}
+.dds.closing > div p {
+    color: var(--gray-7, #575757);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+    letter-spacing: -0.32px;
+    margin: 0 0 32px 0;
+}
+.dds.closing > div .logo {
+    text-align: center;
+}
