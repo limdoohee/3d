@@ -263,194 +263,187 @@ const MisteryBox = observer((props) => {
     }, []);
 
     useEffect(() => {
-        dropSeq = drop.data.curr.dropSeq;
-        dropRound = drop.data.curr.dropRound;
-        // a = assets.filter((e) => e.id === dropRound);
-        if (drop.data.curr.status) {
-            if (drop.data.curr.status === "closed") {
-                // 페이지 리로딩
-                window.location.replace("native://home");
-            } else {
-                console.log("dropOwnFlag", drop.data.curr.dropOwnFlag);
-                if (drop.data.curr.dropOwnFlag) {
-                    const geometry = new THREE.BoxGeometry(3, 3, 0.5);
-                    const material = new THREE.MeshBasicMaterial({
-                        color: 0xffff00,
-                        side: THREE.DoubleSide,
-                        transparent: true,
-                        opacity: 0,
+        // dropSeq = drop.data.curr.dropSeq;
+        // dropRound = drop.data.curr.dropRound;
+
+        // if (drop.data.curr.dropOwnFlag) {
+        //     const geometry = new THREE.BoxGeometry(3, 3, 0.5);
+        //     const material = new THREE.MeshBasicMaterial({
+        //         color: 0xffff00,
+        //         side: THREE.DoubleSide,
+        //         transparent: true,
+        //         opacity: 0,
+        //     });
+        //     const plane = new THREE.Mesh(geometry, material);
+        //     plane.position.z = 5;
+        //     plane.position.y = 4;
+        //     plane.name = "dropDetail" + drop.data.curr.dropSeq;
+        //     scene.add(plane);
+
+        //     loader.load(
+        //         // resource URL
+        //         drop.data.curr.contentUrl,
+        //         function (gltf) {
+        //             model = gltf.scene;
+        //             model.position.z = 3;
+        //             model.position.y = 1;
+        //             // model.scale.multiplyScalar(10);
+
+        //             switch (drop.data.curr.dropSeq) {
+        //                 case 1:
+        //                     model.scale.multiplyScalar(14);
+        //                     break;
+        //                 case 2:
+        //                     plane.position.y = 3.5;
+        //                     model.scale.multiplyScalar(20);
+        //                     break;
+        //                 case 3:
+        //                     plane.position.y = 3;
+        //                     model.scale.multiplyScalar(1.5);
+        //                     break;
+        //                 case 4:
+        //                     plane.position.y = 3;
+        //                     model.scale.multiplyScalar(15);
+        //                     break;
+        //                 case 5:
+        //                     plane.position.y = 2.5;
+        //                     model.scale.multiplyScalar(15);
+        //                     break;
+        //                 default:
+        //                     model.scale.multiplyScalar(10);
+        //                     break;
+        //             }
+
+        //             scene.add(model);
+
+        //             model.traverse(function (object) {
+        //                 if (object.isMesh) object.castShadow = true;
+        //             });
+
+        //             // mixer = new THREE.AnimationMixer(model);
+        //             // mixer.clipAction(gltf.animations[0]).play();
+
+        //             model.name = "drop";
+        //         },
+        //         undefined,
+        //         function (error) {
+        //             console.log("An error happened");
+        //         },
+        //     );
+        // } else {
+        let dropBox;
+        // if (drop.data.curr.status === "ready") {
+        loader.load(
+            // resource URL
+            "../../static/3d/dropBox/dropbox__locked_shaking.glb",
+            // called when the resource is loaded
+            function (gltf) {
+                model = gltf.scene;
+                model.scale.set(25, 25, 25);
+                model.rotation.set(0.2, -0.5, 0);
+                model.position.y = 2;
+                model.position.z = 3;
+                scene.add(model);
+
+                // model.traverse(function (object) {
+                //     if (object.isMesh) {
+                //         object.castShadow = true;
+                //         object.material = new THREE.MeshPhongMaterial({
+                //             map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropSeq + ".jpg"),
+                //             transparent: true,
+                //         });
+                //     }
+                // });
+                mixer = new THREE.AnimationMixer(model);
+                model.name = "box";
+
+                mixer.clipAction(gltf.animations[0]).play();
+
+                loader.load("../../static/3d/dropBox/dropbox__unlocked_loop.glb", (gltf) => {
+                    model = gltf.scene;
+                    model.position.y = 2;
+                    model.position.z = 3;
+
+                    const animationAction = mixer.clipAction(gltf.animations[0]);
+                    animationActions.push(animationAction);
+                    // mixer.clipAction(gltf.animations[0]).play();
+                    activeAction = animationActions[0];
+
+                    // add an animation from another file
+                    loader.load("../../static/3d/dropBox/dropbox__locked_shaking.glb", (object) => {
+                        model = gltf.scene;
+                        model.position.y = 2;
+                        model.position.z = 3;
+
+                        const animationAction = mixer.clipAction(gltf.animations[0]);
+                        animationActions.push(animationAction);
+
+                        //     //add an animation from another file
+                        //     fbxLoader.load("../../static/3d/dropBox/DROPBOX_Open2Disappear.fbx", (object) => {
+                        //         object.rotation.set(0.2, -0.5, 0);
+                        //         object.name = "box";
+                        //         const animationAction = mixer.clipAction(object.animations[0]);
+                        //         animationActions.push(animationAction);
+
+                        // modelReady = true;
+                        //     });
                     });
-                    const plane = new THREE.Mesh(geometry, material);
-                    plane.position.z = 5;
-                    plane.position.y = 4;
-                    plane.name = "dropDetail" + drop.data.curr.dropSeq;
-                    scene.add(plane);
+                });
+            },
+            undefined,
+            // called when loading has errors
+            function (error) {
+                console.log("An error happened");
+            },
+        );
+        // }
+        if (drop.data.curr.status === "processing") {
+            loader.load(
+                // resource URL
+                "../../static/3d/dropBox/dropbox__unlocked_loop.glb",
+                // called when the resource is loaded
+                function (gltf) {
+                    model = gltf.scene;
+                    model.scale.set(25, 25, 25);
+                    model.rotation.set(0.2, -0.5, 0);
+                    model.position.y = 2;
+                    model.position.z = 3;
+                    scene.add(model);
 
-                    loader.load(
-                        // resource URL
-                        drop.data.curr.contentUrl,
-                        function (gltf) {
-                            model = gltf.scene;
-                            model.position.z = 3;
-                            model.position.y = 1;
-                            // model.scale.multiplyScalar(10);
-
-                            switch (drop.data.curr.dropSeq) {
-                                case 1:
-                                    model.scale.multiplyScalar(14);
-                                    break;
-                                case 2:
-                                    plane.position.y = 3.5;
-                                    model.scale.multiplyScalar(20);
-                                    break;
-                                case 3:
-                                    plane.position.y = 3;
-                                    model.scale.multiplyScalar(1.5);
-                                    break;
-                                case 4:
-                                    plane.position.y = 3;
-                                    model.scale.multiplyScalar(15);
-                                    break;
-                                case 5:
-                                    plane.position.y = 2.5;
-                                    model.scale.multiplyScalar(15);
-                                    break;
-                                default:
-                                    model.scale.multiplyScalar(10);
-                                    break;
-                            }
-
-                            scene.add(model);
-
-                            model.traverse(function (object) {
-                                if (object.isMesh) object.castShadow = true;
+                    model.traverse(function (object) {
+                        if (object.isMesh) {
+                            object.castShadow = true;
+                            object.material = new THREE.MeshPhongMaterial({
+                                map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropSeq + ".jpg"),
+                                transparent: true,
                             });
+                        }
+                    });
 
-                            // mixer = new THREE.AnimationMixer(model);
-                            // mixer.clipAction(gltf.animations[0]).play();
+                    mixer = new THREE.AnimationMixer(model);
+                    animationActions.push(mixer.clipAction(gltf.animations[0]));
+                    mixer.clipAction(gltf.animations[0]).play();
+                    activeAction = animationActions[0];
 
-                            model.name = "drop";
-                        },
-                        undefined,
-                        function (error) {
-                            console.log("An error happened");
-                        },
-                    );
-                } else {
-                    let dropBox;
-                    if (drop.data.curr.status === "ready") {
-                        loader.load(
-                            // resource URL
-                            "../../static/3d/dropBox/dropbox__locked_static.glb",
-                            // called when the resource is loaded
-                            function (gltf) {
-                                model = gltf.scene;
-                                model.scale.set(25, 25, 25);
-                                model.rotation.set(0.2, -0.5, 0);
-                                model.position.y = 2;
-                                model.position.z = 3;
-                                scene.add(model);
+                    model.name = "box";
 
-                                model.traverse(function (object) {
-                                    if (object.isMesh) {
-                                        object.castShadow = true;
-                                        object.material = new THREE.MeshPhongMaterial({
-                                            map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropSeq + ".jpg"),
-                                            transparent: true,
-                                        });
-                                    }
-                                });
+                    loader.load("../../static/3d/dropBox/dropbox_open2disappear.glb", (gltf) => {
+                        model = gltf.scene;
+                        model.position.y = 2;
+                        model.position.z = 3;
 
-                                mixer = new THREE.AnimationMixer(model);
-                                model.name = "box";
-
-                                // loader.load("../../static/3d/dropBox/dropbox__unlocked_loop.glb", (gltf) => {
-                                //     model = gltf.scene;
-                                //     model.position.y = 2;
-                                //     model.position.z = 3;
-
-                                //     const animationAction = mixer.clipAction(gltf.animations[0]);
-                                //     animationActions.push(animationAction);
-                                //     // mixer.clipAction(gltf.animations[0]).play();
-                                //     activeAction = animationActions[0];
-
-                                //     // add an animation from another file
-                                //     loader.load("../../static/3d/dropBox/dropbox__locked_shaking.glb", (object) => {
-                                //         model = gltf.scene;
-                                //         model.position.y = 2;
-                                //         model.position.z = 3;
-
-                                //         const animationAction = mixer.clipAction(gltf.animations[0]);
-                                //         animationActions.push(animationAction);
-
-                                //         //     //add an animation from another file
-                                //         //     fbxLoader.load("../../static/3d/dropBox/DROPBOX_Open2Disappear.fbx", (object) => {
-                                //         //         object.rotation.set(0.2, -0.5, 0);
-                                //         //         object.name = "box";
-                                //         //         const animationAction = mixer.clipAction(object.animations[0]);
-                                //         //         animationActions.push(animationAction);
-
-                                //         // modelReady = true;
-                                //         //     });
-                                //     });
-                                // });
-                            },
-                            undefined,
-                            // called when loading has errors
-                            function (error) {
-                                console.log("An error happened");
-                            },
-                        );
-                    }
-                    if (drop.data.curr.status === "processing") {
-                        loader.load(
-                            // resource URL
-                            "../../static/3d/dropBox/dropbox__unlocked_loop.glb",
-                            // called when the resource is loaded
-                            function (gltf) {
-                                model = gltf.scene;
-                                model.scale.set(25, 25, 25);
-                                model.rotation.set(0.2, -0.5, 0);
-                                model.position.y = 2;
-                                model.position.z = 3;
-                                scene.add(model);
-
-                                model.traverse(function (object) {
-                                    if (object.isMesh) {
-                                        object.castShadow = true;
-                                        object.material = new THREE.MeshPhongMaterial({
-                                            map: new THREE.TextureLoader().load("../../static/3d/dropBox/texture/" + drop.data.curr.dropSeq + ".jpg"),
-                                            transparent: true,
-                                        });
-                                    }
-                                });
-
-                                mixer = new THREE.AnimationMixer(model);
-                                animationActions.push(mixer.clipAction(gltf.animations[0]));
-                                mixer.clipAction(gltf.animations[0]).play();
-                                activeAction = animationActions[0];
-
-                                model.name = "box";
-
-                                loader.load("../../static/3d/dropBox/dropbox_open2disappear.glb", (gltf) => {
-                                    model = gltf.scene;
-                                    model.position.y = 2;
-                                    model.position.z = 3;
-
-                                    const animationAction = mixer.clipAction(gltf.animations[0]);
-                                    animationActions.push(animationAction);
-                                });
-                            },
-                            undefined,
-                            // called when loading has errors
-                            function (error) {
-                                console.log("An error happened");
-                            },
-                        );
-                    }
-                }
-            }
+                        const animationAction = mixer.clipAction(gltf.animations[0]);
+                        animationActions.push(animationAction);
+                    });
+                },
+                undefined,
+                // called when loading has errors
+                function (error) {
+                    console.log("An error happened");
+                },
+            );
         }
+        // }
     }, [drop.data.curr.status]);
 
     const modalData = {

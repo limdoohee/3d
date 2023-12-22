@@ -1,0 +1,12 @@
+.button {
+    position: absolute;
+    z-index: 1;
+    bottom: 100px;
+    left: calc(50% - 65px);
+    border: 0;
+    background: #000;
+    border-radius: 50px;
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 20px;
+}
